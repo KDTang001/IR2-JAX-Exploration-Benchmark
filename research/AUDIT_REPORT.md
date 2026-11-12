@@ -1,5 +1,7 @@
 # IR2-JAX Benchmark：首轮代码审计报告
 
+> 2026-11-12 后续核实：AUD-001 已确认为 Windows 忽略规则导致的发布遗漏。本机和服务器均保留九个一致的原环境模块；恢复来源、修复及实际验证范围见 [环境包恢复记录](ENV_PUBLICATION_RECOVERY.md)。下文保留两轮静态审计的原始时间点结论，不能据此判断修复后分支仍缺少环境包。
+
 - 日期：2026-11-12
 - 审计对象：公开仓库 `KDTang001/IR2-JAX-Exploration-Benchmark`，`main` 分支快照
 - 审计方式：GitHub 文件树、README、配置、源码和测试静态阅读
