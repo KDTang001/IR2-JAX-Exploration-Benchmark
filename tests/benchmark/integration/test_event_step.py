@@ -64,6 +64,35 @@ def test_observe_is_pure_and_ignores_hidden_remote_truth() -> None:
     assert int(state.event) == 0
 
 
+def test_ir2_graph_observation_ignores_unsent_peer_state_and_hidden_truth() -> None:
+    config = HostConfig(
+        n_agents=2,
+        navigation_mode="ir2_graph",
+        sensor_radius=4,
+        graph_nodes_per_axis=6,
+        graph_padding_size=80,
+        graph_capacity=80,
+    )
+    truth = jnp.ones((32, 32), jnp.uint8).at[1:31, 1:31].set(0)
+    data = MapInput(truth, truth == 0, jnp.array([32, 32]), jnp.array([3, 3]))
+    state = reset(data, config, jax.random.PRNGKey(9), jnp.array([[3, 3], [25, 25]]))
+    changed = state._replace(
+        truth=state.truth.at[20:28, 20:28].set(1),
+        positions=state.positions.at[1].set(jnp.array([28, 28])),
+        local_maps=state.local_maps.at[1].set(jnp.zeros_like(truth)),
+        goals=state.goals.at[1].set(jnp.array([10, 10])),
+        plans=state.plans.at[1].set(jnp.full_like(state.plans[1], 10)),
+        balances=state.balances.at[1].set(0),
+        isolated_mask=~state.isolated_mask,
+    )
+    compiled = jax.jit(lambda value: observe(value, jnp.int32(0), config))
+    expected, actual = compiled(state), compiled(changed)
+    for left, right in zip(
+        jax.tree_util.tree_leaves(expected), jax.tree_util.tree_leaves(actual), strict=True
+    ):
+        np.testing.assert_array_equal(left, right)
+
+
 def test_map_delta_is_locked_before_movement_and_new_sensing() -> None:
     # Given: robot zero knows up to x=2 and will reveal x=3 after moving.
     config = HostConfig(sensor_radius=1, max_distance=1, coverage_target=1)

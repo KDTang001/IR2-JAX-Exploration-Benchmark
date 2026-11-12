@@ -137,3 +137,9 @@
 - 完整地图审计及正式评测工作负载验证。
 
 因此 Phase 0 目前状态为 **部分通过（Windows CPU packaging/import/micro smoke）**，不能标记为整体完成。下一工作优先进入 Phase 1 的独立 parity 证据核验，同时等待 Linux/CUDA 环境可用；正式训练仍保持暂停。
+
+## 进度更新：Phase 1 首批 parity 证据（2026-11-12）
+
+上述待办中的指定传感器、图结构 parity 重跑已完成：Windows CPU 下 39 项通过、无跳过，包含原尺寸地图 16 步感知与图维护轨迹，以及事件/隔离检查。详见 [IR2_PARITY_REPORT.md](IR2_PARITY_REPORT.md) 和其中的机器可读证据。
+
+这不是完整 `ir2_graph` 多机器人 episode 验收。非零会合效用、长期容量处理和付费地图融合的联合隔离仍待核验，Linux/CUDA 与后续阶段也未完成。本次没有修改生产代码或恢复训练。
