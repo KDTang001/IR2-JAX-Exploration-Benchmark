@@ -1,0 +1,31 @@
+{
+  "scope": "formal_auxiliary",
+  "budget_mode": "per_robot",
+  "scenario_seeds": [
+    0,
+    1,
+    2
+  ],
+  "n_agents": [
+    2,
+    4,
+    6
+  ],
+  "budgets": [
+    8192
+  ],
+  "conditions": [
+    [
+      0,
+      0.0,
+      64
+    ]
+  ],
+  "method_ids": [
+    "heuristic",
+    "A_learned_none",
+    "B_learned_none",
+    "B_real_updates_learned_predict"
+  ],
+  "complete": false
+}

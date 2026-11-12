@@ -1,0 +1,7 @@
+[
+  {"root": "../../DungeonMaps", "manifest": "ir2_manifest_enriched.jsonl", "source": "ir2"},
+  {"root": "procedural/train", "manifest": "procedural/train/manifest.jsonl", "source": "procedural"},
+  {"root": "procedural/validation", "manifest": "procedural/validation/manifest.jsonl", "source": "procedural"},
+  {"root": "procedural/test", "manifest": "procedural/test/manifest.jsonl", "source": "procedural"},
+  {"root": "procedural/ood", "manifest": "procedural/ood/manifest.jsonl", "source": "procedural"}
+]

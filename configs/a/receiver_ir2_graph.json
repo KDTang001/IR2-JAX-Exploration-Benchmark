@@ -1,0 +1,20 @@
+{
+  "suite": "formal",
+  "communication_mode": "fixed",
+  "fixed_plan": true,
+  "neighbor_estimator": "zoh",
+  "candidate_attention": true,
+  "curriculum_easy_episodes": 256,
+  "events": 2000000,
+  "warmup_events": 0,
+  "rollout_length": 128,
+  "sequence_length": 32,
+  "ppo_epochs": 4,
+  "batch_size": 16,
+  "physical_env_count": 16,
+  "hidden": 256,
+  "learning_rate": 0.00001,
+  "predictor_replay_capacity": 4096,
+  "ppo_minibatch_sequences": 8,
+  "ppo_target_kl": 0.02
+}

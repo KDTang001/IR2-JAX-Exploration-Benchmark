@@ -1,0 +1,14 @@
+This project contains code and maps derived from:
+IR2 Multi-Robot RL Exploration
+https://github.com/marmotlab/IR2-Multi-Robot-RL-Exploration
+Upstream snapshot: 1ef6d224ae18503f4763c3cec20e05a737f95783
+
+The upstream Apache License 2.0 is retained in LICENSE.txt.
+Original attribution and publication links are retained in README.md.
+
+This derivative adds the ir2_benchmark JAX package, configuration, tests,
+documentation and tooling. The original env.py, graph.py, graph_generator.py
+and sensor.py have been modified for deterministic comparison, compatibility,
+and integration. Results or claims made by the original authors do not certify
+the derivative benchmark. See spec/spec-design-benchmark-status-and-discussion.md
+for implementation limitations and historical validation scope.

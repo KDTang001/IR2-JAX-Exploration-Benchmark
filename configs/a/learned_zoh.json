@@ -1,0 +1,14 @@
+{
+  "communication_mode": "learned",
+  "neighbor_estimator": "zoh",
+  "events": 2000000,
+  "warmup_events": 100000,
+  "rollout_length": 128,
+  "ppo_epochs": 4,
+  "batch_size": 4,
+  "hidden": 256,
+  "learning_rate": 0.0003,
+  "suite": "formal",
+  "predictor_replay_capacity": 4096,
+  "predictor_recent_fraction": 0.5
+}

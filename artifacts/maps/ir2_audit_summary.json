@@ -1,0 +1,11 @@
+{
+  "total": 17299,
+  "train": 5625,
+  "validation": 624,
+  "test": 728,
+  "excluded": 10322,
+  "errors": 4999,
+  "extra_buckets": [],
+  "output": "artifacts/maps/ir2_manifest.jsonl",
+  "wall_seconds": 987.7422907799482
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "split": "train",
+    "maps": 6000,
+    "seed": 410000,
+    "shift": "none",
+    "manifest": "artifacts/maps/procedural/train/manifest.jsonl",
+    "wall_seconds": 2533.6810581106693
+  },
+  {
+    "split": "validation",
+    "maps": 300,
+    "seed": 510000,
+    "shift": "none",
+    "manifest": "artifacts/maps/procedural/validation/manifest.jsonl",
+    "wall_seconds": 118.61804754845798
+  },
+  {
+    "split": "test",
+    "maps": 300,
+    "seed": 610000,
+    "shift": "none",
+    "manifest": "artifacts/maps/procedural/test/manifest.jsonl",
+    "wall_seconds": 126.80622422043234
+  },
+  {
+    "split": "ood",
+    "maps": 300,
+    "seed": 710000,
+    "shift": "narrow",
+    "manifest": "artifacts/maps/procedural/ood/manifest.jsonl",
+    "wall_seconds": 130.10087298601866
+  }
+]

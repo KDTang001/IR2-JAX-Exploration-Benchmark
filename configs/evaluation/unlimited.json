@@ -1,0 +1,27 @@
+{
+  "scope": "formal_auxiliary",
+  "budget_mode": "unlimited",
+  "scenario_seeds": [
+    0,
+    1,
+    2
+  ],
+  "n_agents": [
+    2,
+    4,
+    6
+  ],
+  "budgets": [],
+  "conditions": [
+    [
+      0,
+      0.0,
+      64
+    ]
+  ],
+  "method_ids": [
+    "A_learned_predict",
+    "B_learned_predict"
+  ],
+  "complete": false
+}

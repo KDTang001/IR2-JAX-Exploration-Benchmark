@@ -1,0 +1,11 @@
+{
+  "n_agents": 2,
+  "sensor_radius": 8,
+  "max_distance": 2,
+  "plan_horizon": 5,
+  "max_rounds": 128,
+  "initial_budget": 2048,
+  "max_candidates": 64,
+  "coverage_target": 0.99,
+  "fault_mode": 0
+}

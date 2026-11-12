@@ -1,0 +1,26 @@
+# Python 3.11. CPU-portable dependencies for the benchmark and original IR2 tools.
+# Install with: python -m pip install -r requirement.txt
+# Linux NVIDIA GPU: additionally install requirements-server.txt.
+# These versions reflect the development environment where available.
+jax==0.4.35
+jaxlib==0.4.34
+flax==0.10.2
+optax==0.2.4
+chex==0.1.87
+orbax-checkpoint==0.10.2
+numpy==2.0.2
+pillow==13.0.0
+matplotlib==3.9.4
+scipy==1.13.1
+scikit-image==0.24.0
+scikit-learn==1.6.1
+imageio==2.37.2
+torch==2.6.0
+ray==2.51.2
+tensorboard==2.20.0
+# Used by the original test_driver.py; not installed in the benchmark runtime.
+pandas>=2.2,<3
+pytest>=8,<9
+ruff>=0.9
+hatchling>=1.25
+editables>=0.5

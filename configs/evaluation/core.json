@@ -1,0 +1,235 @@
+{
+  "scope": "formal",
+  "real_training_events": 2000000,
+  "warmup_included": true,
+  "training_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "scenario_seeds": [
+    0,
+    1,
+    2
+  ],
+  "n_agents": [
+    2,
+    4,
+    6
+  ],
+  "budgets": [
+    0,
+    2048,
+    8192,
+    32768
+  ],
+  "conditions": [
+    [
+      0,
+      0.0,
+      64
+    ],
+    [
+      1,
+      0.1,
+      64
+    ],
+    [
+      1,
+      0.3,
+      64
+    ],
+    [
+      1,
+      0.5,
+      64
+    ],
+    [
+      2,
+      0.0,
+      64
+    ],
+    [
+      2,
+      0.0,
+      128
+    ]
+  ],
+  "methods": [
+    {
+      "method_id": "A_fixed_zoh",
+      "route": "A",
+      "communication": "fixed",
+      "estimator": "zoh"
+    },
+    {
+      "method_id": "A_fixed_predict",
+      "route": "A",
+      "communication": "fixed",
+      "estimator": "predict"
+    },
+    {
+      "method_id": "A_learned_zoh",
+      "route": "A",
+      "communication": "learned",
+      "estimator": "zoh"
+    },
+    {
+      "method_id": "A_learned_predict",
+      "route": "A",
+      "communication": "learned",
+      "estimator": "predict"
+    },
+    {
+      "method_id": "B_fixed_zoh",
+      "route": "B",
+      "communication": "fixed",
+      "estimator": "zoh"
+    },
+    {
+      "method_id": "B_fixed_predict",
+      "route": "B",
+      "communication": "fixed",
+      "estimator": "predict"
+    },
+    {
+      "method_id": "B_learned_zoh",
+      "route": "B",
+      "communication": "learned",
+      "estimator": "zoh"
+    },
+    {
+      "method_id": "B_learned_predict",
+      "route": "B",
+      "communication": "learned",
+      "estimator": "predict"
+    }
+  ],
+  "model_selection": "validation_only_same_search_budget",
+  "map_weighting": "scenario_mean_then_equal_maps_within_family_then_equal_families",
+  "bootstrap": "training_seed_and_map_hierarchy",
+  "auxiliary": [
+    "heuristic",
+    "zero_communication",
+    "unlimited_budget",
+    "no_neighbor_plan",
+    "B_real_updates",
+    "fixed_team_budget"
+  ],
+  "complete": false,
+  "auxiliary_matrix": [
+    {
+      "category": "fixed_team_budget",
+      "budget_mode": "team_total",
+      "method_ids": [
+        "A_learned_predict",
+        "B_learned_predict"
+      ],
+      "budgets": [
+        8192,
+        32768,
+        131072
+      ],
+      "conditions": [
+        [
+          0,
+          0.0,
+          64
+        ]
+      ]
+    },
+    {
+      "category": "unlimited_budget",
+      "budget_mode": "unlimited",
+      "method_ids": [
+        "A_learned_predict",
+        "B_learned_predict"
+      ],
+      "budgets": [],
+      "conditions": [
+        [
+          0,
+          0.0,
+          64
+        ]
+      ]
+    },
+    {
+      "category": "heuristic",
+      "budget_mode": "per_robot",
+      "method_ids": [
+        "heuristic"
+      ],
+      "training_seeds": [
+        -1
+      ],
+      "budgets": [
+        8192
+      ],
+      "conditions": [
+        [
+          0,
+          0.0,
+          64
+        ]
+      ]
+    },
+    {
+      "category": "no_neighbor_plan",
+      "budget_mode": "per_robot",
+      "method_ids": [
+        "A_learned_none",
+        "B_learned_none"
+      ],
+      "budgets": [
+        8192
+      ],
+      "conditions": [
+        [
+          0,
+          0.0,
+          64
+        ]
+      ]
+    },
+    {
+      "category": "B_real_updates",
+      "budget_mode": "per_robot",
+      "method_ids": [
+        "B_real_updates_learned_predict"
+      ],
+      "budgets": [
+        8192
+      ],
+      "conditions": [
+        [
+          0,
+          0.0,
+          64
+        ]
+      ]
+    },
+    {
+      "category": "zero_communication",
+      "budget_mode": "per_robot",
+      "method_ids": [
+        "A_learned_predict",
+        "B_learned_predict"
+      ],
+      "budgets": [
+        0
+      ],
+      "conditions": [
+        [
+          0,
+          0.0,
+          64
+        ]
+      ]
+    }
+  ],
+  "auxiliary_scope": "Normal only; existing test/OOD maps and scenario seeds, N=2/4/6; learned methods use the same five full-quota training repetitions; zero reuses core endpoint results.",
+  "base_config": "../default.json"
+}

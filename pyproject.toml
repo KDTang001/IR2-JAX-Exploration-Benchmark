@@ -1,0 +1,34 @@
+[build-system]
+requires = ["hatchling", "editables>=0.5"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ir2-benchmark"
+version = "0.1.0"
+description = "Communication-limited multi-robot exploration benchmark"
+requires-python = ">=3.11,<3.14"
+dependencies = ["jax>=0.4.35", "flax>=0.10", "optax>=0.2", "numpy>=1.26", "pillow>=10", "matplotlib>=3.8"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.9"]
+
+[project.scripts]
+ir2-benchmark = "ir2_benchmark.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests/benchmark"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["D100", "D104", "D203", "D213", "COM812", "CPY001"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "D103", "INP001"]
+"scripts/**" = ["INP001"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ir2_benchmark"]

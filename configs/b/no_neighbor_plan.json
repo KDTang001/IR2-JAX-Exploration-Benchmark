@@ -1,0 +1,6 @@
+{
+  "learned_communication": true,
+  "predicted_plans": false,
+  "use_neighbor_plan": false,
+  "real_updates": false
+}

@@ -1,0 +1,17 @@
+{
+  "n_agents": 4,
+  "agent_bucket": 6,
+  "sensor_radius": 80,
+  "max_distance": 20,
+  "plan_horizon": 5,
+  "max_rounds": 512,
+  "initial_budget": 131072,
+  "max_candidates": 64,
+  "coverage_target": 0.99,
+  "fault_mode": 0,
+  "dropout_probability": 0.0,
+  "burst_start": 128,
+  "burst_duration": 64,
+  "spawn_radius": 10,
+  "signal_threshold": -70.0
+}

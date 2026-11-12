@@ -1,0 +1,12 @@
+# Compatible with the existing ex environment's CUDA 12.4 / cuDNN 9.1 stack.
+jax[cuda12]==0.4.35
+flax==0.10.2
+optax==0.2.4
+chex==0.1.87
+orbax-checkpoint==0.10.2
+nvidia-cuda-nvcc-cu12==12.4.131
+pytest>=8,<9
+ruff>=0.9
+matplotlib>=3.8
+hatchling>=1.25
+editables>=0.5
