@@ -115,3 +115,25 @@
 2. 执行 Phase 0 的导入/CLI/doctor/micro rollout 检查。
 3. 如果发现缺失模块，先恢复正确源码，不临时造一个空包绕过错误。
 4. Phase 0 通过后，开始 Phase 1；不提前启动正式训练。
+
+
+## 进度更新：环境包发布遗漏已恢复（2026-11-12）
+
+用户确认提交 `1431ad6a42eda555d4c34a5eacac06dbc61282ac` 已将原有九个 `src/ir2_benchmark/env/` 模块恢复到本审计分支，并修复 Windows 大小写不敏感忽略规则导致的发布遗漏。详细证据见 `ENV_PUBLICATION_RECOVERY.md`。
+
+已完成的 Phase 0 子项（仅限 Windows CPU 独立 wheel 环境）：
+- wheel 构建及非 editable 安装；
+- `pip check`；
+- 八个功能模块从已安装 wheel 导入；
+- CLI help；
+- 78 项指定单元/集成测试；
+- `ir2_one_hop` micro rollout：256 事件、128 轮，正常 truncated。
+
+仍未完成的 Phase 0/1 项：
+- Linux/CUDA 独立安装与运行；
+- 完整 `ir2_graph` 原尺寸场景验收；
+- 完整传感器、图节点/边/utility parity 测试重跑；
+- 全量测试套件与干净环境 CI；
+- 完整地图审计及正式评测工作负载验证。
+
+因此 Phase 0 目前状态为 **部分通过（Windows CPU packaging/import/micro smoke）**，不能标记为整体完成。下一工作优先进入 Phase 1 的独立 parity 证据核验，同时等待 Linux/CUDA 环境可用；正式训练仍保持暂停。
