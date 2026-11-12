@@ -153,3 +153,42 @@ README 说明训练输出、检查点和录像不随公开快照提供；讨论�
 - CPU/GPU 配对性能测量。
 - 独立干净环境安装测试。
 - 外部相关工作系统检索和 novelty matrix。
+
+
+## 4. 第二轮静态审计补充（2026-11-12）
+
+### AUD-002：根目录 env.py 是原版 IR2 环境，不是 JAX 包模块
+
+进一步检查根目录 env.py，确认它使用原版依赖和接口（例如 parameter / test_parameter、sensor、graph_generator、node、ss_realistic_model），并定义原版 Env 类。它不能满足新包对 ir2_benchmark.env.reset、observe、step、rollout、artifacts、scenarios 的导入契约。
+
+因此 AUD-001 不是简单的文件树误读：公开 Git Tree 确实只有根目录原版 env.py，没有 src/ir2_benchmark/env/ 包文件。README 所描述的 JAX CLI 与当前已发布文件树之间存在明显断裂。下一步必须核对目标分支/发布快照及 GitHub 包内容，再做干净安装验证；在验证前不得直接从原版 env.py 猜测重建 JAX 环境模块。
+
+### AUD-003：README 与依赖清单的安装指令需要一致性检查
+
+README 展示 requirement.txt，随后以 --no-deps -e . 安装项目；pyproject.toml 本身声明较宽松的依赖范围。服务器文档则要求使用 requirements-server.txt 的约束安装。需要在全新 Python 3.11 环境分别验证 CPU 与 CUDA 安装路径，并记录解析结果、pip check、设备清单和 CLI 导入结果。仅有版本文字说明不足以证明可安装。
+
+### AUD-004：信号模型存在多个不同语义实现，必须避免混称
+
+当前至少存在：
+- communication.signal.link_signal：解析线段穿过栅格的实际长度，注释明确标记为新模型；
+- communication.propagation.ir2：按 skimage.draw.line 风格栅格路径计算障碍项，并使用 episode 级随机噪声；
+- communication.propagation.attenuation：调用新解析线段模型；
+- ideal、range、los_range：其他链路预设。
+
+配置通过 preset 选择具体传播模型。论文必须把 IR2-style reproduction 与 analytic segment-length extension 分开报告，且对同一组几何端点构建独立参考值测试，不能把不同 preset 的分数合并成单一的 signal-strength 结论。
+
+### AUD-005：图导航与一跳导航是不同动作语义
+
+navigation.ir2_graph 明确保留原版图生成/边语义；navigation.one_hop 和 navigation.jax_path 提供不同的候选与路径行为。仓库的实现状态文档说明近期采用“一跳邻接节点完整到达”，而旧配置仍可能包含 grid_path 等模式。正式 Benchmark 必须为每种模式提供独立命名、独立配置和动作语义说明，不能把一跳模式称为 IR2 原始动作的等价移植。
+
+### AUD-006：当前 actor 的图分支将通信/扩展特征与 IR2 pointer 分支分开
+
+agents.actor.Actor.encode 在 features.graph is not None 时先调用原始 GraphPolicy 的图编码、候选编码和 pointer logits，然后用图 context 生成 ObservationEncoder/GRU carry。该 carry 用于通信头，但不回写到 pointer logits。非 graph 分支则用 GRU hidden 和候选注意力计算动作 logits。由此可知两种 navigation mode 的策略计算路径并不相同。对 Benchmark 第一阶段而言，应先冻结并记录它们的差异，不应为了新方法研究而在当前阶段改写策略网络。
+
+### AUD-007：正式矩阵配置包含暂缓的世界模型 B 研究
+
+configs/evaluation/core.json 当前声明 A/B 八个方法组合，且包含 B_* 与 B_real_updates 辅助控制。根据当前项目范围，世界模型想象训练与世界模型队友意图预测暂缓。因此该配置目前只能视为历史/完整研究规划配置，不能直接作为本阶段 Benchmark 基础验收矩阵。应新建 benchmark-foundation 配置或明确裁剪正式矩阵，保留旧配置用于历史追溯，避免静默改变已定义实验。
+
+### 第二轮审计结论
+
+当前最优先的不是增加算法，而是核实并恢复公开仓库的可安装、可导入、可运行闭环。在此之前，环境、训练、评测、吞吐的任何完成声明都不成立。生产源码暂不修改；本轮只更新审计证据与风险分类。
