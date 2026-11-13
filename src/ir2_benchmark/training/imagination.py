@@ -211,6 +211,7 @@ def imagined_observe(state: CognitiveState, config: HostConfig) -> LocalObservat
         state.inbox.lengths[agent],
         state.inbox.present[agent],
         config,
+        valid_shape=state.valid_shape,
     )
     ages = jnp.where(
         state.inbox.received_event[agent] >= 0, state.event - state.inbox.received_event[agent], -1

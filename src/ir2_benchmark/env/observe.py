@@ -31,10 +31,21 @@ class LocalKnowledge(NamedTuple):
     peer_maps: Array | None = None
 
 
-def merge_local_messages(
-    initial: LocalKnowledge, buffers: Array, lengths: Array, present: Array, config: HostConfig
+def merge_local_messages(  # noqa: PLR0913 - real map bounds differ from static array shape
+    initial: LocalKnowledge,
+    buffers: Array,
+    lengths: Array,
+    present: Array,
+    config: HostConfig,
+    *,
+    valid_shape: Array | None = None,
 ) -> LocalKnowledge:
-    """Overlay only paid packet slots; real and imagined states use identical decoding."""
+    """Overlay paid packets within real map bounds, excluding static bucket padding.
+
+    Omitting valid_shape treats the array as an unpadded map. Internal callers
+    always pass the real geometry, including replay and imagined observations.
+    """
+    limits = jnp.asarray(initial.local_map.shape if valid_shape is None else valid_shape)
 
     def merge(sender: int, known: LocalKnowledge) -> LocalKnowledge:
         packet = Packet(buffers[sender], lengths[sender])
@@ -75,9 +86,9 @@ def merge_local_messages(
                 delta.valid_mask[index]
                 & (origin.codec == Codec.MAP_DELTA)
                 & (x >= 0)
-                & (x < width)
+                & (x < limits[1])
                 & (y >= 0)
-                & (y < height)
+                & (y < limits[0])
             )
             cx, cy = jnp.clip(x, 0, width - 1), jnp.clip(y, 0, height - 1)
             update = valid & (event >= times[cy, cx])
@@ -97,9 +108,9 @@ def merge_local_messages(
                     delta.valid_mask[index]
                     & (origin.codec == Codec.MAP_DELTA)
                     & (x >= 0)
-                    & (x < width)
+                    & (x < limits[1])
                     & (y >= 0)
-                    & (y < height)
+                    & (y < limits[0])
                 )
                 cx, cy = jnp.clip(x, 0, width - 1), jnp.clip(y, 0, height - 1)
                 value = jnp.where(valid, delta.states[index], maps[author, cy, cx])
@@ -218,6 +229,7 @@ def observe(state: EnvState, agent_id: Array, config: HostConfig) -> LocalObserv
         state.inbox.lengths[agent_id],
         state.inbox.present[agent_id],
         config,
+        valid_shape=state.valid_shape,
     )
     ages = jnp.where(
         state.inbox.received_event[agent_id] >= 0,

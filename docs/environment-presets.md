@@ -52,6 +52,8 @@ addressed 模式要求 `make_action(..., recipients=布尔数组)`，数组长�
 
 自定义负载原样进入已送达收件箱，接收方法自行解码。仅标准 MAP_DELTA（包括显式转发的 MAP_DELTA）能够更新环境中的地图知识并参与图融合。特征或 PLAN 不会获得队友地图。学习特征必须序列化，不能通过环境外共享张量绕过字节预算。
 
+MAP_DELTA 的 wire 坐标按 uint16 校验；接收时仅合并 `0 <= x < valid_shape[1]`、`0 <= y < valid_shape[0]` 的条目，真实地图外的静态 padding 保持未知。越界条目仍占用发射字节，不退款。直接调用 `merge_local_messages` 的自定义 padded-map 方法须传入 `valid_shape=...`；省略时视整个数组为未 padding 地图。
+
 ## 自定义函数契约
 
 在创建配置和编译前调用 `register_preset(kind, name, function, version="1")`。kind 为 reward、signal 或 sending；禁止覆盖已有名称，不从 JSON 执行或导入任意代码。命令行运行自定义方法时，由方法的 Python 入口注册，再调用环境或训练 API。

@@ -1,5 +1,7 @@
 # IR2-JAX Benchmark：首轮代码审计报告
 
+> 2026-11-14 更新：Phase 2 通信协议与故障模型在声明的 Windows CPU 范围验收通过。Normal、Dropout、Burst 独立测试，118 项通信检查和 28 项相邻阶段回归通过。发现并修复 MAP_DELTA 越过 valid_shape 写入 padding 的接收缺陷，见 [通信与故障验收报告](COMMUNICATION_FAULT_REPORT.md)。
+
 > 2026-11-13 更新：Phase 1 核心环境验收在声明的 Windows CPU 范围内完成，73 项不同测试通过、无跳过。修复了原版对照代码确定性排序的空数组崩溃；继承机制、扩展差异与运行证据见 [IR2 一致性报告最新结论](IR2_PARITY_REPORT.md)。不代表全仓库、GPU 或正式 Benchmark 实验验收完成。
 
 > 2026-11-12 Phase 1 进展：传感器、图结构及辅助事件/隔离检查实际运行 39 项通过、无跳过。逐项结论、继承/扩展边界与未验收范围见 [IR2 一致性报告](IR2_PARITY_REPORT.md)。这不等于完整环境已与原版等价；下文仍保留早期静态审计记录。
