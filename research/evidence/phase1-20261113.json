@@ -1,0 +1,2210 @@
+{
+  "date": "2026-11-13",
+  "base_commit": "a9cfa94e4a3d70bb23555bea0113913a7613dc26",
+  "scope": "Phase 1 CPU core-environment acceptance; finite fixtures, declared IR2 mechanism parity and benchmark extension contracts. No training or GPU certification.",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python": "3.11.0",
+  "versions": {
+    "jax": "0.4.35",
+    "jaxlib": "0.4.34",
+    "numpy": "2.0.2",
+    "scipy": "1.13.1",
+    "scikit-learn": "1.6.1",
+    "scikit-image": "0.24.0",
+    "torch": "2.6.0",
+    "pytest": "8.4.2"
+  },
+  "result": {
+    "unique_tests": 73,
+    "passed": 73,
+    "failed": 0,
+    "skipped": 0
+  },
+  "test_groups": {
+    "tests.benchmark.geometry.test_ir2_rendezvous_parity": 13,
+    "tests.benchmark.geometry.test_ir2_sensor_parity": 12,
+    "tests.benchmark.geometry.test_ir2_graph_parity": 16,
+    "tests.benchmark.integration.test_ir2_contract": 9,
+    "tests.benchmark.integration.test_event_step": 10,
+    "tests.benchmark.integration.test_phase1_acceptance": 9,
+    "tests.benchmark.geometry.test_ir2_native_trace": 4
+  },
+  "runs": [
+    {
+      "run": "final",
+      "tests": "61",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "198.102"
+    },
+    {
+      "run": "acceptance",
+      "tests": "7",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "89.259"
+    },
+    {
+      "run": "isolation",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "11.570"
+    },
+    {
+      "run": "expanded",
+      "tests": "4",
+      "failures": "3",
+      "errors": "0",
+      "skipped": "0",
+      "time": "102.307"
+    },
+    {
+      "run": "repaired",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "181.494"
+    },
+    {
+      "run": "hybrid",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "96.638"
+    },
+    {
+      "run": "oracle-regression",
+      "tests": "29",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "115.900"
+    }
+  ],
+  "test_cases": [
+    {
+      "id": "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[directed]",
+      "seconds": 2.719,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[bidirectional]",
+      "seconds": 0.017,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[repair]",
+      "seconds": 0.018,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[unreachable]",
+      "seconds": 0.007,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[below_threshold]",
+      "seconds": 0.007,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[at_threshold]",
+      "seconds": 0.018,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[disabled]",
+      "seconds": 0.005,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[same_node]",
+      "seconds": 0.006,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[wall]",
+      "seconds": 0.016,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[unknown]",
+      "seconds": 0.016,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_batched_multiple_peers_take_maximum_and_keep_repair_for_next_peer",
+      "seconds": 1.573,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_tied_routes_use_coordinates_under_permuted_node_ids",
+      "seconds": 2.808,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_batched_disabled_and_enabled_peers_preserve_original_results",
+      "seconds": 2.415,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_batched_empty_walls_corners_diagonals_and_borders[0]",
+      "seconds": 0.21,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_batched_empty_walls_corners_diagonals_and_borders[1]",
+      "seconds": 0.19,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_batched_empty_walls_corners_diagonals_and_borders[3]",
+      "seconds": 0.233,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_batched_empty_walls_corners_diagonals_and_borders[17]",
+      "seconds": 0.328,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_batched_empty_walls_corners_diagonals_and_borders[40]",
+      "seconds": 0.379,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_batched_dynamic_valid_shapes_stop_at_unpadded_borders",
+      "seconds": 0.3,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_batched_native_map_radius_80",
+      "seconds": 0.543,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_seeded_fractional_radius_and_padding_match_original[0.5]",
+      "seconds": 0.264,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_seeded_fractional_radius_and_padding_match_original[1.5]",
+      "seconds": 0.236,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_seeded_fractional_radius_and_padding_match_original[7.5]",
+      "seconds": 0.352,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_seeded_fractional_radius_and_padding_match_original[80.0]",
+      "seconds": 0.448,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_ir2_reset_physical_coverage_matches_original_footprints",
+      "seconds": 1.856,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_sparse_visibility_matches_all_rays_across_multiple_blocks",
+      "seconds": 1.168,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_frontier_and_collision_match_original_endpoint_semantics",
+      "seconds": 0.982,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_initialization_and_multistep_updates_preserve_utility_and_guidepost",
+      "seconds": 6.227,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_merger_matches_original_when_only_one_unprotected_pair",
+      "seconds": 8.974,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_overflow_blocks_observation_instead_of_eviction",
+      "seconds": 7.21,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_full_original_worker_observation_current_nonzero_and_peer",
+      "seconds": 6.571,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_native_50_point_grid_k30_ties_match_reference",
+      "seconds": 3.756,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_duplicate_start_node_is_retained_like_original",
+      "seconds": 1.26,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_offshoots_and_own_global_graph_match_original[False-False]",
+      "seconds": 8.935,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_offshoots_and_own_global_graph_match_original[False-True]",
+      "seconds": 9.437,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_offshoots_and_own_global_graph_match_original[True-False]",
+      "seconds": 8.965,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_offshoots_and_own_global_graph_match_original[True-True]",
+      "seconds": 9.17,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_partial_windows_node_removal_peer_window_and_observation",
+      "seconds": 14.117,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_failed_merger_preserves_original_partial_dictionary_rollback",
+      "seconds": 2.988,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_batched_insert_matches_sequential_first_occurrence_and_overflow",
+      "seconds": 0.389,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_batched_graph_updates_match_independent_divergent_branches",
+      "seconds": 15.932,
+      "status": "passed",
+      "last_run": "oracle-regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_real_and_imagined_edges_share_the_full_graph_contract",
+      "seconds": 36.34,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_ir2_individual_reward_uses_decision_time_target_utility",
+      "seconds": 11.441,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_only_paid_delivered_map_adds_peer_map_and_global_nodes[False-True-True-True]",
+      "seconds": 4.367,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_only_paid_delivered_map_adds_peer_map_and_global_nodes[True-True-True-True]",
+      "seconds": 11.275,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_only_paid_delivered_map_adds_peer_map_and_global_nodes[True-False-True-True]",
+      "seconds": 3.382,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_only_paid_delivered_map_adds_peer_map_and_global_nodes[False-False-True-True]",
+      "seconds": 2.895,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_only_paid_delivered_map_adds_peer_map_and_global_nodes[True-True-False-True]",
+      "seconds": 3.49,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_only_paid_delivered_map_adds_peer_map_and_global_nodes[True-True-True-False]",
+      "seconds": 2.795,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_plan_only_peer_has_no_map_surplus_utility",
+      "seconds": 12.073,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_later_robot_uses_new_message_and_earlier_robot_waits_until_next_turn",
+      "seconds": 5.52,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_observe_is_pure_and_ignores_hidden_remote_truth",
+      "seconds": 1.217,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_ir2_graph_observation_ignores_unsent_peer_state_and_hidden_truth",
+      "seconds": 7.979,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_map_delta_is_locked_before_movement_and_new_sensing",
+      "seconds": 1.489,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_paid_map_overlay_does_not_increase_physical_coverage",
+      "seconds": 1.13,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_all_dropped_transmission_still_charges_actual_packet_bytes",
+      "seconds": 1.047,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_link_reachability_uses_post_move_positions",
+      "seconds": 2.287,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_time_limit_freezes_state_without_claiming_coverage_completion",
+      "seconds": 4.148,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_padded_robots_never_observe_move_or_receive_budget",
+      "seconds": 3.014,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_compiled_event_matches_eager_state",
+      "seconds": 2.362,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_ordered_map_episode_matches_sensor_oracle_and_retains_history[False-False]",
+      "seconds": 18.686,
+      "status": "passed",
+      "last_run": "acceptance"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_ordered_map_episode_matches_sensor_oracle_and_retains_history[True-False]",
+      "seconds": 13.743,
+      "status": "passed",
+      "last_run": "acceptance"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_ordered_map_episode_matches_sensor_oracle_and_retains_history[True-True]",
+      "seconds": 12.376,
+      "status": "passed",
+      "last_run": "acceptance"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_failure_latches_and_evaluation_rejects_invalid_graph[history]",
+      "seconds": 13.559,
+      "status": "passed",
+      "last_run": "acceptance"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_failure_latches_and_evaluation_rejects_invalid_graph[path]",
+      "seconds": 12.826,
+      "status": "passed",
+      "last_run": "acceptance"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_ir2_terminal_state_freezes_every_field[terminated]",
+      "seconds": 8.48,
+      "status": "passed",
+      "last_run": "acceptance"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_ir2_terminal_state_freezes_every_field[truncated]",
+      "seconds": 8.966,
+      "status": "passed",
+      "last_run": "acceptance"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_nonzero_rendezvous_observation_isolated_from_hidden_peer_truth",
+      "seconds": 9.518,
+      "status": "passed",
+      "last_run": "isolation"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_original_positive_map_difference_includes_encoding_order",
+      "seconds": 1.368,
+      "status": "passed",
+      "last_run": "isolation"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_native_trace::test_native_original_ir2_trace_crosses_merge_step[DungeonMaps/train/easy/img_9339.png]",
+      "seconds": 98.127,
+      "status": "passed",
+      "last_run": "repaired"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_native_trace::test_native_original_ir2_trace_crosses_merge_step[DungeonMaps/test/complex/1.png]",
+      "seconds": 82.976,
+      "status": "passed",
+      "last_run": "repaired"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_native_trace::test_native_original_ir2_trace_crosses_merge_step[DungeonMaps/test/corridor/1.png]",
+      "seconds": 30.055,
+      "status": "passed",
+      "last_run": "expanded"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_native_trace::test_native_original_ir2_trace_crosses_merge_step[DungeonMaps/test/hybrid/1.png]",
+      "seconds": 96.511,
+      "status": "passed",
+      "last_run": "hybrid"
+    }
+  ],
+  "pre_fix_failures": [
+    {
+      "id": "test_native_original_ir2_trace_crosses_merge_step[DungeonMaps/train/easy/img_9339.png]",
+      "message": "IndexError: too many indices for array: array is 1-dimensional, but 2 were indexed"
+    },
+    {
+      "id": "test_native_original_ir2_trace_crosses_merge_step[DungeonMaps/test/complex/1.png]",
+      "message": "IndexError: too many indices for array: array is 1-dimensional, but 2 were indexed"
+    },
+    {
+      "id": "test_native_original_ir2_trace_crosses_merge_step[DungeonMaps/test/hybrid/1.png]",
+      "message": "IndexError: too many indices for array: array is 1-dimensional, but 2 were indexed"
+    }
+  ],
+  "fix": "Reference coordinate_distance_order handles empty shape (0,) by returning an empty intp index; no JAX production algorithm changed.",
+  "raw_sha256": {
+    "sensor.py": "0cee01dacfa6c53bb42b245c501bb711c07022584a8a7f59ce5471247df36683",
+    "graph_generator.py": "6586ee35209b791c5dd9a729cbf084e8d4661a13140a637a369a7c92994f31c4",
+    "graph.py": "6c267d4d527251ea9685742bb904500f84a1bbb2c94c16cbaa3c472273a4bb5e",
+    "node.py": "905e86c74d81438125c37fd0838c507afa5e130d4e17fecff63c0c1c84d570b6",
+    "env.py": "c4e9ad46ad85b185c513cbd56eeb2f9fdf122bbfc152db073b8fe3c09333225b",
+    "multi_robot_worker.py": "0baafdd412f7aaf20be5cc7debf3dcda46ac67b49518196e6a963b9fe9201a59",
+    "src/ir2_benchmark/navigation/ir2_rendezvous.py": "e001afdd63fcc3d04bf65d221c296713a01cf35dd2f826f103876586d44b16c4",
+    "src/ir2_benchmark/navigation/ir2_graph.py": "dc759c2cb707616bb126c1126a1f64886ee6bad55d257c073762181448fff211",
+    "src/ir2_benchmark/env/ir2_observation.py": "d39f48c6a57c471954d9d9562f704e4a7d90998736c581e833279f311a172b13",
+    "src/ir2_benchmark/env/step.py": "f520bec270646564bd4350835528e381b2e2628d8f6f497768c1dcf1ac69e0ea",
+    "src/ir2_benchmark/types.py": "282de9048f8059dad68eeb405f24a88a5610c94caa46916510fab2c27f19d1fb",
+    "tests/benchmark/integration/test_phase1_acceptance.py": "6d1dc6686da1702cc2d9dc63c6de9db90022816503cf28c968f1c2a1478cd345",
+    "tests/benchmark/geometry/test_ir2_native_trace.py": "24ba74f443b0dd461f37d7d0eaeac1dba0e9e79d7099e0c5c309f7ea8d1f8f66",
+    "DungeonMaps/train/easy/img_9339.png": "80a5930331312957b51a0fb08cd16c98621eac1bd1d6bd0872dfe32f7f93214a",
+    "DungeonMaps/test/complex/1.png": "788ebcbc9e634948b60339e385a94c8843de84e7d079d5c47be1fc944acd8c92",
+    "DungeonMaps/test/corridor/1.png": "a09727d474cd495a204e8e18b414959f1bb98fec1685fc3afb1e314b1cece40d",
+    "DungeonMaps/test/hybrid/1.png": "5796704f424446042dbc4ffe0f4c83e8906edc4ed753198bfd786b0bd918345f"
+  },
+  "native_traces": [
+    {
+      "device": "TFRT_CPU_0",
+      "map": "DungeonMaps/train/easy/img_9339.png",
+      "shape": [
+        480,
+        640
+      ],
+      "steps_requested": 32,
+      "status": "passed",
+      "step": 32,
+      "check": "all_worker_observation_tensors",
+      "records": [
+        {
+          "step": 0,
+          "position": [
+            270,
+            41
+          ],
+          "known_cells": 6194,
+          "frontiers": 15,
+          "nodes": 37,
+          "global_nodes": 0,
+          "edges": 1110
+        },
+        {
+          "step": 1,
+          "position": [
+            209,
+            49
+          ],
+          "known_cells": 8897,
+          "frontiers": 15,
+          "nodes": 37,
+          "global_nodes": 3,
+          "edges": 1110
+        },
+        {
+          "step": 2,
+          "position": [
+            156,
+            39
+          ],
+          "known_cells": 11192,
+          "frontiers": 14,
+          "nodes": 39,
+          "global_nodes": 5,
+          "edges": 1170
+        },
+        {
+          "step": 3,
+          "position": [
+            91,
+            49
+          ],
+          "known_cells": 13967,
+          "frontiers": 15,
+          "nodes": 37,
+          "global_nodes": 7,
+          "edges": 1079
+        },
+        {
+          "step": 4,
+          "position": [
+            39,
+            68
+          ],
+          "known_cells": 16984,
+          "frontiers": 15,
+          "nodes": 42,
+          "global_nodes": 9,
+          "edges": 1099
+        },
+        {
+          "step": 5,
+          "position": [
+            39,
+            127
+          ],
+          "known_cells": 19544,
+          "frontiers": 14,
+          "nodes": 48,
+          "global_nodes": 11,
+          "edges": 1245
+        },
+        {
+          "step": 6,
+          "position": [
+            52,
+            196
+          ],
+          "known_cells": 22382,
+          "frontiers": 15,
+          "nodes": 42,
+          "global_nodes": 13,
+          "edges": 1108
+        },
+        {
+          "step": 7,
+          "position": [
+            39,
+            254
+          ],
+          "known_cells": 24130,
+          "frontiers": 18,
+          "nodes": 46,
+          "global_nodes": 16,
+          "edges": 1106
+        },
+        {
+          "step": 8,
+          "position": [
+            104,
+            244
+          ],
+          "known_cells": 27062,
+          "frontiers": 14,
+          "nodes": 67,
+          "global_nodes": 18,
+          "edges": 1764
+        },
+        {
+          "step": 9,
+          "position": [
+            156,
+            244
+          ],
+          "known_cells": 29363,
+          "frontiers": 14,
+          "nodes": 63,
+          "global_nodes": 21,
+          "edges": 1612
+        },
+        {
+          "step": 10,
+          "position": [
+            196,
+            225
+          ],
+          "known_cells": 31055,
+          "frontiers": 17,
+          "nodes": 59,
+          "global_nodes": 15,
+          "edges": 1593
+        },
+        {
+          "step": 11,
+          "position": [
+            235,
+            254
+          ],
+          "known_cells": 32835,
+          "frontiers": 18,
+          "nodes": 60,
+          "global_nodes": 17,
+          "edges": 1622
+        },
+        {
+          "step": 12,
+          "position": [
+            274,
+            235
+          ],
+          "known_cells": 34700,
+          "frontiers": 14,
+          "nodes": 63,
+          "global_nodes": 19,
+          "edges": 1701
+        },
+        {
+          "step": 13,
+          "position": [
+            313,
+            225
+          ],
+          "known_cells": 36311,
+          "frontiers": 17,
+          "nodes": 63,
+          "global_nodes": 21,
+          "edges": 1676
+        },
+        {
+          "step": 14,
+          "position": [
+            352,
+            235
+          ],
+          "known_cells": 38192,
+          "frontiers": 19,
+          "nodes": 66,
+          "global_nodes": 23,
+          "edges": 1745
+        },
+        {
+          "step": 15,
+          "position": [
+            391,
+            225
+          ],
+          "known_cells": 39946,
+          "frontiers": 23,
+          "nodes": 66,
+          "global_nodes": 26,
+          "edges": 1668
+        },
+        {
+          "step": 16,
+          "position": [
+            430,
+            235
+          ],
+          "known_cells": 43988,
+          "frontiers": 29,
+          "nodes": 88,
+          "global_nodes": 29,
+          "edges": 2153
+        },
+        {
+          "step": 17,
+          "position": [
+            443,
+            264
+          ],
+          "known_cells": 45231,
+          "frontiers": 23,
+          "nodes": 83,
+          "global_nodes": 30,
+          "edges": 1950
+        },
+        {
+          "step": 18,
+          "position": [
+            417,
+            166
+          ],
+          "known_cells": 48044,
+          "frontiers": 23,
+          "nodes": 89,
+          "global_nodes": 31,
+          "edges": 2247
+        },
+        {
+          "step": 19,
+          "position": [
+            417,
+            313
+          ],
+          "known_cells": 50493,
+          "frontiers": 23,
+          "nodes": 86,
+          "global_nodes": 33,
+          "edges": 1933
+        },
+        {
+          "step": 20,
+          "position": [
+            365,
+            303
+          ],
+          "known_cells": 52848,
+          "frontiers": 23,
+          "nodes": 118,
+          "global_nodes": 32,
+          "edges": 2938
+        },
+        {
+          "step": 21,
+          "position": [
+            313,
+            293
+          ],
+          "known_cells": 55070,
+          "frontiers": 23,
+          "nodes": 66,
+          "global_nodes": 34,
+          "edges": 1327
+        },
+        {
+          "step": 22,
+          "position": [
+            248,
+            293
+          ],
+          "known_cells": 57842,
+          "frontiers": 22,
+          "nodes": 69,
+          "global_nodes": 36,
+          "edges": 1405
+        },
+        {
+          "step": 23,
+          "position": [
+            196,
+            303
+          ],
+          "known_cells": 60215,
+          "frontiers": 24,
+          "nodes": 70,
+          "global_nodes": 38,
+          "edges": 1425
+        },
+        {
+          "step": 24,
+          "position": [
+            143,
+            293
+          ],
+          "known_cells": 62501,
+          "frontiers": 25,
+          "nodes": 71,
+          "global_nodes": 40,
+          "edges": 1368
+        },
+        {
+          "step": 25,
+          "position": [
+            104,
+            323
+          ],
+          "known_cells": 65027,
+          "frontiers": 22,
+          "nodes": 76,
+          "global_nodes": 43,
+          "edges": 1451
+        },
+        {
+          "step": 26,
+          "position": [
+            130,
+            371
+          ],
+          "known_cells": 67833,
+          "frontiers": 23,
+          "nodes": 101,
+          "global_nodes": 45,
+          "edges": 2108
+        },
+        {
+          "step": 27,
+          "position": [
+            183,
+            371
+          ],
+          "known_cells": 70175,
+          "frontiers": 23,
+          "nodes": 129,
+          "global_nodes": 48,
+          "edges": 2890
+        },
+        {
+          "step": 28,
+          "position": [
+            235,
+            362
+          ],
+          "known_cells": 72471,
+          "frontiers": 23,
+          "nodes": 95,
+          "global_nodes": 50,
+          "edges": 1973
+        },
+        {
+          "step": 29,
+          "position": [
+            274,
+            352
+          ],
+          "known_cells": 74062,
+          "frontiers": 29,
+          "nodes": 96,
+          "global_nodes": 52,
+          "edges": 2000
+        },
+        {
+          "step": 30,
+          "position": [
+            313,
+            371
+          ],
+          "known_cells": 76140,
+          "frontiers": 23,
+          "nodes": 87,
+          "global_nodes": 45,
+          "edges": 1793
+        },
+        {
+          "step": 31,
+          "position": [
+            352,
+            352
+          ],
+          "known_cells": 77679,
+          "frontiers": 29,
+          "nodes": 90,
+          "global_nodes": 47,
+          "edges": 1784
+        },
+        {
+          "step": 32,
+          "position": [
+            378,
+            391
+          ],
+          "known_cells": 79611,
+          "frontiers": 22,
+          "nodes": 90,
+          "global_nodes": 50,
+          "edges": 1719
+        }
+      ],
+      "elapsed_seconds": 87.906
+    },
+    {
+      "device": "TFRT_CPU_0",
+      "map": "DungeonMaps/test/complex/1.png",
+      "shape": [
+        1000,
+        1000
+      ],
+      "steps_requested": 32,
+      "status": "passed",
+      "step": 32,
+      "check": "all_worker_observation_tensors",
+      "records": [
+        {
+          "step": 0,
+          "position": [
+            379,
+            243
+          ],
+          "known_cells": 15135,
+          "frontiers": 66,
+          "nodes": 33,
+          "global_nodes": 0,
+          "edges": 899
+        },
+        {
+          "step": 1,
+          "position": [
+            367,
+            224
+          ],
+          "known_cells": 18745,
+          "frontiers": 46,
+          "nodes": 37,
+          "global_nodes": 7,
+          "edges": 1096
+        },
+        {
+          "step": 2,
+          "position": [
+            347,
+            163
+          ],
+          "known_cells": 22201,
+          "frontiers": 55,
+          "nodes": 31,
+          "global_nodes": 8,
+          "edges": 826
+        },
+        {
+          "step": 3,
+          "position": [
+            387,
+            102
+          ],
+          "known_cells": 26899,
+          "frontiers": 43,
+          "nodes": 23,
+          "global_nodes": 10,
+          "edges": 329
+        },
+        {
+          "step": 4,
+          "position": [
+            326,
+            82
+          ],
+          "known_cells": 28134,
+          "frontiers": 31,
+          "nodes": 23,
+          "global_nodes": 11,
+          "edges": 345
+        },
+        {
+          "step": 5,
+          "position": [
+            367,
+            143
+          ],
+          "known_cells": 28288,
+          "frontiers": 31,
+          "nodes": 37,
+          "global_nodes": 12,
+          "edges": 755
+        },
+        {
+          "step": 6,
+          "position": [
+            367,
+            265
+          ],
+          "known_cells": 29823,
+          "frontiers": 43,
+          "nodes": 37,
+          "global_nodes": 13,
+          "edges": 889
+        },
+        {
+          "step": 7,
+          "position": [
+            347,
+            326
+          ],
+          "known_cells": 36106,
+          "frontiers": 22,
+          "nodes": 35,
+          "global_nodes": 15,
+          "edges": 601
+        },
+        {
+          "step": 8,
+          "position": [
+            285,
+            306
+          ],
+          "known_cells": 38397,
+          "frontiers": 32,
+          "nodes": 33,
+          "global_nodes": 17,
+          "edges": 475
+        },
+        {
+          "step": 9,
+          "position": [
+            224,
+            306
+          ],
+          "known_cells": 46959,
+          "frontiers": 58,
+          "nodes": 38,
+          "global_nodes": 21,
+          "edges": 622
+        },
+        {
+          "step": 10,
+          "position": [
+            204,
+            285
+          ],
+          "known_cells": 51543,
+          "frontiers": 53,
+          "nodes": 43,
+          "global_nodes": 24,
+          "edges": 873
+        },
+        {
+          "step": 11,
+          "position": [
+            183,
+            285
+          ],
+          "known_cells": 53558,
+          "frontiers": 32,
+          "nodes": 43,
+          "global_nodes": 26,
+          "edges": 893
+        },
+        {
+          "step": 12,
+          "position": [
+            183,
+            347
+          ],
+          "known_cells": 59223,
+          "frontiers": 46,
+          "nodes": 45,
+          "global_nodes": 29,
+          "edges": 679
+        },
+        {
+          "step": 13,
+          "position": [
+            163,
+            387
+          ],
+          "known_cells": 61547,
+          "frontiers": 23,
+          "nodes": 41,
+          "global_nodes": 29,
+          "edges": 549
+        },
+        {
+          "step": 14,
+          "position": [
+            224,
+            265
+          ],
+          "known_cells": 61688,
+          "frontiers": 23,
+          "nodes": 44,
+          "global_nodes": 29,
+          "edges": 817
+        },
+        {
+          "step": 15,
+          "position": [
+            163,
+            245
+          ],
+          "known_cells": 62461,
+          "frontiers": 25,
+          "nodes": 43,
+          "global_nodes": 30,
+          "edges": 781
+        },
+        {
+          "step": 16,
+          "position": [
+            102,
+            265
+          ],
+          "known_cells": 67776,
+          "frontiers": 44,
+          "nodes": 48,
+          "global_nodes": 33,
+          "edges": 747
+        },
+        {
+          "step": 17,
+          "position": [
+            82,
+            204
+          ],
+          "known_cells": 72160,
+          "frontiers": 53,
+          "nodes": 50,
+          "global_nodes": 34,
+          "edges": 707
+        },
+        {
+          "step": 18,
+          "position": [
+            102,
+            143
+          ],
+          "known_cells": 83521,
+          "frontiers": 45,
+          "nodes": 65,
+          "global_nodes": 40,
+          "edges": 1224
+        },
+        {
+          "step": 19,
+          "position": [
+            41,
+            122
+          ],
+          "known_cells": 85587,
+          "frontiers": 18,
+          "nodes": 57,
+          "global_nodes": 40,
+          "edges": 945
+        },
+        {
+          "step": 20,
+          "position": [
+            143,
+            122
+          ],
+          "known_cells": 85853,
+          "frontiers": 16,
+          "nodes": 54,
+          "global_nodes": 37,
+          "edges": 864
+        },
+        {
+          "step": 21,
+          "position": [
+            41,
+            163
+          ],
+          "known_cells": 86052,
+          "frontiers": 16,
+          "nodes": 57,
+          "global_nodes": 37,
+          "edges": 863
+        },
+        {
+          "step": 22,
+          "position": [
+            122,
+            82
+          ],
+          "known_cells": 86169,
+          "frontiers": 16,
+          "nodes": 53,
+          "global_nodes": 37,
+          "edges": 817
+        },
+        {
+          "step": 23,
+          "position": [
+            61,
+            245
+          ],
+          "known_cells": 86638,
+          "frontiers": 16,
+          "nodes": 50,
+          "global_nodes": 37,
+          "edges": 656
+        },
+        {
+          "step": 24,
+          "position": [
+            82,
+            183
+          ],
+          "known_cells": 86694,
+          "frontiers": 16,
+          "nodes": 60,
+          "global_nodes": 38,
+          "edges": 940
+        },
+        {
+          "step": 25,
+          "position": [
+            122,
+            122
+          ],
+          "known_cells": 86768,
+          "frontiers": 16,
+          "nodes": 59,
+          "global_nodes": 39,
+          "edges": 1107
+        },
+        {
+          "step": 26,
+          "position": [
+            61,
+            163
+          ],
+          "known_cells": 86841,
+          "frontiers": 16,
+          "nodes": 61,
+          "global_nodes": 40,
+          "edges": 1023
+        },
+        {
+          "step": 27,
+          "position": [
+            102,
+            102
+          ],
+          "known_cells": 86884,
+          "frontiers": 16,
+          "nodes": 62,
+          "global_nodes": 41,
+          "edges": 1209
+        },
+        {
+          "step": 28,
+          "position": [
+            41,
+            143
+          ],
+          "known_cells": 86927,
+          "frontiers": 16,
+          "nodes": 58,
+          "global_nodes": 42,
+          "edges": 970
+        },
+        {
+          "step": 29,
+          "position": [
+            102,
+            82
+          ],
+          "known_cells": 86931,
+          "frontiers": 16,
+          "nodes": 58,
+          "global_nodes": 43,
+          "edges": 1053
+        },
+        {
+          "step": 30,
+          "position": [
+            61,
+            143
+          ],
+          "known_cells": 86994,
+          "frontiers": 16,
+          "nodes": 60,
+          "global_nodes": 40,
+          "edges": 1058
+        },
+        {
+          "step": 31,
+          "position": [
+            122,
+            102
+          ],
+          "known_cells": 86996,
+          "frontiers": 16,
+          "nodes": 59,
+          "global_nodes": 41,
+          "edges": 1127
+        },
+        {
+          "step": 32,
+          "position": [
+            82,
+            163
+          ],
+          "known_cells": 87044,
+          "frontiers": 16,
+          "nodes": 64,
+          "global_nodes": 42,
+          "edges": 1128
+        }
+      ],
+      "elapsed_seconds": 82.79599999999999
+    },
+    {
+      "device": "TFRT_CPU_0",
+      "map": "DungeonMaps/test/corridor/1.png",
+      "shape": [
+        480,
+        640
+      ],
+      "steps_requested": 32,
+      "status": "passed",
+      "step": 32,
+      "check": "all_worker_observation_tensors",
+      "records": [
+        {
+          "step": 0,
+          "position": [
+            49,
+            433
+          ],
+          "known_cells": 6321,
+          "frontiers": 22,
+          "nodes": 36,
+          "global_nodes": 0,
+          "edges": 924
+        },
+        {
+          "step": 1,
+          "position": [
+            65,
+            371
+          ],
+          "known_cells": 11670,
+          "frontiers": 32,
+          "nodes": 67,
+          "global_nodes": 6,
+          "edges": 1682
+        },
+        {
+          "step": 2,
+          "position": [
+            39,
+            352
+          ],
+          "known_cells": 12802,
+          "frontiers": 22,
+          "nodes": 65,
+          "global_nodes": 8,
+          "edges": 1579
+        },
+        {
+          "step": 3,
+          "position": [
+            78,
+            381
+          ],
+          "known_cells": 13438,
+          "frontiers": 24,
+          "nodes": 70,
+          "global_nodes": 9,
+          "edges": 1739
+        },
+        {
+          "step": 4,
+          "position": [
+            117,
+            371
+          ],
+          "known_cells": 14886,
+          "frontiers": 21,
+          "nodes": 80,
+          "global_nodes": 11,
+          "edges": 1966
+        },
+        {
+          "step": 5,
+          "position": [
+            104,
+            323
+          ],
+          "known_cells": 17024,
+          "frontiers": 22,
+          "nodes": 71,
+          "global_nodes": 13,
+          "edges": 1717
+        },
+        {
+          "step": 6,
+          "position": [
+            117,
+            274
+          ],
+          "known_cells": 19227,
+          "frontiers": 22,
+          "nodes": 61,
+          "global_nodes": 15,
+          "edges": 1315
+        },
+        {
+          "step": 7,
+          "position": [
+            104,
+            215
+          ],
+          "known_cells": 21796,
+          "frontiers": 22,
+          "nodes": 46,
+          "global_nodes": 17,
+          "edges": 1135
+        },
+        {
+          "step": 8,
+          "position": [
+            117,
+            156
+          ],
+          "known_cells": 24474,
+          "frontiers": 21,
+          "nodes": 48,
+          "global_nodes": 19,
+          "edges": 1157
+        },
+        {
+          "step": 9,
+          "position": [
+            104,
+            98
+          ],
+          "known_cells": 26750,
+          "frontiers": 22,
+          "nodes": 54,
+          "global_nodes": 21,
+          "edges": 1228
+        },
+        {
+          "step": 10,
+          "position": [
+            52,
+            117
+          ],
+          "known_cells": 29087,
+          "frontiers": 27,
+          "nodes": 71,
+          "global_nodes": 23,
+          "edges": 1666
+        },
+        {
+          "step": 11,
+          "position": [
+            39,
+            68
+          ],
+          "known_cells": 31422,
+          "frontiers": 29,
+          "nodes": 71,
+          "global_nodes": 25,
+          "edges": 1591
+        },
+        {
+          "step": 12,
+          "position": [
+            91,
+            49
+          ],
+          "known_cells": 34289,
+          "frontiers": 23,
+          "nodes": 83,
+          "global_nodes": 28,
+          "edges": 1892
+        },
+        {
+          "step": 13,
+          "position": [
+            143,
+            49
+          ],
+          "known_cells": 37132,
+          "frontiers": 29,
+          "nodes": 82,
+          "global_nodes": 30,
+          "edges": 1795
+        },
+        {
+          "step": 14,
+          "position": [
+            183,
+            39
+          ],
+          "known_cells": 40200,
+          "frontiers": 26,
+          "nodes": 74,
+          "global_nodes": 32,
+          "edges": 1465
+        },
+        {
+          "step": 15,
+          "position": [
+            183,
+            88
+          ],
+          "known_cells": 41959,
+          "frontiers": 22,
+          "nodes": 82,
+          "global_nodes": 34,
+          "edges": 1661
+        },
+        {
+          "step": 16,
+          "position": [
+            209,
+            127
+          ],
+          "known_cells": 44934,
+          "frontiers": 29,
+          "nodes": 93,
+          "global_nodes": 36,
+          "edges": 1929
+        },
+        {
+          "step": 17,
+          "position": [
+            261,
+            127
+          ],
+          "known_cells": 47239,
+          "frontiers": 26,
+          "nodes": 95,
+          "global_nodes": 38,
+          "edges": 1959
+        },
+        {
+          "step": 18,
+          "position": [
+            300,
+            98
+          ],
+          "known_cells": 50081,
+          "frontiers": 22,
+          "nodes": 80,
+          "global_nodes": 39,
+          "edges": 1591
+        },
+        {
+          "step": 19,
+          "position": [
+            313,
+            59
+          ],
+          "known_cells": 52689,
+          "frontiers": 22,
+          "nodes": 89,
+          "global_nodes": 41,
+          "edges": 1771
+        },
+        {
+          "step": 20,
+          "position": [
+            365,
+            49
+          ],
+          "known_cells": 55222,
+          "frontiers": 21,
+          "nodes": 88,
+          "global_nodes": 36,
+          "edges": 1754
+        },
+        {
+          "step": 21,
+          "position": [
+            352,
+            98
+          ],
+          "known_cells": 57226,
+          "frontiers": 30,
+          "nodes": 106,
+          "global_nodes": 38,
+          "edges": 2318
+        },
+        {
+          "step": 22,
+          "position": [
+            365,
+            137
+          ],
+          "known_cells": 59514,
+          "frontiers": 29,
+          "nodes": 104,
+          "global_nodes": 40,
+          "edges": 2197
+        },
+        {
+          "step": 23,
+          "position": [
+            352,
+            176
+          ],
+          "known_cells": 63673,
+          "frontiers": 36,
+          "nodes": 103,
+          "global_nodes": 44,
+          "edges": 2080
+        },
+        {
+          "step": 24,
+          "position": [
+            378,
+            205
+          ],
+          "known_cells": 65072,
+          "frontiers": 30,
+          "nodes": 99,
+          "global_nodes": 45,
+          "edges": 2002
+        },
+        {
+          "step": 25,
+          "position": [
+            365,
+            244
+          ],
+          "known_cells": 66883,
+          "frontiers": 22,
+          "nodes": 102,
+          "global_nodes": 46,
+          "edges": 2105
+        },
+        {
+          "step": 26,
+          "position": [
+            365,
+            127
+          ],
+          "known_cells": 66958,
+          "frontiers": 22,
+          "nodes": 125,
+          "global_nodes": 46,
+          "edges": 2644
+        },
+        {
+          "step": 27,
+          "position": [
+            365,
+            283
+          ],
+          "known_cells": 67468,
+          "frontiers": 22,
+          "nodes": 78,
+          "global_nodes": 46,
+          "edges": 1486
+        },
+        {
+          "step": 28,
+          "position": [
+            352,
+            235
+          ],
+          "known_cells": 67527,
+          "frontiers": 22,
+          "nodes": 107,
+          "global_nodes": 47,
+          "edges": 2262
+        },
+        {
+          "step": 29,
+          "position": [
+            378,
+            196
+          ],
+          "known_cells": 67546,
+          "frontiers": 22,
+          "nodes": 101,
+          "global_nodes": 48,
+          "edges": 2069
+        },
+        {
+          "step": 30,
+          "position": [
+            339,
+            186
+          ],
+          "known_cells": 68136,
+          "frontiers": 22,
+          "nodes": 107,
+          "global_nodes": 48,
+          "edges": 2228
+        },
+        {
+          "step": 31,
+          "position": [
+            300,
+            176
+          ],
+          "known_cells": 70054,
+          "frontiers": 22,
+          "nodes": 114,
+          "global_nodes": 50,
+          "edges": 2442
+        },
+        {
+          "step": 32,
+          "position": [
+            248,
+            166
+          ],
+          "known_cells": 72153,
+          "frontiers": 26,
+          "nodes": 82,
+          "global_nodes": 52,
+          "edges": 1324
+        }
+      ],
+      "elapsed_seconds": 30.0
+    },
+    {
+      "device": "TFRT_CPU_0",
+      "map": "DungeonMaps/test/hybrid/1.png",
+      "shape": [
+        500,
+        500
+      ],
+      "steps_requested": 32,
+      "status": "passed",
+      "step": 32,
+      "check": "all_worker_observation_tensors",
+      "records": [
+        {
+          "step": 0,
+          "position": [
+            135,
+            201
+          ],
+          "known_cells": 7701,
+          "frontiers": 18,
+          "nodes": 66,
+          "global_nodes": 0,
+          "edges": 1970
+        },
+        {
+          "step": 1,
+          "position": [
+            173,
+            214
+          ],
+          "known_cells": 10294,
+          "frontiers": 7,
+          "nodes": 86,
+          "global_nodes": 4,
+          "edges": 2517
+        },
+        {
+          "step": 2,
+          "position": [
+            204,
+            204
+          ],
+          "known_cells": 11571,
+          "frontiers": 13,
+          "nodes": 95,
+          "global_nodes": 6,
+          "edges": 2752
+        },
+        {
+          "step": 3,
+          "position": [
+            234,
+            214
+          ],
+          "known_cells": 13894,
+          "frontiers": 26,
+          "nodes": 93,
+          "global_nodes": 9,
+          "edges": 2744
+        },
+        {
+          "step": 4,
+          "position": [
+            275,
+            214
+          ],
+          "known_cells": 19259,
+          "frontiers": 18,
+          "nodes": 109,
+          "global_nodes": 12,
+          "edges": 3077
+        },
+        {
+          "step": 5,
+          "position": [
+            285,
+            183
+          ],
+          "known_cells": 21396,
+          "frontiers": 19,
+          "nodes": 115,
+          "global_nodes": 14,
+          "edges": 3098
+        },
+        {
+          "step": 6,
+          "position": [
+            316,
+            183
+          ],
+          "known_cells": 23511,
+          "frontiers": 29,
+          "nodes": 112,
+          "global_nodes": 17,
+          "edges": 2936
+        },
+        {
+          "step": 7,
+          "position": [
+            336,
+            173
+          ],
+          "known_cells": 25095,
+          "frontiers": 42,
+          "nodes": 115,
+          "global_nodes": 18,
+          "edges": 3019
+        },
+        {
+          "step": 8,
+          "position": [
+            346,
+            183
+          ],
+          "known_cells": 25920,
+          "frontiers": 44,
+          "nodes": 110,
+          "global_nodes": 20,
+          "edges": 2856
+        },
+        {
+          "step": 9,
+          "position": [
+            377,
+            193
+          ],
+          "known_cells": 28782,
+          "frontiers": 35,
+          "nodes": 111,
+          "global_nodes": 23,
+          "edges": 2938
+        },
+        {
+          "step": 10,
+          "position": [
+            407,
+            214
+          ],
+          "known_cells": 30665,
+          "frontiers": 25,
+          "nodes": 87,
+          "global_nodes": 23,
+          "edges": 2230
+        },
+        {
+          "step": 11,
+          "position": [
+            397,
+            183
+          ],
+          "known_cells": 30785,
+          "frontiers": 25,
+          "nodes": 103,
+          "global_nodes": 24,
+          "edges": 2757
+        },
+        {
+          "step": 12,
+          "position": [
+            356,
+            193
+          ],
+          "known_cells": 30826,
+          "frontiers": 25,
+          "nodes": 116,
+          "global_nodes": 25,
+          "edges": 3090
+        },
+        {
+          "step": 13,
+          "position": [
+            346,
+            173
+          ],
+          "known_cells": 30894,
+          "frontiers": 26,
+          "nodes": 123,
+          "global_nodes": 26,
+          "edges": 3286
+        },
+        {
+          "step": 14,
+          "position": [
+            336,
+            143
+          ],
+          "known_cells": 32759,
+          "frontiers": 25,
+          "nodes": 121,
+          "global_nodes": 28,
+          "edges": 3268
+        },
+        {
+          "step": 15,
+          "position": [
+            326,
+            112
+          ],
+          "known_cells": 37023,
+          "frontiers": 28,
+          "nodes": 126,
+          "global_nodes": 31,
+          "edges": 3209
+        },
+        {
+          "step": 16,
+          "position": [
+            356,
+            112
+          ],
+          "known_cells": 38868,
+          "frontiers": 37,
+          "nodes": 127,
+          "global_nodes": 34,
+          "edges": 3297
+        },
+        {
+          "step": 17,
+          "position": [
+            387,
+            102
+          ],
+          "known_cells": 44860,
+          "frontiers": 43,
+          "nodes": 150,
+          "global_nodes": 39,
+          "edges": 4023
+        },
+        {
+          "step": 18,
+          "position": [
+            418,
+            92
+          ],
+          "known_cells": 48366,
+          "frontiers": 18,
+          "nodes": 145,
+          "global_nodes": 41,
+          "edges": 3828
+        },
+        {
+          "step": 19,
+          "position": [
+            448,
+            92
+          ],
+          "known_cells": 48779,
+          "frontiers": 15,
+          "nodes": 131,
+          "global_nodes": 42,
+          "edges": 3487
+        },
+        {
+          "step": 20,
+          "position": [
+            336,
+            112
+          ],
+          "known_cells": 48785,
+          "frontiers": 15,
+          "nodes": 154,
+          "global_nodes": 39,
+          "edges": 4063
+        },
+        {
+          "step": 21,
+          "position": [
+            306,
+            112
+          ],
+          "known_cells": 49314,
+          "frontiers": 19,
+          "nodes": 135,
+          "global_nodes": 40,
+          "edges": 3306
+        },
+        {
+          "step": 22,
+          "position": [
+            285,
+            92
+          ],
+          "known_cells": 51038,
+          "frontiers": 35,
+          "nodes": 121,
+          "global_nodes": 42,
+          "edges": 2837
+        },
+        {
+          "step": 23,
+          "position": [
+            244,
+            92
+          ],
+          "known_cells": 56443,
+          "frontiers": 12,
+          "nodes": 124,
+          "global_nodes": 45,
+          "edges": 3072
+        },
+        {
+          "step": 24,
+          "position": [
+            214,
+            81
+          ],
+          "known_cells": 57740,
+          "frontiers": 17,
+          "nodes": 120,
+          "global_nodes": 46,
+          "edges": 2814
+        },
+        {
+          "step": 25,
+          "position": [
+            193,
+            71
+          ],
+          "known_cells": 58873,
+          "frontiers": 28,
+          "nodes": 120,
+          "global_nodes": 48,
+          "edges": 2869
+        },
+        {
+          "step": 26,
+          "position": [
+            163,
+            71
+          ],
+          "known_cells": 61460,
+          "frontiers": 40,
+          "nodes": 131,
+          "global_nodes": 50,
+          "edges": 3292
+        },
+        {
+          "step": 27,
+          "position": [
+            132,
+            51
+          ],
+          "known_cells": 67507,
+          "frontiers": 33,
+          "nodes": 159,
+          "global_nodes": 54,
+          "edges": 4031
+        },
+        {
+          "step": 28,
+          "position": [
+            102,
+            51
+          ],
+          "known_cells": 69728,
+          "frontiers": 12,
+          "nodes": 153,
+          "global_nodes": 56,
+          "edges": 3859
+        },
+        {
+          "step": 29,
+          "position": [
+            81,
+            71
+          ],
+          "known_cells": 70849,
+          "frontiers": 14,
+          "nodes": 157,
+          "global_nodes": 58,
+          "edges": 3926
+        },
+        {
+          "step": 30,
+          "position": [
+            61,
+            92
+          ],
+          "known_cells": 71657,
+          "frontiers": 10,
+          "nodes": 143,
+          "global_nodes": 50,
+          "edges": 3549
+        },
+        {
+          "step": 31,
+          "position": [
+            51,
+            122
+          ],
+          "known_cells": 72613,
+          "frontiers": 14,
+          "nodes": 127,
+          "global_nodes": 52,
+          "edges": 3074
+        },
+        {
+          "step": 32,
+          "position": [
+            51,
+            163
+          ],
+          "known_cells": 74063,
+          "frontiers": 15,
+          "nodes": 111,
+          "global_nodes": 54,
+          "edges": 2596
+        }
+      ],
+      "elapsed_seconds": 94.99999999999997
+    }
+  ]
+}
