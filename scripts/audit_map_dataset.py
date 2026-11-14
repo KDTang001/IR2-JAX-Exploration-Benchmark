@@ -27,13 +27,12 @@ from ir2_benchmark.maps.generate import generate_map
 
 @dataclass(frozen=True, slots=True)
 class MapJob:
-    """One manifest row and its separately pinned source-file identity."""
+    """One manifest row and the location of its source image."""
 
     root: str
     path: str
     row_json: str
     procedural: bool
-    expected_blob: str | None
 
 
 @dataclass(frozen=True, slots=True)
@@ -42,6 +41,7 @@ class MapCheck:
 
     path: str
     file_hash: str
+    git_blob: str
     canonical: str
     component: int
     free: int
@@ -55,8 +55,6 @@ def check_map(job: MapJob) -> MapCheck:  # noqa: C901
     row = json.loads(job.row_json)
     issues: list[str] = []
     blob = sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw, usedforsecurity=False)
-    if job.expected_blob is not None and blob.hexdigest() != job.expected_blob:
-        issues.append("git_blob_mismatch")
     with Image.open(path) as image:
         pixels = np.asarray(image.convert("L"))
     grid = (pixels <= 150).astype(np.uint8)
@@ -89,9 +87,7 @@ def check_map(job: MapJob) -> MapCheck:  # noqa: C901
         common.update(size=grid.shape[0], shift=expected_shift, version="ir2-procedural-v1")
         if area != free or free < 0.15 * grid.size or grid.shape[0] != grid.shape[1]:
             issues.append("procedural_geometry_contract")
-        regenerated = generate_map(
-            row["template"], row["requested_seed"], shift=row["shift"]
-        )
+        regenerated = generate_map(row["template"], row["requested_seed"], shift=row["shift"])
         reproduced = json.loads(json.dumps(asdict(regenerated.record)))
         for key, value in reproduced.items():
             if row[key] != value:
@@ -115,7 +111,15 @@ def check_map(job: MapJob) -> MapCheck:  # noqa: C901
             issues.append(f"manifest_mismatch:{key}")
     if area is not None and area < 6:
         issues.append("insufficient_six_agent_component")
-    return MapCheck(job.path, sha256(raw).hexdigest(), canonical, area or 0, free, tuple(issues))
+    return MapCheck(
+        job.path,
+        sha256(raw).hexdigest(),
+        blob.hexdigest(),
+        canonical,
+        area or 0,
+        free,
+        tuple(issues),
+    )
 
 
 def split_issues(jobs: list[MapJob], checks: list[MapCheck]) -> list[str]:
@@ -214,7 +218,7 @@ def main() -> int:  # noqa: C901, PLR0915
     if args.reference_git_inputs is not None:
         with gzip.open(args.reference_git_inputs, "rt") as stream:
             reference = json.load(stream)
-        expected, reference_commit = reference["blobs"], reference["commit"]
+        expected, reference_commit = reference["manifest_blobs"], reference["commit"]
     registry = args.data_root / "artifacts/maps/sources.json"
     jobs = []
     manifests = {}
@@ -233,7 +237,6 @@ def main() -> int:  # noqa: C901, PLR0915
                     path,
                     line,
                     source["source"] == "procedural",
-                    expected.get(path),
                 )
             )
     jobs.sort(key=lambda job: job.path)
@@ -254,8 +257,6 @@ def main() -> int:  # noqa: C901, PLR0915
     issues = [f"missing:{p}" for p in sorted(declared - actual)] + [
         f"undeclared:{p}" for p in sorted(actual - declared)
     ]
-    if expected:
-        assert declared <= expected.keys(), "reference inventory omitted declared maps"
     checks = []
     with ProcessPoolExecutor(args.workers, mp_context=multiprocessing.get_context("spawn")) as pool:
         for i, check in enumerate(pool.map(check_map, jobs, chunksize=8), start=1):
@@ -264,6 +265,9 @@ def main() -> int:  # noqa: C901, PLR0915
             if i % 1000 == 0:
                 print(f"Checked {i}/{len(jobs)} images and seeds", flush=True)  # noqa: T201
     issues.extend(split_issues(jobs, checks))
+    png_tree = sha256("".join(f"{c.git_blob}  {c.path}\n" for c in checks).encode()).hexdigest()
+    if expected and png_tree != reference["png_tree_sha256"]:
+        issues.append("png_git_tree_mismatch")
     ownership = defaultdict(list)
     source_hashes = defaultdict(set)
     counts = Counter()
@@ -293,6 +297,7 @@ def main() -> int:  # noqa: C901, PLR0915
     summary = {
         "status": "failed" if issues else "passed",
         "reference_commit": reference_commit,
+        "png_git_tree_sha256": png_tree,
         "data_root": str(args.data_root),
         "workers": args.workers,
         "maps": len(checks),
