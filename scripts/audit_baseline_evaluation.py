@@ -35,12 +35,20 @@ class VerifiedEpisode(TypedDict):
     allocation_concentration: float
 
 
+class VerifiedFailure(TypedDict):
+    """An intact execution error has no independently measurable trajectory."""
+
+    result_id: str
+    outcome: str
+    error: str
+
+
 def digest(value: dict | list) -> str:
     """Encode the documented canonical JSON identity without production helpers."""
     return sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
-def verify_episode(job: tuple[str, str]) -> VerifiedEpisode:  # noqa: C901, PLR0912, PLR0915
+def verify_episode(job: tuple[str, str]) -> VerifiedEpisode | VerifiedFailure:  # noqa: C901, PLR0912, PLR0915
     """Reconstruct birth scans, every physical scan, standard wire cost and end metrics."""
     serialized, directory = job
     task = json.loads(serialized)
@@ -133,6 +141,15 @@ def verify_episode(job: tuple[str, str]) -> VerifiedEpisode:  # noqa: C901, PLR0
     assert envelope["checksum"] == digest(row)
     assert row["checkpoint_hash"] == method["checkpoint_hash"]
     assert row["configuration_hash"] == scene["config_hash"]
+    if row["outcome"] not in ("success", "timeout"):
+        assert row["outcome"] in ("model_error", "map_error", "environment_error", "oom")
+        assert row["metrics"] is None
+        assert row["trace_file"] == row["trace_hash"] == ""
+        assert isinstance(row["error"], str)
+        assert row["error"]
+        return VerifiedFailure(
+            result_id=task["result_id"], outcome=row["outcome"], error=row["error"]
+        )
     trace_file = Path(row["trace_file"])
     assert sha256(trace_file.read_bytes()).hexdigest() == row["trace_hash"]
     assert row["outcome"] in ("success", "timeout"), row.get("error")
@@ -322,7 +339,16 @@ def main() -> int:
             if len(verified) % 32 == 0:
                 print(f"Independently verified {len(verified)}/{len(jobs)} episodes", flush=True)  # noqa: T201
     args.output.write_text(
-        json.dumps({"status": "passed", "episodes": len(verified), "results": verified}, indent=2)
+        json.dumps(
+            {
+                "status": "passed",
+                "tasks": len(verified),
+                "episodes_with_measurements": sum("error" not in row for row in verified),
+                "execution_error_records": sum("error" in row for row in verified),
+                "results": verified,
+            },
+            indent=2,
+        )
         + "\n"
     )
     return 0

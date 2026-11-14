@@ -14,6 +14,10 @@ if TYPE_CHECKING:
     from ir2_benchmark.navigation.ir2_graph import GraphMemory, GraphObservation
 
 
+class GraphStateError(ValueError):
+    """The environment graph cannot support a valid exploration episode."""
+
+
 class MapInput(NamedTuple):
     """Device-ready binary occupancy and host-verified scoring component."""
 
@@ -243,7 +247,7 @@ def validate_graph_state(state: EnvState) -> None:
         detail = (
             "IR2 graph/history capacity exhausted; increase the declared capacity before running"
         )
-        raise ValueError(detail)
+        raise GraphStateError(detail)
     if bool(jnp.any(state.graph_memory.path_failed)):
         detail = "IR2 rendezvous graph remains disconnected after the original repair procedure"
-        raise ValueError(detail)
+        raise GraphStateError(detail)

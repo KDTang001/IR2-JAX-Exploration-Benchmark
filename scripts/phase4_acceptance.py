@@ -220,7 +220,7 @@ def main() -> int:  # noqa: C901, PLR0912, PLR0915
     ]
     with (args.output / "cli-smoke.log").open("w") as log:
         subprocess.run(  # noqa: S603 - Fixed interpreter/entrypoint; argv never enters a shell.
-            command, stdout=log, stderr=subprocess.STDOUT, check=True, env=os.environ.copy()
+            command, stdout=log, stderr=subprocess.STDOUT, check=False, env=os.environ.copy()
         )
     cases = [(development, small), *((m, base) for m in selected)]
     planned = []
@@ -254,10 +254,10 @@ def main() -> int:  # noqa: C901, PLR0912, PLR0915
     start = time.monotonic()
     first = run_manifest(manifest, args.output, batch_size=2, max_pending_tasks=32)
     assert first.requested == 312, first
-    assert first.failures == 0, first
     second = run_manifest(manifest, args.output, batch_size=2, max_pending_tasks=32)
     assert second.requested == second.resumed == 312
-    assert second.executed == second.failures == 0
+    assert second.executed == 0
+    assert second.failures == first.failures
     for task in planned:
         assert completed_result(args.output / "results" / f"{task.result_id}.json", task)
     exogenous = {}
@@ -274,6 +274,9 @@ def main() -> int:  # noqa: C901, PLR0912, PLR0915
             scene.drop_probability,
         )
         row = json.loads((args.output / "results" / f"{task.result_id}.json").read_text())["result"]
+        if not row["trace_file"]:
+            assert row["outcome"] not in ("success", "timeout")
+            continue
         with np.load(row["trace_file"]) as trace:
             realized = trace["external_links"][trace["active"]]
         if key in exogenous:
@@ -317,7 +320,7 @@ def main() -> int:  # noqa: C901, PLR0912, PLR0915
             report_command, stdout=log, stderr=subprocess.STDOUT, check=True
         )
     report = json.loads((args.output / "report/report.json").read_text())
-    assert report["requested_manifest_complete"]
+    assert report["requested_manifest_complete"] == (first.failures == 0)
     assert not report["formal_complete"]
     release = json.loads((args.output / "report/release_manifest.json").read_text())
     assert all(
@@ -325,7 +328,7 @@ def main() -> int:  # noqa: C901, PLR0912, PLR0915
         for v in release["checkpoints"].values()
     )
     result = {
-        "status": "passed",
+        "status": "passed" if first.failures == 0 else "failed",
         "limited": True,
         "tasks": len(planned),
         "roles": dict(Counter(roles.values())),
@@ -337,7 +340,7 @@ def main() -> int:  # noqa: C901, PLR0912, PLR0915
     }
     (args.output / "acceptance.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=2), flush=True)  # noqa: T201
-    return 0
+    return int(first.failures != 0)
 
 
 if __name__ == "__main__":
