@@ -28,7 +28,7 @@ def write_plan_quality(rows: tuple[ReportRow, ...], output: Path) -> tuple[str, 
     with (output / "plan_quality.csv").open("w", newline="", encoding="utf-8") as stream:
         writer = None
         for row in rows:
-            if row.route == "heuristic" or row.outcome not in ("success", "timeout"):
+            if row.route in ("heuristic", "baseline") or row.outcome not in ("success", "timeout"):
                 continue
             if not row.plan_diagnostics or not Path(row.trace_file).is_file():
                 missing.append(row.result_id)

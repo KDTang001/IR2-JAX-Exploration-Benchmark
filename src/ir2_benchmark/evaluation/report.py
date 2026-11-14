@@ -10,7 +10,7 @@ from pathlib import Path
 from ir2_benchmark.evaluation.budgets import auxiliary_kind
 from ir2_benchmark.evaluation.figures import plot_facets
 from ir2_benchmark.evaluation.plan_quality import write_plan_quality
-from ir2_benchmark.evaluation.records import file_hash
+from ir2_benchmark.evaluation.records import completed_result, file_hash
 from ir2_benchmark.evaluation.recovery import write_recovery
 from ir2_benchmark.evaluation.scenarios import identity, read_task_manifest
 from ir2_benchmark.evaluation.scope import (
@@ -73,18 +73,25 @@ def write_report(  # noqa: PLR0913, PLR0915
     """Write measured scores/cost/failures and explicitly incomplete workloads."""
     rows, corrupt = load_report_rows(results)
     declaration = json.loads(core.read_text(encoding="utf-8")) if core is not None else {}
+    benchmark = declaration.get("scope") == "benchmark"
     expected_seeds = tuple(declaration.get("training_seeds", range(5)))
     expected_methods = tuple(method["method_id"] for method in declaration.get("methods", []))
     output.mkdir(parents=True, exist_ok=True)
     present = {row.result_id for row in rows}
     current = set()
     pending = requested = core_pending = auxiliary_pending = 0
+    unmatched_results = 0
     audit = WorkloadAudit(map_sources, declaration, core)
     with (output / "pending_tasks.jsonl").open("w", encoding="utf-8") as stream:
         if manifest is not None:
             for task in read_task_manifest(manifest):
                 audit.observe(task)
                 requested += 1
+                if task.result_id in present and not completed_result(
+                    results / "results" / f"{task.result_id}.json", task
+                ):
+                    unmatched_results += 1
+                    present.remove(task.result_id)
                 if task.result_id not in present:
                     stream.write(json.dumps({"result_id": task.result_id}) + "\n")
                     pending += 1
@@ -92,13 +99,22 @@ def write_report(  # noqa: PLR0913, PLR0915
                         auxiliary_pending += 1
                     else:
                         core_pending += 1
-                else:
-                    current.add(task.result_id)
+                current.add(task.result_id)
     workload = audit.finish()
     superseded = tuple(
         row.result_id for row in rows if manifest is not None and row.result_id not in current
     )
     rows = tuple(row for row in rows if manifest is None or row.result_id in current)
+    rows = tuple(row for row in rows if row.result_id in present)
+    requested_complete = (
+        manifest is not None
+        and requested > 0
+        and pending == 0
+        and not corrupt
+        and unmatched_results == 0
+        and len(rows) == requested
+        and all(row.outcome in ("success", "timeout") and row.error is None for row in rows)
+    )
     core_rows = tuple(row for row in rows if not is_auxiliary(row))
     auxiliary_rows = tuple(row for row in rows if is_auxiliary(row))
     methods = tuple(sorted(set(expected_methods) | {row.method_id for row in core_rows}))
@@ -147,11 +163,15 @@ def write_report(  # noqa: PLR0913, PLR0915
     )
     complete = core_complete and auxiliary_complete and pending == 0
     payload = {
+        "requested_manifest_complete": requested_complete,
         "formal_complete": complete,
         "core_complete": core_complete,
         "auxiliary_complete": auxiliary_complete,
         "workload_scope": asdict(workload),
         "requested": requested,
+        "requested_unique_tasks": len(current),
+        "duplicate_requested_tasks": requested - len(current),
+        "unmatched_requested_results": unmatched_results,
         "completed_results": len(rows),
         "pending_results": pending,
         "corrupt_records": corrupt,
@@ -166,8 +186,12 @@ def write_report(  # noqa: PLR0913, PLR0915
         "auxiliary_results": len(auxiliary_rows),
         "superseded_result_ids": superseded,
         "overall_summary_role": "core_methods_only; primary curves by split/N/fault/p/duration",
-        "weighting": "scenario_mean_then_equal_maps_then_equal_families_then_training_seeds",
-        "uncertainty": "training_seed_and_map_hierarchical_bootstrap",
+        "weighting": "scenario_mean_then_equal_maps_then_equal_families"
+        if benchmark
+        else "scenario_mean_then_equal_maps_then_equal_families_then_training_seeds",
+        "uncertainty": "conditional_map_bootstrap_of_fixed_policies"
+        if benchmark
+        else "training_seed_and_map_hierarchical_bootstrap",
     }
     (output / "report.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     for name, selected in (
@@ -185,14 +209,24 @@ def write_report(  # noqa: PLR0913, PLR0915
     lines = [
         "# Exploration benchmark report",
         "",
+        f"Requested manifest complete: **{requested_complete}**.",
         f"Formal matrix complete: **{complete}**.",
         f"Core complete: **{core_complete}**; auxiliary complete: **{auxiliary_complete}**.",
         f"Episodes: {len(rows)}; missing: {pending}; corrupt: {len(corrupt)}.",
         "",
-        "Scores weight maps, families and training seeds equally after averaging scenarios.",
-        "Intervals resample training seeds/maps; one trained model is one repetition.",
+        "Scores weight maps and families equally after averaging scenarios."
+        if benchmark
+        else "Scores weight maps, families and training seeds equally after averaging scenarios.",
+        "Intervals condition on fixed policies and resample maps within families; "
+        "seed -1 is a policy sentinel, with no independent trained repetitions."
+        if benchmark
+        else "Intervals resample training seeds/maps; one trained model is one repetition.",
         "",
-        "| Method | AUC | 95% interval | Success rate | Training seeds | Missing seeds | Errors |",
+        "| Method | AUC | 95% conditional interval | Success rate | Policy seed sentinel | "
+        "Missing sentinels | Errors |"
+        if benchmark
+        else "| Method | AUC | 95% interval | Success rate | Training seeds | Missing seeds | "
+        "Errors |",
         "|---|---:|---|---:|---|---|---:|",
     ]
     lines.extend(

@@ -39,6 +39,7 @@ def add_evaluate_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--task-manifest", type=Path)
     parser.add_argument("--method-manifest", type=Path)
+    parser.add_argument("--reference-checkpoint", type=Path)
     parser.add_argument("--map-sources", type=Path)
     parser.add_argument("--suite-config", type=Path, default=Path("configs/evaluation/core.json"))
     parser.add_argument("--map", type=Path)
@@ -153,28 +154,54 @@ def _micro_map(args: argparse.Namespace, config: HostConfig) -> EvaluationMap:
     )
 
 
+def _manifest_method(entry: dict, reference_checkpoint: Path | None) -> tuple[Method, HostConfig]:
+    """Restore a named fixed baseline or the existing checkpoint-derived learning method."""
+    if entry.get("route") == "baseline":
+        from ir2_benchmark.agents.baselines import make_baseline_method  # noqa: PLC0415
+
+        checkpoint = (
+            (Path(entry["checkpoint"]) if entry.get("checkpoint") else reference_checkpoint)
+            if entry["motion"] == "ir2_adapted"
+            else None
+        )
+        return make_baseline_method(
+            entry["motion"], entry["communication"], checkpoint
+        ), HostConfig()
+    return checkpoint_method(
+        None if entry.get("route") == "heuristic" else Path(entry["checkpoint"]),
+        entry.get("route"),
+        entry.get("training_seed"),
+    )
+
+
+def _evaluation_methods(args: argparse.Namespace) -> tuple[tuple[Method, ...], HostConfig]:
+    """Validate distinct fixed/checkpoint method identities before planning any task."""
+    if args.method_manifest is None:
+        method, config = checkpoint_method(args.checkpoint, args.route, args.training_seed)
+        return (method,), config
+    entries = json.loads(args.method_manifest.read_text(encoding="utf-8"))
+    restored = tuple(
+        _manifest_method(entry, getattr(args, "reference_checkpoint", None)) for entry in entries
+    )
+    if not restored:
+        raise ConfigError(field="method_manifest", detail="requires at least one method")
+    methods = tuple(item[0] for item in restored)
+    if len({(m.method_id, m.training_seed) for m in methods}) != len(methods):
+        raise ConfigError(field="method_manifest", detail="duplicate method/repetition identity")
+    if any(m.route == "baseline" for m in methods) and args.config is None:
+        raise ConfigError(
+            field="config", detail="baseline evaluation requires an explicit graph configuration"
+        )
+    return methods, restored[0][1]
+
+
 def evaluate_handler(args: argparse.Namespace) -> int:
     """Execute a persisted suite in the real simulator; limits remain in every result."""
     args.output.mkdir(parents=True, exist_ok=True)
     if args.task_manifest is not None:
         manifest = args.task_manifest
     else:
-        if args.method_manifest is not None:
-            entries = json.loads(args.method_manifest.read_text(encoding="utf-8"))
-            restored = tuple(
-                checkpoint_method(
-                    None if entry.get("route") == "heuristic" else Path(entry["checkpoint"]),
-                    entry.get("route"),
-                    entry.get("training_seed"),
-                )
-                for entry in entries
-            )
-            methods, trained_config = tuple(item[0] for item in restored), restored[0][1]
-        else:
-            method, trained_config = checkpoint_method(
-                args.checkpoint, args.route, args.training_seed
-            )
-            methods = (method,)
+        methods, trained_config = _evaluation_methods(args)
         config = load_config(args.config) if args.config is not None else trained_config
         if args.suite == "micro":
             if args.route == "heuristic" and args.config is None:

@@ -59,6 +59,7 @@ class EvaluationResult:
     requested_team_bytes: int | None = None
     unallocated_bytes: int = 0
     auxiliary_kind: str = ""
+    spent_bytes: int | None = None
 
 
 @dataclass(frozen=True, slots=True)

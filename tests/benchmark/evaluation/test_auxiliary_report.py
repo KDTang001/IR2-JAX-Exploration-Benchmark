@@ -52,6 +52,8 @@ def save_hand_calculated_result(root: Path, task: EvaluationTask, auc: float) ->
         "metrics": {"auc": auc, "final_coverage": auc},
         "trace_file": str(trace),
         "trace_hash": file_hash(trace),
+        "checkpoint_hash": method.checkpoint_hash,
+        "configuration_hash": scene.config_hash,
         "plan_diagnostics": True,
         "decision_rule": method.decision_rule,
         "real_training_events": method.real_training_events,

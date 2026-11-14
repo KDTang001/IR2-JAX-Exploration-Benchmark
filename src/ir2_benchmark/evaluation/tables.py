@@ -36,6 +36,7 @@ def write_cost_tables(rows: tuple[ReportRow, ...], output: Path) -> None:
     cost_fields = (
         *identity_fields,
         "initial_team_bytes",
+        "spent_bytes",
         "emitted_bytes",
         "delivered_payload_bytes",
         "budget_utilization",
@@ -57,9 +58,12 @@ def write_cost_tables(rows: tuple[ReportRow, ...], output: Path) -> None:
                 identifiers
                 | {
                     "initial_team_bytes": budget,
+                    "spent_bytes": row.spent_bytes,
                     "emitted_bytes": row.emitted_bytes,
                     "delivered_payload_bytes": row.delivered_payload_bytes,
-                    "budget_utilization": row.emitted_bytes / budget if budget else None,
+                    "budget_utilization": row.spent_bytes / budget
+                    if budget and row.spent_bytes is not None
+                    else None,
                 }
             )
             cold.writerow(
@@ -100,7 +104,11 @@ def write_condition_statistics(
         writer.writeheader()
         for (facet, budget, method), entries in sorted(grouped.items()):
             split, agents, mode, probability, duration, budget_mode, auxiliary_kind = facet
-            seeds = (-1,) if all(row.route == "heuristic" for row in entries) else expected_seeds
+            seeds = (
+                (-1,)
+                if all(row.route in ("heuristic", "baseline") for row in entries)
+                else expected_seeds
+            )
             summary = summarize_method(method, tuple(entries), seeds, repetitions=repetitions)
             writer.writerow(
                 {

@@ -34,7 +34,7 @@ def declared_method_fields(declaration: dict) -> dict[str, tuple[tuple[str, str]
     return {
         entry["method_id"]: tuple(
             (field, entry[field])
-            for field in ("route", "communication", "estimator")
+            for field in ("route", "communication", "estimator", "decision_rule")
             if field in entry
         )
         for entry in declaration.get("methods", [])
@@ -144,6 +144,8 @@ def missing_auxiliary_conditions(rows: tuple[ReportRow, ...], declaration: dict)
 
 def row_auxiliary_kind(row: ReportRow) -> str:
     """Recognize legacy method names too, after the original result checksum was verified."""
+    if row.route == "baseline":
+        return ""
     if row.auxiliary_kind:
         return row.auxiliary_kind
     if row.route == "heuristic":
@@ -180,7 +182,7 @@ def invalid_auxiliary_quotas(rows: tuple[ReportRow, ...], declaration: dict) -> 
                 f"{row.method_id}:{row.training_seed}:{row.real_training_events}"
                 for row in rows
                 if is_auxiliary(row)
-                and row.route != "heuristic"
+                and row.route not in ("heuristic", "baseline")
                 and row.real_training_events != expected
             }
         )

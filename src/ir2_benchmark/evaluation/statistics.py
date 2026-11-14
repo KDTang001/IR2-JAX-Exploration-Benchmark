@@ -46,6 +46,9 @@ class ReportRow:
     requested_team_bytes: int | None = None
     unallocated_bytes: int = 0
     auxiliary_kind: str = ""
+    spent_bytes: int | None = None
+    overlap: float | None = None
+    allocation_concentration: float | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -81,7 +84,7 @@ def family_balanced_mean(rows: tuple[ReportRow, ...]) -> float | None:
 def hierarchical_interval(
     rows: tuple[ReportRow, ...], *, repetitions: int = 1000, seed: int = 0
 ) -> tuple[float | None, float | None]:
-    """Resample training seeds, then maps within each seed/family; scenarios are averaged first."""
+    """Resample seeds/maps; a single fixed-policy sentinel seed reduces to map bootstrap."""
     maps: dict[tuple[int, str, str], list[float]] = defaultdict(list)
     for row in rows:
         if row.auc is not None:

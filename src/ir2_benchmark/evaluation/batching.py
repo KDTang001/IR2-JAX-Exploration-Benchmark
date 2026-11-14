@@ -16,8 +16,10 @@ from ir2_benchmark.evaluation.records import file_hash
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from flax.core import FrozenDict
     from jax import Array
 
+    from ir2_benchmark.agents.baselines import BaselineSpec
     from ir2_benchmark.env.rollout import RolloutResult
     from ir2_benchmark.evaluation.scenarios import EvaluationTask
     from ir2_benchmark.training.b_state import BTrainingConfig
@@ -26,7 +28,7 @@ if TYPE_CHECKING:
     from ir2_benchmark.training.state_a import TrainAConfig
     from ir2_benchmark.types import MapInput
 
-ModelParameters: TypeAlias = "AParameters | BParameters | tuple[()]"
+ModelParameters: TypeAlias = "AParameters | BParameters | FrozenDict | tuple[()]"
 EvaluationKernel: TypeAlias = (
     "Callable[[ModelParameters, MapInput, Array, Array, Array, Array], tuple[RolloutResult, Array]]"
 )
@@ -51,6 +53,13 @@ class BModel:
 
 
 @dataclass(frozen=True, slots=True)
+class BaselineModel:
+    """A fixed baseline needs only its static adapter spec, with no learner metadata file."""
+
+    spec: BaselineSpec
+
+
+@dataclass(frozen=True, slots=True)
 class GroupKey:
     """Only native geometry, environment semantics and model inference structure group lanes."""
 
@@ -66,15 +75,19 @@ class PreparedTask:
 
     task: EvaluationTask
     group: GroupKey
-    model: AModel | BModel | None
+    model: AModel | BModel | BaselineModel | None
 
 
 def verify_checkpoint(task: EvaluationTask) -> None:
     """Never let a parameter-cache hit hide a modified checkpoint at the same path."""
-    if (
-        task.method.route != "heuristic"
-        and file_hash(Path(task.method.checkpoint)) != task.method.checkpoint_hash
-    ):
+    if task.method.route == "heuristic":
+        return
+    if task.method.route == "baseline":
+        from ir2_benchmark.agents.baselines import spec_from_method  # noqa: PLC0415
+
+        if spec_from_method(task.method).motion == "nearest_frontier":
+            return
+    if file_hash(Path(task.method.checkpoint)) != task.method.checkpoint_hash:
         detail = "checkpoint_content_hash_mismatch"
         raise ModelExecutionError(detail)
 
@@ -94,7 +107,9 @@ def prepare_task(task: EvaluationTask) -> PreparedTask:
             settings = TrainAConfig(**raw["training"])
             model = AModel(settings, metadata_path, file_hash(metadata_path))
             profile = (
-                settings.hidden, settings.communication_mode, settings.neighbor_estimator,
+                settings.hidden,
+                settings.communication_mode,
+                settings.neighbor_estimator,
                 settings.candidate_attention,
                 settings.fixed_plan,
             )
@@ -117,10 +132,31 @@ def prepare_task(task: EvaluationTask) -> PreparedTask:
             )
         case "heuristic":
             pass
+        case "baseline":
+            from ir2_benchmark.agents.baselines import spec_from_method  # noqa: PLC0415
+
+            if task.scenario.config.navigation_mode != "ir2_graph":
+                raise ConfigError(field="baseline.navigation_mode", detail="requires ir2_graph")
+            spec = spec_from_method(task.method)
+            model = BaselineModel(spec)
+            profile = (spec.motion, spec.communication)
         case unreachable:
             assert_never(unreachable)
     key = GroupKey(task.scenario.config, task.scenario.bucket, task.method.route, profile)
     return PreparedTask(task, key, model)
+
+
+def _model_metadata_hash(model: AModel | BModel | BaselineModel, detail: str) -> str | None:
+    """Verify learner metadata, or identify asset-free and original-policy baseline bundles."""
+    match model:
+        case AModel() | BModel():
+            if file_hash(model.metadata_path) != model.metadata_hash:
+                raise ModelExecutionError(detail)
+            return model.metadata_hash
+        case BaselineModel(spec=spec):
+            return None if spec.motion == "nearest_frontier" else ""
+        case unreachable:
+            assert_never(unreachable)
 
 
 class ParameterCache:
@@ -143,11 +179,13 @@ class ParameterCache:
         if prepared.model is None:
             return ()
         verify_checkpoint(prepared.task)
-        if file_hash(prepared.model.metadata_path) != prepared.model.metadata_hash:
-            detail = "checkpoint_metadata_changed_while_queued"
-            raise ModelExecutionError(detail)
+        metadata_hash = _model_metadata_hash(
+            prepared.model, "checkpoint_metadata_changed_while_queued"
+        )
+        if metadata_hash is None:
+            return ()
         method = prepared.task.method
-        key = method.route, method.checkpoint_hash, prepared.model.metadata_hash
+        key = method.route, method.checkpoint_hash, metadata_hash
         if key in self._entries:
             self._entries.move_to_end(key)
             return self._entries[key]
@@ -162,14 +200,16 @@ class ParameterCache:
                 from ir2_benchmark.training.evaluate_b import load_parameters  # noqa: PLC0415
 
                 parameters, _ = load_parameters(method.checkpoint)
+            case BaselineModel():
+                from ir2_benchmark.agents.baselines import load_policy_parameters  # noqa: PLC0415
+
+                parameters = load_policy_parameters(method.checkpoint)
             case None:
                 return ()
             case unreachable:
                 assert_never(unreachable)
         verify_checkpoint(prepared.task)
-        if file_hash(prepared.model.metadata_path) != prepared.model.metadata_hash:
-            detail = "checkpoint_metadata_changed_while_loading"
-            raise ModelExecutionError(detail)
+        _model_metadata_hash(prepared.model, "checkpoint_metadata_changed_while_loading")
         self._entries[key] = parameters
         return parameters
 

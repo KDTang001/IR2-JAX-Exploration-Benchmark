@@ -272,6 +272,7 @@ def _advance(
         external & state.active_mask & (jnp.arange(config.n_slots) != agent),
         signals.strength,
         signals.strength_valid & state.active_mask & (jnp.arange(config.n_slots) != agent),
+        jnp.where(sent.eligible, packet.length, 0),
     )
     return StepResult(next_state, reward_result.reward, terminated, truncated, info)
 
@@ -307,6 +308,7 @@ def step_agent(
             jnp.zeros(config.n_slots, bool),
             jnp.zeros(config.n_slots, jnp.float32),
             jnp.zeros(config.n_slots, bool),
+            jnp.int32(0),
         )
         return StepResult(state, jnp.float32(0), state.terminated, state.truncated, info)
 

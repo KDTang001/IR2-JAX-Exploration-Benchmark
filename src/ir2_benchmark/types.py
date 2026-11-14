@@ -203,6 +203,7 @@ class StepInfo(NamedTuple):
     external_links: Array | None = None
     signal_strength: Array | None = None
     signal_strength_valid: Array | None = None
+    emitted_length: Array | None = None
 
 
 class StepResult(NamedTuple):

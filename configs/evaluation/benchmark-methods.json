@@ -1,0 +1,42 @@
+[
+  {
+    "route": "baseline",
+    "motion": "nearest_frontier",
+    "communication": "off"
+  },
+  {
+    "route": "baseline",
+    "motion": "nearest_frontier",
+    "communication": "plan"
+  },
+  {
+    "route": "baseline",
+    "motion": "nearest_frontier",
+    "communication": "map"
+  },
+  {
+    "route": "baseline",
+    "motion": "nearest_frontier",
+    "communication": "mixed"
+  },
+  {
+    "route": "baseline",
+    "motion": "ir2_adapted",
+    "communication": "off"
+  },
+  {
+    "route": "baseline",
+    "motion": "ir2_adapted",
+    "communication": "plan"
+  },
+  {
+    "route": "baseline",
+    "motion": "ir2_adapted",
+    "communication": "map"
+  },
+  {
+    "route": "baseline",
+    "motion": "ir2_adapted",
+    "communication": "mixed"
+  }
+]

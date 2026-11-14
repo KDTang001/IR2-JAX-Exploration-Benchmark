@@ -31,6 +31,10 @@ class EventTrace(NamedTuple):
     invalid_action: Array
     terminated: Array
     truncated: Array
+    emitted_length: Array | None = None
+    packet_buffer: Array | None = None
+    physical_links: Array | None = None
+    external_links: Array | None = None
 
 
 class RolloutResult(NamedTuple):
@@ -76,6 +80,10 @@ def rollout(
             info.invalid_action,
             result.terminated,
             result.truncated,
+            info.emitted_length,
+            info.packet_buffer,
+            info.physical_links,
+            info.external_links,
         )
         return updated, trace
 
