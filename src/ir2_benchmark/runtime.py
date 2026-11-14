@@ -128,7 +128,8 @@ def run_doctor(*, runtime_only: bool = False) -> RuntimeReport:
         flax_version=version("flax"),
         optax_version=version("optax"),
         devices=tuple(
-            DeviceReport(device.platform, device.device_kind, device.id) for device in jax.devices()
+            DeviceReport(device.platform, device.device_kind, device.id)
+            for device in jax.devices()
         ),
         batch_size=batch_size,
         horizon=horizon,
