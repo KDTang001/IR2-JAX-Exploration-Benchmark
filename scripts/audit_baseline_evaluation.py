@@ -35,7 +35,7 @@ class VerifiedEpisode(TypedDict):
     allocation_concentration: float
 
 
-def digest(value: dict) -> str:
+def digest(value: dict | list) -> str:
     """Encode the documented canonical JSON identity without production helpers."""
     return sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
@@ -46,6 +46,29 @@ def verify_episode(job: tuple[str, str]) -> VerifiedEpisode:  # noqa: C901, PLR0
     task = json.loads(serialized)
     scene, method = task["scenario"], task["method"]
     config, n = scene["config"], scene["n_agents"]
+    assert digest(config) == scene["config_hash"]
+    identity_fields = {
+        key: scene[key]
+        for key in (
+            "map_hash",
+            "map_scenario_hash",
+            "split",
+            "spawn_seed",
+            "fault_seed",
+            "config",
+            "implementations",
+        )
+    }
+    assert digest(identity_fields) == scene["scenario_id"]
+    assert (
+        digest(
+            [
+                scene["scenario_id"],
+                {key: value for key, value in method.items() if key != "checkpoint"},
+            ]
+        )
+        == task["result_id"]
+    )
     assert method["route"] == "baseline"
     assert config["signal_model"] == "ir2"
     root = Path(__file__).resolve().parents[1]
@@ -105,6 +128,8 @@ def verify_episode(job: tuple[str, str]) -> VerifiedEpisode:  # noqa: C901, PLR0
     record = Path(directory) / "results" / f"{task['result_id']}.json"
     envelope = json.loads(record.read_text())
     row = envelope["result"]
+    assert row["result_id"] == task["result_id"]
+    assert row["method_id"] == method["method_id"]
     assert envelope["checksum"] == digest(row)
     assert row["checkpoint_hash"] == method["checkpoint_hash"]
     assert row["configuration_hash"] == scene["config_hash"]
@@ -118,7 +143,9 @@ def verify_episode(job: tuple[str, str]) -> VerifiedEpisode:  # noqa: C901, PLR0
     cold = emitted = paid = payload_delivered = 0
     coverage = []
     with np.load(trace_file, allow_pickle=False) as trace:
+        assert abs(float(trace["initial_coverage"]) - initial) <= 1e-12
         active = np.flatnonzero(trace["active"])
+        np.testing.assert_array_equal(active, np.arange(len(active)))
         for event in active:
             agent = int(trace["agent_id"][event])
             assert event == int(trace["event"][event])
@@ -228,6 +255,15 @@ def verify_episode(job: tuple[str, str]) -> VerifiedEpisode:  # noqa: C901, PLR0
     final_coverage = coverage[-1] if coverage else initial
     success = final_coverage >= config["coverage_target"]
     assert (row["outcome"] == "success") == success
+    expected_round = expected_offset = None
+    if success:
+        if coverage:
+            first = int(np.flatnonzero(np.asarray(coverage) >= config["coverage_target"])[0])
+            expected_round, expected_offset = first // n + 1, first % n
+        else:
+            expected_round = 0
+    assert row["metrics"]["success_round"] == expected_round
+    assert row["metrics"]["success_event_offset"] == expected_offset
     if not success:
         assert len(coverage) == config["max_rounds"] * n
     auc = (sum(rounds) + (config["max_rounds"] - len(rounds)) * final_coverage) / config[

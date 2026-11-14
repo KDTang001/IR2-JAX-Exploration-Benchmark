@@ -229,6 +229,27 @@ def main() -> int:  # noqa: C901, PLR0912, PLR0915
     assert second.executed == second.failures == 0
     for task in planned:
         assert completed_result(args.output / "results" / f"{task.result_id}.json", task)
+    exogenous = {}
+    for task in planned:
+        scene = task.scenario
+        key = (
+            scene.map_hash,
+            scene.spawn_seed,
+            scene.fault_seed,
+            scene.n_agents,
+            scene.budget,
+            scene.max_rounds,
+            scene.fault_mode,
+            scene.drop_probability,
+        )
+        row = json.loads((args.output / "results" / f"{task.result_id}.json").read_text())["result"]
+        with np.load(row["trace_file"]) as trace:
+            realized = trace["external_links"][trace["active"]]
+        if key in exogenous:
+            length = min(len(realized), len(exogenous[key]))
+            np.testing.assert_array_equal(realized[:length], exogenous[key][:length])
+        else:
+            exogenous[key] = realized
     for motion in ("nearest_frontier", "ir2_adapted"):
         traces = []
         for task in planned:
@@ -267,6 +288,11 @@ def main() -> int:  # noqa: C901, PLR0912, PLR0915
     report = json.loads((args.output / "report/report.json").read_text())
     assert report["requested_manifest_complete"]
     assert not report["formal_complete"]
+    release = json.loads((args.output / "report/release_manifest.json").read_text())
+    assert all(
+        v["model_selection"] == "external_pretrained_reference"
+        for v in release["checkpoints"].values()
+    )
     result = {
         "status": "passed",
         "limited": True,
