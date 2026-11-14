@@ -49,13 +49,19 @@ def write_release_manifest(results: Path, report: Path, manifest: Path | None) -
                     "actual_hash": file_hash(path) if path.is_file() else None,
                     "real_events": counters.get("real_events"),
                     "imagined_events": counters.get("imagined_events"),
-                    "model_selection": "fixed_validation_coverage_auc"
-                    if (
-                        counters.get("best_validation_auc") is not None
-                        or counters.get("validation_auc") is not None
-                    )
-                    and path.parent.name == "best"
-                    else "latest_checkpoint_unselected",
+                    "model_selection": (
+                        "external_pretrained_reference"
+                        if method.route == "baseline"
+                        else (
+                            "fixed_validation_coverage_auc"
+                            if (
+                                counters.get("best_validation_auc") is not None
+                                or counters.get("validation_auc") is not None
+                            )
+                            and path.parent.name == "best"
+                            else "latest_checkpoint_unselected"
+                        )
+                    ),
                     "training_seed": method.training_seed,
                     "selected_at_events": method.selected_at_events,
                     "total_training_events": method.real_training_events,

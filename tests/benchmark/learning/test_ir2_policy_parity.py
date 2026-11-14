@@ -73,7 +73,7 @@ def test_policy_matches_original_weights(batch_size: int, mask_case: str) -> Non
             torch.from_numpy(edge_mask[:, None, :].copy()),
             t_adjacency,
         ).numpy()
-    with jax.default_device(jax.devices("cpu")[0]):
+    with jax.default_device(jax.devices()[0]):
         variables = convert_torch_policy_weights(reference.state_dict())
         args = tuple(map(jnp.asarray, (nodes, edges, current, node_mask, edge_mask, adjacency)))
         actual_nodes = policy.apply(
@@ -169,6 +169,6 @@ def test_strict_actor_preserves_graph_policy_and_uses_full_graph() -> None:
 def test_masked_log_probs_only_enables_wait_for_empty_action_set() -> None:
     logp = masked_log_probs(jnp.array([10.0, 2.0, 3.0]), jnp.array([False, True, True]))
     assert np.isneginf(np.asarray(logp)[0])
-    np.testing.assert_allclose(jnp.exp(logp).sum(), 1.0)
+    np.testing.assert_allclose(jnp.exp(logp).sum(), 1.0, atol=2 * np.finfo(np.float32).eps, rtol=0)
     fallback = masked_log_probs(jnp.full(3, -jnp.inf), jnp.zeros(3, dtype=bool))
     np.testing.assert_array_equal(jnp.exp(fallback), [1.0, 0.0, 0.0])

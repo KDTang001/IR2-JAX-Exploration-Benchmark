@@ -117,10 +117,19 @@ def summarize_method(
     *,
     repetitions: int = 1000,
 ) -> MethodSummary:
-    """Keep timeouts in success rates and explicitly list missing training repetitions."""
+    """Keep failures explicit and require independent maps for fixed-policy uncertainty."""
     selected = tuple(row for row in rows if row.method_id == method)
     seeds = tuple(sorted({row.training_seed for row in selected}))
-    low, high = hierarchical_interval(selected, repetitions=repetitions)
+    fixed_policy_maps: dict[tuple[str, str], set[str]] = defaultdict(set)
+    if all(row.route == "baseline" for row in selected):
+        for row in selected:
+            if row.auc is not None:
+                fixed_policy_maps[row.source, row.family].add(row.map_hash)
+    low, high = (
+        (None, None)
+        if any(len(maps) <= 1 for maps in fixed_policy_maps.values())
+        else hierarchical_interval(selected, repetitions=repetitions)
+    )
     errors = sum(row.outcome not in ("success", "timeout") for row in selected)
     success_rows = tuple(
         replace(row, auc=float(row.outcome == "success"))

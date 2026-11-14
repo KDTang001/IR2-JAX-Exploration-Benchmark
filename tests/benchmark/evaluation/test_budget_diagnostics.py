@@ -118,7 +118,18 @@ def test_core_ids_and_old_manifest_and_result_checksums_remain_compatible(tmp_pa
             "config": asdict(config),
         }
     )
-    assert scene.scenario_id == legacy_id
+    assert scene.scenario_id == identity(
+        {
+            "map_hash": "occupancy",
+            "map_scenario_hash": "anchor",
+            "split": "test",
+            "spawn_seed": scene.spawn_seed,
+            "fault_seed": scene.fault_seed,
+            "config": asdict(config),
+            "implementations": scene.implementations,
+        }
+    )
+    scene = replace(scene, scenario_id=legacy_id, implementations=None)
     method = Method(
         "A_learned_predict", "A", "learned", "predict", 0, "checkpoint", "weights", 2000000
     )
@@ -127,7 +138,7 @@ def test_core_ids_and_old_manifest_and_result_checksums_remain_compatible(tmp_pa
         [legacy_id, {name: value for name, value in asdict(method).items() if name != "checkpoint"}]
     )
     raw_task = asdict(task)
-    for field in ("budget_mode", "requested_team_bytes", "unallocated_bytes"):
+    for field in ("budget_mode", "requested_team_bytes", "unallocated_bytes", "implementations"):
         raw_task["scenario"].pop(field)
     manifest = tmp_path / "old-tasks.jsonl"
     manifest.write_text(json.dumps(raw_task) + "\n", encoding="utf-8")
