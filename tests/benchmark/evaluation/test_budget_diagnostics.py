@@ -12,6 +12,7 @@ from PIL import Image
 from ir2_benchmark.commands.evaluate import add_evaluate_arguments, evaluate_handler
 from ir2_benchmark.config import HostConfig
 from ir2_benchmark.evaluation.budgets import allocate_budget
+from ir2_benchmark.evaluation.metrics import EpisodeMetrics, EpisodeOutcome
 from ir2_benchmark.evaluation.records import completed_result, file_hash
 from ir2_benchmark.evaluation.report import load_report_rows
 from ir2_benchmark.evaluation.scenarios import (
@@ -144,20 +145,37 @@ def test_core_ids_and_old_manifest_and_result_checksums_remain_compatible(tmp_pa
     manifest.write_text(json.dumps(raw_task) + "\n", encoding="utf-8")
     trace = tmp_path / "old-trace.npz"
     np.savez(trace, coverage=np.array([0.25]))
-    raw = {
-        "result_id": task.result_id,
-        "method_id": method.method_id,
-        "training_seed": 0,
-        "source": "ir2",
-        "family": "rooms",
-        "map_hash": "occupancy",
-        "outcome": "timeout",
-        "checkpoint_hash": "weights",
-        "configuration_hash": scene.config_hash,
-        "trace_file": str(trace),
-        "trace_hash": file_hash(trace),
-        "metrics": {"auc": 0.25},
-    }
+    raw = (
+        asdict(scene)
+        | asdict(method)
+        | {
+            "result_id": task.result_id,
+            "method_id": method.method_id,
+            "training_seed": 0,
+            "source": "ir2",
+            "family": "rooms",
+            "map_hash": "occupancy",
+            "outcome": "timeout",
+            "checkpoint_hash": "weights",
+            "configuration_hash": scene.config_hash,
+            "trace_file": str(trace),
+            "trace_hash": file_hash(trace),
+            "metrics": asdict(
+                EpisodeMetrics(
+                    outcome=EpisodeOutcome.TIMEOUT,
+                    success=False,
+                    timeout=True,
+                    auc=0.25,
+                    final_coverage=0.25,
+                    success_round=None,
+                    success_event_offset=None,
+                    observed_rounds=scene.max_rounds,
+                )
+            ),
+        }
+    )
+    for field in ("budget_mode", "requested_team_bytes", "unallocated_bytes"):
+        raw.pop(field)
     envelope = {"result": raw, "checksum": identity(raw)}
     path = tmp_path / "results" / f"{task.result_id}.json"
     path.parent.mkdir()

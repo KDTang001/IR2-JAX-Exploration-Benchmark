@@ -269,6 +269,16 @@ def verify_episode(job: tuple[str, str]) -> VerifiedEpisode:  # noqa: C901, PLR0
     auc = (sum(rounds) + (config["max_rounds"] - len(rounds)) * final_coverage) / config[
         "max_rounds"
     ]
+    recovery_start = scene["burst_start"] + scene["burst_duration"]
+    recovery = (
+        rounds[min(len(rounds) - 1, recovery_start + 63)] - rounds[recovery_start - 1]
+        if scene["fault_mode"] == 2 and len(rounds) > recovery_start
+        else None
+    )
+    if recovery is None:
+        assert row["recovery_coverage_gain"] is None
+    else:
+        assert abs(row["recovery_coverage_gain"] - recovery) <= 1e-7
     overlap = 1 - union.sum() / footprints.sum()
     concentration = float(np.sum((allocation / allocation.sum()) ** 2))
     for field, value in [("final_coverage", final_coverage), ("auc", auc)]:

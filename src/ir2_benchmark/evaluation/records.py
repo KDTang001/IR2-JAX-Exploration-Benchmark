@@ -4,17 +4,19 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import asdict, dataclass
+from dataclasses import MISSING, asdict, dataclass, fields
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, assert_never
 
-from ir2_benchmark.evaluation.metrics import EpisodeOutcome
+from ir2_benchmark.evaluation.budgets import result_budget_fields
+from ir2_benchmark.evaluation.metrics import EpisodeMetrics, EpisodeOutcome
 from ir2_benchmark.evaluation.scenarios import identity
 
 if TYPE_CHECKING:
+    from collections.abc import Mapping
+
     from ir2_benchmark.evaluation.budgets import BudgetMode
-    from ir2_benchmark.evaluation.metrics import EpisodeMetrics
-    from ir2_benchmark.evaluation.scenarios import EvaluationTask
+    from ir2_benchmark.evaluation.scenarios import EvaluationTask, JsonValue
 
 
 @dataclass(frozen=True, slots=True)
@@ -91,24 +93,142 @@ def save_result(path: Path, result: EvaluationResult) -> None:
     temporary.replace(path)
 
 
+def _valid_completion(payload: Mapping[str, JsonValue], task: EvaluationTask) -> bool:
+    """Require the writer's complete outcome metrics, including success at reset."""
+    try:
+        outcome = EpisodeOutcome(payload.get("outcome"))
+    except (ValueError, TypeError):
+        return False
+    match outcome:
+        case (
+            EpisodeOutcome.MODEL_ERROR
+            | EpisodeOutcome.MAP_ERROR
+            | EpisodeOutcome.OOM
+            | EpisodeOutcome.ENVIRONMENT_ERROR
+        ):
+            return (
+                "metrics" in payload
+                and payload["metrics"] is None
+                and type(payload.get("error")) is str
+            )
+        case EpisodeOutcome.SUCCESS | EpisodeOutcome.TIMEOUT:
+            pass
+        case unreachable:
+            assert_never(unreachable)
+    try:
+        metrics = EpisodeMetrics(**payload["metrics"])
+    except (KeyError, TypeError):
+        return False
+    success = outcome == EpisodeOutcome.SUCCESS
+    # Fraction bounds also reject NaN and infinities; booleans are not numeric scores.
+    valid_scores = all(
+        type(score) in (int, float) and 0 <= score <= 1
+        for score in (metrics.auc, metrics.final_coverage)
+    )
+    if (
+        payload.get("error") is not None
+        or metrics.outcome != outcome
+        or metrics.success is not success
+        or metrics.timeout is not (not success)
+        or type(metrics.observed_rounds) is not int
+        or not 0 <= metrics.observed_rounds <= task.scenario.max_rounds
+        or not valid_scores
+        or metrics.auc > metrics.final_coverage + 1e-12
+    ):
+        return False
+    if success:
+        return (
+            metrics.final_coverage >= task.scenario.config.coverage_target
+            and type(metrics.success_round) is int
+            and (
+                (
+                    metrics.observed_rounds == metrics.success_round == 0
+                    and metrics.success_event_offset is None
+                    and metrics.auc == metrics.final_coverage
+                )
+                or (
+                    1 <= metrics.success_round <= metrics.observed_rounds
+                    and (
+                        metrics.success_event_offset is None
+                        or (
+                            type(metrics.success_event_offset) is int
+                            and 0 <= metrics.success_event_offset < task.scenario.n_agents
+                        )
+                    )
+                )
+            )
+        )
+    return (
+        metrics.final_coverage < task.scenario.config.coverage_target
+        and metrics.observed_rounds == task.scenario.max_rounds
+        and metrics.success_round is None
+        and metrics.success_event_offset is None
+    )
+
+
 def completed_result(path: Path, task: EvaluationTask) -> bool:
     """Resume only an intact matching result and its checksum-verified real trace."""
-    if not path.exists():
-        return False
     try:
         row = json.loads(path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError:
+    except (OSError, UnicodeError, json.JSONDecodeError):
         return False
-    payload = row.get("result", {})
-    matching = (
-        row.get("checksum") == identity(payload)
-        and payload.get("result_id") == task.result_id
-        and payload.get("checkpoint_hash") == task.method.checkpoint_hash
-        and payload.get("configuration_hash") == task.scenario.config_hash
+    match row:
+        case {"result": dict() as payload, "checksum": str() as checksum}:
+            pass
+        case _:  # Untrusted JSON may have any shape.
+            return False
+    scenario, method = task.scenario, task.method
+    expected = (
+        {
+            name: getattr(scenario, name)
+            for name in (
+                "scenario_id",
+                "source",
+                "family",
+                "map_hash",
+                "split",
+                "n_agents",
+                "budget",
+                "fault_mode",
+                "drop_probability",
+                "burst_duration",
+                "limited",
+                "map_scenario_hash",
+            )
+        }
+        | {
+            name: getattr(method, name)
+            for name in (
+                "method_id",
+                "route",
+                "training_seed",
+                "checkpoint_hash",
+                "real_training_events",
+                "selected_at_events",
+            )
+        }
+        | {
+            "result_id": task.result_id,
+            "configuration_hash": scenario.config_hash,
+            "decision_rule": "heuristic" if method.route == "heuristic" else method.decision_rule,
+            **result_budget_fields(scenario, method),
+        }
     )
-    if not matching:
+    # Only appended result fields have historical defaults; missing identity is never inferred.
+    defaults = {
+        field.name: field.default
+        for field in fields(EvaluationResult)
+        if field.default is not MISSING
+    }
+    if (
+        checksum != identity(payload)
+        or any(payload.get(name, defaults.get(name)) != value for name, value in expected.items())
+        or not _valid_completion(payload, task)
+    ):
         return False
     trace = payload.get("trace_file", "")
+    if type(trace) is not str:
+        return False
     if payload.get("outcome") in (EpisodeOutcome.SUCCESS, EpisodeOutcome.TIMEOUT) and not trace:
         return False
     return not trace or (

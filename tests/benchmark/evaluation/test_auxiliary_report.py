@@ -11,6 +11,7 @@ import numpy as np
 
 from ir2_benchmark.config import HostConfig
 from ir2_benchmark.evaluation.budgets import result_budget_fields
+from ir2_benchmark.evaluation.metrics import EpisodeMetrics, EpisodeOutcome
 from ir2_benchmark.evaluation.records import file_hash
 from ir2_benchmark.evaluation.report import write_report
 from ir2_benchmark.evaluation.scenarios import (
@@ -36,29 +37,46 @@ def save_hand_calculated_result(root: Path, task: EvaluationTask, auc: float) ->
     trace = root / f"{task.result_id}.npz"
     np.savez(trace, coverage=np.full(4, auc), plan_has_target=np.zeros((4, 2), bool))
     scene, method = task.scenario, task.method
-    raw = {
-        "result_id": task.result_id,
-        "method_id": method.method_id,
-        "route": method.route,
-        "training_seed": method.training_seed,
-        "source": scene.source,
-        "family": scene.family,
-        "map_hash": scene.map_hash,
-        "map_scenario_hash": scene.map_scenario_hash,
-        "split": scene.split,
-        "n_agents": scene.n_agents,
-        "budget": scene.budget,
-        "outcome": "timeout",
-        "metrics": {"auc": auc, "final_coverage": auc},
-        "trace_file": str(trace),
-        "trace_hash": file_hash(trace),
-        "checkpoint_hash": method.checkpoint_hash,
-        "configuration_hash": scene.config_hash,
-        "plan_diagnostics": True,
-        "decision_rule": method.decision_rule,
-        "real_training_events": method.real_training_events,
-        **result_budget_fields(scene, method),
-    }
+    success = auc >= scene.config.coverage_target
+    outcome = EpisodeOutcome.SUCCESS if success else EpisodeOutcome.TIMEOUT
+    raw = (
+        asdict(scene)
+        | asdict(method)
+        | {
+            "result_id": task.result_id,
+            "method_id": method.method_id,
+            "route": method.route,
+            "training_seed": method.training_seed,
+            "source": scene.source,
+            "family": scene.family,
+            "map_hash": scene.map_hash,
+            "map_scenario_hash": scene.map_scenario_hash,
+            "split": scene.split,
+            "n_agents": scene.n_agents,
+            "budget": scene.budget,
+            "outcome": outcome,
+            "metrics": asdict(
+                EpisodeMetrics(
+                    outcome,
+                    success,
+                    not success,
+                    auc,
+                    auc,
+                    1 if success else None,
+                    0 if success else None,
+                    1 if success else scene.max_rounds,
+                )
+            ),
+            "trace_file": str(trace),
+            "trace_hash": file_hash(trace),
+            "checkpoint_hash": method.checkpoint_hash,
+            "configuration_hash": scene.config_hash,
+            "plan_diagnostics": True,
+            "decision_rule": "heuristic" if method.route == "heuristic" else method.decision_rule,
+            "real_training_events": method.real_training_events,
+            **result_budget_fields(scene, method),
+        }
+    )
     path = root / "results" / f"{task.result_id}.json"
     path.parent.mkdir(exist_ok=True)
     path.write_text(json.dumps({"result": raw, "checksum": identity(raw)}), encoding="utf-8")

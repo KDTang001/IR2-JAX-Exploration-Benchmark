@@ -12,6 +12,7 @@ import pytest
 
 from ir2_benchmark.config import HostConfig
 from ir2_benchmark.evaluation.budgets import auxiliary_kind, result_budget_fields
+from ir2_benchmark.evaluation.metrics import EpisodeMetrics, EpisodeOutcome
 from ir2_benchmark.evaluation.records import file_hash
 from ir2_benchmark.evaluation.report import load_report_rows, write_report
 from ir2_benchmark.evaluation.scenarios import (
@@ -55,7 +56,18 @@ def save_measured_fixture(root: Path, task: EvaluationTask) -> None:
         | {
             "result_id": task.result_id,
             "outcome": "timeout",
-            "metrics": {"auc": 0.3, "final_coverage": 0.4},
+            "metrics": asdict(
+                EpisodeMetrics(
+                    outcome=EpisodeOutcome.TIMEOUT,
+                    success=False,
+                    timeout=True,
+                    auc=0.3,
+                    final_coverage=0.4,
+                    success_round=None,
+                    success_event_offset=None,
+                    observed_rounds=scene.max_rounds,
+                )
+            ),
             "trace_file": str(trace),
             "trace_hash": file_hash(trace),
             "configuration_hash": scene.config_hash,

@@ -52,8 +52,11 @@ def reference_parity(
     module = importlib.util.module_from_spec(module_spec)
     module_spec.loader.exec_module(module)
     original = module.PolicyNet(6, 128).cpu().eval()
+    original64 = module.PolicyNet(6, 128).double().cpu().eval()
     with np.load(checkpoint, allow_pickle=False) as tensors:
-        original.load_state_dict({name: torch.from_numpy(tensors[name]) for name in tensors.files})
+        weights = {name: torch.from_numpy(tensors[name]) for name in tensors.files}
+        original.load_state_dict(weights)
+        original64.load_state_dict(weights)
     parameters = load_policy_parameters(checkpoint)
     forward = jax.jit(GraphPolicy().apply)
     records = []
@@ -71,24 +74,52 @@ def reference_parity(
             assert graph is not None
             arrays = [np.array(x, copy=True) for x in graph]
             with torch.no_grad():
-                expected = original(
+                torch_args = (
                     torch.from_numpy(arrays[0][None]),
                     torch.from_numpy(arrays[1][None, None].astype(np.int64)),
                     torch.from_numpy(arrays[2].reshape(1, 1, 1).astype(np.int64)),
                     torch.from_numpy(arrays[3][None, None]),
                     torch.from_numpy(arrays[4][None, None]),
                     torch.from_numpy(arrays[5][None]),
-                ).numpy()[0]
+                )
+                expected = original(*torch_args).numpy()[0]
+                # Original PolicyNet mutates an action mask; never reuse that argument.
+                args64 = tuple(arg.clone() for arg in torch_args)
+                args64 = (args64[0].double(), *args64[1:])
+                expected64 = original64(*args64).numpy()[0]
             actual = forward(parameters, *graph)
             actual.block_until_ready()
             assert all(device.platform == "gpu" for device in actual.devices())
-            np.testing.assert_allclose(actual, expected, atol=2e-5, rtol=2e-5)
-            assert int(np.argmax(actual)) == int(np.argmax(expected))
+            with jax.experimental.enable_x64():
+                parameters64 = jax.tree.map(lambda x: x.astype(jax.numpy.float64), parameters)
+                graph64 = tuple(
+                    x.astype(jax.numpy.float64)
+                    if jax.numpy.issubdtype(x.dtype, jax.numpy.floating)
+                    else x
+                    for x in graph
+                )
+                actual64 = forward(parameters64, *graph64)
+                np.testing.assert_allclose(actual64, expected64, atol=1e-10, rtol=1e-10)
+            # Trained 400-node graphs amplify FP32 reduction-order rounding. A separate
+            # FP64 oracle distinguishes this from conversion/architecture disagreement.
+            np.testing.assert_allclose(actual, expected, atol=2e-4, rtol=0)
+            np.testing.assert_allclose(np.exp(actual), np.exp(expected), atol=5e-5, rtol=0)
+            np.testing.assert_array_equal(np.asarray(actual) < -1e7, expected < -1e7)
+            assert (
+                int(np.argmax(actual))
+                == int(np.argmax(expected))
+                == int(np.argmax(expected64))
+                == int(np.argmax(actual64))
+            )
             records.append(
                 {
                     "map": data.path,
                     "agent": agent,
                     "max_abs_error": float(np.max(np.abs(np.asarray(actual) - expected))),
+                    "fp32_probability_max_abs_error": float(
+                        np.max(np.abs(np.exp(actual) - np.exp(expected)))
+                    ),
+                    "fp64_max_abs_error": float(np.max(np.abs(np.asarray(actual64) - expected64))),
                     "devices": [str(d) for d in actual.devices()],
                 }
             )
