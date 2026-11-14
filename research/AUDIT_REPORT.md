@@ -1,5 +1,7 @@
 # IR2-JAX Benchmark：首轮代码审计报告
 
+> 2026-11-14 目标环境补验：此前只在 Windows CPU 检查，遗漏了服务器功能验收。本次已在用户指定服务器的 conda `ex` + H100/CUDA 上，用提交 `1e0af0ed` 的同一源码补跑：Phase 1 73 项、Phase 2 118 项全部通过，无失败或跳过，共 191 项不同测试。四条原尺寸轨迹和六条独立链路/计费轨迹与本地逐步记录一致。源码与设备均有实际断言；预检旧安装导入问题和完整原始结果见 [远程验收证据](evidence/remote-acceptance-20261114.json)、[Phase 1 报告](IR2_PARITY_REPORT.md) 和 [Phase 2 报告](COMMUNICATION_FAULT_REPORT.md)。本次未恢复训练，尚未进行正式吞吐评测。
+
 > 2026-11-14 更新：Phase 2 通信协议与故障模型在声明的 Windows CPU 范围验收通过。Normal、Dropout、Burst 独立测试，118 项通信检查和 28 项相邻阶段回归通过。发现并修复 MAP_DELTA 越过 valid_shape 写入 padding 的接收缺陷，见 [通信与故障验收报告](COMMUNICATION_FAULT_REPORT.md)。
 
 > 2026-11-13 更新：Phase 1 核心环境验收在声明的 Windows CPU 范围内完成，73 项不同测试通过、无跳过。修复了原版对照代码确定性排序的空数组崩溃；继承机制、扩展差异与运行证据见 [IR2 一致性报告最新结论](IR2_PARITY_REPORT.md)。不代表全仓库、GPU 或正式 Benchmark 实验验收完成。

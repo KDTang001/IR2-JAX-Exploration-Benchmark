@@ -2,7 +2,7 @@
 
 - 版本：Draft 0.1
 - 日期：2026-11-12
-- 当前状态：审计分支；尚未开始生产代码修改
+- 当前状态：审计分支；Phase 1/2 已完成声明范围的 Windows CPU 与目标服务器 H100/CUDA 功能验收，下一步 Phase 3。以下原始路线与历史记录以最后一条进度更新为准。
 
 ## 原则
 1. 先修复会阻断 import/rollout 的问题，再谈性能。
@@ -157,3 +157,11 @@
 修复 MAP_DELTA 接收时只按数组尺寸而未按 valid_shape 过滤的缺陷，真实观察、想象观察与录像共用真实地图边界。规范、原始失败与复验结果见 [COMMUNICATION_FAULT_REPORT.md](COMMUNICATION_FAULT_REPORT.md)。本轮未训练或修改正式实验矩阵。
 
 下一阶段为 Phase 3 地图数据集与划分审计。Linux/GPU 和正式大规模评测仍未完成。
+
+## 进度更新：目标服务器 Phase 1/2 功能补验（2026-11-14）
+
+此前只做 Windows CPU 本地验收而遗漏用户指定服务器，阶段完成的验证安排不完整。现已在服务器 conda `ex`、NVIDIA H100、强制 CUDA 后端下，用审计提交 `1e0af0ed` 的同一源码快照补验：Phase 1 73 项、Phase 2 118 项全部通过，均无失败或跳过。28 项相邻回归包含在 Phase 1 中，两个阶段共 191 项不同测试。
+
+上传前后的文件摘要、实际导入路径、JIT 数组所在设备和测试结束后的源码一致性均已核对。四张原尺寸地图的逐步记录及 Normal/Dropout/Burst × attempt/success 六组通信记录与本地证据完全一致。初次 launcher 导入旧 editable 安装的预检已中止，正式结果含快照路径与 CUDA 断言。详见 [远程验收证据](evidence/remote-acceptance-20261114.json)。
+
+目标服务器功能验收已补足；Linux/GPU 吞吐、全地图/种子矩阵和正式实验仍待后续阶段。没有启动训练或扩展生产代码。下一步仍为 Phase 3 地图数据集与划分审计。

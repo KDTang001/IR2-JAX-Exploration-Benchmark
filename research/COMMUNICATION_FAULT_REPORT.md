@@ -4,9 +4,9 @@
 
 ## 1. 结论与验收范围
 
-**Phase 2 在声明的 Windows CPU 范围内验收通过。** Normal、Dropout、Burst 分别作为独立条件运行，未混合故障。完成标准协议、真实字节账本、收件箱、物理信号/外部故障分离、接收知识和付费地图融合检查。
+**Phase 2 在声明的 Windows CPU 和远程 Linux / H100 CUDA 范围内验收通过。** Normal、Dropout、Burst 分别作为独立条件运行，未混合故障。完成标准协议、真实字节账本、收件箱、物理信号/外部故障分离、接收知识和付费地图融合检查。服务器补验详情见第 8 节。
 
-最终通信验收集合 **118 项通过、无失败、无跳过**；另有 **28 项 Phase 1 相关集成测试复验通过**。合计 **146 个不同测试**，不是完整全仓库测试。检查不包含训练、正式地图矩阵或 Linux/GPU 性能；这些仍属于后续阶段。
+最终通信验收集合 **118 项通过、无失败、无跳过**；另有 **28 项 Phase 1 相关集成测试复验通过**。本阶段合计 **146 个不同测试**，不是完整全仓库测试。远程补验额外执行完整的 73 项 Phase 1，因此两个阶段合计 191 项；其中已包含上述 28 项，不能重复相加。检查不包含训练、正式地图矩阵或 Linux/GPU 性能；这些仍属于后续阶段。
 
 发现并修复一个实际缺陷：接收 MAP_DELTA 时只检查数组尺寸，未检查真实地图 `valid_shape`，可能把批量 padding 写成已知栅格。三条接收调用链已统一修复，保留失败与复验记录。
 
@@ -112,7 +112,7 @@ Host oracle 不调用生产 codec/ledger/fault 解码函数：使用 Python stru
 
 ## 7. 运行与证据边界
 
-运行环境沿用 Phase 1 的独立 Windows Python 3.11 CPU 虚拟环境。修复后的检查设置 `PYTHONPATH` 指向当前分支 src，避免误测旧 wheel；版本和实际导入路径记录在证据中。ruff 仅装入临时审计环境用于格式检查，没有改项目依赖。
+首轮本地验收沿用 Phase 1 的独立 Windows Python 3.11 CPU 虚拟环境。修复后的检查设置 `PYTHONPATH` 指向当前分支 src，避免误测旧 wheel；版本和实际导入路径记录在证据中。ruff 仅装入临时审计环境用于格式检查，没有改项目依赖。
 
 从仓库根目录，PowerShell 运行最终通信集合：
 
@@ -127,6 +127,35 @@ python -m pytest tests/benchmark/unit/test_packet.py tests/benchmark/unit/test_c
 
 相邻阶段回归为 `test_event_step.py`、`test_ir2_contract.py`、`test_phase1_acceptance.py`，排除会训练模型的 `graph_training` 案例。与新增部分测试分批执行并按测试 ID 去重，146 不包含重复运行次数。旧 Matplotlib/Pyparsing 弃用警告不当作数值失败，也不为消除它们扩大修改。
 
-本次通过表示：所列包结构、预算规则、独立故障条件与接收知识变化有可复算证据。自定义算法可以沿用标准编码器或 opaque codec，但应固定预设身份、遵守字节容量及接收边界。正式公平评测、完整地图划分、方法基线和跨设备复现仍需后续阶段验收。
+本次通过表示：所列包结构、预算规则、独立故障条件与接收知识变化有可复算证据。自定义算法可以沿用标准编码器或 opaque codec，但应固定预设身份、遵守字节容量及接收边界。正式公平评测、完整地图划分、方法基线和更广泛软硬件版本复现仍需后续阶段验收。
+
+## 8. 2026-11-14：目标服务器 CUDA 补验
+
+此前将 Windows CPU 本地检查作为阶段完成依据，却未接着到用户指定的远程环境验证，验收安排不完整。本次直接连接目标服务器，在 conda `ex` 和 H100 上补齐功能验收，没有启动训练或修改生产代码。今后本地结果作为预检，阶段结论必须同时明确目标服务器的实际验证状态。
+
+源码来自已发布审计提交 `1e0af0eda51907e938c73a4d8f8295a41e4343bf` 的 Git archive。独立目录为 `/home/user/Tz/acceptance/20261114-1e0af0ed/source`；上传后和测试结束后，221 个源码/配置/测试/必需地图文件的 SHA-256 全部一致。服务器旧项目目录保持原样，验收对象是这份已发布快照。
+
+环境为 Linux 6.8.0、Python 3.11.0、JAX 0.4.35、jaxlib 0.4.34、NumPy 2.0.2、NVIDIA H100、驱动 550.163.01。无需下载额外依赖。测试进程强制 `JAX_PLATFORMS=cuda`，实际 JIT 结果位于 `cuda:0`；原版 Python/NumPy/SciPy 对照仍使用服务器 CPU。
+
+| 远程检查集合 | 结果 | pytest 耗时 | 外层进程耗时 |
+|---|---|---:|---:|
+| Phase 1 全部声明检查，含 28 项相邻回归 | 73 通过，0 失败，0 跳过，排除 1 项训练测试 | 572.74 s | 590.87 s |
+| Phase 2 通信集合 | 118 通过，0 失败，0 跳过，排除 1 项 collector 测试 | 160.68 s | 166.34 s |
+
+以上耗时包含 JIT 编译和 Python 对照，不构成硬件性能基准。四条原尺寸轨迹的全部逐步记录与 Windows 证据一致；Normal、Dropout、Burst × attempt/success 六条通信轨迹的全部 32 事件记录也完全一致，包括 wire bytes、每事件费用、余额及逐接收者送达标志。第 5 节费用和送达汇总无需修改。
+
+预检曾发现 launcher 导入服务器旧的 editable 安装，已终止该次未完成运行，不计入通过结果。正式补验在 launcher 和两个 pytest 进程分别断言 `observe`、`step`、`channel` 实际导入路径属于审计快照，并验证 CUDA 设备，避免只设置变量却误测旧安装。该预检记录、最终 JUnit 测试清单、原始日志、源码摘要、四条地图轨迹、六条通信轨迹及实际 runner/probe 源码均保存在 [远程机器可读证据](evidence/remote-acceptance-20261114.json)。
+
+远程复现使用同一测试清单（从上述 source 目录执行，使用 `ex` 的 Python）：
+
+```bash
+export PYTHONPATH="$PWD/src"
+export JAX_PLATFORMS=cuda
+export XLA_PYTHON_CLIENT_PREALLOCATE=false
+export PYTHONDONTWRITEBYTECODE=1 MPLBACKEND=Agg
+python -m pytest tests/benchmark/unit/test_packet.py tests/benchmark/unit/test_channel.py tests/benchmark/unit/test_ledger.py tests/benchmark/unit/test_signal.py tests/benchmark/integration/test_presets.py tests/benchmark/integration/test_phase2_acceptance.py -k 'not collector' -q -p no:cacheprovider
+```
+
+实际验收另加了外置 pytest probe 检查源码与设备；完整命令、两个阶段的排除规则及 probe 实现在证据中。未把有限测试集通过扩展为所有地图、所有种子或所有自定义协议的等价保证。
 
 下一阶段为 **Phase 3：地图数据集、划分、重复与泄漏审计**。
