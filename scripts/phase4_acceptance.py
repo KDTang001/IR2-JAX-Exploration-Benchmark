@@ -256,7 +256,7 @@ def main() -> int:  # noqa: C901, PLR0912, PLR0915
     ]
     with (args.output / "cli-smoke.log").open("w") as log:
         subprocess.run(  # noqa: S603 - Fixed interpreter/entrypoint; argv never enters a shell.
-            command, stdout=log, stderr=subprocess.STDOUT, check=False, env=os.environ.copy()
+            command, stdout=log, stderr=subprocess.STDOUT, check=True, env=os.environ.copy()
         )
     cases = [(development, small), *((m, base) for m in selected)]
     planned = []
