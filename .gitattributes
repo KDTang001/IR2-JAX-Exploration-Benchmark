@@ -1,0 +1,4 @@
+# Dataset identities must survive Windows checkouts and Git archive exports.
+artifacts/maps/**/*.jsonl text eol=lf
+artifacts/maps/**/*.json text eol=lf
+research/evidence/*.sha256 text eol=lf
