@@ -179,7 +179,8 @@ def test_core_ids_and_old_manifest_and_result_checksums_remain_compatible(tmp_pa
     envelope = {"result": raw, "checksum": identity(raw)}
     path = tmp_path / "results" / f"{task.result_id}.json"
     path.parent.mkdir()
-    path.write_text(json.dumps(envelope), encoding="utf-8")
+    original_json = json.dumps(envelope)
+    path.write_text(original_json, encoding="utf-8")
     # When: restoring old tasks and loading old result envelopes before applying defaults.
     assert next(read_task_manifest(manifest)) == task
     assert completed_result(path, task)
@@ -187,7 +188,7 @@ def test_core_ids_and_old_manifest_and_result_checksums_remain_compatible(tmp_pa
     # Then: default provenance does not change the original checksum or identity.
     assert corrupt == ()
     assert rows[0].budget_mode == "per_robot"
-    assert json.loads(path.read_text()) == envelope
+    assert path.read_text(encoding="utf-8") == original_json
 
 
 @pytest.mark.parametrize(
