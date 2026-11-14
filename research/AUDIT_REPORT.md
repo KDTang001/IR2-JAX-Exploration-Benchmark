@@ -1,5 +1,7 @@
 # IR2-JAX Benchmark：首轮代码审计报告
 
+> 2026-11-14 Phase 3：目标服务器全量核对 24,199 张 PNG，并按记录种子重现全部 6,900 张程序化地图；13,877 张保留地图无 D4 canonical 重复或跨来源冲突。35 项不同测试最终通过，另核实 13 个实际 CUDA 数据加载组合和三类错误元数据拒绝。修复失效的固定验证清单及 Git 换行导致的字节/实现摘要不一致，地图、种子、8 KiB 验证预算保持不变。逐项划分、历史失败、来源与边界见 [Phase 3 报告](MAP_DATASET_REPORT.md)、[机器证据](evidence/phase3-20261114.json)及[全量文件摘要](evidence/phase3-data-files-20261114.sha256)。未启动训练。
+
 > 2026-11-14 目标环境补验：此前只在 Windows CPU 检查，遗漏了服务器功能验收。本次已在用户指定服务器的 conda `ex` + H100/CUDA 上，用提交 `1e0af0ed` 的同一源码补跑：Phase 1 73 项、Phase 2 118 项全部通过，无失败或跳过，共 191 项不同测试。四条原尺寸轨迹和六条独立链路/计费轨迹与本地逐步记录一致。源码与设备均有实际断言；预检旧安装导入问题和完整原始结果见 [远程验收证据](evidence/remote-acceptance-20261114.json)、[Phase 1 报告](IR2_PARITY_REPORT.md) 和 [Phase 2 报告](COMMUNICATION_FAULT_REPORT.md)。本次未恢复训练，尚未进行正式吞吐评测。
 
 > 2026-11-14 更新：Phase 2 通信协议与故障模型在声明的 Windows CPU 范围验收通过。Normal、Dropout、Burst 独立测试，118 项通信检查和 28 项相邻阶段回归通过。发现并修复 MAP_DELTA 越过 valid_shape 写入 padding 的接收缺陷，见 [通信与故障验收报告](COMMUNICATION_FAULT_REPORT.md)。

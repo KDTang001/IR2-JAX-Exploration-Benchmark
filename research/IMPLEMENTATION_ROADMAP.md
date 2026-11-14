@@ -2,7 +2,7 @@
 
 - 版本：Draft 0.1
 - 日期：2026-11-12
-- 当前状态：审计分支；Phase 1/2 已完成声明范围的 Windows CPU 与目标服务器 H100/CUDA 功能验收，下一步 Phase 3。以下原始路线与历史记录以最后一条进度更新为准。
+- 当前状态：审计分支；Phase 1/2 及 Phase 3 声明范围的目标服务器验收已通过，下一步 Phase 4。以下原始路线与历史记录以最后一条进度更新为准。
 
 ## 原则
 1. 先修复会阻断 import/rollout 的问题，再谈性能。
@@ -165,3 +165,13 @@
 上传前后的文件摘要、实际导入路径、JIT 数组所在设备和测试结束后的源码一致性均已核对。四张原尺寸地图的逐步记录及 Normal/Dropout/Burst × attempt/success 六组通信记录与本地证据完全一致。初次 launcher 导入旧 editable 安装的预检已中止，正式结果含快照路径与 CUDA 断言。详见 [远程验收证据](evidence/remote-acceptance-20261114.json)。
 
 目标服务器功能验收已补足；Linux/GPU 吞吐、全地图/种子矩阵和正式实验仍待后续阶段。没有启动训练或扩展生产代码。下一步仍为 Phase 3 地图数据集与划分审计。
+
+## 进度更新：Phase 3 数据集与采样验收完成（2026-11-14）
+
+目标服务器 `ex` 上全量核对 17,299 张 IR2 与 6,900 张程序化 PNG，逐一验证占据/anchor/component/尺寸/三个 hash，独立重算 IR2 test 优先去重及训练族验证留出。全部 6,900 个程序化实例按 requested_seed 重现，13,877 个保留 canonical 全局唯一，跨来源交集为零。
+
+合并保留 train 11,625、validation 924、test 1,028、ood 300。实际 sampler 只从 train 调度；evaluation reader 只读 1,328 张 test/ood；固定验证仍使用原来 25 张 validation 地图、同一组出生/故障种子、N、轮数上限和 8 KiB 预算。修复旧验证场景的配置身份与 CRLF/LF 导出/源码绑定问题；没有改 PNG、地图划分或训练算法。
+
+远程最终去重 35 项测试通过、无失败或跳过；另外将实际 13 个来源/族/桶组合加载到 CUDA，核对三类错误元数据显式拒绝。IR2 difficult 本身跨 512/768/1024 桶，已经按实际 registry 验证。所有初次失败与辅助检查错误假设均保留。见 [完整报告](MAP_DATASET_REPORT.md)、[机器证据](evidence/phase3-20261114.json)、[逐文件 SHA-256](evidence/phase3-data-files-20261114.sha256)和[只读复核](evidence/phase3-code-review-20261114.md)。
+
+下一步为 Phase 4 基线与统一评测，先冻结 Benchmark 专用配置与小型配对验收。训练未恢复；吞吐和正式实验仍在后续阶段。

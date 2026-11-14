@@ -1,0 +1,1388 @@
+{
+  "date": "2026-11-14",
+  "status": "passed",
+  "scope": "All committed original/procedural maps plus declared Phase3 functional tests on remote conda ex/H100. No training, method ranking or throughput claim.",
+  "source_final": {
+    "commit": "408595181968dfe6548f5342411b29b155704bf9",
+    "files": {
+      ".gitattributes": "d66d5eab7f2361a678f53dde58a69d07338ce29d4e1628fa5f24190c170d6039",
+      ".gitignore": "6b942135807dc27875654a5863643b38f4f0d2c8c435c71fe32e2ca67ed6e3db",
+      "LICENSE.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "NOTICE": "08a3d503e0ffa3d2f37df8ec728c133c80b3ea099dda914747a941f457c36106",
+      "README.md": "51ed27d5c49acf43cd3fe532f218a77ebd41c3a6e8ab0d919d9a1f9e037bef01",
+      "artifacts/maps/ir2_manifest_enriched.jsonl": "c60e0fbe288e0c206f8dcad348b3c8f77e73534f33a0faa0eb072b4e8e7761d8",
+      "artifacts/maps/procedural/ood/manifest.jsonl": "72fe2955e9848e4e688df21da6cb03b434aefea5566813694600495413f674b3",
+      "artifacts/maps/procedural/test/manifest.jsonl": "d97bf5f0cf30029008b52c5e515e7e17708967d41da46e75fe032af20148039f",
+      "artifacts/maps/procedural/train/manifest.jsonl": "0f9ca254710d1895925012468772d8d6e46a6c7c403e01cb3f3d3e361ae86546",
+      "artifacts/maps/procedural/validation/manifest.jsonl": "730340a96e9d920fa79a29d4108ed572fc8d1a0e93ede762e822fff711386c1d",
+      "artifacts/maps/sources.json": "04aef1454ac7557908d049d242932198de634503891c9f180634aeb7a9e44bae",
+      "artifacts/maps/validation-scenarios.jsonl": "0112548680511201eb0ef714429761da90de16951ade41578341111f7cb6b3b1",
+      "artifacts/maps/validation-scenarios.selection.json": "3b4128024ddae7e3d21394c64892e25ed6af319f964240b769ca7847aa1bb7e5",
+      "configs/a/fixed_predict.json": "a9ce3c646b714fd2784dc73e73371009ffbe250aceca090da36b98ff4e9907da",
+      "configs/a/fixed_zoh.json": "11e23d30e69261169aeb58985517586f3f380b0547a1b510dcec1a4151e59eb1",
+      "configs/a/learned_predict.json": "130c3576f34dab07606868d71a0bdaacd0ebd09960817d7e7f51640339b0298d",
+      "configs/a/learned_zoh.json": "223b8d860ccc4f71a39825d922e1282d89fcc88cc8483448b57389e92e7e9241",
+      "configs/a/no_neighbor_plan.json": "e4ff34d3770b697fdc8937209c70cf2e224c806beaaeb3cb3d9573ce77923411",
+      "configs/a/receiver_ir2_graph.json": "9d1f9b922299417d795465b97a304a00d3e064fe7ccb16413c58dcacb9e3c6cf",
+      "configs/a/receiver_map_communication.json": "8c080d32b321ad37213968694466b382d4bd16e324dbca1e300e94c7c75ce6e5",
+      "configs/a/receiver_onehop.json": "ff65431327b555b8a51531db32084fa1acc9a559b542c07a754f4139bf650b0e",
+      "configs/a/receiver_pretrain.json": "b4e7ab0cb7881c668cdcbe3b1398fcd8a2dd81f2d647087bb98d6cc10d61734d",
+      "configs/a/receiver_pretrain_minibatch.json": "ff65431327b555b8a51531db32084fa1acc9a559b542c07a754f4139bf650b0e",
+      "configs/b/fixed_predict.json": "14a01a6e749534eca961bc5e964eea74dd2271e22660245603f8ea3ea98885d8",
+      "configs/b/fixed_zoh.json": "b3945d0f9b46f81d8d0557e34461e9a75b417300e3def70089da30b713ab6ac4",
+      "configs/b/learned_predict.json": "65fc634045007866bedb55f08b5e003127ed0882b6929d32121fbddef05a5a4e",
+      "configs/b/learned_zoh.json": "88d8f06e602bfbd2e454141110e0986758476c9ba219c9ab05a9367a9bc347ce",
+      "configs/b/no_neighbor_plan.json": "6c1203a32303f06683e98922b58aba0a1064f1a4e1d43b95ef32924e65f7742d",
+      "configs/b/real_updates.json": "41f137b13d7d2f9331e1e5118ae56a505dc8ca30aa2fbbef59bfc7f68b29242d",
+      "configs/default.json": "75547bf70801c0e78751558b0ea107e5ffa1ebce4663e7bc55db6a1def76000e",
+      "configs/evaluation/auxiliary.json": "605f308d5f2a8fa86deb93ce889951ee32801916c6b831afde8c89397992f313",
+      "configs/evaluation/core.json": "20986d39288ab2ab1f470caa60fee01b1959b765cf7fedc1b518e18d8c6bcdd8",
+      "configs/evaluation/team_budget.json": "d8c2ffcd8747b6887a19203e8e6d9733c17b91546250d44f85e378a5c6e5e0c4",
+      "configs/evaluation/unlimited.json": "3ec4e9f8e4e836d256783a737ce22c32ac8da336e9f2285ba605fdaf898c2bf4",
+      "configs/micro.json": "6a938a49b20abd9e0d43cefb36ef00dd2cf05316a7dfd5e656baaf32a8eefb45",
+      "configs/receiver_ir2_graph.json": "d0a97bb7c7843b4bc420079b3fca1ff0524337b3fb6cec49a158a2ff2a3d53fb",
+      "configs/receiver_ir2_graph_fusion.json": "1bf96d429957e1ae65401a1e3dbc6db846ffd9bcdc7737ff9823db27a889e040",
+      "configs/receiver_onehop.json": "ad1810de144119669bdc7a1efed90bc5699f2263c544fe7798cce8ef565cc4d7",
+      "configs/receiver_onehop_fusion.json": "cfc9c6330e86f37220ffe4d95f7d0c6b7d37c8f366d6c242c31c077281bbbda6",
+      "configs/receiver_pretrain.json": "dd558c6efd50df329003d8c07e5edb51c3506e273a02d1b168c3a2200dd9d07a",
+      "driver.py": "33f8c8f0f2576d9ae1aa792cd83c97b266b54a9a3cf6715e051b245fe66e15d1",
+      "env.py": "578b98b473f0765e92c6696a589d282200bf48a936902f3f89155250dd5a877b",
+      "graph.py": "39bce78c47e4b885955e98a46bf6b7ab0585837467b8bb15e9b7091a7cec68e4",
+      "graph_generator.py": "ab52dffc99b87959785d24b84347fc45d17f11a9ced2f29db6f3649a677a31bc",
+      "model.py": "2a0c4d91497fc5b5db981e2b91f1b8ed4ed11550bfaee3a67c5d6d1a967fd637",
+      "multi_robot_worker.py": "687f7f33699be20892a25e81948e73b68bf8b60d1ebbf46396615cb5f56f94af",
+      "node.py": "d156b1089d75f05a4323e0ece65362b9e850d7a2c7b0690f4d360ad8fb043e53",
+      "parameter.py": "ce43fa019b3e9442b11fdbda9864e20a5e912cb974db7694fa951e76d78187e9",
+      "pyproject.toml": "0046d38b1949b2ca424c70bbfd0a3d875f7abecffd8b0fccebf568e790a698f7",
+      "requirement.txt": "acf9c1e2be590fce59ea92c40f28b692454a4c94d32798137406f20b0b4d1dc1",
+      "requirements-server.txt": "c75c8e8eab23e10f2758a7cc2b8100fc4f4bb44ef8933fa5f525f285923bb786",
+      "robot.py": "14c40c58d8aca4a09c17a22ebd8e72f00107278ac802a5930bacba8042572d97",
+      "runner.py": "e9ffc1a0a0758afba3430842522b1c7cadfe99bc6413be21940aba0f2bd91c0e",
+      "scripts/audit_map_dataset.py": "43d2865933852b98eec4c95d516274c32691d1dae473d97a5ec8da2846b40437",
+      "sensor.py": "4e59c4b0ab47c38a82a833168c49203bfdff64695dd1a1f62ce1f3978dfc95c9",
+      "src/ir2_benchmark/__init__.py": "81a1864952bf64d6fa7a56fe365973819c19942881028d004ba095d35fed8bcb",
+      "src/ir2_benchmark/agents/__init__.py": "2ded27c1fc2bd04245a4dccdf9cc90cc2e84ddd0c43ec06b1e101af1ea38faef",
+      "src/ir2_benchmark/agents/actor.py": "0d2872df0a09763333d42194b6933c88df1644d8750ffc4b520a423d830a2ab0",
+      "src/ir2_benchmark/agents/critic.py": "432f6975c01e0aabcff49c5d72717b90470158fc5d186466011e658ccfe710c8",
+      "src/ir2_benchmark/agents/fixed_comm.py": "69c4c56227ff7f05036104d89b6be82754786a93c31a44f63bd7298f6f486c19",
+      "src/ir2_benchmark/agents/heuristic.py": "6ad7bf0827dc431009a2ff4aee0b8605015dfa5f07b3a171f2817c2c9bfa6053",
+      "src/ir2_benchmark/cli.py": "2beb11083dee26de606e7651b402aa8ee204f96afe189d423389626ea2103860",
+      "src/ir2_benchmark/codecs/__init__.py": "7d696eefc1300ad1d8d76d9158de7d2dea413ef7cc804c63a4a194d80dd69d36",
+      "src/ir2_benchmark/codecs/packet.py": "9ef8de8094d9dd7866d0eaa0db57f079fceeef0fc25809371d4982661ee658de",
+      "src/ir2_benchmark/codecs/standard.py": "19a83044738e008478a1c82e8ac1d1691ece6c152ac38e39134af40a4f5060f3",
+      "src/ir2_benchmark/commands/__init__.py": "052d4e45c62ad9611c64cb35e115ca9dfe61ac774a884c98d9fa26fc5628c2fa",
+      "src/ir2_benchmark/commands/common.py": "f28bda629dc18acc3885cb70f0aead0a1d0c8d4a59df79197979710a1cbc315a",
+      "src/ir2_benchmark/commands/evaluate.py": "24885762a024ee7f1c5ece89c9f169996d887dd61c1f665dd1e326f78eecceb0",
+      "src/ir2_benchmark/commands/options.py": "0e63e9aa284b03a094c0ad381ab16c261692243881210c6053f7707f535e9295",
+      "src/ir2_benchmark/commands/performance.py": "36b882aadf0fca519ee92891dc57980616618bfc65513eb93e1a28b13ddbad4e",
+      "src/ir2_benchmark/commands/train.py": "e4ca0e9043b36142a214c8474f27a6417f1d82586bd627759121550cbd57bd16",
+      "src/ir2_benchmark/communication/__init__.py": "9370bf84c7d422e515837b394b640a41ea061a2186843e2e4421012e53114f0f",
+      "src/ir2_benchmark/communication/channel.py": "9afdbb0dd691654c05c329129a0b2eaf0c840a3deaab8c7faf204b323ec0d6d2",
+      "src/ir2_benchmark/communication/faults.py": "a784d4a6d6fec4cd751e24e38fd10e0e9a24cbdea2b8389cc61475237265f9eb",
+      "src/ir2_benchmark/communication/ledger.py": "f638031e31b4cfe0a21d344522c9b20efd86d2307c0c17cbc63a00da4287141a",
+      "src/ir2_benchmark/communication/propagation.py": "d6a7956be1fc6f6a8f94f37e18508c2a18431f1ce3d765d9298aaa7ff8c609f0",
+      "src/ir2_benchmark/communication/sending.py": "4be4bdba300fd6643bcb41005e9f44d6fc1af31df803048e59aec11d6f86f877",
+      "src/ir2_benchmark/communication/signal.py": "51647a74e1214fb6d0a830a1b8b21409db40033a05175e92677f2736146dddaa",
+      "src/ir2_benchmark/config.py": "ae638c133f9713a940cc30f41f31e28fa31a8841d4756bc723b7fe92f5493bf8",
+      "src/ir2_benchmark/env/__init__.py": "a204314f4cf1d5cc030caa7a3e20b19c93ce583f6273fcba129d86c891363e89",
+      "src/ir2_benchmark/env/artifacts.py": "17a83d7e332d5887e6a212d6bea56a5381e19d1561c502dc570058f937fc96dd",
+      "src/ir2_benchmark/env/ir2_observation.py": "d39f48c6a57c471954d9d9562f704e4a7d90998736c581e833279f311a172b13",
+      "src/ir2_benchmark/env/observe.py": "6d16746d141b5f6b8da7ba992551ae171204be03812eafc06483fc3bbb876924",
+      "src/ir2_benchmark/env/reset.py": "497f633b72b85ac4e520d8b5aef342b0008443a26d49a9fea8b8a668f7f9bd0c",
+      "src/ir2_benchmark/env/rewards.py": "63679ac961d0e8bc3b57f2edf583fc0a90b3c603b04356e0750ee17d1ba32e6a",
+      "src/ir2_benchmark/env/rollout.py": "0625324e68ff14f803ad7dee2a8e2cea38957505521f357ec396211067061a4f",
+      "src/ir2_benchmark/env/scenarios.py": "a59cc65b775edc8a144c794f962f966438b157ea8e8931f26d732087e13b82c6",
+      "src/ir2_benchmark/env/step.py": "be11ad15245ce9eb2bf4797218b294a542e9fec6cae8caa2e2c34ecdf78ace5b",
+      "src/ir2_benchmark/evaluation/__init__.py": "51c4febdfc22a15ffce620151810a752b73c7aa6845be412a2c89c559e550edf",
+      "src/ir2_benchmark/evaluation/batching.py": "7d3d427822d1e5d3390cbc3aab2e7163e2fde037a3c67c6483c4120926096d33",
+      "src/ir2_benchmark/evaluation/budgets.py": "0ffc23d632ccd38d9a3638397cfc0d585775af2528a4f3d65933a646882cd958",
+      "src/ir2_benchmark/evaluation/diagnostics.py": "8461c3b20050eacb3b7d898ffefb29411ea28ecf43a3b28e6442966e849f11b9",
+      "src/ir2_benchmark/evaluation/episode.py": "bdca63b17c00b54b6bf4975fcdc10ebb566e2e8f8b127e7f4c054e15895badac",
+      "src/ir2_benchmark/evaluation/errors.py": "75c108418941ddee20ff60b70d21aaa1cea57bb983034b48dcac2eae3e9e4e9a",
+      "src/ir2_benchmark/evaluation/figures.py": "974fa3d0b65a1c475a1686a9c5a92b783d6ba50fac3e7db640b4810727125199",
+      "src/ir2_benchmark/evaluation/metrics.py": "f156bed4b17fb1bacf4723d4d98ffae614fe2d785bf29d0975d5df1185b68a0c",
+      "src/ir2_benchmark/evaluation/plan_quality.py": "615f56295da6325ee403c347ad766909ea4f57f125bf9f3f73643a9544faa3c5",
+      "src/ir2_benchmark/evaluation/records.py": "cfda8b5c91fd330dd1a21d37c6b21e406b452d14ea793b064164478ee83c93e6",
+      "src/ir2_benchmark/evaluation/recovery.py": "51ad29f7346aa6332b182df9c0eb84af2456e97773b70a6011b83b9513a1a702",
+      "src/ir2_benchmark/evaluation/release.py": "dbb18493c296c76b22901b4db57e32ac6aa0465563b18b877df70ea5b446e2b1",
+      "src/ir2_benchmark/evaluation/report.py": "6063b7e79af53bc2426d0f4d6e71ccbd3ff2cb3354c82e0b5b4ff7581bbbf070",
+      "src/ir2_benchmark/evaluation/runner.py": "adfed2611e2e91e6472191e393885757ed6cf99d4f7a566e7ade0b9a45639c69",
+      "src/ir2_benchmark/evaluation/scenarios.py": "460a888773cd568e5c0f2e6ddc77320a4fc6a2723e6c243c3577b83fb5390d4b",
+      "src/ir2_benchmark/evaluation/scope.py": "8ab6fe3f713745dd496a5f7623f130d96897353e4c2a1007669cfeb1613e1f04",
+      "src/ir2_benchmark/evaluation/statistics.py": "1504dceef767ca10a210df60cfa27169d59b6a1f73d3c3e763cd7cb2190871d6",
+      "src/ir2_benchmark/evaluation/tables.py": "f2aba7f9ea882d4a61cfbf9119bf3a1e7d5d6206d20772ff86ab9b190e2f6515",
+      "src/ir2_benchmark/evaluation/throughput.py": "16c2de69935d4694ce16da040146377759c6df33919fe884bc97ebab49ec9844",
+      "src/ir2_benchmark/evaluation/timing.py": "08b0e8786866e6e5d5ef655cf7bdb4e4b9792904ed4aeddc3d58eab5f9d9c960",
+      "src/ir2_benchmark/evaluation/validation.py": "917d210cef880b9627925ed8f161642f6b6431ad289fc0197c260f35c9110366",
+      "src/ir2_benchmark/evaluation/workload.py": "43fd6122604e9fc1002259539fc58b7469d90a6fc9d2a88a25ae2890bc097a4a",
+      "src/ir2_benchmark/maps/__init__.py": "8e4d0c7cb52bb7653d75aa0e3030aab737f62cd3e4435264612eed017fc238bc",
+      "src/ir2_benchmark/maps/generate.py": "8245245025f3cc84a60d0fd2eb2ebb8ab629f9c8aa495beb13338a2e42010383",
+      "src/ir2_benchmark/maps/manifest.py": "dd375b9f8276d3ea8ca0d67c7ed196957f26c0210a00c58c883753439ac889fa",
+      "src/ir2_benchmark/maps/prepare.py": "dd239476428dd8e2ad4414f32b13e879b76b96b7b9f67539015f5dd9813abd05",
+      "src/ir2_benchmark/maps/sampler.py": "1475b0266983d8ccddca9cedd932983b05bc5353ab4e547b6cf9fc3607005531",
+      "src/ir2_benchmark/models/__init__.py": "a5a6ac1ad321117ff88e723af18c4cc8abdcee0cf33109ff6e75ec145395a42c",
+      "src/ir2_benchmark/models/encoders.py": "22517f323960c584e4469981f4c53dea758e637b046e7ad59caef6ce183a77fe",
+      "src/ir2_benchmark/models/ir2_policy.py": "86fc228461c4d2eacaa32c3feb38ff7141c03a64c9ac7c1e3dd4e534dc116bb9",
+      "src/ir2_benchmark/models/plan_predictor.py": "7efc34cd99ec795ea5396e195f7a447aee2e3204061a2b2133f67b89e13f8704",
+      "src/ir2_benchmark/models/world_model.py": "8313efc4dd3770aee9288a03a95a2697676ff1f3eb058341516bee6669ad9469",
+      "src/ir2_benchmark/navigation/__init__.py": "825803e95be661ba7927b31623b10c500ee53e451451d85e2748f856e8be63bd",
+      "src/ir2_benchmark/navigation/candidates.py": "c1a5dc353df0897b1854f4314645bfd0c30156e8a0b4cf3bc17f8718268ce043",
+      "src/ir2_benchmark/navigation/ir2_graph.py": "3a847992270cfe52cb874a117a028a2290da1ccc2953cc43248c491c4cf5ceb9",
+      "src/ir2_benchmark/navigation/ir2_rendezvous.py": "41e5718404665e85bb2c30690fee6902bb7639144dec8a6faf581b5f4ed43d66",
+      "src/ir2_benchmark/navigation/jax_path.py": "7ea688350067a32073291e3bcb6e71d57a85c36b7a6ad5782a615e061d9c365e",
+      "src/ir2_benchmark/navigation/one_hop.py": "8cff56e768f6dccd0757ee10d55bb70abf54c6e5c1dcca38abbadc838999cfe0",
+      "src/ir2_benchmark/navigation/reference.py": "4408c80682fe34458a93a65623e25e4087a73de85f5b014c6833e526c711083c",
+      "src/ir2_benchmark/presets.py": "5fd148a91d8012a8e0026740e9e3bde7885af51c2a8816a8e8b7d6547d43a000",
+      "src/ir2_benchmark/runtime.py": "1a6d6b4f7ddfb8e71689fa37c47d827f0aa58b7ca1d19f190298e2a9165cd7e5",
+      "src/ir2_benchmark/sensing/__init__.py": "fe519e0e2afd98f3f87fb89ecfac83030d1e8e5546978ec870737ebc77ecaa58",
+      "src/ir2_benchmark/sensing/ir2_sensor.py": "ba81675939a0524b4eb99b2df9667ec6afc465ff97702fe5594bdd6ba22d8153",
+      "src/ir2_benchmark/sensing/jax_sensor.py": "cafd53456b21997887f51b6192e27f02697cf5581daf8c8e25d9ff1b6b6197f8",
+      "src/ir2_benchmark/sensing/reference.py": "6a27f77454e01e280e619c2b9dd994a8882c481463a8004b39b7a6d66be8ec3a",
+      "src/ir2_benchmark/training/__init__.py": "70313f28e68a0235cda2e7199ec25bc74f115d27c91eb55d1717acb212b4f310",
+      "src/ir2_benchmark/training/b_collect.py": "458bb6afe578a22a2da10fea3634c2f4e03caaf9ed8117d90e98ddd9fd96eabf",
+      "src/ir2_benchmark/training/b_pools.py": "d11c844465b094043628360835bc8cd5f74553e4fec773f6b537e02348d32da6",
+      "src/ir2_benchmark/training/b_state.py": "57cf532986a738bb5b27a0bfbc34d9e8586f29c0dc9a1dec203d6caee78e6534",
+      "src/ir2_benchmark/training/b_types.py": "77a684d15f6b646d7e958ca85e53b5800674bf564999464aac95f2f131a27c48",
+      "src/ir2_benchmark/training/checkpoint.py": "48f27d9a0cb64478bca07ed0ac58b752edc5fad6e252d99658024d2882ddd02c",
+      "src/ir2_benchmark/training/collect_a.py": "c086390334e0bcb8dc48e893a444c7ea0d6f8d8df3a4bd8e1e9cab2d4aff76f4",
+      "src/ir2_benchmark/training/comparison_a.py": "460ee8043549ab0d150589cec13b59bf6be6eb1d437c8752475389ee1f0045ec",
+      "src/ir2_benchmark/training/diagnostics_a.py": "304fb6c0a1190771c845e1c9b06a2924e2cdcd91b2ee4e90c6b8dedc631a6191",
+      "src/ir2_benchmark/training/dispatch_a.py": "d614e18d44080ba476560f3a0b71dc62e74e33e333012d548518232304e310db",
+      "src/ir2_benchmark/training/dreamer.py": "72ef92a72862890d4038e053d35267582759a5a5832067bb633e53c2e20ff93e",
+      "src/ir2_benchmark/training/driver_a.py": "f5fc50c293941a1b2c47e15c8221e2a593d4c685661d72c2a12c359bf687c4df",
+      "src/ir2_benchmark/training/evaluate_a.py": "967367e2f8bee59b8c98262a838e0dec884eb5c5f0080ded77a1a2108d480020",
+      "src/ir2_benchmark/training/evaluate_b.py": "10035667ace87e844e7b69f45e18fc9fe1e306d46674280aed99fbe44d51fc78",
+      "src/ir2_benchmark/training/imagination.py": "21465b70d3a7c86cd55fa860adb1681f4392972b1fc73e4b1b2ab0472ddd9213",
+      "src/ir2_benchmark/training/plan_losses.py": "9c5e5d70ab312483b07236fe289547c5a78bbdb442ac2f8811e8b33fce8a4fb8",
+      "src/ir2_benchmark/training/pools_a.py": "59b93e85b495e4b7992041c17a0a99efb4399541c6d728154e87e8b6930fd137",
+      "src/ir2_benchmark/training/ppo.py": "e2db957ed42b99ff6ac56b700068f12bfed5ae76ae20ab4e42a583ca3bd97966",
+      "src/ir2_benchmark/training/predictor_replay.py": "ab14e0a450b513b0ad7cafce970c62bc8d2dc98e0e1eff88d7e77fdacf43b0d8",
+      "src/ir2_benchmark/training/recording_a.py": "1f492d340429b77cc12decc094aef2081d3fcff163361f3efc114f8fa16b49c2",
+      "src/ir2_benchmark/training/replay.py": "0774fbc982e2918a9a332f28b2074af383849b8abfe70ac87018e2aa7d412f2b",
+      "src/ir2_benchmark/training/selection_a.py": "09667fb250c235fd418ade17fc74c0dde0b21d7f48ca9f38eee6b69f8d3a88c6",
+      "src/ir2_benchmark/training/state_a.py": "54530b9691b62ca9d0b5708fb2fb33509cc1c0bcab47e5ed6d83d0e96f7ea7e6",
+      "src/ir2_benchmark/training/storage.py": "58f46e414f7ca4da9abb8c68a28fc327ed961c73df268e52630bdfd1479f5a1b",
+      "src/ir2_benchmark/training/train_a.py": "dd1f4369d9cfe6d9059b32e0ccc16f4b536e75e4cbd54eae5ba0328cd4e588ec",
+      "src/ir2_benchmark/training/train_b.py": "0c7b1d6fd67df0dcc1ac234560cbfa841369423e3f31739ed4262d12dcb2cca5",
+      "src/ir2_benchmark/training/world_losses.py": "d18e46023cf174f8e6d00f24ee18b757b04ecd01d86e0e67fccc4deff29b8a56",
+      "src/ir2_benchmark/types.py": "4d82b72f51962b7ac462f7255821e9ff25b5586ff3c70b003617cb02ac400496",
+      "src/ir2_benchmark/visualization/__init__.py": "5e69fa457d5a87db72cf556b231b9ae951b95e6164944e27b4ebac0c13cd4f4d",
+      "src/ir2_benchmark/visualization/recording.py": "551405c8fa5a3ac15cf372f0c360ea272c659df9c0eb7a200701b16e204a7764",
+      "src/ir2_benchmark/visualization/render.py": "409872dd418d106a625aa8af7c84f743cd18192560c7fd4177e12f864244a714",
+      "src/ir2_benchmark/visualization/replay.py": "1adc1a4aab02e072f96546d9a870cb9140af84d63e8503d9c56921de65f5f50f",
+      "ss_realistic_model.py": "dee2f76a4673dd663138acfe1a4654f2cccb0ba103dac0346d5c7bace0f26b92",
+      "test_driver.py": "4442462fa84e77ec6b0bd97bb5c8bd785b39902cd283b4e40827be68f73b7bd0",
+      "test_multi_robot_worker.py": "f8ac603e8f7119064423f03dc0887ac3c2aa4c4d2b3da3ccc9709956d56190c4",
+      "test_parameter.py": "6616067502c3493138a9e61835669320c1509cf07fa95fe73334c4f2c9a8d309",
+      "tests/benchmark/evaluation/test_auxiliary_report.py": "b456ef26e213c5b58f22a7bda2bb83347be03e29f67d42063597afa3738f6201",
+      "tests/benchmark/evaluation/test_batch_runner.py": "ac53361e8f2a8ec5505dbd1154adba180a7cae017ff1939d726b46b8442bd272",
+      "tests/benchmark/evaluation/test_budget_diagnostics.py": "710d085c1df4f33c0979ea4316e3a5c43d6654fedf468e12d01d7f6995e90f80",
+      "tests/benchmark/evaluation/test_checkpoint_scope.py": "ad70fcde372e0059a6d677451a820a30f87b7fc002d968a0d31bac3ebce098d8",
+      "tests/benchmark/evaluation/test_parameter_cache.py": "d1d75687c572eb5b2e8ad0d8066fbfc57f299e75c54b3b31deb66faa34286775",
+      "tests/benchmark/evaluation/test_recovery.py": "0cbe514f02c168f646df644f8ac49b43200a9f558ee902f2596a98cafdb5c00a",
+      "tests/benchmark/evaluation/test_release.py": "1147c63d3d8421ebd3b34d2320e08987de580ea084848423faf4fab6294c8b7b",
+      "tests/benchmark/evaluation/test_release_metadata.py": "570b57cd9c01336b3e17819f15ac479938f8bffb2500f7534e471f48e6956108",
+      "tests/benchmark/evaluation/test_report.py": "70768f3be79215a373bf0d66174fb9eb6587cd0445ae888612c5bb3104a5d3a4",
+      "tests/benchmark/evaluation/test_runner.py": "a57c8ab2b02f91b865e182f27156d03a893bbc5d79d56d712d037a0b65f6f3e9",
+      "tests/benchmark/evaluation/test_sampler.py": "9bbdeddac349f7b9aff0fe179cea2206ac620fbb0bba0f0e1f40a37df37e5a93",
+      "tests/benchmark/evaluation/test_scenarios.py": "5e39ea79d11bab2bd97c524438ef6075ba77ac872279601d5a5a3888daf2e556",
+      "tests/benchmark/evaluation/test_training_options.py": "912c0d5a6035ecde39edca4f4c212871af2dadd5f98553010459ea7e7db9df09",
+      "tests/benchmark/evaluation/test_validation.py": "dfed061c32f3dda2108c38514ed0da671719ba20868eadd36b69fcc577754df4",
+      "tests/benchmark/evaluation/test_workload_scope.py": "673b5d3e5f61cb25f0fc9a75a4a2fa3e0b7dc181ddaa5387e1fa33b9715fee0f",
+      "tests/benchmark/geometry/test_ir2_graph_parity.py": "ad6c8b5a96f8d612ebcf267d742ee998789048207e01ffa3fcea40f440a453a7",
+      "tests/benchmark/geometry/test_ir2_native_trace.py": "cea4653a36209e714bea76a0d4f680943be7e20638122b228b0922a0717c432d",
+      "tests/benchmark/geometry/test_ir2_rendezvous_parity.py": "0a2c7e8a281174e2c7ac6df5d91ea2e1bffec76ca17707adb01ea95302d4415d",
+      "tests/benchmark/geometry/test_ir2_sensor_parity.py": "f2fceb160affd71b0c509286d7f797448d112ca94f3fc44c78cef22f5c58b7d9",
+      "tests/benchmark/integration/test_a_comparison.py": "ac121e07fdc2596d13f071f9c4375f6428cb2ae2cd6f4268c3f922bcb2734f59",
+      "tests/benchmark/integration/test_b_comparison.py": "83defb2491cb0812c25d712b991b2a1bb0be63b5e1392dd8e53098a1cec7a5bf",
+      "tests/benchmark/integration/test_b_parallel_resume.py": "5dbb64d10c2ba8f8d512dfedf403f76a82a7627f7e6516b37797a8663b47ab57",
+      "tests/benchmark/integration/test_event_step.py": "deeb2f3d79de10b55b95470d854a852d2b787bcc0c88004204c2c0215ccd3594",
+      "tests/benchmark/integration/test_ir2_contract.py": "d7f55877b107157eb6113ac227b58865f511bdffc5b7c8583d8a570398a4fdae",
+      "tests/benchmark/integration/test_one_hop.py": "c43f990d74ddda812ccd47bf8d50e0538a2b9bc20f425f39bc8aee4ecbd1653b",
+      "tests/benchmark/integration/test_phase1_acceptance.py": "134de246e2a5527fbea050b00f0d355643be8f8cb408e382034eb549b4c4f63d",
+      "tests/benchmark/integration/test_phase2_acceptance.py": "7743853f6855efa16d247d294c99e9f1f3e6ceeb36a449b56372fb744c7d0822",
+      "tests/benchmark/integration/test_phase3_acceptance.py": "0a3989ca4da6d95c5c8c0c2bec6d802e58adbbb879a94cda87a515b7107f7124",
+      "tests/benchmark/integration/test_presets.py": "b217be45d061fe1e71c3bd6d0c73a579c2d0509e4f8fa68eace4afbc90fea5df",
+      "tests/benchmark/integration/test_rollout.py": "0d90a1546e3082e851a3c9df36c608436f26eceec74c75b2d8b9c3a6c07b0cef",
+      "tests/benchmark/learning/test_actor.py": "e6d68a98e3ab5932f09ccfa516e5701f786631b2c63e2b6fc5cd5f0b6273b3ad",
+      "tests/benchmark/learning/test_b_benchmark.py": "e76478b35b1bf66f86dc7a726a98bd7411e96903a3039733185c5fa002f4363b",
+      "tests/benchmark/learning/test_b_evaluation_kernel.py": "ec025019a8ce1ac242715b6ff96caf951d2063c40cdccf6e83c39b0e3c66bcd9",
+      "tests/benchmark/learning/test_b_graph_replay.py": "a7419bad1345dd9f3e6f0349d074401636af3f12d5dc58b35bcd7d952d1b4f07",
+      "tests/benchmark/learning/test_b_parallel.py": "43b1bd4518d3f9381005b46e708099e8c51ddff8b226f3856154f4f109b828c9",
+      "tests/benchmark/learning/test_evaluation_a_kernel.py": "8c11badf1a35aa9df724e17d48eb88eb7015b4458f18f07eea83e6ecef8191f0",
+      "tests/benchmark/learning/test_imagination.py": "91ca37716c8e14687dbf1d9f8bf2ae2a445c16dadaf0f16bc6106672d053cb29",
+      "tests/benchmark/learning/test_imagined_update.py": "dc77568d86db16b1a73d0b5c63fce673c48098b03afb869efce94670f0a3fba6",
+      "tests/benchmark/learning/test_ir2_policy_parity.py": "d7c3ffd9a0a5d21abd19dc3a622ac709201ad902fc6ed4848af7d761472be015",
+      "tests/benchmark/learning/test_parallel_a.py": "a99978d4912166a855ea6f8d6bb2ea48452c994285994e48ca24f89be2d0b5a1",
+      "tests/benchmark/learning/test_plan_labels.py": "1dfcf266783b7a4dc03033d7388e1040b3ff0d08fbd50e48b91665619a5a13e5",
+      "tests/benchmark/learning/test_plan_predictor.py": "787091da61136c10feaf2e5abac05532f0294b5d96e1bf00117dcc5260ae46d6",
+      "tests/benchmark/learning/test_replay.py": "49d31cfff76d03a2c1ae38da8f75a616af31eb60d9c2221d14f5131c88c8d86d",
+      "tests/benchmark/learning/test_returns.py": "780ec96b20283175949a3ca986e31054cf2c7be6f05255a163ce5476083a762f",
+      "tests/benchmark/learning/test_storage.py": "281e5691800e69fb02987de8a6a13a2857f847b30aa8870eb99f0800808560e5",
+      "tests/benchmark/learning/test_train_a.py": "2af2fe0554a0939e034697079cf2b7247854dbafba4763531d84dad3e88e12a8",
+      "tests/benchmark/learning/test_training_recording_a.py": "a5c069c1bc19f8451dbb4d5cede5809fd08b9786a29617ec73ba1c30ce59346d",
+      "tests/benchmark/learning/test_world_model.py": "a230446698f28cfd1f9f7e9b5bce1dd2d0a70d6b188c42f28e7ab74297e7def7",
+      "tests/benchmark/test_runtime.py": "f3ef2636ee26bb1fb7d89d6609c948f03487df03f2cbcb9c9eda5c49a77f4590",
+      "tests/benchmark/unit/test_channel.py": "9d60e87c9de3bb6ac8be0de871446978b9ca8f111be696883c13736056f70d2f",
+      "tests/benchmark/unit/test_ledger.py": "d05a1169c3f949cc00ebec5996009bbbd29e5338b47310fdfe5b51b934753150",
+      "tests/benchmark/unit/test_maps.py": "fe686fd8436be8657dae49495b3d21ea437f01bccc36159499e3925d2a0db263",
+      "tests/benchmark/unit/test_metrics.py": "e7ef82ea54b793816ed3b23b77f01857f3786b5130848f16e54992907c9bcb28",
+      "tests/benchmark/unit/test_navigation.py": "02913fa9c0595486d65557a2f7754a0bfb7c0ca0500f0dbb3060b261e7d13845",
+      "tests/benchmark/unit/test_packet.py": "053a87f1dcb65555d0588c120b1d7cfaed49ada9ee3e43938149cf6091708c98",
+      "tests/benchmark/unit/test_sensing.py": "9357ce3a798147bb96a434f596a5fca6167731d26ddfd81d36ad9a4044383313",
+      "tests/benchmark/unit/test_signal.py": "02ba937c5d0012086675ac695193281bf43b19b93faf27093bbdf8d5f19dd8fb",
+      "tests/benchmark/visualization/test_recording.py": "744c9f42df410bb87c34c3d3a7dc62cf1131b9fa7e0db04e677cb50812f7e804",
+      "tests/benchmark/visualization/test_render.py": "cae3143586b6fe743dbb59b78bcb6c4e6771ce1ca6c06bac5e12068391d91d74"
+    },
+    "normalization": "Exact Git LF source bytes; .gitattributes fixes dataset exports under core.autocrlf=true."
+  },
+  "execution_initial": {
+    "status": "failed",
+    "started": "2026-11-14T05:44:24.914697+00:00",
+    "runs": [
+      {
+        "name": "dataset",
+        "command": [
+          "/home/user/anaconda3/envs/ex/bin/python",
+          "scripts/audit_map_dataset.py",
+          "--data-root",
+          "/home/user/Tz/ir2-benchmark",
+          "--output",
+          "/home/user/Tz/acceptance/phase3-20261114/results",
+          "--workers",
+          "16",
+          "--reference-git-inputs",
+          "/home/user/Tz/acceptance/phase3-20261114/git-inputs.json.gz"
+        ],
+        "pid": 618725,
+        "status": "passed",
+        "started": 669206.594979034,
+        "exit_code": 0,
+        "elapsed_seconds": 200.03272313892376
+      },
+      {
+        "name": "tests",
+        "command": [
+          "/home/user/anaconda3/envs/ex/bin/python",
+          "-m",
+          "pytest",
+          "tests/benchmark/unit/test_maps.py",
+          "tests/benchmark/evaluation/test_sampler.py",
+          "tests/benchmark/evaluation/test_validation.py",
+          "tests/benchmark/integration/test_phase3_acceptance.py",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "-p",
+          "acceptance_probe",
+          "--junitxml=/home/user/Tz/acceptance/phase3-20261114/results/phase3.xml"
+        ],
+        "pid": 618726,
+        "status": "failed",
+        "started": 669206.596110099,
+        "exit_code": 1,
+        "elapsed_seconds": 34.00548410601914
+      }
+    ],
+    "runtime": {
+      "python": "3.11.0 (main, Mar  1 2023, 18:26:19) [GCC 11.2.0]",
+      "executable": "/home/user/anaconda3/envs/ex/bin/python",
+      "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+      "host": "user-MZ73-LM1-000",
+      "backend": "gpu",
+      "devices": [
+        "cuda:0"
+      ],
+      "reset_import": "/home/user/Tz/acceptance/phase3-20261114/source/src/ir2_benchmark/env/reset.py",
+      "versions": {
+        "jax": "0.4.35",
+        "jaxlib": "0.4.34",
+        "numpy": "2.0.2",
+        "scipy": "1.13.1",
+        "pillow": "13.0.0",
+        "pytest": "8.4.2"
+      },
+      "gpu": "NVIDIA H100, 550.163.01, 81559 MiB, 575 MiB"
+    },
+    "source_verification": {
+      "files": 227,
+      "mismatches": []
+    },
+    "finished": "2026-11-14T05:47:45.706056+00:00"
+  },
+  "dataset": {
+    "status": "passed",
+    "reference_commit": "28cfd09ea168057de10730b985f84643f6b152ce",
+    "png_git_tree_sha256": "89a1498d1c21a6a32929514a5936c532faf24c46de91e358f0208c7544d2cd3c",
+    "data_root": "/home/user/Tz/ir2-benchmark",
+    "workers": 16,
+    "maps": 24199,
+    "procedural_seeds_reproduced": 6900,
+    "counts": {
+      "ir2/excluded/complex": 277,
+      "ir2/excluded/difficult": 2751,
+      "ir2/excluded/easy": 6999,
+      "ir2/excluded/hybrid": 295,
+      "ir2/test/complex": 223,
+      "ir2/test/corridor": 400,
+      "ir2/test/hybrid": 105,
+      "ir2/train/difficult": 2925,
+      "ir2/train/easy": 2700,
+      "ir2/validation/difficult": 324,
+      "ir2/validation/easy": 300,
+      "procedural/ood/corridor": 100,
+      "procedural/ood/hybrid": 100,
+      "procedural/ood/rooms": 100,
+      "procedural/test/corridor": 100,
+      "procedural/test/hybrid": 100,
+      "procedural/test/rooms": 100,
+      "procedural/train/corridor": 2000,
+      "procedural/train/hybrid": 2000,
+      "procedural/train/rooms": 2000,
+      "procedural/validation/corridor": 100,
+      "procedural/validation/hybrid": 100,
+      "procedural/validation/rooms": 100
+    },
+    "exclusions": {
+      "duplicate_occupancy": 4997,
+      "test_priority": 326,
+      "missing_marker_208": 4999
+    },
+    "anchor_component_smaller_than_all_free": {},
+    "retained_unique_canonical": 13877,
+    "cross_source_overlap": 0,
+    "manifest_sha256": {
+      "artifacts/maps/ir2_manifest_enriched.jsonl": "c60e0fbe288e0c206f8dcad348b3c8f77e73534f33a0faa0eb072b4e8e7761d8",
+      "artifacts/maps/procedural/train/manifest.jsonl": "0f9ca254710d1895925012468772d8d6e46a6c7c403e01cb3f3d3e361ae86546",
+      "artifacts/maps/procedural/validation/manifest.jsonl": "730340a96e9d920fa79a29d4108ed572fc8d1a0e93ede762e822fff711386c1d",
+      "artifacts/maps/procedural/test/manifest.jsonl": "d97bf5f0cf30029008b52c5e515e7e17708967d41da46e75fe032af20148039f",
+      "artifacts/maps/procedural/ood/manifest.jsonl": "72fe2955e9848e4e688df21da6cb03b434aefea5566813694600495413f674b3"
+    },
+    "file_checksum_sha256": "249dde4ad651d8eef8390e51a21a2cd47768b4f79679fefec0f14bab7382d286",
+    "sampling": {
+      "scheduled": 108,
+      "train_records": 11625,
+      "sampler_hash": "e3f92157266140b7afc608312472bd237c7b71e215bea92095ab124b8aa0837f",
+      "fixed_validation_scenarios": 25
+    },
+    "issues": [],
+    "elapsed_seconds": 199.63106212299317
+  },
+  "supplement": {
+    "status": "passed",
+    "registry_directory_labels_verified": true,
+    "validation_hash_first_selection_verified": true,
+    "retained_shapes": {
+      "('ir2', '[1000, 1000]')": 971,
+      "('ir2', '[480, 640]')": 5400,
+      "('ir2', '[500, 500]')": 606,
+      "('procedural', '[512, 512]')": 2224,
+      "('procedural', '[768, 768]')": 2337,
+      "('procedural', '[1024, 1024]')": 2339
+    },
+    "retained_buckets": {
+      "('ir2', 1024)": 971,
+      "('ir2', 768)": 5400,
+      "('ir2', 512)": 606,
+      "('procedural', 512)": 2224,
+      "('procedural', 768)": 2337,
+      "('procedural', 1024)": 2339
+    },
+    "ir2_pixel_values": [
+      127,
+      195,
+      203,
+      208
+    ],
+    "actual_gpu_sampler_loads": [
+      {
+        "source": "ir2",
+        "family": "difficult",
+        "bucket": 512,
+        "n_agents": 4,
+        "component_area": 103125,
+        "devices": [
+          "cuda:0"
+        ]
+      },
+      {
+        "source": "ir2",
+        "family": "easy",
+        "bucket": 768,
+        "n_agents": 6,
+        "component_area": 128000,
+        "devices": [
+          "cuda:0"
+        ]
+      },
+      {
+        "source": "procedural",
+        "family": "rooms",
+        "bucket": 512,
+        "n_agents": 2,
+        "component_area": 242980,
+        "devices": [
+          "cuda:0"
+        ]
+      },
+      {
+        "source": "procedural",
+        "family": "rooms",
+        "bucket": 1024,
+        "n_agents": 4,
+        "component_area": 1001856,
+        "devices": [
+          "cuda:0"
+        ]
+      },
+      {
+        "source": "ir2",
+        "family": "difficult",
+        "bucket": 768,
+        "n_agents": 4,
+        "component_area": 128000,
+        "devices": [
+          "cuda:0"
+        ]
+      },
+      {
+        "source": "procedural",
+        "family": "rooms",
+        "bucket": 768,
+        "n_agents": 4,
+        "component_area": 564916,
+        "devices": [
+          "cuda:0"
+        ]
+      },
+      {
+        "source": "procedural",
+        "family": "corridor",
+        "bucket": 1024,
+        "n_agents": 2,
+        "component_area": 348200,
+        "devices": [
+          "cuda:0"
+        ]
+      },
+      {
+        "source": "procedural",
+        "family": "hybrid",
+        "bucket": 512,
+        "n_agents": 6,
+        "component_area": 151408,
+        "devices": [
+          "cuda:0"
+        ]
+      },
+      {
+        "source": "procedural",
+        "family": "hybrid",
+        "bucket": 768,
+        "n_agents": 2,
+        "component_area": 345880,
+        "devices": [
+          "cuda:0"
+        ]
+      },
+      {
+        "source": "procedural",
+        "family": "hybrid",
+        "bucket": 1024,
+        "n_agents": 6,
+        "component_area": 561168,
+        "devices": [
+          "cuda:0"
+        ]
+      },
+      {
+        "source": "procedural",
+        "family": "corridor",
+        "bucket": 768,
+        "n_agents": 6,
+        "component_area": 219051,
+        "devices": [
+          "cuda:0"
+        ]
+      },
+      {
+        "source": "procedural",
+        "family": "corridor",
+        "bucket": 512,
+        "n_agents": 6,
+        "component_area": 117156,
+        "devices": [
+          "cuda:0"
+        ]
+      },
+      {
+        "source": "ir2",
+        "family": "difficult",
+        "bucket": 1024,
+        "n_agents": 4,
+        "component_area": 466875,
+        "devices": [
+          "cuda:0"
+        ]
+      }
+    ],
+    "actual_loader_rejections": [
+      {
+        "field": "map_hash",
+        "reason": "training_manifest_occupancy_hash_mismatch"
+      },
+      {
+        "field": "scenario_hash",
+        "reason": "training_manifest_anchor_hash_mismatch"
+      },
+      {
+        "field": "bucket",
+        "reason": "training_manifest_bucket_mismatch"
+      }
+    ],
+    "validation_migration_unchanged_fields": [
+      "map_path",
+      "map_hash",
+      "map_scenario_hash",
+      "spawn_seed",
+      "fault_seed",
+      "n_agents",
+      "budget",
+      "max_rounds"
+    ],
+    "validation_migration_scenarios": 25,
+    "elapsed_seconds": 2.961747211054899
+  },
+  "test_result": {
+    "unique_passed": 35,
+    "failed_final": 0,
+    "skipped": 0,
+    "groups": {
+      "tests.benchmark.unit.test_maps": 17,
+      "tests.benchmark.evaluation.test_sampler": 4,
+      "tests.benchmark.evaluation.test_validation": 3,
+      "tests.benchmark.integration.test_phase3_acceptance": 11
+    }
+  },
+  "test_cases": [
+    {
+      "id": "tests.benchmark.evaluation.test_sampler::test_complete_cycle_has_exact_joint_hierarchy_frequencies",
+      "status": "passed",
+      "seconds": 0.006,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.evaluation.test_sampler::test_counter_schedule_is_order_independent_and_relocation_keeps_identity",
+      "status": "passed",
+      "seconds": 0.002,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.evaluation.test_sampler::test_easy_curriculum_is_reproducible_and_then_restores_balanced_schedule",
+      "status": "passed",
+      "seconds": 0.01,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.evaluation.test_sampler::test_missing_formal_stratum_is_rejected_instead_of_replaced",
+      "status": "passed",
+      "seconds": 0.001,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.evaluation.test_validation::test_fixed_validation_manifest_cannot_change_during_training",
+      "status": "passed",
+      "seconds": 0.001,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.evaluation.test_validation::test_validation_manifest_keeps_exact_config_identity",
+      "status": "passed",
+      "seconds": 0.001,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.evaluation.test_validation::test_validation_rejects_a_test_scene_before_loading_any_checkpoint",
+      "status": "passed",
+      "seconds": 0.005,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[2-1024]",
+      "status": "passed",
+      "seconds": 3.937,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[2-512]",
+      "status": "passed",
+      "seconds": 2.992,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[2-768]",
+      "status": "passed",
+      "seconds": 3.37,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[4-1024]",
+      "status": "passed",
+      "seconds": 3.832,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[4-512]",
+      "status": "passed",
+      "seconds": 2.614,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[4-768]",
+      "status": "passed",
+      "seconds": 3.338,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[6-1024]",
+      "status": "passed",
+      "seconds": 3.867,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[6-512]",
+      "status": "passed",
+      "seconds": 2.556,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[6-768]",
+      "status": "passed",
+      "seconds": 3.314,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase3_acceptance::test_completion_scores_anchor_component_instead_of_disconnected_free_area",
+      "status": "passed",
+      "seconds": 0.457,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase3_acceptance::test_published_validation_is_current_graph_config_and_validation_only",
+      "status": "passed",
+      "seconds": 0.106,
+      "run": "final_targeted"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_audit_keeps_image_metadata_when_source_has_no_marker",
+      "status": "passed",
+      "seconds": 0.003,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_audit_prefers_test_and_reports_every_file_when_duplicates_exist",
+      "status": "passed",
+      "seconds": 0.027,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_component_matches_independent_bfs_when_geometry_has_random_holes",
+      "status": "passed",
+      "seconds": 0.021,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_equivalent_occupancies_share_group_when_rotated_or_spawn_changed",
+      "status": "passed",
+      "seconds": 0.001,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_generator_changes_only_approved_parameter_range_when_ood_requested",
+      "status": "passed",
+      "seconds": 0.254,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_generator_has_distinct_templates_when_seed_shared",
+      "status": "passed",
+      "seconds": 0.544,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_generator_reports_rejection_instead_of_fallback_when_geometry_impossible",
+      "status": "passed",
+      "seconds": 0.001,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_generator_reproduces_connected_formal_geometry_when_seed_fixed[corridor]",
+      "status": "passed",
+      "seconds": 0.321,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_generator_reproduces_connected_formal_geometry_when_seed_fixed[hybrid]",
+      "status": "passed",
+      "seconds": 0.274,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_generator_reproduces_connected_formal_geometry_when_seed_fixed[rooms]",
+      "status": "passed",
+      "seconds": 0.407,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_metadata_backfill_does_not_reassign_split_when_existing_manifest_enriched",
+      "status": "passed",
+      "seconds": 0.001,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_oversize_bucket_is_explicit_when_source_exceeds_default_buckets",
+      "status": "passed",
+      "seconds": 0.0,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_preserves_topology_and_padding_when_prepared",
+      "status": "passed",
+      "seconds": 0.184,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_reports_map_errors_without_replacement_when_invalid[corrupt]",
+      "status": "passed",
+      "seconds": 0.03,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_reports_map_errors_without_replacement_when_invalid[insufficient_component]",
+      "status": "passed",
+      "seconds": 0.001,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_reports_map_errors_without_replacement_when_invalid[missing_marker]",
+      "status": "passed",
+      "seconds": 0.001,
+      "run": "initial_cuda"
+    },
+    {
+      "id": "tests.benchmark.unit.test_maps::test_spawn_uses_connected_cells_and_expands_radius_when_needed",
+      "status": "passed",
+      "seconds": 0.002,
+      "run": "initial_cuda"
+    }
+  ],
+  "test_runs": [
+    {
+      "name": "initial_cuda",
+      "suites": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "1",
+          "skipped": "0",
+          "tests": "35",
+          "time": "32.833",
+          "timestamp": "2026-11-14T13:44:25.975823+08:00",
+          "hostname": "user-MZ73-LM1-000"
+        }
+      ],
+      "cases": [
+        {
+          "id": "tests.benchmark.unit.test_maps::test_preserves_topology_and_padding_when_prepared",
+          "status": "passed",
+          "seconds": 0.184,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_reports_map_errors_without_replacement_when_invalid[corrupt]",
+          "status": "passed",
+          "seconds": 0.03,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_reports_map_errors_without_replacement_when_invalid[missing_marker]",
+          "status": "passed",
+          "seconds": 0.001,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_reports_map_errors_without_replacement_when_invalid[insufficient_component]",
+          "status": "passed",
+          "seconds": 0.001,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_spawn_uses_connected_cells_and_expands_radius_when_needed",
+          "status": "passed",
+          "seconds": 0.002,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_component_matches_independent_bfs_when_geometry_has_random_holes",
+          "status": "passed",
+          "seconds": 0.021,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_oversize_bucket_is_explicit_when_source_exceeds_default_buckets",
+          "status": "passed",
+          "seconds": 0.0,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_equivalent_occupancies_share_group_when_rotated_or_spawn_changed",
+          "status": "passed",
+          "seconds": 0.001,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_audit_prefers_test_and_reports_every_file_when_duplicates_exist",
+          "status": "passed",
+          "seconds": 0.027,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_generator_reproduces_connected_formal_geometry_when_seed_fixed[rooms]",
+          "status": "passed",
+          "seconds": 0.407,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_generator_reproduces_connected_formal_geometry_when_seed_fixed[corridor]",
+          "status": "passed",
+          "seconds": 0.321,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_generator_reproduces_connected_formal_geometry_when_seed_fixed[hybrid]",
+          "status": "passed",
+          "seconds": 0.274,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_generator_changes_only_approved_parameter_range_when_ood_requested",
+          "status": "passed",
+          "seconds": 0.254,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_generator_has_distinct_templates_when_seed_shared",
+          "status": "passed",
+          "seconds": 0.544,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_generator_reports_rejection_instead_of_fallback_when_geometry_impossible",
+          "status": "passed",
+          "seconds": 0.001,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_audit_keeps_image_metadata_when_source_has_no_marker",
+          "status": "passed",
+          "seconds": 0.003,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.unit.test_maps::test_metadata_backfill_does_not_reassign_split_when_existing_manifest_enriched",
+          "status": "passed",
+          "seconds": 0.001,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.evaluation.test_sampler::test_complete_cycle_has_exact_joint_hierarchy_frequencies",
+          "status": "passed",
+          "seconds": 0.006,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.evaluation.test_sampler::test_easy_curriculum_is_reproducible_and_then_restores_balanced_schedule",
+          "status": "passed",
+          "seconds": 0.01,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.evaluation.test_sampler::test_counter_schedule_is_order_independent_and_relocation_keeps_identity",
+          "status": "passed",
+          "seconds": 0.002,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.evaluation.test_sampler::test_missing_formal_stratum_is_rejected_instead_of_replaced",
+          "status": "passed",
+          "seconds": 0.001,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.evaluation.test_validation::test_validation_rejects_a_test_scene_before_loading_any_checkpoint",
+          "status": "passed",
+          "seconds": 0.005,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.evaluation.test_validation::test_fixed_validation_manifest_cannot_change_during_training",
+          "status": "passed",
+          "seconds": 0.001,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.evaluation.test_validation::test_validation_manifest_keeps_exact_config_identity",
+          "status": "passed",
+          "seconds": 0.001,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.integration.test_phase3_acceptance::test_published_validation_is_current_graph_config_and_validation_only",
+          "status": "failed",
+          "seconds": 0.001,
+          "run": "initial_cuda",
+          "message": "AssertionError: assert '7b93d73980ed...9143d0dcd0af7' == '88c77aec4fef...a30ac88e01fa7'\n  \n  - 88c77aec4fef7388064cba7a9bf5d67521cefb5becb232de2aca30ac88e01fa7\n  + 7b93d73980ed53f059ab2631d3a72e8a88dd412f3a9cabb1cff9143d0dcd0af7",
+          "trace": "def test_published_validation_is_current_graph_config_and_validation_only() -> None:\n        # Given: the actual published registry and fixed model-selection artifacts.\n        frozen = ROOT / \"artifacts/maps/validation-scenarios.jsonl\"\n        config = replace(load_config(ROOT / \"configs/receiver_ir2_graph.json\"), initial_budget=8192)\n        selection = json.loads(frozen.with_suffix(\".selection.json\").read_text())\n>       assert selection[\"manifest_hash\"] == sha256(frozen.read_bytes()).hexdigest()\nE       AssertionError: assert '7b93d73980ed...9143d0dcd0af7' == '88c77aec4fef...a30ac88e01fa7'\nE         \nE         - 88c77aec4fef7388064cba7a9bf5d67521cefb5becb232de2aca30ac88e01fa7\nE         + 7b93d73980ed53f059ab2631d3a72e8a88dd412f3a9cabb1cff9143d0dcd0af7\n\ntests/benchmark/integration/test_phase3_acceptance.py:29: AssertionError"
+        },
+        {
+          "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[2-512]",
+          "status": "passed",
+          "seconds": 2.992,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[2-768]",
+          "status": "passed",
+          "seconds": 3.37,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[2-1024]",
+          "status": "passed",
+          "seconds": 3.937,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[4-512]",
+          "status": "passed",
+          "seconds": 2.614,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[4-768]",
+          "status": "passed",
+          "seconds": 3.338,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[4-1024]",
+          "status": "passed",
+          "seconds": 3.832,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[6-512]",
+          "status": "passed",
+          "seconds": 2.556,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[6-768]",
+          "status": "passed",
+          "seconds": 3.314,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.integration.test_phase3_acceptance::test_birth_and_physical_denominator_preserve_component_and_padding[6-1024]",
+          "status": "passed",
+          "seconds": 3.867,
+          "run": "initial_cuda"
+        },
+        {
+          "id": "tests.benchmark.integration.test_phase3_acceptance::test_completion_scores_anchor_component_instead_of_disconnected_free_area",
+          "status": "passed",
+          "seconds": 0.457,
+          "run": "initial_cuda"
+        }
+      ],
+      "stdout": "........................F..........                                      [100%]\n=================================== FAILURES ===================================\n____ test_published_validation_is_current_graph_config_and_validation_only _____\n\n    def test_published_validation_is_current_graph_config_and_validation_only() -> None:\n        # Given: the actual published registry and fixed model-selection artifacts.\n        frozen = ROOT / \"artifacts/maps/validation-scenarios.jsonl\"\n        config = replace(load_config(ROOT / \"configs/receiver_ir2_graph.json\"), initial_budget=8192)\n        selection = json.loads(frozen.with_suffix(\".selection.json\").read_text())\n>       assert selection[\"manifest_hash\"] == sha256(frozen.read_bytes()).hexdigest()\nE       AssertionError: assert '7b93d73980ed...9143d0dcd0af7' == '88c77aec4fef...a30ac88e01fa7'\nE         \nE         - 88c77aec4fef7388064cba7a9bf5d67521cefb5becb232de2aca30ac88e01fa7\nE         + 7b93d73980ed53f059ab2631d3a72e8a88dd412f3a9cabb1cff9143d0dcd0af7\n\ntests/benchmark/integration/test_phase3_acceptance.py:29: AssertionError\n- generated xml file: /home/user/Tz/acceptance/phase3-20261114/results/phase3.xml -\n=========================== short test summary info ============================\nFAILED tests/benchmark/integration/test_phase3_acceptance.py::test_published_validation_is_current_graph_config_and_validation_only\n1 failed, 34 passed in 32.53s\n"
+    },
+    {
+      "name": "after_lf_export",
+      "suites": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "1",
+          "skipped": "0",
+          "tests": "1",
+          "time": "0.646",
+          "timestamp": "2026-11-14T13:49:07.906029+08:00",
+          "hostname": "user-MZ73-LM1-000"
+        }
+      ],
+      "cases": [
+        {
+          "id": "tests.benchmark.integration.test_phase3_acceptance::test_published_validation_is_current_graph_config_and_validation_only",
+          "status": "failed",
+          "seconds": 0.106,
+          "run": "after_lf_export",
+          "message": "ValueError: preset implementation mismatch; explicit migration/new run required",
+          "trace": "def test_published_validation_is_current_graph_config_and_validation_only() -> None:\n        # Given: the actual published registry and fixed model-selection artifacts.\n        frozen = ROOT / \"artifacts/maps/validation-scenarios.jsonl\"\n        config = replace(load_config(ROOT / \"configs/receiver_ir2_graph.json\"), initial_budget=8192)\n        selection = json.loads(frozen.with_suffix(\".selection.json\").read_text())\n        assert selection[\"manifest_hash\"] == sha256(frozen.read_bytes()).hexdigest()\n        candidates = {}\n        for source in manifest_sources(ROOT / \"artifacts/maps/sources.json\"):\n            for line in source.manifest.read_text().splitlines():\n                row = json.loads(line)\n                if row[\"split\"] == \"validation\" and row.get(\"exclusion_reason\") is None:\n                    family = row.get(\"family\", row.get(\"template\"))\n                    candidates[source.source, family, row[\"occupancy_hash\"]] = row[\"scenario_hash\"]\n        # When: loading the exact committed workload through the production validator.\n>       scenes = validate_manifest(frozen)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests/benchmark/integration/test_phase3_acceptance.py:38: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nsrc/ir2_benchmark/evaluation/validation.py:108: in validate_manifest\n    scenarios = tuple(read_scenario_manifest(path))\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsrc/ir2_benchmark/evaluation/scenarios.py:280: in read_scenario_manifest\n    verify_preset_manifest(row[\"config\"], row.get(\"implementations\"))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nconfig = HostConfig(n_agents=2, agent_bucket=6, sensor_radius=80, max_distance=20, plan_horizon=5, max_rounds=512, initial_budg...ge_mode='broadcast', charge_mode='attempt', send_policy='action', send_period=1, message_codec=0, custom_parameters=())\nrecorded = {'reward': {'name': 'coverage_delta', 'source_hash': '67566a0f30d2f4517ad0064487f6742c81d796125961e1310b9c64aa166cf435...me': 'attenuation', 'source_hash': '67566a0f30d2f4517ad0064487f6742c81d796125961e1310b9c64aa166cf435', 'version': '1'}}\n\n    def verify_preset_manifest(config: HostConfig, recorded: dict | None) -> None:\n        \"\"\"Refuse to resume new artifacts with a different preset implementation.\"\"\"\n        if recorded is not None and recorded != preset_manifest(config):\n>           raise ValueError(\"preset implementation mismatch; explicit migration/new run required\")\nE           ValueError: preset implementation mismatch; explicit migration/new run required\n\nsrc/ir2_benchmark/presets.py:112: ValueError"
+        }
+      ],
+      "stdout": "F                                                                        [100%]\n=================================== FAILURES ===================================\n____ test_published_validation_is_current_graph_config_and_validation_only _____\n\n    def test_published_validation_is_current_graph_config_and_validation_only() -> None:\n        # Given: the actual published registry and fixed model-selection artifacts.\n        frozen = ROOT / \"artifacts/maps/validation-scenarios.jsonl\"\n        config = replace(load_config(ROOT / \"configs/receiver_ir2_graph.json\"), initial_budget=8192)\n        selection = json.loads(frozen.with_suffix(\".selection.json\").read_text())\n        assert selection[\"manifest_hash\"] == sha256(frozen.read_bytes()).hexdigest()\n        candidates = {}\n        for source in manifest_sources(ROOT / \"artifacts/maps/sources.json\"):\n            for line in source.manifest.read_text().splitlines():\n                row = json.loads(line)\n                if row[\"split\"] == \"validation\" and row.get(\"exclusion_reason\") is None:\n                    family = row.get(\"family\", row.get(\"template\"))\n                    candidates[source.source, family, row[\"occupancy_hash\"]] = row[\"scenario_hash\"]\n        # When: loading the exact committed workload through the production validator.\n>       scenes = validate_manifest(frozen)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests/benchmark/integration/test_phase3_acceptance.py:38: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nsrc/ir2_benchmark/evaluation/validation.py:108: in validate_manifest\n    scenarios = tuple(read_scenario_manifest(path))\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsrc/ir2_benchmark/evaluation/scenarios.py:280: in read_scenario_manifest\n    verify_preset_manifest(row[\"config\"], row.get(\"implementations\"))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nconfig = HostConfig(n_agents=2, agent_bucket=6, sensor_radius=80, max_distance=20, plan_horizon=5, max_rounds=512, initial_budg...ge_mode='broadcast', charge_mode='attempt', send_policy='action', send_period=1, message_codec=0, custom_parameters=())\nrecorded = {'reward': {'name': 'coverage_delta', 'source_hash': '67566a0f30d2f4517ad0064487f6742c81d796125961e1310b9c64aa166cf435...me': 'attenuation', 'source_hash': '67566a0f30d2f4517ad0064487f6742c81d796125961e1310b9c64aa166cf435', 'version': '1'}}\n\n    def verify_preset_manifest(config: HostConfig, recorded: dict | None) -> None:\n        \"\"\"Refuse to resume new artifacts with a different preset implementation.\"\"\"\n        if recorded is not None and recorded != preset_manifest(config):\n>           raise ValueError(\"preset implementation mismatch; explicit migration/new run required\")\nE           ValueError: preset implementation mismatch; explicit migration/new run required\n\nsrc/ir2_benchmark/presets.py:112: ValueError\n- generated xml file: /home/user/Tz/acceptance/phase3-20261114/results/phase3-final.xml -\n=========================== short test summary info ============================\nFAILED tests/benchmark/integration/test_phase3_acceptance.py::test_published_validation_is_current_graph_config_and_validation_only\n1 failed in 0.21s\n"
+    },
+    {
+      "name": "final_targeted",
+      "suites": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "0",
+          "skipped": "0",
+          "tests": "1",
+          "time": "0.588",
+          "timestamp": "2026-11-14T13:53:46.291077+08:00",
+          "hostname": "user-MZ73-LM1-000"
+        }
+      ],
+      "cases": [
+        {
+          "id": "tests.benchmark.integration.test_phase3_acceptance::test_published_validation_is_current_graph_config_and_validation_only",
+          "status": "passed",
+          "seconds": 0.106,
+          "run": "final_targeted"
+        }
+      ],
+      "stdout": ".                                                                        [100%]\n- generated xml file: /home/user/Tz/acceptance/phase3-20261114/results/phase3-final.xml -\n1 passed in 0.14s\n"
+    }
+  ],
+  "initial_stale_validation_failure": {
+    "status": "failed",
+    "exception_type": "ConfigError",
+    "message": "validation: requires validation-only rows and intact configuration hashes",
+    "file": "/home/user/Tz/ir2-benchmark/artifacts/maps/validation-scenarios.jsonl"
+  },
+  "validation_migration": {
+    "base_commit": "dc7bf34ed82ee7290bdcc0db46ba8923f96f150a",
+    "old_manifest_sha256": "27b324c3c2475e8a246f8b948f9aff0cfed593441a52760374339cba1000b029",
+    "new_manifest_sha256": "0112548680511201eb0ef714429761da90de16951ade41578341111f7cb6b3b1",
+    "unchanged_fields": [
+      "map_path",
+      "map_hash",
+      "map_scenario_hash",
+      "spawn_seed",
+      "fault_seed",
+      "n_agents",
+      "budget",
+      "max_rounds"
+    ],
+    "scenarios": 25,
+    "navigation_mode": "ir2_graph",
+    "k_size": 30,
+    "initial_budget": 8192,
+    "implementation_source_hash": "bfe667f1cf6fa9515e6828935889c309b4984faea36af2fb45948ee19f17aaee"
+  },
+  "checksum_manifest": {
+    "path": "research/evidence/phase3-data-files-20261114.sha256",
+    "sha256": "249dde4ad651d8eef8390e51a21a2cd47768b4f79679fefec0f14bab7382d286",
+    "files": 24199,
+    "bytes": 2626461,
+    "paths_equal_committed_png_tree": true
+  },
+  "deployment_corrections": {
+    "early_launch_before_source_upload_completed": "Traceback (most recent call last):\n  File \"/home/user/Tz/acceptance/phase3-20261114/runner.py\", line 4, in <module>\n    sys.path.insert(0,str(SOURCE/'src'));sys.dont_write_bytecode=True;os.chdir(SOURCE)\n                                                                      ^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/user/Tz/acceptance/phase3-20261114/source'\n",
+    "initial_export": {
+      "commit": "28cfd09ea168057de10730b985f84643f6b152ce",
+      "archive_sha256": "164bad1f4cb40b658390c8578e1cdc50a967df927df46442534731f3954de2d6"
+    },
+    "lf_normalization": {
+      "commit": "1b4ca363b17007a64a700c4795ea572a0950e814",
+      "files_checked": 228,
+      "only_crlf_to_lf_normalized": [
+        ".gitignore",
+        "LICENSE.txt",
+        "NOTICE",
+        "README.md",
+        "artifacts/maps/sources.json",
+        "artifacts/maps/validation-scenarios.jsonl",
+        "artifacts/maps/validation-scenarios.selection.json",
+        "configs/a/fixed_predict.json",
+        "configs/a/fixed_zoh.json",
+        "configs/a/learned_predict.json",
+        "configs/a/learned_zoh.json",
+        "configs/a/no_neighbor_plan.json",
+        "configs/a/receiver_ir2_graph.json",
+        "configs/a/receiver_map_communication.json",
+        "configs/a/receiver_onehop.json",
+        "configs/a/receiver_pretrain.json",
+        "configs/a/receiver_pretrain_minibatch.json",
+        "configs/b/fixed_predict.json",
+        "configs/b/fixed_zoh.json",
+        "configs/b/learned_predict.json",
+        "configs/b/learned_zoh.json",
+        "configs/b/no_neighbor_plan.json",
+        "configs/b/real_updates.json",
+        "configs/default.json",
+        "configs/evaluation/auxiliary.json",
+        "configs/evaluation/core.json",
+        "configs/evaluation/team_budget.json",
+        "configs/evaluation/unlimited.json",
+        "configs/micro.json",
+        "configs/receiver_ir2_graph.json",
+        "configs/receiver_ir2_graph_fusion.json",
+        "configs/receiver_onehop.json",
+        "configs/receiver_onehop_fusion.json",
+        "configs/receiver_pretrain.json",
+        "driver.py",
+        "env.py",
+        "graph.py",
+        "graph_generator.py",
+        "model.py",
+        "multi_robot_worker.py",
+        "node.py",
+        "parameter.py",
+        "pyproject.toml",
+        "requirement.txt",
+        "requirements-server.txt",
+        "robot.py",
+        "runner.py",
+        "scripts/audit_map_dataset.py",
+        "sensor.py",
+        "src/ir2_benchmark/__init__.py",
+        "src/ir2_benchmark/agents/__init__.py",
+        "src/ir2_benchmark/agents/actor.py",
+        "src/ir2_benchmark/agents/critic.py",
+        "src/ir2_benchmark/agents/fixed_comm.py",
+        "src/ir2_benchmark/agents/heuristic.py",
+        "src/ir2_benchmark/cli.py",
+        "src/ir2_benchmark/codecs/__init__.py",
+        "src/ir2_benchmark/codecs/packet.py",
+        "src/ir2_benchmark/codecs/standard.py",
+        "src/ir2_benchmark/commands/__init__.py",
+        "src/ir2_benchmark/commands/common.py",
+        "src/ir2_benchmark/commands/evaluate.py",
+        "src/ir2_benchmark/commands/options.py",
+        "src/ir2_benchmark/commands/performance.py",
+        "src/ir2_benchmark/commands/train.py",
+        "src/ir2_benchmark/communication/__init__.py",
+        "src/ir2_benchmark/communication/channel.py",
+        "src/ir2_benchmark/communication/faults.py",
+        "src/ir2_benchmark/communication/ledger.py",
+        "src/ir2_benchmark/communication/propagation.py",
+        "src/ir2_benchmark/communication/sending.py",
+        "src/ir2_benchmark/communication/signal.py",
+        "src/ir2_benchmark/config.py",
+        "src/ir2_benchmark/env/__init__.py",
+        "src/ir2_benchmark/env/artifacts.py",
+        "src/ir2_benchmark/env/ir2_observation.py",
+        "src/ir2_benchmark/env/observe.py",
+        "src/ir2_benchmark/env/reset.py",
+        "src/ir2_benchmark/env/rewards.py",
+        "src/ir2_benchmark/env/rollout.py",
+        "src/ir2_benchmark/env/scenarios.py",
+        "src/ir2_benchmark/env/step.py",
+        "src/ir2_benchmark/evaluation/__init__.py",
+        "src/ir2_benchmark/evaluation/batching.py",
+        "src/ir2_benchmark/evaluation/budgets.py",
+        "src/ir2_benchmark/evaluation/diagnostics.py",
+        "src/ir2_benchmark/evaluation/episode.py",
+        "src/ir2_benchmark/evaluation/errors.py",
+        "src/ir2_benchmark/evaluation/figures.py",
+        "src/ir2_benchmark/evaluation/metrics.py",
+        "src/ir2_benchmark/evaluation/plan_quality.py",
+        "src/ir2_benchmark/evaluation/records.py",
+        "src/ir2_benchmark/evaluation/recovery.py",
+        "src/ir2_benchmark/evaluation/release.py",
+        "src/ir2_benchmark/evaluation/report.py",
+        "src/ir2_benchmark/evaluation/runner.py",
+        "src/ir2_benchmark/evaluation/scenarios.py",
+        "src/ir2_benchmark/evaluation/scope.py",
+        "src/ir2_benchmark/evaluation/statistics.py",
+        "src/ir2_benchmark/evaluation/tables.py",
+        "src/ir2_benchmark/evaluation/throughput.py",
+        "src/ir2_benchmark/evaluation/timing.py",
+        "src/ir2_benchmark/evaluation/validation.py",
+        "src/ir2_benchmark/evaluation/workload.py",
+        "src/ir2_benchmark/maps/__init__.py",
+        "src/ir2_benchmark/maps/generate.py",
+        "src/ir2_benchmark/maps/manifest.py",
+        "src/ir2_benchmark/maps/prepare.py",
+        "src/ir2_benchmark/maps/sampler.py",
+        "src/ir2_benchmark/models/__init__.py",
+        "src/ir2_benchmark/models/encoders.py",
+        "src/ir2_benchmark/models/ir2_policy.py",
+        "src/ir2_benchmark/models/plan_predictor.py",
+        "src/ir2_benchmark/models/world_model.py",
+        "src/ir2_benchmark/navigation/__init__.py",
+        "src/ir2_benchmark/navigation/candidates.py",
+        "src/ir2_benchmark/navigation/ir2_graph.py",
+        "src/ir2_benchmark/navigation/ir2_rendezvous.py",
+        "src/ir2_benchmark/navigation/jax_path.py",
+        "src/ir2_benchmark/navigation/one_hop.py",
+        "src/ir2_benchmark/navigation/reference.py",
+        "src/ir2_benchmark/presets.py",
+        "src/ir2_benchmark/runtime.py",
+        "src/ir2_benchmark/sensing/__init__.py",
+        "src/ir2_benchmark/sensing/ir2_sensor.py",
+        "src/ir2_benchmark/sensing/jax_sensor.py",
+        "src/ir2_benchmark/sensing/reference.py",
+        "src/ir2_benchmark/training/__init__.py",
+        "src/ir2_benchmark/training/b_collect.py",
+        "src/ir2_benchmark/training/b_pools.py",
+        "src/ir2_benchmark/training/b_state.py",
+        "src/ir2_benchmark/training/b_types.py",
+        "src/ir2_benchmark/training/checkpoint.py",
+        "src/ir2_benchmark/training/collect_a.py",
+        "src/ir2_benchmark/training/comparison_a.py",
+        "src/ir2_benchmark/training/diagnostics_a.py",
+        "src/ir2_benchmark/training/dispatch_a.py",
+        "src/ir2_benchmark/training/dreamer.py",
+        "src/ir2_benchmark/training/driver_a.py",
+        "src/ir2_benchmark/training/evaluate_a.py",
+        "src/ir2_benchmark/training/evaluate_b.py",
+        "src/ir2_benchmark/training/imagination.py",
+        "src/ir2_benchmark/training/plan_losses.py",
+        "src/ir2_benchmark/training/pools_a.py",
+        "src/ir2_benchmark/training/ppo.py",
+        "src/ir2_benchmark/training/predictor_replay.py",
+        "src/ir2_benchmark/training/recording_a.py",
+        "src/ir2_benchmark/training/replay.py",
+        "src/ir2_benchmark/training/selection_a.py",
+        "src/ir2_benchmark/training/state_a.py",
+        "src/ir2_benchmark/training/storage.py",
+        "src/ir2_benchmark/training/train_a.py",
+        "src/ir2_benchmark/training/train_b.py",
+        "src/ir2_benchmark/training/world_losses.py",
+        "src/ir2_benchmark/types.py",
+        "src/ir2_benchmark/visualization/__init__.py",
+        "src/ir2_benchmark/visualization/recording.py",
+        "src/ir2_benchmark/visualization/render.py",
+        "src/ir2_benchmark/visualization/replay.py",
+        "ss_realistic_model.py",
+        "test_driver.py",
+        "test_multi_robot_worker.py",
+        "test_parameter.py",
+        "tests/benchmark/evaluation/test_auxiliary_report.py",
+        "tests/benchmark/evaluation/test_batch_runner.py",
+        "tests/benchmark/evaluation/test_budget_diagnostics.py",
+        "tests/benchmark/evaluation/test_checkpoint_scope.py",
+        "tests/benchmark/evaluation/test_parameter_cache.py",
+        "tests/benchmark/evaluation/test_recovery.py",
+        "tests/benchmark/evaluation/test_release.py",
+        "tests/benchmark/evaluation/test_release_metadata.py",
+        "tests/benchmark/evaluation/test_report.py",
+        "tests/benchmark/evaluation/test_runner.py",
+        "tests/benchmark/evaluation/test_sampler.py",
+        "tests/benchmark/evaluation/test_scenarios.py",
+        "tests/benchmark/evaluation/test_training_options.py",
+        "tests/benchmark/evaluation/test_validation.py",
+        "tests/benchmark/evaluation/test_workload_scope.py",
+        "tests/benchmark/geometry/test_ir2_graph_parity.py",
+        "tests/benchmark/geometry/test_ir2_native_trace.py",
+        "tests/benchmark/geometry/test_ir2_rendezvous_parity.py",
+        "tests/benchmark/geometry/test_ir2_sensor_parity.py",
+        "tests/benchmark/integration/test_a_comparison.py",
+        "tests/benchmark/integration/test_b_comparison.py",
+        "tests/benchmark/integration/test_b_parallel_resume.py",
+        "tests/benchmark/integration/test_event_step.py",
+        "tests/benchmark/integration/test_ir2_contract.py",
+        "tests/benchmark/integration/test_one_hop.py",
+        "tests/benchmark/integration/test_phase1_acceptance.py",
+        "tests/benchmark/integration/test_phase2_acceptance.py",
+        "tests/benchmark/integration/test_phase3_acceptance.py",
+        "tests/benchmark/integration/test_presets.py",
+        "tests/benchmark/integration/test_rollout.py",
+        "tests/benchmark/learning/test_actor.py",
+        "tests/benchmark/learning/test_b_benchmark.py",
+        "tests/benchmark/learning/test_b_evaluation_kernel.py",
+        "tests/benchmark/learning/test_b_graph_replay.py",
+        "tests/benchmark/learning/test_b_parallel.py",
+        "tests/benchmark/learning/test_evaluation_a_kernel.py",
+        "tests/benchmark/learning/test_imagination.py",
+        "tests/benchmark/learning/test_imagined_update.py",
+        "tests/benchmark/learning/test_ir2_policy_parity.py",
+        "tests/benchmark/learning/test_parallel_a.py",
+        "tests/benchmark/learning/test_plan_labels.py",
+        "tests/benchmark/learning/test_plan_predictor.py",
+        "tests/benchmark/learning/test_replay.py",
+        "tests/benchmark/learning/test_returns.py",
+        "tests/benchmark/learning/test_storage.py",
+        "tests/benchmark/learning/test_train_a.py",
+        "tests/benchmark/learning/test_training_recording_a.py",
+        "tests/benchmark/learning/test_world_model.py",
+        "tests/benchmark/test_runtime.py",
+        "tests/benchmark/unit/test_channel.py",
+        "tests/benchmark/unit/test_ledger.py",
+        "tests/benchmark/unit/test_maps.py",
+        "tests/benchmark/unit/test_metrics.py",
+        "tests/benchmark/unit/test_navigation.py",
+        "tests/benchmark/unit/test_packet.py",
+        "tests/benchmark/unit/test_sensing.py",
+        "tests/benchmark/unit/test_signal.py",
+        "tests/benchmark/visualization/test_recording.py",
+        "tests/benchmark/visualization/test_render.py"
+      ],
+      "dataset_pngs_and_manifests_unchanged": true
+    },
+    "helper_wrong_single_bucket_assumption": "Traceback (most recent call last):\n  File \"/home/user/Tz/acceptance/phase3-20261114/supplement.py\", line 27, in <module>\n    assert len(samples)==11\nAssertionError\n",
+    "helper_server_absolute_path_comparison": "Traceback (most recent call last):\n  File \"/home/user/Tz/acceptance/phase3-20261114/supplement.py\", line 44, in <module>\n    keys=['map_path','map_hash','map_scenario_hash','spawn_seed','fault_seed','n_agents','budget','max_rounds'];assert [[r[k] for k in keys] for r in old]==[[r[k] for k in keys] for r in new]\n                                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+    "current_source_and_frozen_manifests_match_exact_git_lf_bytes": true
+  },
+  "final_test_runtime": {
+    "python": "/home/user/anaconda3/envs/ex/bin/python",
+    "backend": "gpu",
+    "devices": [
+      "cuda:0"
+    ],
+    "reset_import": "/home/user/Tz/acceptance/phase3-20261114/source/src/ir2_benchmark/env/reset.py"
+  },
+  "review": {
+    "recommendation": "APPROVE",
+    "code_quality_status": "WATCH",
+    "blockers": [],
+    "report_path": "research/evidence/phase3-code-review-20261114.md",
+    "report_sha256": "f5113433309a4073627d25a423677c41e4e6286684ae4af316625f753128bd55"
+  },
+  "reproduction": {
+    "audit_cli": "PYTHONPATH=src python scripts/audit_map_dataset.py --data-root <repo> --output <evidence-directory> --workers 16 --reference-git-inputs <compact-reference.json.gz>",
+    "compact_git_reference": {
+      "commit": "28cfd09ea168057de10730b985f84643f6b152ce",
+      "manifest_blobs": {
+        "artifacts/maps/sources.json": "3bb53bda2a7ea73a1ee118ae5eba492771cfeaac",
+        "artifacts/maps/ir2_manifest_enriched.jsonl": "1b224e0b6a07576c0b8f8a987250339aaeacffb1",
+        "artifacts/maps/procedural/train/manifest.jsonl": "951f00256f58b5d7229de81250891a72ae2ead7c",
+        "artifacts/maps/procedural/validation/manifest.jsonl": "fd3b66e259da90fa390c6f410c696330a644b62e",
+        "artifacts/maps/procedural/test/manifest.jsonl": "0712996202a89b714b2208c8f060e77c45096e4c",
+        "artifacts/maps/procedural/ood/manifest.jsonl": "305aef481865907ba45e750186a8b0950d15aad6"
+      },
+      "png_tree_sha256": "89a1498d1c21a6a32929514a5936c532faf24c46de91e358f0208c7544d2cd3c",
+      "png_files": 24199
+    },
+    "server_runner_py": "import datetime,hashlib,importlib.metadata,json,os,pathlib,platform,subprocess,sys,time,traceback\nBASE=pathlib.Path(__file__).resolve().parent;SOURCE=BASE/'source';OUT=BASE/'results'\nos.environ.update(PYTHONPATH=str(SOURCE/'src')+os.pathsep+str(BASE),JAX_PLATFORMS='cuda',CUDA_VISIBLE_DEVICES='0',XLA_PYTHON_CLIENT_PREALLOCATE='false',PYTHONDONTWRITEBYTECODE='1',MPLBACKEND='Agg',OMP_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1')\nsys.path.insert(0,str(SOURCE/'src'));sys.dont_write_bytecode=True;os.chdir(SOURCE)\nr={'status':'initializing','started':datetime.datetime.now(datetime.timezone.utc).isoformat(),'runs':[]}\ndef save():(OUT/'run.json').write_text(json.dumps(r,indent=2))\ntry:\n import jax,jax.numpy as jnp\n import ir2_benchmark.env.reset as reset_module\n probe=jax.jit(lambda x:x+1)(jnp.arange(3));probe.block_until_ready();assert all(d.platform=='gpu' for d in probe.devices())\n assert pathlib.Path(reset_module.__file__).resolve().is_relative_to(SOURCE/'src')\n r['runtime']={'python':sys.version,'executable':sys.executable,'platform':platform.platform(),'host':platform.node(),'backend':jax.default_backend(),'devices':[str(d) for d in probe.devices()],'reset_import':reset_module.__file__,'versions':{n:importlib.metadata.version(n) for n in ['jax','jaxlib','numpy','scipy','pillow','pytest']},'gpu':subprocess.check_output(['nvidia-smi','--query-gpu=name,driver_version,memory.total,memory.used','--format=csv,noheader'],text=True).strip()}\n commands=[('dataset',[sys.executable,'scripts/audit_map_dataset.py','--data-root','/home/user/Tz/ir2-benchmark','--output',str(OUT),'--workers','16','--reference-git-inputs',str(BASE/'git-inputs.json.gz')]),('tests',[sys.executable,'-m','pytest','tests/benchmark/unit/test_maps.py','tests/benchmark/evaluation/test_sampler.py','tests/benchmark/evaluation/test_validation.py','tests/benchmark/integration/test_phase3_acceptance.py','-q','-p','no:cacheprovider','-p','acceptance_probe','--junitxml='+str(OUT/'phase3.xml')])]\n live=[];r['status']='running'\n for name,command in commands:\n  log=(OUT/(name+'.log')).open('w');p=subprocess.Popen(command,stdout=log,stderr=subprocess.STDOUT,env=os.environ.copy());item={'name':name,'command':command,'pid':p.pid,'status':'running','started':time.monotonic()};r['runs'].append(item);live.append((p,log,item))\n save()\n while any(p.poll() is None for p,_,_ in live):\n  for p,log,item in live:\n   if p.poll() is not None and item['status']=='running':item.update(status='passed' if p.returncode==0 else 'failed',exit_code=p.returncode,elapsed_seconds=time.monotonic()-item['started']);log.close();save()\n  time.sleep(1)\n for p,log,item in live:\n  if item['status']=='running':item.update(status='passed' if p.returncode==0 else 'failed',exit_code=p.returncode,elapsed_seconds=time.monotonic()-item['started']);log.close()\n m=json.loads((BASE/'source-manifest.json').read_text());bad=[n for n,h in m['files'].items() if hashlib.sha256((SOURCE/n).read_bytes()).hexdigest()!=h];r['source_verification']={'files':len(m['files']),'mismatches':bad};assert not bad\n r['status']='passed' if all(x['exit_code']==0 for x in r['runs']) else 'failed'\nexcept BaseException:\n r.update(status='error',exception=traceback.format_exc());print(r['exception'],flush=True)\nfinally:\n r['finished']=datetime.datetime.now(datetime.timezone.utc).isoformat();save();print(json.dumps(r,indent=2),flush=True)\n",
+    "pytest_probe_py": "import json,pathlib,sys\nimport jax,jax.numpy as jnp\nfrom ir2_benchmark.env import reset\nBASE=pathlib.Path(__file__).resolve().parent\n\ndef pytest_sessionstart(session):\n assert pathlib.Path(reset.__file__).resolve().is_relative_to(BASE/'source'/'src')\n a=jax.jit(lambda x:x+1)(jnp.arange(3));a.block_until_ready();assert all(d.platform=='gpu' for d in a.devices())\n pathlib.Path(session.config.option.xmlpath).with_suffix('.runtime.json').write_text(json.dumps({'python':sys.executable,'backend':jax.default_backend(),'devices':[str(d) for d in a.devices()],'reset_import':reset.__file__},indent=2))\n",
+    "supplement_py": "import collections,dataclasses,hashlib,json,pathlib,sys,time\nimport jax,numpy as np\nbase=pathlib.Path('/home/user/Tz/acceptance/phase3-20261114');sys.path.insert(0,str(base/'source/src'))\nfrom ir2_benchmark.commands.common import manifest_sources\nfrom ir2_benchmark.maps.sampler import TrainingMapSampler\nfrom ir2_benchmark.maps.prepare import MapError\nfrom ir2_benchmark.evaluation.validation import validate_manifest\nroot=pathlib.Path('/home/user/Tz/ir2-benchmark');sources=manifest_sources(root/'artifacts/maps/sources.json');sampler=TrainingMapSampler(sources,seed=71)\nassert pathlib.Path(sys.modules['ir2_benchmark.maps.sampler'].__file__).resolve().is_relative_to(base/'source/src')\nrows=[];by_path={};groups=collections.defaultdict(list);shapes=collections.Counter();buckets=collections.Counter();values=set()\nfor source in sources:\n for line in source.manifest.read_text().splitlines():\n  r=json.loads(line);family=r.get('family',r.get('template'));p=source.root/r['path'];by_path[str(p.resolve())]=r\n  if source.source=='ir2':assert (r['origin'],r['family'])==tuple(pathlib.PurePosixPath(r['path']).parts[:2])\n  else:assert r['split']==p.parent.name\n  if r.get('exclusion_reason') is None:\n   groups[source.source,r['split'],family].append(r)\n   shapes[source.source,str(r.get('valid_shape',[r.get('size'),r.get('size')]))]+=1\n   buckets[source.source,int(r.get('bucket',r.get('size')))]+=1\n  if source.source=='ir2':values.update(r['pixel_values'])\nscenes=validate_manifest(base/'source/artifacts/maps/validation-scenarios.jsonl')\nexpected={(source,family,r['occupancy_hash']) for (source,split,family),members in groups.items() if split=='validation' for r in sorted(members,key=lambda r:r['occupancy_hash'])[:5]}\nassert {(s.source,s.family,s.map_hash) for s in scenes}==expected\nsamples={}\nfor i in range(108):\n s=sampler.schedule(i);samples.setdefault((s.source,s.family,s.bucket),s)\nassert set(samples)=={(r.source,r.family,r.bucket) for r in sampler.records}\nloads=[];start=time.monotonic()\nfor s in samples.values():\n r=by_path[s.path];assert r['split']=='train' and not r.get('exclusion_reason');data=sampler.load(s);jax.block_until_ready(data)\n assert tuple(map(int,data.valid_shape))==tuple(r.get('valid_shape',[r.get('size'),r.get('size')]))\n assert data.occupancy.shape==(s.bucket,s.bucket)\n assert int(data.component.sum())==r['component_area']\n assert tuple(map(int,data.anchor))==tuple(r['anchor'])\n assert all(d.platform=='gpu' for d in data.occupancy.devices())\n loads.append({'source':s.source,'family':s.family,'bucket':s.bucket,'n_agents':s.n_agents,'component_area':int(data.component.sum()),'devices':[str(d) for d in data.occupancy.devices()]})\nfirst=next(iter(samples.values()));rejected=[]\nfor field,value,reason in [('map_hash','0'*64,'occupancy_hash_mismatch'),('scenario_hash','0'*64,'anchor_hash_mismatch'),('bucket',256,'bucket_mismatch')]:\n try:sampler.load(dataclasses.replace(first,**{field:value}))\n except MapError as e:\n  assert reason in e.reason;rejected.append({'field':field,'reason':e.reason})\n else:raise AssertionError('Malformed sample was accepted:'+field)\nold=[json.loads(l) for l in (root/'artifacts/maps/validation-scenarios.jsonl').read_text().splitlines()];new=[json.loads(l) for l in (base/'source/artifacts/maps/validation-scenarios.jsonl').read_text().splitlines()]\nfor r in old:r['map_path']=(root/r['map_path']).resolve().relative_to(root).as_posix()\nkeys=['map_path','map_hash','map_scenario_hash','spawn_seed','fault_seed','n_agents','budget','max_rounds'];assert [[r[k] for k in keys] for r in old]==[[r[k] for k in keys] for r in new]\nreport={'status':'passed','registry_directory_labels_verified':True,'validation_hash_first_selection_verified':True,'retained_shapes':{str(k):v for k,v in shapes.items()},'retained_buckets':{str(k):v for k,v in buckets.items()},'ir2_pixel_values':sorted(values),'actual_gpu_sampler_loads':loads,'actual_loader_rejections':rejected,'validation_migration_unchanged_fields':keys,'validation_migration_scenarios':len(new),'elapsed_seconds':time.monotonic()-start}\n(base/'results/supplement.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2))\n"
+  },
+  "notes": [
+    "Tests are deduplicated across runs: initial34passing tests plus the finally corrected artifact-binding test. Original failures remain in test_runs.",
+    "The dataset audit uses server CPUs and 16 workers for PNG, SciPy four-neighbor labels and generation. JAX test arrays and actual sampler MapInputs use CUDA.",
+    "Original-map directory labels and hash-first fixed-validation selection are checked by the recorded supplement, independently of manifest labels.",
+    "All6900 current procedural rows have empty rejection histories. Future pool-level duplicate_occupancy retries require pool-aware replay beyond standalone generate_map(requested_seed).",
+    "The13 actual training source/family/bucket strata include IR2 difficult at512,768,1024. The initial helper assumption of11 was corrected; sampling/environment code was already bucket-aware.",
+    "Fixed validation preserves exactly the public25 map paths and identities, spawn/fault seeds,N,budget and max_rounds. Older server paths were absolute; paths are compared relative to its project root.",
+    "Initial run.json retains failed status for the original artifact-binding test. Overall status is based on final per-test outcomes and the unchanged successful dataset audit.",
+    "No raster data or source-map split assignments were changed. Formal baseline training and complete evaluation matrices remain subsequent phases."
+  ],
+  "closure": {
+    "status": "passed",
+    "evaluation_maps": 1328,
+    "evaluation_splits": {
+      "test": 1028,
+      "ood": 300
+    },
+    "final_source_files_verified": 228,
+    "source_mismatches": [],
+    "data_file_checksum_verified": "249dde4ad651d8eef8390e51a21a2cd47768b4f79679fefec0f14bab7382d286"
+  }
+}

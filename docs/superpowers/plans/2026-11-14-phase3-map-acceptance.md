@@ -10,19 +10,19 @@
 
 - [x] 核对 `artifacts/maps/sources.json`、五个主 manifest 和原始文件数量。
 - [x] 阅读 `maps/{manifest,prepare,generate,sampler}.py`、validation/evaluation 加载代码和已有相关测试。
-- [ ] 从 Git 固定输入 blob 身份；服务器直接复用现有 PNG，逐文件核对，避免重复传输地图池。
-- [ ] 保存服务器版本、实际 import 路径与源文件摘要。
+- [x] 从 Git 固定输入 blob 身份；服务器直接复用现有 PNG，逐文件核对，避免重复传输地图池。
+- [x] 保存服务器版本、实际 import 路径与源文件摘要。
 
 ## 2. 全量数据 oracle
 
 文件：`scripts/audit_map_dataset.py`（独立审计，不替换环境实现）。
 
-- [ ] 逐一解码 17,299 张 IR2 与 6,900 张程序化地图；检查形状、像素、占据、marker anchor、4 连通区域和 bucket。
-- [ ] 独立重算定向占据、D4 canonical、scenario hash，核对全部 manifest 字段。
-- [ ] 独立重算 IR2 test 优先去重及各训练族 hash-first 10% 验证划分。
-- [ ] 检查所有保留 train/validation/test/OOD 集合两两 canonical 交集和程序化/原始全部数据交集。
-- [ ] 用记录的 final_seed 重现全部 6,900 张程序化地图及参数，记录任何失败；不写另一套 PNG。
-- [ ] 输出逐文件 SHA-256 清单和聚合证据，完整保留排除原因。
+- [x] 逐一解码 17,299 张 IR2 与 6,900 张程序化地图；检查形状、像素、占据、marker anchor、4 连通区域和 bucket。
+- [x] 独立重算定向占据、D4 canonical、scenario hash，核对全部 manifest 字段。
+- [x] 独立重算 IR2 test 优先去重及各训练族 hash-first 10% 验证划分。
+- [x] 检查所有保留 train/validation/test/OOD 集合两两 canonical 交集和程序化/原始全部数据交集。
+- [x] 用记录的 requested_seed 重现全部 6,900 张程序化地图及参数/拒绝历史，记录任何失败；不写另一套 PNG。
+- [x] 输出逐文件 SHA-256 清单和聚合证据，完整保留排除原因。
 
 运行入口：
 
@@ -34,11 +34,11 @@ PYTHONPATH=src python scripts/audit_map_dataset.py --data-root /home/user/Tz/ir2
 
 文件：现有 `tests/benchmark/{unit/test_maps,evaluation/test_sampler,evaluation/test_validation}.py`；必要新增验收放 `tests/benchmark/integration/test_phase3_acceptance.py`。
 
-- [ ] 用真实 registry 验证 sampler 的 train-only 选择、108 项平衡周期和 relocation 身份。
-- [ ] 核实 25 张固定验证地图均来自 validation，并且与 train/test/OOD 独立；实际执行 `validate_manifest`。
-- [ ] 若旧验证场景配置/哈希失效，记录原始失败，再按 `configs/receiver_ir2_graph.json` 重建相同地图集合，不恢复训练。
-- [ ] 在 CUDA 上对 512/768/1024 桶和 N=2/4/6 检查 reset 重现、不同且同连通区域的出生、有效边界、padding 和物理覆盖分母。
-- [ ] 运行相应既有测试及新增数据/输入边界回归；不为文档改动重复运行环境全集。
+- [x] 用真实 registry 验证 sampler 的 train-only 选择、108 项平衡周期和 relocation 身份。
+- [x] 核实 25 张固定验证地图均来自 validation，并且与 train/test/OOD 独立；实际执行 `validate_manifest`。
+- [x] 若旧验证场景配置/哈希失效，记录原始失败，再按 `configs/receiver_ir2_graph.json` 重建相同地图集合，不恢复训练。
+- [x] 在 CUDA 上对 512/768/1024 桶和 N=2/4/6 检查 reset 重现、不同且同连通区域的出生、有效边界、padding 和物理覆盖分母。
+- [x] 运行相应既有测试及新增数据/输入边界回归；不为文档改动重复运行环境全集。
 
 ```bash
 JAX_PLATFORMS=cuda PYTHONPATH=src XLA_PYTHON_CLIENT_PREALLOCATE=false python -m pytest tests/benchmark/unit/test_maps.py tests/benchmark/evaluation/test_sampler.py tests/benchmark/evaluation/test_validation.py tests/benchmark/integration/test_phase3_acceptance.py -q -p no:cacheprovider
@@ -46,7 +46,7 @@ JAX_PLATFORMS=cuda PYTHONPATH=src XLA_PYTHON_CLIENT_PREALLOCATE=false python -m 
 
 ## 4. 交付
 
-- [ ] `research/MAP_DATASET_REPORT.md`：全量统计、继承与扩展、发现/修复、证据范围和剩余阶段。
-- [ ] `research/evidence/phase3-20261114.json`：机器可读检查、失败/复验、源码和环境身份。
-- [ ] `research/evidence/phase3-data-files-20261114.sha256`：可从仓库根目录核对的文件清单。
-- [ ] 更新总审计和路线图，推送既有审计分支，保留远程必要原始证据并清理本轮临时转运包。
+- [x] `research/MAP_DATASET_REPORT.md`：全量统计、继承与扩展、发现/修复、证据范围和剩余阶段。
+- [x] `research/evidence/phase3-20261114.json`：机器可读检查、失败/复验、源码和环境身份。
+- [x] `research/evidence/phase3-data-files-20261114.sha256`：可从仓库根目录核对的文件清单。
+- [x] 更新总审计和路线图，推送既有审计分支，保留远程必要原始证据并清理本轮临时转运包。
