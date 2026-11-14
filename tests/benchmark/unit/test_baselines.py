@@ -219,20 +219,20 @@ def test_no_reachable_frontier_still_selects_a_legal_edge(utility: list[int]) ->
     assert not bool(route.invalid_action)
 
 
-@pytest.mark.parametrize("utility", [[1, 0, 0, 0], [0, 0, 0, 1]])
+@pytest.mark.parametrize("utility", [[1, 0, 0, 0, 0], [0, 0, 0, 1, 0]])
 def test_node_zero_cannot_be_a_future_target_or_transit_node(utility: list[int]) -> None:
     # Given: a nonzero current node and a frontier at, or reachable only through, node zero.
     observation = _observation(
-        [(5, 2), (2, 2), (3, 2), (6, 2)],
-        [(1, 2), (2, 0), (0, 3)],
+        [(5, 2), (2, 2), (3, 2), (6, 2), (2, 3)],
+        [(1, 2), (1, 4), (2, 0), (0, 3)],
         utility,
-        [1, 2],
+        [1, 2, 4],
         current=1,
     )
     # When: selecting a route whose later actions must obey the original node-zero mask.
     action = nearest_frontier_action(observation, HostConfig())
-    # Then: no route through node zero is selected; the ordinary legal fallback applies.
-    np.testing.assert_array_equal(action.waypoint, [3, 2])
+    # Then: the coordinate-first fallback differs from the first hop of the forbidden route.
+    np.testing.assert_array_equal(action.waypoint, [2, 3])
 
 
 @pytest.mark.parametrize(
