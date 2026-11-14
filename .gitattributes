@@ -2,4 +2,6 @@
 artifacts/maps/**/*.jsonl text eol=lf
 artifacts/maps/**/*.json text eol=lf
 research/evidence/*.sha256 text eol=lf
+research/evidence/*.json text eol=lf
+research/evidence/*.xml text eol=lf
 src/**/*.py text eol=lf

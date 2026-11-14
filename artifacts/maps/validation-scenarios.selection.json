@@ -4,7 +4,7 @@
   "seed": 0,
   "scenarios": 25,
   "split": "validation",
-  "manifest_hash": "0112548680511201eb0ef714429761da90de16951ade41578341111f7cb6b3b1",
+  "manifest_hash": "b513b3474fb78224ee2f138f79b17c32c3124d305dc4741ca31f1b486e4b3925",
   "base_config": {
     "n_agents": 4,
     "agent_bucket": 6,
@@ -15,6 +15,7 @@
     "initial_budget": 8192,
     "max_candidates": 29,
     "navigation_mode": "ir2_graph",
+    "rendezvous_mode": "strict_ir2",
     "global_graph_fusion": false,
     "graph_nodes_per_axis": 50,
     "graph_local_radius": 80,
