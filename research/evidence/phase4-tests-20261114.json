@@ -1,0 +1,1227 @@
+{
+  "status": "passed",
+  "scope": "Related Phase4 tests across recorded source revisions, not the full repository suite",
+  "all_runtime_tests_on_remote_server": true,
+  "full_repository_suite": false,
+  "raw_unique_test_names": 278,
+  "canonical_unique_cases": 275,
+  "canonical_cases_passed": 275,
+  "rename_normalization": {
+    "test_no_reachable_frontier_waits_instead_of_moving_arbitrarily": "test_no_reachable_frontier_still_selects_a_legal_edge"
+  },
+  "stages": [
+    {
+      "stage": "initial",
+      "code_commit": "945fbb8876b1c964a1d85fa36798d2675d5bd6b4",
+      "tests": 160,
+      "failures_or_skips": [
+        {
+          "case": "tests.benchmark.evaluation.test_budget_diagnostics::test_core_ids_and_old_manifest_and_result_checksums_remain_compatible",
+          "kind": "failure",
+          "message": "AssertionError: assert '90c30c74b99c...bdb3bd0d842bc' == '46ff645f70b5...763b98041add3'\n  \n  - 46ff645f70b56273f2470ad912c8656f8040cfb0e975bd8f398763b98041add3\n  + 90c30c74b99cf46834d542bfc03ecf39396bba39a70b8746cdfbdb3bd0d842bc"
+        },
+        {
+          "case": "tests.benchmark.learning.test_ir2_policy_parity::test_policy_matches_original_weights[neighbors-1]",
+          "kind": "failure",
+          "message": "RuntimeError: Unknown backend cpu. Available backends are ['cuda']"
+        },
+        {
+          "case": "tests.benchmark.learning.test_ir2_policy_parity::test_policy_matches_original_weights[neighbors-2]",
+          "kind": "failure",
+          "message": "RuntimeError: Unknown backend cpu. Available backends are ['cuda']"
+        },
+        {
+          "case": "tests.benchmark.learning.test_ir2_policy_parity::test_policy_matches_original_weights[dead_end-1]",
+          "kind": "failure",
+          "message": "RuntimeError: Unknown backend cpu. Available backends are ['cuda']"
+        },
+        {
+          "case": "tests.benchmark.learning.test_ir2_policy_parity::test_policy_matches_original_weights[dead_end-2]",
+          "kind": "failure",
+          "message": "RuntimeError: Unknown backend cpu. Available backends are ['cuda']"
+        },
+        {
+          "case": "tests.benchmark.learning.test_ir2_policy_parity::test_policy_matches_original_weights[mixed-1]",
+          "kind": "failure",
+          "message": "RuntimeError: Unknown backend cpu. Available backends are ['cuda']"
+        },
+        {
+          "case": "tests.benchmark.learning.test_ir2_policy_parity::test_policy_matches_original_weights[mixed-2]",
+          "kind": "failure",
+          "message": "RuntimeError: Unknown backend cpu. Available backends are ['cuda']"
+        },
+        {
+          "case": "tests.benchmark.learning.test_ir2_policy_parity::test_masked_log_probs_only_enables_wait_for_empty_action_set",
+          "kind": "failure",
+          "message": "AssertionError: \nNot equal to tolerance rtol=1e-07, atol=0\n\nMismatched elements: 1 / 1 (100%)\nMax absolute difference among violations: 1.1920929e-07\nMax relative difference among violations: 1.1920929e-07\n ACTUAL: array(1., dtype=float32)\n DESIRED: array(1.)"
+        }
+      ],
+      "xml": "phase4-unit-initial-20261114.xml",
+      "xml_sha256": "9440dd736ef02fce471f4e04361b4a729297bd074cac3e7133b190752f8a2fda"
+    },
+    {
+      "stage": "followup",
+      "code_commit": "e5fa4d2e24e58f580190911b9a0885f493ec0a22",
+      "tests": 66,
+      "failures_or_skips": [],
+      "xml": "phase4-unit-followup-20261114.xml",
+      "xml_sha256": "6910b90c4fd9f617e5649e73eb915d8fc9ff3915b9b75d6b6e501cd42f02d730"
+    },
+    {
+      "stage": "binding",
+      "code_commit": "d23e0731787fd45b08fbc211c654882944636cd1",
+      "tests": 127,
+      "failures_or_skips": [
+        {
+          "case": "tests.benchmark.evaluation.test_budget_diagnostics::test_core_ids_and_old_manifest_and_result_checksums_remain_compatible",
+          "kind": "failure",
+          "message": "AssertionError: assert {'checksum': ...t': 128, ...}} == {'checksum': ...t': 128, ...}}\n  \n  Omitting 1 identical items, use -vv to show\n  Differing items:\n  {'result': {'bucket': 512, 'budget': 8192, 'burst_duration': 64, 'burst_start': 128, ...}} != {'result': {'bucket': 512, 'budget': 8192, 'burst_duration': 64, 'burst_start': 128, ...}}\n  Use -v to get more diff"
+        }
+      ],
+      "xml": "phase4-unit-binding-20261114.xml",
+      "xml_sha256": "b9ae6c0b3e7b94eed6110192524293fef67bd93963432f8ee276d7d4cde4c694"
+    },
+    {
+      "stage": "fixture",
+      "code_commit": "834af518",
+      "tests": 1,
+      "failures_or_skips": [],
+      "xml": "phase4-unit-fixture-20261114.xml",
+      "xml_sha256": "54ef703803ac3079d2309c10f44e896e2b8feffde375bd73f8440236d1a2d9c6"
+    },
+    {
+      "stage": "reachable",
+      "code_commit": "748aaeb5f72a1dbaf3c83ca3ba2f75b8fb03cfb5",
+      "tests": 130,
+      "failures_or_skips": [],
+      "xml": "phase4-unit-reachable-20261114.xml",
+      "xml_sha256": "344c0777e4ed67c77e1e441684beefe3f9f864a6c018cc8ef78002247cd796fd"
+    },
+    {
+      "stage": "legal",
+      "code_commit": "016e121b7379370f306527b0986d5c247952cbb1",
+      "tests": 36,
+      "failures_or_skips": [],
+      "xml": "phase4-unit-legal-20261114.xml",
+      "xml_sha256": "d62eb7f2f8ebf1a0ecef66b9d44038621e3a5397e247723e9a2eff4a6c2d5d03"
+    },
+    {
+      "stage": "node-zero",
+      "code_commit": "a0e2039a",
+      "tests": 2,
+      "failures_or_skips": [],
+      "xml": "phase4-unit-node-zero-20261114.xml",
+      "xml_sha256": "a9005c4db2eb01a121c7f80552e51de09a28769be5fe5cb93d36c2ff24b1cc86"
+    },
+    {
+      "stage": "validation",
+      "code_commit": "016e121b7379370f306527b0986d5c247952cbb1",
+      "tests": 1,
+      "failures_or_skips": [],
+      "xml": "phase4-unit-validation-20261114.xml",
+      "xml_sha256": "22e7d912d014ec32643b2a8f4fee578347fbfdea1d5a1aaa46cb464e09515ba9"
+    }
+  ],
+  "latest_case_outcomes": {
+    "tests.benchmark.unit.test_baselines::test_frontier_beyond_neighbors_uses_shortest_route_instead_of_farthest_edge": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_frontier_selection_uses_graph_distance_instead_of_euclidean_goal_distance": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_original_slot_zero_exclusion_is_respected_with_current_node_zero": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_equal_distance_frontiers_use_target_coordinates": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_padded_positive_utility_cannot_attract_a_route": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_equal_routes_to_one_frontier_use_first_edge_coordinate_ties[candidates0]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_equal_routes_to_one_frontier_use_first_edge_coordinate_ties[candidates1]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_no_reachable_frontier_still_selects_a_legal_edge[utility0]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_no_reachable_frontier_still_selects_a_legal_edge[utility1]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_no_reachable_frontier_still_selects_a_legal_edge[utility2]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_node_zero_cannot_be_a_future_target_or_transit_node[utility0]": {
+      "passed": true,
+      "latest_stage": "node-zero"
+    },
+    "tests.benchmark.unit.test_baselines::test_node_zero_cannot_be_a_future_target_or_transit_node[utility1]": {
+      "passed": true,
+      "latest_stage": "node-zero"
+    },
+    "tests.benchmark.unit.test_baselines::test_fixed_communication_sends_at_own_four_action_intervals[off-expected0]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_fixed_communication_sends_at_own_four_action_intervals[plan-expected1]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_fixed_communication_sends_at_own_four_action_intervals[map-expected2]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_fixed_communication_sends_at_own_four_action_intervals[mixed-expected3]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_methods_keep_untrained_canonical_identities[off-nearest_frontier]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_methods_keep_untrained_canonical_identities[off-ir2_adapted]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_methods_keep_untrained_canonical_identities[plan-nearest_frontier]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_methods_keep_untrained_canonical_identities[plan-ir2_adapted]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_methods_keep_untrained_canonical_identities[map-nearest_frontier]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_methods_keep_untrained_canonical_identities[map-ir2_adapted]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_methods_keep_untrained_canonical_identities[mixed-nearest_frontier]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_methods_keep_untrained_canonical_identities[mixed-ir2_adapted]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_nearest_cache_needs_no_checkpoint_or_learner_configuration_file": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_original_npz_conversion_preserves_tensors_and_freezes_variables": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_non_float32_original_tensor_transport_is_rejected": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_ir2_cache_shares_weights_across_communication_and_rechecks_every_hit": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_ir2_missing_checkpoint_hash_is_rejected_before_loading": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_baselines_reject_legacy_observation_mode": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_baselines::test_ir2_without_parameters_does_not_initialize_a_random_policy": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.unit.test_metrics::test_auc_is_round_mean_when_full_trajectory_recorded": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.unit.test_metrics::test_auc_holds_actual_termination_value_when_success_early": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.unit.test_metrics::test_timeout_has_no_success_time_when_threshold_never_reached": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.unit.test_metrics::test_success_reports_event_offset_when_crossing_within_round": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.unit.test_metrics::test_physical_union_and_overlap_ignore_received_maps_when_maps_are_merged": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.unit.test_metrics::test_overlap_is_missing_when_no_free_cell_physically_observed": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.unit.test_metrics::test_allocation_concentration_uses_first_observer_counts_when_uneven": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.unit.test_metrics::test_communication_counts_broadcast_receivers_when_payload_exceeds_emission": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.unit.test_metrics::test_ade_fde_omit_padded_positions_when_mask_sparse": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.unit.test_metrics::test_plan_error_is_missing_when_valid_mask_empty": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.unit.test_metrics::test_xy_coordinate_normalization_roundtrips_when_rectangular": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.unit.test_metrics::test_grouped_errors_preserve_cold_start_and_phase_when_messages_missing": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.unit.test_metrics::test_short_timeout_trajectory_is_rejected_when_horizon_not_reached": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.unit.test_metrics::test_runtime_failure_is_distinct_from_timeout_when_model_raises": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.unit.test_metrics::test_nll_calibration_and_goal_error_use_valid_coordinates_when_padding_nan": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.integration.test_emission_accounting::test_success_charge_lost_send_records_wire_without_fee": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.integration.test_emission_accounting::test_attempt_charge_paid_fee_agrees_with_actual_lost_wire": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.integration.test_emission_accounting::test_ineligible_send_emits_no_bytes[1-action]": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.integration.test_emission_accounting::test_ineligible_send_emits_no_bytes[128-none]": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.integration.test_emission_accounting::test_legacy_attempt_trace_uses_paid_lengths_without_object_arrays": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.integration.test_emission_accounting::test_legacy_success_trace_rejects_unidentifiable_emissions": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.integration.test_emission_accounting::test_frozen_state_and_rollout_tail_emit_no_bytes": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.integration.test_emission_accounting::test_real_runner_persists_lost_success_charge_wire_and_fee": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.integration.test_event_step::test_later_robot_uses_new_message_and_earlier_robot_waits_until_next_turn": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.integration.test_event_step::test_observe_is_pure_and_ignores_hidden_remote_truth": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.integration.test_event_step::test_ir2_graph_observation_ignores_unsent_peer_state_and_hidden_truth": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.integration.test_event_step::test_map_delta_is_locked_before_movement_and_new_sensing": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.integration.test_event_step::test_paid_map_overlay_does_not_increase_physical_coverage": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.integration.test_event_step::test_all_dropped_transmission_still_charges_actual_packet_bytes": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.integration.test_event_step::test_link_reachability_uses_post_move_positions": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.integration.test_event_step::test_time_limit_freezes_state_without_claiming_coverage_completion": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.integration.test_event_step::test_padded_robots_never_observe_move_or_receive_budget": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.integration.test_event_step::test_compiled_event_matches_eager_state": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.integration.test_rollout::test_scripted_reference_eager_jit_and_batch_agree_each_event[2]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.integration.test_rollout::test_scripted_reference_eager_jit_and_batch_agree_each_event[4]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.integration.test_rollout::test_scripted_reference_eager_jit_and_batch_agree_each_event[6]": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.integration.test_rollout::test_scan_policy_observes_same_round_delivery_inside_each_event": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.integration.test_rollout::test_coverage_completion_freezes_remainder_of_round": {
+      "passed": true,
+      "latest_stage": "legal"
+    },
+    "tests.benchmark.evaluation.test_runner::test_resume_keeps_one_error_result_and_does_not_hide_failure_status": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_runner::test_corrupt_saved_result_is_reexecuted_instead_of_counted_complete": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_queue_flushes_same_group_without_loading_a_whole_manifest": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_queue_bound_flushes_oldest_partial_group_instead_of_accumulating_tasks": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_group_identity_does_not_include_checkpoint_hash_or_scenario_seed": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_batch_two_matches_serial_real_trajectories_and_reuses_compilation": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_bad_map_lane_is_saved_without_discarding_other_real_episodes": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_compute_failure_records_the_whole_batch_without_serial_retry[error0-oom]": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_compute_failure_records_the_whole_batch_without_serial_retry[error1-environment_error]": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_compute_failure_records_the_whole_batch_without_serial_retry[error2-model_error]": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_fixed_baselines_enter_core_without_neighbor_prediction[off-nearest_frontier]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_fixed_baselines_enter_core_without_neighbor_prediction[off-ir2_adapted]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_fixed_baselines_enter_core_without_neighbor_prediction[plan-nearest_frontier]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_fixed_baselines_enter_core_without_neighbor_prediction[plan-ir2_adapted]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_fixed_baselines_enter_core_without_neighbor_prediction[map-nearest_frontier]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_fixed_baselines_enter_core_without_neighbor_prediction[map-ir2_adapted]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_fixed_baselines_enter_core_without_neighbor_prediction[mixed-nearest_frontier]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_fixed_baselines_enter_core_without_neighbor_prediction[mixed-ir2_adapted]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_budget_utilization_uses_paid_bytes_and_preserves_unknown_cost[64-0.25]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_budget_utilization_uses_paid_bytes_and_preserves_unknown_cost[0-0.0]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_budget_utilization_uses_paid_bytes_and_preserves_unknown_cost[None-]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_report_preserves_parallel_metrics_and_fixed_policy_scope": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_requested_completion_stays_separate_from_formal_proof[limited]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_requested_completion_stays_separate_from_formal_proof[missing]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_requested_completion_stays_separate_from_formal_proof[error]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_requested_completion_stays_separate_from_formal_proof[corrupt]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_requested_completion_stays_separate_from_formal_proof[empty]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_requested_completion_stays_separate_from_formal_proof[duplicate]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_requested_completion_stays_separate_from_formal_proof[mismatched]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_declaration_checks_baseline_decision_rule": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_benchmark_reporting::test_loaded_rows_keep_absent_cost_telemetry_unknown": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_report::test_families_are_equal_weight_despite_unequal_map_counts": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_report::test_missing_training_seeds_remain_explicit_with_many_episodes": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_report::test_runtime_errors_have_no_manufactured_auc_or_success_time": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_report::test_missing_budget_is_an_incomplete_matrix_condition": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_report::test_tampered_trace_cannot_enter_a_complete_report": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_report::test_short_training_cannot_claim_a_complete_core_quota": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_auxiliary_report::test_missing_auxiliary_block_keeps_formal_incomplete_without_polluting_core_rank": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_auxiliary_report::test_team_cost_table_reports_requested_allocated_and_unallocated_bytes": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_auxiliary_report::test_learning_auxiliary_keeps_full_training_quota_while_heuristic_needs_none": {
+      "passed": true,
+      "latest_stage": "binding"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_full_small_declaration_proves_both_scopes_and_records_independent_hashes": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_one_map_cannot_stand_in_for_the_declared_full_pool": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_missing_scenario_seed_cannot_be_replaced_by_another_seed_or_duplicate": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_wrong_map_origin_or_anchor_cannot_fill_the_registered_map_bit[split-ood]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_wrong_map_origin_or_anchor_cannot_fill_the_registered_map_bit[scenario_hash-wrong-anchor]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_wrong_map_origin_or_anchor_cannot_fill_the_registered_map_bit[source-procedural]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_wrong_map_origin_or_anchor_cannot_fill_the_registered_map_bit[family-other]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_baseline_geometry_and_slots_are_verified_independently[max_rounds-1]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_baseline_geometry_and_slots_are_verified_independently[sensor_radius-2]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_baseline_geometry_and_slots_are_verified_independently[max_distance-2]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_baseline_geometry_and_slots_are_verified_independently[max_candidates-3]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_baseline_geometry_and_slots_are_verified_independently[agent_bucket-4]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_normal_ignores_irrelevant_burst_start_and_duration_metadata": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_unverified_registry_or_baseline_never_claims_complete": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_forged_duplicate_task_id_cannot_fill_a_different_maps_block": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_workload_scope::test_underfunded_unlimited_label_cannot_satisfy_the_declared_budget_diagnostic": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_budget_diagnostics::test_team_six_allocations_match_the_independent_integer_oracle[8192-1365]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_budget_diagnostics::test_team_six_allocations_match_the_independent_integer_oracle[32768-5461]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_budget_diagnostics::test_team_six_allocations_match_the_independent_integer_oracle[131072-21845]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_budget_diagnostics::test_unlimited_bound_is_exactly_one_maximum_wire_packet_for_each_own_action": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_budget_diagnostics::test_team_two_and_four_leave_no_unallocated_bytes[2]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_budget_diagnostics::test_team_two_and_four_leave_no_unallocated_bytes[4]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_budget_diagnostics::test_tagged_budget_modes_have_distinct_ids_but_keep_paired_seed_streams": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_budget_diagnostics::test_unlimited_budget_pays_every_maximum_packet_in_the_real_ledger": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_budget_diagnostics::test_core_ids_and_old_manifest_and_result_checksums_remain_compatible": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_budget_diagnostics::test_real_evaluate_planning_cli_records_budget_mode_and_allocation[team_total-budgets0-expected0]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_budget_diagnostics::test_real_evaluate_planning_cli_records_budget_mode_and_allocation[unlimited-budgets1-expected1]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_checkpoint_scope::test_each_non_path_method_field_is_fixed_across_maps[checkpoint_hash-other-weights]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_checkpoint_scope::test_each_non_path_method_field_is_fixed_across_maps[route-B]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_checkpoint_scope::test_each_non_path_method_field_is_fixed_across_maps[communication-fixed]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_checkpoint_scope::test_each_non_path_method_field_is_fixed_across_maps[estimator-zoh]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_checkpoint_scope::test_each_non_path_method_field_is_fixed_across_maps[real_training_events-1999999]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_checkpoint_scope::test_each_non_path_method_field_is_fixed_across_maps[decision_rule-greedy]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_checkpoint_scope::test_each_non_path_method_field_is_fixed_across_maps[selected_at_events-1000000]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_checkpoint_scope::test_explicit_core_method_declaration_is_required[route-B]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_checkpoint_scope::test_explicit_core_method_declaration_is_required[communication-fixed]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_checkpoint_scope::test_explicit_core_method_declaration_is_required[estimator-zoh]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_checkpoint_scope::test_real_report_rejects_mixed_checkpoints_but_allows_same_hash_relocated_path[True]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_checkpoint_scope::test_real_report_rejects_mixed_checkpoints_but_allows_same_hash_relocated_path[False]": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_checkpoint_scope::test_same_repetition_cannot_switch_weights_between_core_and_unlimited": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.evaluation.test_checkpoint_scope::test_real_report_rejects_route_that_disagrees_with_explicit_core_declaration": {
+      "passed": true,
+      "latest_stage": "initial"
+    },
+    "tests.benchmark.learning.test_ir2_policy_parity::test_policy_matches_original_weights[neighbors-1]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.learning.test_ir2_policy_parity::test_policy_matches_original_weights[neighbors-2]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.learning.test_ir2_policy_parity::test_policy_matches_original_weights[dead_end-1]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.learning.test_ir2_policy_parity::test_policy_matches_original_weights[dead_end-2]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.learning.test_ir2_policy_parity::test_policy_matches_original_weights[mixed-1]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.learning.test_ir2_policy_parity::test_policy_matches_original_weights[mixed-2]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.learning.test_ir2_policy_parity::test_native_initialization_and_feature_methods": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.learning.test_ir2_policy_parity::test_action_mask_retains_original_batch_fallback": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.learning.test_ir2_policy_parity::test_strict_actor_preserves_graph_policy_and_uses_full_graph": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.learning.test_ir2_policy_parity::test_masked_log_probs_only_enables_wait_for_empty_action_set": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_fixed_policy_statistics::test_fixed_policy_interval_requires_two_maps_in_every_valid_stratum[baseline-strata0-False]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_fixed_policy_statistics::test_fixed_policy_interval_requires_two_maps_in_every_valid_stratum[baseline-strata1-True]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_fixed_policy_statistics::test_fixed_policy_interval_requires_two_maps_in_every_valid_stratum[baseline-strata2-False]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_fixed_policy_statistics::test_fixed_policy_interval_requires_two_maps_in_every_valid_stratum[baseline-strata3-False]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_fixed_policy_statistics::test_fixed_policy_interval_requires_two_maps_in_every_valid_stratum[A-strata4-True]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_fixed_policy_statistics::test_fixed_policy_interval_requires_two_maps_in_every_valid_stratum[B-strata5-True]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[best-None-A-best_validation_auc]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[best-None-B-validation_auc]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[best-0.0-A-best_validation_auc]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[best-0.0-B-validation_auc]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[best-0.625-A-best_validation_auc]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[best-0.625-B-validation_auc]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[latest-None-A-best_validation_auc]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[latest-None-B-validation_auc]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[latest-0.0-A-best_validation_auc]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[latest-0.0-B-validation_auc]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[latest-0.625-A-best_validation_auc]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[latest-0.625-B-validation_auc]": {
+      "passed": true,
+      "latest_stage": "followup"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[result_id-other-result]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[scenario_id-other-scenario]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[method_id-B]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[route-B]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[training_seed-6]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[source-procedural]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[family-corridor]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[map_hash-other-map]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[split-ood]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[n_agents-2]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[budget-8192]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[fault_mode-2]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[drop_probability-0.2]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[burst_duration-8]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[limited-False]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[map_scenario_hash-other-anchor]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[decision_rule-unspecified]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[real_training_events-0]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[selected_at_events-None]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[budget_mode-per_robot]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[requested_team_bytes-None]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[unallocated_bytes-0]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[auxiliary_kind-heuristic]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[checkpoint_hash-other-weights]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_contradictory_identity_when_checksum_and_trace_are_intact[configuration_hash-other-config]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_missing_identity_when_task_has_no_matching_historical_default[method_id]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_missing_identity_when_task_has_no_matching_historical_default[source]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_missing_identity_when_task_has_no_matching_historical_default[limited]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_missing_identity_when_task_has_no_matching_historical_default[map_scenario_hash]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_incomplete_metrics_when_normal_outcome_is_claimed[None]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_incomplete_metrics_when_normal_outcome_is_claimed[metrics1]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_incomplete_metrics_when_normal_outcome_is_claimed[metrics2]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[auc-None]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[auc-nan]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[auc-inf]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[auc--0.1]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[auc-1.1]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[auc-True]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[final_coverage-nan]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[final_coverage-inf]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[final_coverage--0.1]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[final_coverage-1.1]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[final_coverage-0.1]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[final_coverage-0.99]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[outcome-success]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[success-True]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[timeout-False]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[success_round-1]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[success_event_offset-0]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[observed_rounds-0]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[observed_rounds-3]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[observed_rounds-5]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_invalid_metrics_when_normal_outcome_is_claimed[observed_rounds-4.0]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_inconsistent_success_times_or_threshold[None-1-1.0]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_inconsistent_success_times_or_threshold[0-1-1.0]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_inconsistent_success_times_or_threshold[3-1-1.0]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_inconsistent_success_times_or_threshold[2-3-1.0]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_inconsistent_success_times_or_threshold[2-1-0.98]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_accepts_valid_normal_and_explicit_error_results[success]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_accepts_valid_normal_and_explicit_error_results[timeout]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_accepts_valid_normal_and_explicit_error_results[model_error]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_accepts_valid_normal_and_explicit_error_results[map_error]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_accepts_valid_normal_and_explicit_error_results[oom]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_accepts_valid_normal_and_explicit_error_results[environment_error]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_accepts_success_already_reached_at_reset": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_rejects_unknown_outcome_with_absent_metrics": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_accepts_missing_appended_fields_only_when_task_uses_their_defaults": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_result_binding::test_accepts_writer_normalization_of_heuristic_decision_rule": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.unit.test_config::test_rendezvous_mode_defaults_to_original_abort_rule": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.unit.test_config::test_config_loads_reachable_only_rendezvous_mode": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.unit.test_config::test_config_rejects_unknown_rendezvous_mode": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[directed]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[bidirectional]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[repair]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[unreachable]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[below_threshold]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[at_threshold]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[disabled]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[same_node]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[wall]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_original_env_rendezvous_route_and_fallback_parity[unknown]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_batched_multiple_peers_take_maximum_and_keep_repair_for_next_peer": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_tied_routes_use_coordinates_under_permuted_node_ids": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_batched_disabled_and_enabled_peers_preserve_original_results": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.geometry.test_ir2_rendezvous_parity::test_batched_reachable_only_continues_after_unreachable_peer": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.integration.test_phase1_acceptance::test_ordered_map_episode_matches_sensor_oracle_and_retains_history[False-False]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.integration.test_phase1_acceptance::test_ordered_map_episode_matches_sensor_oracle_and_retains_history[True-False]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.integration.test_phase1_acceptance::test_ordered_map_episode_matches_sensor_oracle_and_retains_history[True-True]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.integration.test_phase1_acceptance::test_failure_latches_and_evaluation_rejects_invalid_graph[history]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.integration.test_phase1_acceptance::test_failure_latches_and_evaluation_rejects_invalid_graph[path]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.integration.test_phase1_acceptance::test_ir2_terminal_state_freezes_every_field[terminated]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.integration.test_phase1_acceptance::test_ir2_terminal_state_freezes_every_field[truncated]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.integration.test_phase1_acceptance::test_nonzero_rendezvous_observation_isolated_from_hidden_peer_truth": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.integration.test_phase1_acceptance::test_original_positive_map_difference_includes_encoding_order": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_runner::test_environment_graph_failure_is_distinct_from_invalid_model[False]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.evaluation.test_runner::test_environment_graph_failure_is_distinct_from_invalid_model[True]": {
+      "passed": true,
+      "latest_stage": "reachable"
+    },
+    "tests.benchmark.integration.test_phase3_acceptance::test_published_validation_is_current_graph_config_and_validation_only": {
+      "passed": true,
+      "latest_stage": "validation"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "preserved_counterexample_helper": "/home/user/Tz/acceptance/phase4-20261114/results/reproduction-helpers/graph_probe.py",
+  "published_counterexample_json_and_npz": true,
+  "reference_asset_retained": true,
+  "training_started": false,
+  "helper_sha256": "3ece0fd6692979b714c4e8cafc6efa55d04bc54336bab909643d2eacf6e8a6d2",
+  "removed_temporary_files": [
+    "parity_probe.py",
+    "unit-runner.log",
+    "followup-runner.log"
+  ]
+}

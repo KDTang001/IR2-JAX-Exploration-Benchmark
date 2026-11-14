@@ -1,0 +1,502 @@
+{
+  "phase": 4,
+  "status": "passed",
+  "scope": "Limited functional acceptance of eight fixed baselines and unified evaluation; not formal benchmark experiments or policy-quality certification",
+  "server_source": "/home/user/Tz/acceptance/phase4-20261114/source",
+  "server_results": "/home/user/Tz/acceptance/phase4-20261114/matrix-v4",
+  "runtime": {
+    "python": "3.11.0",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "jax": "0.4.35",
+      "jaxlib": "0.4.34",
+      "flax": "0.10.2",
+      "optax": "0.2.4",
+      "numpy": "2.0.2",
+      "scipy": "1.13.1",
+      "torch": "2.6.0+cu124",
+      "pillow": "13.0.0",
+      "pytest": "8.4.2"
+    },
+    "gpu": "NVIDIA H100, 550.163.01, 81559 MiB"
+  },
+  "source_integrity": {
+    "matched_files": 233,
+    "environment_code_commit": "016e121b7379370f306527b0986d5c247952cbb1",
+    "test_fixture_commit": "a0e2039a758ec29e5aa279f9ff8297e4f110ce05",
+    "control_suite_commit": "303023166b251480ffed2f061e3cd9a8f99d8572",
+    "publication_note": "Production/config/scripts/tests match the deployment; final README and publication metadata changes do not alter the evaluated package."
+  },
+  "acceptance": {
+    "status": "passed",
+    "limited": true,
+    "workers": 2,
+    "tasks": 312,
+    "roles": {
+      "paired": 288,
+      "population": 16,
+      "zero_budget": 8
+    },
+    "initial": {
+      "requested": 312,
+      "executed": 304,
+      "resumed": 8,
+      "failures": 0
+    },
+    "resume": {
+      "requested": 312,
+      "executed": 0,
+      "resumed": 312,
+      "failures": 0
+    },
+    "reference_graphs": 10,
+    "zero_budget_trajectories_equal_within_motion": true,
+    "strict_control": {
+      "summary": {
+        "requested": 1,
+        "executed": 1,
+        "resumed": 0,
+        "failures": 1
+      },
+      "result_id": "426a1153191ed1866bd97b43bca42d9deb887e3a486aa50dfc3e89602965f082",
+      "outcome": "environment_error",
+      "main_result_id": "88bd728c6c304112e3a0c9432bb9496aed8deb1c10f9f01d281460edf620254c"
+    },
+    "elapsed_seconds": 3524.014465122018
+  },
+  "main_outcomes": {
+    "timeout": 312
+  },
+  "active_agent_events": 10112,
+  "invalid_actions": 0,
+  "method_counts": {
+    "nf_off": 39,
+    "nf_plan": 39,
+    "nf_map": 39,
+    "nf_mixed": 39,
+    "ir2_off": 39,
+    "ir2_plan": 39,
+    "ir2_map": 39,
+    "ir2_mixed": 39
+  },
+  "n_agents_counts": {
+    "2": 296,
+    "4": 8,
+    "6": 8
+  },
+  "fault_counts": {
+    "0": 120,
+    "1": 96,
+    "2": 96
+  },
+  "budgets": {
+    "8192": 304,
+    "0": 8
+  },
+  "traffic_totals": {
+    "emitted_bytes": 270828,
+    "spent_bytes": 270828,
+    "delivered_payload_bytes": 232513
+  },
+  "independent_replay": {
+    "status": "passed",
+    "tasks": 312,
+    "episodes_with_measurements": 312,
+    "execution_error_records": 0,
+    "shards": [
+      {
+        "file": "oracle-a.json",
+        "sha256": "33d6e60c4fbd8cce445f12d8151f4cdaf61d7ee8291f1742d9f2c82b66ae29c8"
+      },
+      {
+        "file": "oracle-b.json",
+        "sha256": "719816af567f49b8cd3dedec8ca22d4d5aa6eaf7ecd6e7f2fdca9623dcfd4b1b"
+      }
+    ]
+  },
+  "paired_conditions": "Normal / independent dropout p=0.3 / burst rounds[4,8), separately evaluated; exogenous masks paired across methods",
+  "oracle_boundary": "Original sensor/radio/collision and host byte/coverage/accounting recomputation. Dropout uses recorded exogenous realizations; sampler separately verified in Phase2. Two disjoint audit shards cover every task exactly once in the final audit.",
+  "rendezvous": {
+    "main": "reachable_only",
+    "default_and_control": "strict_ir2",
+    "user_approved": true,
+    "extension": "An unreachable peer contributes no rendezvous utility; later reachable peers still contribute. Original strict abort remains selectable.",
+    "strict_control": {
+      "active_events": 0,
+      "allocation_concentration": null,
+      "auxiliary_kind": "",
+      "budget": 8192,
+      "budget_mode": "per_robot",
+      "burst_duration": 4,
+      "checkpoint_hash": "0a38ab8007bb64f36790d37549e70f7908cc1faba7d17a060ef0f99799193eb8",
+      "cold_start_events": 0,
+      "configuration_hash": "4d7e9585b43f741e3a66b11e9781bf90b83bb5625de8b6f681ccd3024242c0b8",
+      "decision_rule": "ir2_adapted",
+      "delivered_payload_bytes": 0,
+      "drop_probability": 0.0,
+      "emitted_bytes": 0,
+      "error": "IR2 rendezvous graph remains disconnected after the original repair procedure",
+      "family": "micro_rooms",
+      "fault_mode": 0,
+      "limited": true,
+      "map_hash": "7c18b0afa29accad48bf2e541bec0e53466f541729f26b40178404225a9d3672",
+      "map_scenario_hash": "3ea414f18dc1b8dfb8c71076909d2441f6c8396dcf038f8acb2ba2818a64a97a",
+      "method_id": "ir2_mixed",
+      "metrics": null,
+      "n_agents": 2,
+      "outcome": "environment_error",
+      "overlap": null,
+      "plan_diagnostics": false,
+      "real_training_events": 0,
+      "recovery_coverage_gain": null,
+      "requested_team_bytes": null,
+      "result_id": "426a1153191ed1866bd97b43bca42d9deb887e3a486aa50dfc3e89602965f082",
+      "route": "baseline",
+      "scenario_id": "836360be760859615413984b080b261b96b1eb570f04835d11ffedbe21c5a463",
+      "selected_at_events": null,
+      "source": "procedural",
+      "spent_bytes": null,
+      "split": "development_test",
+      "trace_file": "",
+      "trace_hash": "",
+      "training_seed": -1,
+      "unallocated_bytes": 0
+    }
+  },
+  "tests": {
+    "canonical_cases_passed": 275,
+    "raw_unique_names": 278,
+    "full_repository_suite": false,
+    "details": "phase4-tests-20261114.json"
+  },
+  "reference_parity": {
+    "graphs": 10,
+    "fp32_logprob_max_abs_error": 0.00013399124145507812,
+    "fp32_probability_max_abs_error": 3.126263618469238e-05,
+    "fp64_logprob_max_abs_error": 3.0464519795714295e-13,
+    "all_greedy_and_masks_identical": true,
+    "limits": {
+      "fp32_logprob_atol": 0.0002,
+      "fp32_probability_atol": 5e-05,
+      "fp64_atol_and_rtol": 1e-10
+    }
+  },
+  "reference_policy": {
+    "upstream_commit": "1ef6d224ae18503f4763c3cec20e05a737f95783",
+    "source_path": "model/stage2/checkpoint.pth",
+    "source_bytes": 52176462,
+    "source_sha256": "cd72ac7dbf164b8be089394154794416fc969a47d79c1072c437f6f2aa363cf3",
+    "extracted": "policy_model",
+    "tensors": 90,
+    "tensor_digest": "06aae41095fefc4c651e8c9a4d8cf14df30bcd5de18085fcbcd4f75411754ea3",
+    "npz_sha256": "0a38ab8007bb64f36790d37549e70f7908cc1faba7d17a060ef0f99799193eb8",
+    "npz_bytes": 5377565,
+    "dtype": [
+      "float32"
+    ],
+    "role": "external_pretrained_reference",
+    "upstream_training_exposure_to_benchmark_split": "unknown",
+    "new_training_events": 0,
+    "data_fair_retraining_completed": false
+  },
+  "report": {
+    "requested_manifest_complete": true,
+    "formal_complete": false,
+    "core_complete": false,
+    "auxiliary_complete": true,
+    "requested": 312,
+    "requested_unique_tasks": 312,
+    "duplicate_requested_tasks": 0,
+    "unmatched_requested_results": 0,
+    "completed_results": 312,
+    "pending_results": 0,
+    "corrupt_records": [],
+    "limited": true,
+    "methods": [
+      {
+        "method_id": "ir2_map",
+        "auc": 0.13167602383570434,
+        "ci_low": null,
+        "ci_high": null,
+        "success_rate": 0.0,
+        "training_seeds": [
+          -1
+        ],
+        "missing_training_seeds": [],
+        "episodes": 39,
+        "errors": 0
+      },
+      {
+        "method_id": "ir2_mixed",
+        "auc": 0.13409762072195816,
+        "ci_low": null,
+        "ci_high": null,
+        "success_rate": 0.0,
+        "training_seeds": [
+          -1
+        ],
+        "missing_training_seeds": [],
+        "episodes": 39,
+        "errors": 0
+      },
+      {
+        "method_id": "ir2_off",
+        "auc": 0.12921484993144294,
+        "ci_low": null,
+        "ci_high": null,
+        "success_rate": 0.0,
+        "training_seeds": [
+          -1
+        ],
+        "missing_training_seeds": [],
+        "episodes": 39,
+        "errors": 0
+      },
+      {
+        "method_id": "ir2_plan",
+        "auc": 0.132482034600957,
+        "ci_low": null,
+        "ci_high": null,
+        "success_rate": 0.0,
+        "training_seeds": [
+          -1
+        ],
+        "missing_training_seeds": [],
+        "episodes": 39,
+        "errors": 0
+      },
+      {
+        "method_id": "nf_map",
+        "auc": 0.10709731061139055,
+        "ci_low": null,
+        "ci_high": null,
+        "success_rate": 0.0,
+        "training_seeds": [
+          -1
+        ],
+        "missing_training_seeds": [],
+        "episodes": 39,
+        "errors": 0
+      },
+      {
+        "method_id": "nf_mixed",
+        "auc": 0.10660574975144488,
+        "ci_low": null,
+        "ci_high": null,
+        "success_rate": 0.0,
+        "training_seeds": [
+          -1
+        ],
+        "missing_training_seeds": [],
+        "episodes": 39,
+        "errors": 0
+      },
+      {
+        "method_id": "nf_off",
+        "auc": 0.10709731061139055,
+        "ci_low": null,
+        "ci_high": null,
+        "success_rate": 0.0,
+        "training_seeds": [
+          -1
+        ],
+        "missing_training_seeds": [],
+        "episodes": 39,
+        "errors": 0
+      },
+      {
+        "method_id": "nf_plan",
+        "auc": 0.10667905787658316,
+        "ci_low": null,
+        "ci_high": null,
+        "success_rate": 0.0,
+        "training_seeds": [
+          -1
+        ],
+        "missing_training_seeds": [],
+        "episodes": 39,
+        "errors": 0
+      }
+    ],
+    "missing_recovery_pairs": [],
+    "weighting": "scenario_mean_then_equal_maps_then_equal_families",
+    "uncertainty": "conditional_map_bootstrap_of_fixed_policies"
+  },
+  "fixed_validation": {
+    "status": "passed",
+    "scenarios": 25,
+    "only_changed_fields": [
+      "config",
+      "config_hash",
+      "implementations",
+      "scenario_id"
+    ],
+    "manifest_hash": "b513b3474fb78224ee2f138f79b17c32c3124d305dc4741ca31f1b486e4b3925",
+    "exit_code": 0,
+    "command": [
+      "/home/user/anaconda3/envs/ex/bin/python",
+      "-m",
+      "pytest",
+      "tests/benchmark/integration/test_phase3_acceptance.py::test_published_validation_is_current_graph_config_and_validation_only",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "--junitxml=/home/user/Tz/acceptance/phase4-20261114/results/validation-refresh.xml"
+    ],
+    "map_seed_agent_budget_horizon_unchanged": true,
+    "config_representation_adds_default_strict_ir2": true,
+    "manifest": "artifacts/maps/validation-scenarios.jsonl"
+  },
+  "formal_matrix": {
+    "episodes_per_declared_main_suite": 2294784,
+    "executed": false,
+    "strict_full_suite_executed": false
+  },
+  "timing_limit": "acceptance.elapsed_seconds excludes reference parity and the initial CLI smoke; includes cold compilation, matrix, strict control, resume and report. It is not a throughput benchmark.",
+  "csv_line_endings": "LF",
+  "training_started": false,
+  "failure_history": {
+    "initial_test_failures": 8,
+    "binding_fixture_failure": 1,
+    "details": "BASELINE_EVALUATION_REPORT.md section5; raw XML and diagnostic artifacts retained",
+    "v3": {
+      "status": "interrupted_for_correctness_fix",
+      "source_commit": "748aaeb5f72a1dbaf3c83ca3ba2f75b8fb03cfb5",
+      "completed_records": 62,
+      "events_in_records": 1984,
+      "invalid_actions": {
+        "nf_plan": 9,
+        "nf_mixed": 6
+      },
+      "reason": "nearest_frontier requested a masked wait when no frontier was reachable; source corrected before final run",
+      "results_used_in_final_score": false
+    },
+    "known_invalid_oracle_rejected": {
+      "positive_episodes": 28,
+      "positive_exit_code": 0,
+      "known_invalid_result_id": "3282293197bd2d7d0af2018a47a5a9b5d8c0c1055175c874a043f7cca875919b",
+      "negative_exit_code": 1,
+      "negative_failed_at_invalid_action_check": true
+    }
+  },
+  "publication": {
+    "repository": "KDTang001/IR2-JAX-Exploration-Benchmark",
+    "branch": "audit/benchmark-foundation-2026-11-12",
+    "base_public_sha": "1c8b77cdc381bb96ba8a37128f6a8c4c928f6266",
+    "main_unchanged_sha": "ca663f725c335351ed5c8bec45960aa1478d5e36",
+    "raw_model_weights_published": false,
+    "primary_312_event_traces_published": false,
+    "diagnostic_counterexample_npz_published": true
+  },
+  "evidence_files": {
+    "phase4-cleanup-20261114.json": {
+      "sha256": "4263fdf7d8aef79df98560479bfed997eb312ea6be32952321cc243a3b8be4c0",
+      "bytes": 436
+    },
+    "phase4-code-review-20261114.md": {
+      "sha256": "9a6044fe07d45f569a487d0ae293e93ff8d8a0c3b2bf0909d494c340ceb0af1f",
+      "bytes": 25690
+    },
+    "phase4-episodes-20261114.csv": {
+      "sha256": "9e35593f4a6c5b05acc79aa47dab27e1d813992ae39358b2067e867f72e81f38",
+      "bytes": 179403
+    },
+    "phase4-graph-counterexample-20261114.json": {
+      "sha256": "d9443a692412b499d17b0b4e9f78a2db461d6f3cdde96ca7d879cbfd02fb5eb1",
+      "bytes": 480
+    },
+    "phase4-graph-counterexample-20261114.npz": {
+      "sha256": "da1a04990892d2acdf287f7e8b9bfac61825b36dbf1ef15d2557b8288f508852",
+      "bytes": 2281
+    },
+    "phase4-oracle-gates-20261114.json": {
+      "sha256": "ead50f858cdfeab4f33a15f9cc882366f3facbb947d1f17b916b6c77b3918a51",
+      "bytes": 231
+    },
+    "phase4-parity-diagnostic-20261114.json": {
+      "sha256": "a14993e83902d8a329f952e5d827a08587411c9c3e4ebb2ec83d83b18e3e487b",
+      "bytes": 3957
+    },
+    "phase4-policy-provenance-20261114.json": {
+      "sha256": "acf71053f72f99c68f12be8a181315c4cabe106510ebc40ef698eed204bcc3f2",
+      "bytes": 505
+    },
+    "phase4-reference-parity-20261114.json": {
+      "sha256": "43eb46bd6b6643c809711c613d7a465b0c3dcd04b94a57ee45713be518185365",
+      "bytes": 3005
+    },
+    "phase4-release-manifest-20261114.json": {
+      "sha256": "d0a53a600ece40aaf8448916e088f57e051deda1e85466052a56c3ab92396264",
+      "bytes": 37985
+    },
+    "phase4-run-20261114.json": {
+      "sha256": "8d31c95bb7155dbd51680878053700ddc10f58bb946e87f988e6f95a69a738d1",
+      "bytes": 28655
+    },
+    "phase4-runtime-probe-20261114.txt": {
+      "sha256": "203976a993a1531bbd332e4c80f859fc3ed5a8d3ad043ddfe0e2acf2ce59a49b",
+      "bytes": 599
+    },
+    "phase4-source-files-20261114.json": {
+      "sha256": "4cdd1703b64b9f3542d15f2029c026e216588f219447a7a2201c285865658479",
+      "bytes": 26406
+    },
+    "phase4-stages-20261114.json": {
+      "sha256": "34f7c5f4c157b78604b8f170a99fbeda19337500c3e74105bcafde29bf677e70",
+      "bytes": 9451
+    },
+    "phase4-tests-20261114.json": {
+      "sha256": "5a64a2313a7f6279def641c93904d6763b108c4c41aefc2e1473b75708d13873",
+      "bytes": 57925
+    },
+    "phase4-unit-binding-20261114.xml": {
+      "sha256": "b9ae6c0b3e7b94eed6110192524293fef67bd93963432f8ee276d7d4cde4c694",
+      "bytes": 26166
+    },
+    "phase4-unit-fixture-20261114.xml": {
+      "sha256": "54ef703803ac3079d2309c10f44e896e2b8feffde375bd73f8440236d1a2d9c6",
+      "bytes": 418
+    },
+    "phase4-unit-followup-20261114.xml": {
+      "sha256": "6910b90c4fd9f617e5649e73eb915d8fc9ff3915b9b75d6b6e501cd42f02d730",
+      "bytes": 11285
+    },
+    "phase4-unit-initial-20261114.xml": {
+      "sha256": "9440dd736ef02fce471f4e04361b4a729297bd074cac3e7133b190752f8a2fda",
+      "bytes": 56355
+    },
+    "phase4-unit-legal-20261114.xml": {
+      "sha256": "d62eb7f2f8ebf1a0ecef66b9d44038621e3a5397e247723e9a2eff4a6c2d5d03",
+      "bytes": 5577
+    },
+    "phase4-unit-node-zero-20261114.xml": {
+      "sha256": "a9005c4db2eb01a121c7f80552e51de09a28769be5fe5cb93d36c2ff24b1cc86",
+      "bytes": 547
+    },
+    "phase4-unit-reachable-20261114.xml": {
+      "sha256": "344c0777e4ed67c77e1e441684beefe3f9f864a6c018cc8ef78002247cd796fd",
+      "bytes": 21926
+    },
+    "phase4-unit-validation-20261114.xml": {
+      "sha256": "22e7d912d014ec32643b2a8f4fee578347fbfdea1d5a1aaa46cb464e09515ba9",
+      "bytes": 418
+    },
+    "phase4-v3-interruption-20261114.json": {
+      "sha256": "ffeb19dc8b5104902244948b2e9c8c288c992f665219aadfc81fb80c8fd0f712",
+      "bytes": 394
+    }
+  },
+  "review": {
+    "status": "CLEAR",
+    "recommendation": "APPROVE",
+    "blockers": [],
+    "artifact": "phase4-code-review-20261114.md"
+  },
+  "cleanup": {
+    "local_transfer_files_removed": 6,
+    "local_transfer_bytes_removed": 5808320,
+    "server_cleanup_artifact": "phase4-cleanup-20261114.json",
+    "empty_directories_not_recursively_removed": true
+  },
+  "text_evidence_line_endings": "LF"
+}

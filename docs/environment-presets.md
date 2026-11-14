@@ -31,6 +31,9 @@
 | charge_mode | attempt / success |
 | send_policy | action / none / always / periodic / 已注册自定义名称 |
 | message_codec | 0 保留方法动作；1 位置、2 目标、3 计划、4 地图增量 |
+| rendezvous_mode | strict_ir2（默认）/ reachable_only |
+
+**会合目标不可达**：`strict_ir2` 保留原版在图修复后仍不可达时中止的规则。`reachable_only` 让该队友暂不贡献会合效用，继续计算其余可达队友；不读取队友隐藏地图或补造路径。当前 `configs/benchmark.json` 显式选后者，以适应位置与稀疏地图分别通信；`configs/benchmark_strict_ir2.json` 仅切换为严格规则，供对照。自身历史、局部图生成、合法一跳约束与其他费用/故障规则不随此字段切换。
 
 **奖励**：`coverage_delta` 默认严格保持 `100 × 覆盖率增量 − 1/(机器人数量 × 512)`；可配置覆盖权重和 `reward_event_cost`。`coverage_distance` 默认使用覆盖增量和距离成本，事件成本默认 0。`sparse_success` 仅成功事件发放 `reward_success_bonus`（默认 40），超时无成功奖励，结束后的调用奖励为 0。
 

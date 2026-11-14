@@ -25,6 +25,8 @@ The published snapshot also includes map manifests and 6,900 generated maps unde
 
 The independent communication-limited benchmark is documented in [docs/benchmark-running.md](docs/benchmark-running.md). Its entry points are `doctor`, `maps`, `rollout`, `validation-manifest`, `train-a`, `train-b`, `evaluate`, `report` and `throughput`; development smoke results are separate from formal experiment completion.
 
+Current fixed baseline evaluation uses `configs/benchmark.json` and `configs/evaluation/benchmark.json`, separate from the retained A/B research configurations. Eight methods combine nearest-frontier or upstream pretrained IR2 adapted navigation with off/PLAN/MAP_DELTA/mixed communication. See the [Phase 4 acceptance report](research/BASELINE_EVALUATION_REPORT.md) for target-server evidence, reference-weight provenance and limits; this does not certify full formal benchmark experiments or a data-fair retrained IR2 model.
+
 Reward, message exchange, accounting and signal choices are described in [environment presets and custom methods](docs/environment-presets.md).
 
 Current goals, implementation limits and proposed revisions are summarized in the [discussion document](spec/spec-design-benchmark-status-and-discussion.md). On 2026-11-10, all experiment checkpoints, recordings and run outputs were removed at the user's request. The bundled reference weight was also removed; original inference scripts require a separately supplied checkpoint. No training is running.

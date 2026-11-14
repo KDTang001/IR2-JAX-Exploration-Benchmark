@@ -1,5 +1,7 @@
 # IR2-JAX Benchmark：首轮代码审计报告
 
+> 2026-11-14 Phase 4：目标服务器 conda `ex` + H100/CUDA 完成八个固定基线的 312 个限定任务、10,112 个有效 agent 事件，零执行错误、零非法动作；全量独立重算、精确续跑及零预算一致性通过。另一个严格会合规则反例按预期保留为 environment_error。分阶段相关检查去重为 275 项，最终均通过，未启动训练。修复了发射量与扣费混用、结果身份/指标校验不全和最近前沿非法等待；实测原版与 JAX 同样无法处理部分地图下的不可达队友，按用户确认新增主配置 reachable_only，strict_ir2 原规则及匹配配置仍保留。见 [Phase 4 报告](BASELINE_EVALUATION_REPORT.md)、[机器证据](evidence/phase4-20261114.json)及[逐任务数据](evidence/phase4-episodes-20261114.csv)。这是功能验收，不代表 2,294,784 个正式 episode 或探索成功率/性能验收完成。
+
 > 2026-11-14 Phase 3：目标服务器全量核对 24,199 张 PNG，并按记录种子重现全部 6,900 张程序化地图；13,877 张保留地图无 D4 canonical 重复或跨来源冲突。35 项不同测试最终通过，另核实 13 个实际 CUDA 数据加载组合和三类错误元数据拒绝。修复失效的固定验证清单及 Git 换行导致的字节/实现摘要不一致，地图、种子、8 KiB 验证预算保持不变。逐项划分、历史失败、来源与边界见 [Phase 3 报告](MAP_DATASET_REPORT.md)、[机器证据](evidence/phase3-20261114.json)及[全量文件摘要](evidence/phase3-data-files-20261114.sha256)。未启动训练。
 
 > 2026-11-14 目标环境补验：此前只在 Windows CPU 检查，遗漏了服务器功能验收。本次已在用户指定服务器的 conda `ex` + H100/CUDA 上，用提交 `1e0af0ed` 的同一源码补跑：Phase 1 73 项、Phase 2 118 项全部通过，无失败或跳过，共 191 项不同测试。四条原尺寸轨迹和六条独立链路/计费轨迹与本地逐步记录一致。源码与设备均有实际断言；预检旧安装导入问题和完整原始结果见 [远程验收证据](evidence/remote-acceptance-20261114.json)、[Phase 1 报告](IR2_PARITY_REPORT.md) 和 [Phase 2 报告](COMMUNICATION_FAULT_REPORT.md)。本次未恢复训练，尚未进行正式吞吐评测。

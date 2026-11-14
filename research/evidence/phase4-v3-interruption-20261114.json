@@ -1,0 +1,12 @@
+{
+  "status": "interrupted_for_correctness_fix",
+  "source_commit": "748aaeb5f72a1dbaf3c83ca3ba2f75b8fb03cfb5",
+  "completed_records": 62,
+  "events_in_records": 1984,
+  "invalid_actions": {
+    "nf_plan": 9,
+    "nf_mixed": 6
+  },
+  "reason": "nearest_frontier requested a masked wait when no frontier was reachable; source corrected before final run",
+  "results_used_in_final_score": false
+}

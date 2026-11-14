@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="8" skipped="0" tests="160" time="209.012" timestamp="2026-11-14T16:17:18.334155+08:00" hostname="user-MZ73-LM1-000"><testcase classname="tests.benchmark.unit.test_baselines" name="test_frontier_beyond_neighbors_uses_shortest_route_instead_of_farthest_edge" time="1.400" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_frontier_selection_uses_graph_distance_instead_of_euclidean_goal_distance" time="1.913" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_original_slot_zero_exclusion_is_respected_with_current_node_zero" time="0.841" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_equal_distance_frontiers_use_target_coordinates" time="0.099" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_padded_positive_utility_cannot_attract_a_route" time="0.802" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_equal_routes_to_one_frontier_use_first_edge_coordinate_ties[candidates0]" time="1.178" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_equal_routes_to_one_frontier_use_first_edge_coordinate_ties[candidates1]" time="0.104" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_no_reachable_frontier_waits_instead_of_moving_arbitrarily[utility0]" time="0.799" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_no_reachable_frontier_waits_instead_of_moving_arbitrarily[utility1]" time="0.099" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_no_reachable_frontier_waits_instead_of_moving_arbitrarily[utility2]" time="0.100" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_node_zero_cannot_be_a_future_target_or_transit_node[utility0]" time="0.274" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_node_zero_cannot_be_a_future_target_or_transit_node[utility1]" time="0.100" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_fixed_communication_sends_at_own_four_action_intervals[off-expected0]" time="0.050" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_fixed_communication_sends_at_own_four_action_intervals[plan-expected1]" time="0.039" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_fixed_communication_sends_at_own_four_action_intervals[map-expected2]" time="0.036" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_fixed_communication_sends_at_own_four_action_intervals[mixed-expected3]" time="0.053" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_methods_keep_untrained_canonical_identities[off-nearest_frontier]" time="0.001" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_methods_keep_untrained_canonical_identities[off-ir2_adapted]" time="0.001" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_methods_keep_untrained_canonical_identities[plan-nearest_frontier]" time="0.001" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_methods_keep_untrained_canonical_identities[plan-ir2_adapted]" time="0.001" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_methods_keep_untrained_canonical_identities[map-nearest_frontier]" time="0.001" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_methods_keep_untrained_canonical_identities[map-ir2_adapted]" time="0.001" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_methods_keep_untrained_canonical_identities[mixed-nearest_frontier]" time="0.001" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_methods_keep_untrained_canonical_identities[mixed-ir2_adapted]" time="0.001" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_nearest_cache_needs_no_checkpoint_or_learner_configuration_file" time="0.004" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_original_npz_conversion_preserves_tensors_and_freezes_variables" time="0.142" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_non_float32_original_tensor_transport_is_rejected" time="0.020" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_ir2_cache_shares_weights_across_communication_and_rechecks_every_hit" time="0.073" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_ir2_missing_checkpoint_hash_is_rejected_before_loading" time="0.001" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_baselines_reject_legacy_observation_mode" time="0.001" /><testcase classname="tests.benchmark.unit.test_baselines" name="test_ir2_without_parameters_does_not_initialize_a_random_policy" time="0.291" /><testcase classname="tests.benchmark.unit.test_metrics" name="test_auc_is_round_mean_when_full_trajectory_recorded" time="0.000" /><testcase classname="tests.benchmark.unit.test_metrics" name="test_auc_holds_actual_termination_value_when_success_early" time="0.000" /><testcase classname="tests.benchmark.unit.test_metrics" name="test_timeout_has_no_success_time_when_threshold_never_reached" time="0.001" /><testcase classname="tests.benchmark.unit.test_metrics" name="test_success_reports_event_offset_when_crossing_within_round" time="0.000" /><testcase classname="tests.benchmark.unit.test_metrics" name="test_physical_union_and_overlap_ignore_received_maps_when_maps_are_merged" time="0.000" /><testcase classname="tests.benchmark.unit.test_metrics" name="test_overlap_is_missing_when_no_free_cell_physically_observed" time="0.000" /><testcase classname="tests.benchmark.unit.test_metrics" name="test_allocation_concentration_uses_first_observer_counts_when_uneven" time="0.000" /><testcase classname="tests.benchmark.unit.test_metrics" name="test_communication_counts_broadcast_receivers_when_payload_exceeds_emission" time="0.000" /><testcase classname="tests.benchmark.unit.test_metrics" name="test_ade_fde_omit_padded_positions_when_mask_sparse" time="0.000" /><testcase classname="tests.benchmark.unit.test_metrics" name="test_plan_error_is_missing_when_valid_mask_empty" time="0.000" /><testcase classname="tests.benchmark.unit.test_metrics" name="test_xy_coordinate_normalization_roundtrips_when_rectangular" time="0.000" /><testcase classname="tests.benchmark.unit.test_metrics" name="test_grouped_errors_preserve_cold_start_and_phase_when_messages_missing" time="0.000" /><testcase classname="tests.benchmark.unit.test_metrics" name="test_short_timeout_trajectory_is_rejected_when_horizon_not_reached" time="0.000" /><testcase classname="tests.benchmark.unit.test_metrics" name="test_runtime_failure_is_distinct_from_timeout_when_model_raises" time="0.000" /><testcase classname="tests.benchmark.unit.test_metrics" name="test_nll_calibration_and_goal_error_use_valid_coordinates_when_padding_nan" time="0.000" /><testcase classname="tests.benchmark.integration.test_emission_accounting" name="test_success_charge_lost_send_records_wire_without_fee" time="8.378" /><testcase classname="tests.benchmark.integration.test_emission_accounting" name="test_attempt_charge_paid_fee_agrees_with_actual_lost_wire" time="6.611" /><testcase classname="tests.benchmark.integration.test_emission_accounting" name="test_ineligible_send_emits_no_bytes[1-action]" time="6.024" /><testcase classname="tests.benchmark.integration.test_emission_accounting" name="test_ineligible_send_emits_no_bytes[128-none]" time="6.362" /><testcase classname="tests.benchmark.integration.test_emission_accounting" name="test_legacy_attempt_trace_uses_paid_lengths_without_object_arrays" time="5.717" /><testcase classname="tests.benchmark.integration.test_emission_accounting" name="test_legacy_success_trace_rejects_unidentifiable_emissions" time="5.933" /><testcase classname="tests.benchmark.integration.test_emission_accounting" name="test_frozen_state_and_rollout_tail_emit_no_bytes" time="9.457" /><testcase classname="tests.benchmark.integration.test_emission_accounting" name="test_real_runner_persists_lost_success_charge_wire_and_fee" time="7.766" /><testcase classname="tests.benchmark.integration.test_event_step" name="test_later_robot_uses_new_message_and_earlier_robot_waits_until_next_turn" time="11.364" /><testcase classname="tests.benchmark.integration.test_event_step" name="test_observe_is_pure_and_ignores_hidden_remote_truth" time="1.837" /><testcase classname="tests.benchmark.integration.test_event_step" name="test_ir2_graph_observation_ignores_unsent_peer_state_and_hidden_truth" time="17.368" /><testcase classname="tests.benchmark.integration.test_event_step" name="test_map_delta_is_locked_before_movement_and_new_sensing" time="3.014" /><testcase classname="tests.benchmark.integration.test_event_step" name="test_paid_map_overlay_does_not_increase_physical_coverage" time="3.685" /><testcase classname="tests.benchmark.integration.test_event_step" name="test_all_dropped_transmission_still_charges_actual_packet_bytes" time="3.384" /><testcase classname="tests.benchmark.integration.test_event_step" name="test_link_reachability_uses_post_move_positions" time="4.732" /><testcase classname="tests.benchmark.integration.test_event_step" name="test_time_limit_freezes_state_without_claiming_coverage_completion" time="8.478" /><testcase classname="tests.benchmark.integration.test_event_step" name="test_padded_robots_never_observe_move_or_receive_budget" time="7.138" /><testcase classname="tests.benchmark.integration.test_event_step" name="test_compiled_event_matches_eager_state" time="5.717" /><testcase classname="tests.benchmark.integration.test_rollout" name="test_scripted_reference_eager_jit_and_batch_agree_each_event[2]" time="12.098" /><testcase classname="tests.benchmark.integration.test_rollout" name="test_scripted_reference_eager_jit_and_batch_agree_each_event[4]" time="13.283" /><testcase classname="tests.benchmark.integration.test_rollout" name="test_scripted_reference_eager_jit_and_batch_agree_each_event[6]" time="13.228" /><testcase classname="tests.benchmark.integration.test_rollout" name="test_scan_policy_observes_same_round_delivery_inside_each_event" time="5.120" /><testcase classname="tests.benchmark.integration.test_rollout" name="test_coverage_completion_freezes_remainder_of_round" time="5.632" /><testcase classname="tests.benchmark.evaluation.test_runner" name="test_resume_keeps_one_error_result_and_does_not_hide_failure_status" time="0.002" /><testcase classname="tests.benchmark.evaluation.test_runner" name="test_corrupt_saved_result_is_reexecuted_instead_of_counted_complete" time="0.002" /><testcase classname="tests.benchmark.evaluation.test_batch_runner" name="test_queue_flushes_same_group_without_loading_a_whole_manifest" time="0.001" /><testcase classname="tests.benchmark.evaluation.test_batch_runner" name="test_queue_bound_flushes_oldest_partial_group_instead_of_accumulating_tasks" time="0.001" /><testcase classname="tests.benchmark.evaluation.test_batch_runner" name="test_group_identity_does_not_include_checkpoint_hash_or_scenario_seed" time="0.001" /><testcase classname="tests.benchmark.evaluation.test_batch_runner" name="test_batch_two_matches_serial_real_trajectories_and_reuses_compilation" time="14.365" /><testcase classname="tests.benchmark.evaluation.test_batch_runner" name="test_bad_map_lane_is_saved_without_discarding_other_real_episodes" time="0.057" /><testcase classname="tests.benchmark.evaluation.test_batch_runner" name="test_compute_failure_records_the_whole_batch_without_serial_retry[error0-oom]" time="0.011" /><testcase classname="tests.benchmark.evaluation.test_batch_runner" name="test_compute_failure_records_the_whole_batch_without_serial_retry[error1-environment_error]" time="0.010" /><testcase classname="tests.benchmark.evaluation.test_batch_runner" name="test_compute_failure_records_the_whole_batch_without_serial_retry[error2-model_error]" time="0.010" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_fixed_baselines_enter_core_without_neighbor_prediction[off-nearest_frontier]" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_fixed_baselines_enter_core_without_neighbor_prediction[off-ir2_adapted]" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_fixed_baselines_enter_core_without_neighbor_prediction[plan-nearest_frontier]" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_fixed_baselines_enter_core_without_neighbor_prediction[plan-ir2_adapted]" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_fixed_baselines_enter_core_without_neighbor_prediction[map-nearest_frontier]" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_fixed_baselines_enter_core_without_neighbor_prediction[map-ir2_adapted]" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_fixed_baselines_enter_core_without_neighbor_prediction[mixed-nearest_frontier]" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_fixed_baselines_enter_core_without_neighbor_prediction[mixed-ir2_adapted]" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_budget_utilization_uses_paid_bytes_and_preserves_unknown_cost[64-0.25]" time="0.001" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_budget_utilization_uses_paid_bytes_and_preserves_unknown_cost[0-0.0]" time="0.001" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_budget_utilization_uses_paid_bytes_and_preserves_unknown_cost[None-]" time="0.001" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_report_preserves_parallel_metrics_and_fixed_policy_scope" time="0.339" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_requested_completion_stays_separate_from_formal_proof[limited]" time="0.154" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_requested_completion_stays_separate_from_formal_proof[missing]" time="0.154" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_requested_completion_stays_separate_from_formal_proof[error]" time="0.156" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_requested_completion_stays_separate_from_formal_proof[corrupt]" time="0.155" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_requested_completion_stays_separate_from_formal_proof[empty]" time="0.005" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_requested_completion_stays_separate_from_formal_proof[duplicate]" time="0.155" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_requested_completion_stays_separate_from_formal_proof[mismatched]" time="0.155" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_declaration_checks_baseline_decision_rule" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_benchmark_reporting" name="test_loaded_rows_keep_absent_cost_telemetry_unknown" time="0.003" /><testcase classname="tests.benchmark.evaluation.test_report" name="test_families_are_equal_weight_despite_unequal_map_counts" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_report" name="test_missing_training_seeds_remain_explicit_with_many_episodes" time="0.002" /><testcase classname="tests.benchmark.evaluation.test_report" name="test_runtime_errors_have_no_manufactured_auc_or_success_time" time="0.001" /><testcase classname="tests.benchmark.evaluation.test_report" name="test_missing_budget_is_an_incomplete_matrix_condition" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_report" name="test_tampered_trace_cannot_enter_a_complete_report" time="0.001" /><testcase classname="tests.benchmark.evaluation.test_report" name="test_short_training_cannot_claim_a_complete_core_quota" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_auxiliary_report" name="test_missing_auxiliary_block_keeps_formal_incomplete_without_polluting_core_rank" time="1.184" /><testcase classname="tests.benchmark.evaluation.test_auxiliary_report" name="test_team_cost_table_reports_requested_allocated_and_unallocated_bytes" time="0.001" /><testcase classname="tests.benchmark.evaluation.test_auxiliary_report" name="test_learning_auxiliary_keeps_full_training_quota_while_heuristic_needs_none" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_full_small_declaration_proves_both_scopes_and_records_independent_hashes" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_one_map_cannot_stand_in_for_the_declared_full_pool" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_missing_scenario_seed_cannot_be_replaced_by_another_seed_or_duplicate" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_wrong_map_origin_or_anchor_cannot_fill_the_registered_map_bit[split-ood]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_wrong_map_origin_or_anchor_cannot_fill_the_registered_map_bit[scenario_hash-wrong-anchor]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_wrong_map_origin_or_anchor_cannot_fill_the_registered_map_bit[source-procedural]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_wrong_map_origin_or_anchor_cannot_fill_the_registered_map_bit[family-other]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_baseline_geometry_and_slots_are_verified_independently[max_rounds-1]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_baseline_geometry_and_slots_are_verified_independently[sensor_radius-2]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_baseline_geometry_and_slots_are_verified_independently[max_distance-2]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_baseline_geometry_and_slots_are_verified_independently[max_candidates-3]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_baseline_geometry_and_slots_are_verified_independently[agent_bucket-4]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_normal_ignores_irrelevant_burst_start_and_duration_metadata" time="0.007" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_unverified_registry_or_baseline_never_claims_complete" time="0.002" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_forged_duplicate_task_id_cannot_fill_a_different_maps_block" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_workload_scope" name="test_underfunded_unlimited_label_cannot_satisfy_the_declared_budget_diagnostic" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_budget_diagnostics" name="test_team_six_allocations_match_the_independent_integer_oracle[8192-1365]" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_budget_diagnostics" name="test_team_six_allocations_match_the_independent_integer_oracle[32768-5461]" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_budget_diagnostics" name="test_team_six_allocations_match_the_independent_integer_oracle[131072-21845]" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_budget_diagnostics" name="test_unlimited_bound_is_exactly_one_maximum_wire_packet_for_each_own_action" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_budget_diagnostics" name="test_team_two_and_four_leave_no_unallocated_bytes[2]" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_budget_diagnostics" name="test_team_two_and_four_leave_no_unallocated_bytes[4]" time="0.000" /><testcase classname="tests.benchmark.evaluation.test_budget_diagnostics" name="test_tagged_budget_modes_have_distinct_ids_but_keep_paired_seed_streams" time="0.001" /><testcase classname="tests.benchmark.evaluation.test_budget_diagnostics" name="test_unlimited_budget_pays_every_maximum_packet_in_the_real_ledger" time="0.005" /><testcase classname="tests.benchmark.evaluation.test_budget_diagnostics" name="test_core_ids_and_old_manifest_and_result_checksums_remain_compatible" time="0.001"><failure message="AssertionError: assert '90c30c74b99c...bdb3bd0d842bc' == '46ff645f70b5...763b98041add3'&#10;  &#10;  - 46ff645f70b56273f2470ad912c8656f8040cfb0e975bd8f398763b98041add3&#10;  + 90c30c74b99cf46834d542bfc03ecf39396bba39a70b8746cdfbdb3bd0d842bc">tmp_path = PosixPath('/tmp/pytest-of-user/pytest-21/test_core_ids_and_old_manifest0')
+
+    def test_core_ids_and_old_manifest_and_result_checksums_remain_compatible(tmp_path: Path) -&gt; None:
+        # Given: the pre-diagnostic scenario/result formats, without new default metadata fields.
+        config = HostConfig()
+        map_data = EvaluationMap("map.png", "occupancy", "test", "ir2", "rooms", 512, "anchor")
+        scene = make_scenario(map_data, config, 0)
+        legacy_id = identity(
+            {
+                "map_hash": "occupancy",
+                "map_scenario_hash": "anchor",
+                "split": "test",
+                "spawn_seed": scene.spawn_seed,
+                "fault_seed": scene.fault_seed,
+                "config": asdict(config),
+            }
+        )
+&gt;       assert scene.scenario_id == legacy_id
+E       AssertionError: assert '90c30c74b99c...bdb3bd0d842bc' == '46ff645f70b5...763b98041add3'
+E         
+E         - 46ff645f70b56273f2470ad912c8656f8040cfb0e975bd8f398763b98041add3
+E         + 90c30c74b99cf46834d542bfc03ecf39396bba39a70b8746cdfbdb3bd0d842bc
+
+tests/benchmark/evaluation/test_budget_diagnostics.py:121: AssertionError</failure></testcase><testcase classname="tests.benchmark.evaluation.test_budget_diagnostics" name="test_real_evaluate_planning_cli_records_budget_mode_and_allocation[team_total-budgets0-expected0]" time="0.003" /><testcase classname="tests.benchmark.evaluation.test_budget_diagnostics" name="test_real_evaluate_planning_cli_records_budget_mode_and_allocation[unlimited-budgets1-expected1]" time="0.002" /><testcase classname="tests.benchmark.evaluation.test_checkpoint_scope" name="test_each_non_path_method_field_is_fixed_across_maps[checkpoint_hash-other-weights]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_checkpoint_scope" name="test_each_non_path_method_field_is_fixed_across_maps[route-B]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_checkpoint_scope" name="test_each_non_path_method_field_is_fixed_across_maps[communication-fixed]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_checkpoint_scope" name="test_each_non_path_method_field_is_fixed_across_maps[estimator-zoh]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_checkpoint_scope" name="test_each_non_path_method_field_is_fixed_across_maps[real_training_events-1999999]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_checkpoint_scope" name="test_each_non_path_method_field_is_fixed_across_maps[decision_rule-greedy]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_checkpoint_scope" name="test_each_non_path_method_field_is_fixed_across_maps[selected_at_events-1000000]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_checkpoint_scope" name="test_explicit_core_method_declaration_is_required[route-B]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_checkpoint_scope" name="test_explicit_core_method_declaration_is_required[communication-fixed]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_checkpoint_scope" name="test_explicit_core_method_declaration_is_required[estimator-zoh]" time="0.004" /><testcase classname="tests.benchmark.evaluation.test_checkpoint_scope" name="test_real_report_rejects_mixed_checkpoints_but_allows_same_hash_relocated_path[True]" time="0.596" /><testcase classname="tests.benchmark.evaluation.test_checkpoint_scope" name="test_real_report_rejects_mixed_checkpoints_but_allows_same_hash_relocated_path[False]" time="0.598" /><testcase classname="tests.benchmark.evaluation.test_checkpoint_scope" name="test_same_repetition_cannot_switch_weights_between_core_and_unlimited" time="0.005" /><testcase classname="tests.benchmark.evaluation.test_checkpoint_scope" name="test_real_report_rejects_route_that_disagrees_with_explicit_core_declaration" time="0.600" /><testcase classname="tests.benchmark.learning.test_ir2_policy_parity" name="test_policy_matches_original_weights[neighbors-1]" time="0.962"><failure message="RuntimeError: Unknown backend cpu. Available backends are ['cuda']">batch_size = 1, mask_case = 'neighbors'
+
+    @pytest.mark.parametrize("batch_size", [1, 2])
+    @pytest.mark.parametrize("mask_case", ["neighbors", "dead_end", "mixed"])
+    def test_policy_matches_original_weights(batch_size: int, mask_case: str) -&gt; None:
+        torch = pytest.importorskip("torch")
+        spec = importlib.util.spec_from_file_location(
+            "original_ir2_model", Path(__file__).resolve().parents[3] / "model.py"
+        )
+        assert spec is not None
+        assert spec.loader is not None
+        original = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(original)
+        torch.manual_seed(731)
+        reference = original.PolicyNet(6, 128).cpu().eval()
+        policy = GraphPolicy()
+        rng = np.random.default_rng(513)
+        n_nodes = 11
+        nodes = rng.normal(size=(batch_size, n_nodes, 6)).astype(np.float32)
+        node_mask = np.zeros((batch_size, n_nodes), dtype=bool)
+        node_mask[:, -2:] = True
+        nodes[:, -2:] = 0
+        edge_blocking_probability = 0.55
+        adjacency = rng.random((batch_size, n_nodes, n_nodes)) &gt; edge_blocking_probability
+        adjacency[:, np.arange(n_nodes), np.arange(n_nodes)] = False
+        adjacency[:, -1, :] = True  # Exercise original finite-mask all-blocked attention.
+        edges = np.tile(np.array([4, 7, 2, 0, 0], dtype=np.int64), (batch_size, 1))
+        current = np.full(batch_size, 4, dtype=np.int64)
+        edge_mask = np.tile(np.array([False, False, False, True, True]), (batch_size, 1))
+        if mask_case == "dead_end":
+            edge_mask[:, 1:] = True
+        elif mask_case == "mixed":
+            edge_mask[0, 1:] = True
+    
+        # Relabel every graph, including current/candidate indices and padded nodes.
+        for b in range(batch_size):
+            permutation = rng.permutation(n_nodes)
+            inverse = np.argsort(permutation)
+            nodes[b] = nodes[b, permutation]
+            node_mask[b] = node_mask[b, permutation]
+            adjacency[b] = adjacency[b][permutation][:, permutation]
+            edges[b] = inverse[edges[b]]
+            current[b] = inverse[current[b]]
+    
+        t_nodes = torch.from_numpy(nodes)
+        t_node_mask = torch.from_numpy(node_mask[:, None, :])
+        t_adjacency = torch.from_numpy(adjacency)
+        with torch.no_grad():
+            expected_nodes = reference.encode_graph(t_nodes, t_node_mask, t_adjacency)
+            expected = reference(
+                t_nodes,
+                torch.from_numpy(edges[:, None, :]),
+                torch.from_numpy(current[:, None, None]),
+                t_node_mask,
+                torch.from_numpy(edge_mask[:, None, :].copy()),
+                t_adjacency,
+            ).numpy()
+&gt;       with jax.default_device(jax.devices("cpu")[0]):
+                                ^^^^^^^^^^^^^^^^^^
+
+tests/benchmark/learning/test_ir2_policy_parity.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1094: in devices
+    return get_backend(backend).devices()
+           ^^^^^^^^^^^^^^^^^^^^
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1028: in get_backend
+    return _get_backend_uncached(platform)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+platform = 'cpu'
+
+    def _get_backend_uncached(
+        platform: None | str | xla_client.Client = None
+    ) -&gt; xla_client.Client:
+      # TODO(mattjj,skyewm): remove this input polymorphism after we clean up how
+      # 'backend' values are handled
+      if platform is not None and not isinstance(platform, str):
+        return platform
+    
+      platform = (platform or _XLA_BACKEND.value or _PLATFORM_NAME.value or None)
+    
+      bs = backends()
+      if platform is not None:
+        platform = canonicalize_platform(platform)
+        backend = bs.get(platform, None)
+        if backend is None:
+          if platform in _backend_errors:
+            raise RuntimeError(f"Backend '{platform}' failed to initialize: "
+                               f"{_backend_errors[platform]}. "
+                               f'Available backends are {list(bs)}')
+&gt;         raise RuntimeError(
+              f"Unknown backend {platform}. Available backends are {list(bs)}")
+E         RuntimeError: Unknown backend cpu. Available backends are ['cuda']
+
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1016: RuntimeError</failure></testcase><testcase classname="tests.benchmark.learning.test_ir2_policy_parity" name="test_policy_matches_original_weights[neighbors-2]" time="0.018"><failure message="RuntimeError: Unknown backend cpu. Available backends are ['cuda']">batch_size = 2, mask_case = 'neighbors'
+
+    @pytest.mark.parametrize("batch_size", [1, 2])
+    @pytest.mark.parametrize("mask_case", ["neighbors", "dead_end", "mixed"])
+    def test_policy_matches_original_weights(batch_size: int, mask_case: str) -&gt; None:
+        torch = pytest.importorskip("torch")
+        spec = importlib.util.spec_from_file_location(
+            "original_ir2_model", Path(__file__).resolve().parents[3] / "model.py"
+        )
+        assert spec is not None
+        assert spec.loader is not None
+        original = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(original)
+        torch.manual_seed(731)
+        reference = original.PolicyNet(6, 128).cpu().eval()
+        policy = GraphPolicy()
+        rng = np.random.default_rng(513)
+        n_nodes = 11
+        nodes = rng.normal(size=(batch_size, n_nodes, 6)).astype(np.float32)
+        node_mask = np.zeros((batch_size, n_nodes), dtype=bool)
+        node_mask[:, -2:] = True
+        nodes[:, -2:] = 0
+        edge_blocking_probability = 0.55
+        adjacency = rng.random((batch_size, n_nodes, n_nodes)) &gt; edge_blocking_probability
+        adjacency[:, np.arange(n_nodes), np.arange(n_nodes)] = False
+        adjacency[:, -1, :] = True  # Exercise original finite-mask all-blocked attention.
+        edges = np.tile(np.array([4, 7, 2, 0, 0], dtype=np.int64), (batch_size, 1))
+        current = np.full(batch_size, 4, dtype=np.int64)
+        edge_mask = np.tile(np.array([False, False, False, True, True]), (batch_size, 1))
+        if mask_case == "dead_end":
+            edge_mask[:, 1:] = True
+        elif mask_case == "mixed":
+            edge_mask[0, 1:] = True
+    
+        # Relabel every graph, including current/candidate indices and padded nodes.
+        for b in range(batch_size):
+            permutation = rng.permutation(n_nodes)
+            inverse = np.argsort(permutation)
+            nodes[b] = nodes[b, permutation]
+            node_mask[b] = node_mask[b, permutation]
+            adjacency[b] = adjacency[b][permutation][:, permutation]
+            edges[b] = inverse[edges[b]]
+            current[b] = inverse[current[b]]
+    
+        t_nodes = torch.from_numpy(nodes)
+        t_node_mask = torch.from_numpy(node_mask[:, None, :])
+        t_adjacency = torch.from_numpy(adjacency)
+        with torch.no_grad():
+            expected_nodes = reference.encode_graph(t_nodes, t_node_mask, t_adjacency)
+            expected = reference(
+                t_nodes,
+                torch.from_numpy(edges[:, None, :]),
+                torch.from_numpy(current[:, None, None]),
+                t_node_mask,
+                torch.from_numpy(edge_mask[:, None, :].copy()),
+                t_adjacency,
+            ).numpy()
+&gt;       with jax.default_device(jax.devices("cpu")[0]):
+                                ^^^^^^^^^^^^^^^^^^
+
+tests/benchmark/learning/test_ir2_policy_parity.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1094: in devices
+    return get_backend(backend).devices()
+           ^^^^^^^^^^^^^^^^^^^^
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1028: in get_backend
+    return _get_backend_uncached(platform)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+platform = 'cpu'
+
+    def _get_backend_uncached(
+        platform: None | str | xla_client.Client = None
+    ) -&gt; xla_client.Client:
+      # TODO(mattjj,skyewm): remove this input polymorphism after we clean up how
+      # 'backend' values are handled
+      if platform is not None and not isinstance(platform, str):
+        return platform
+    
+      platform = (platform or _XLA_BACKEND.value or _PLATFORM_NAME.value or None)
+    
+      bs = backends()
+      if platform is not None:
+        platform = canonicalize_platform(platform)
+        backend = bs.get(platform, None)
+        if backend is None:
+          if platform in _backend_errors:
+            raise RuntimeError(f"Backend '{platform}' failed to initialize: "
+                               f"{_backend_errors[platform]}. "
+                               f'Available backends are {list(bs)}')
+&gt;         raise RuntimeError(
+              f"Unknown backend {platform}. Available backends are {list(bs)}")
+E         RuntimeError: Unknown backend cpu. Available backends are ['cuda']
+
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1016: RuntimeError</failure></testcase><testcase classname="tests.benchmark.learning.test_ir2_policy_parity" name="test_policy_matches_original_weights[dead_end-1]" time="0.016"><failure message="RuntimeError: Unknown backend cpu. Available backends are ['cuda']">batch_size = 1, mask_case = 'dead_end'
+
+    @pytest.mark.parametrize("batch_size", [1, 2])
+    @pytest.mark.parametrize("mask_case", ["neighbors", "dead_end", "mixed"])
+    def test_policy_matches_original_weights(batch_size: int, mask_case: str) -&gt; None:
+        torch = pytest.importorskip("torch")
+        spec = importlib.util.spec_from_file_location(
+            "original_ir2_model", Path(__file__).resolve().parents[3] / "model.py"
+        )
+        assert spec is not None
+        assert spec.loader is not None
+        original = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(original)
+        torch.manual_seed(731)
+        reference = original.PolicyNet(6, 128).cpu().eval()
+        policy = GraphPolicy()
+        rng = np.random.default_rng(513)
+        n_nodes = 11
+        nodes = rng.normal(size=(batch_size, n_nodes, 6)).astype(np.float32)
+        node_mask = np.zeros((batch_size, n_nodes), dtype=bool)
+        node_mask[:, -2:] = True
+        nodes[:, -2:] = 0
+        edge_blocking_probability = 0.55
+        adjacency = rng.random((batch_size, n_nodes, n_nodes)) &gt; edge_blocking_probability
+        adjacency[:, np.arange(n_nodes), np.arange(n_nodes)] = False
+        adjacency[:, -1, :] = True  # Exercise original finite-mask all-blocked attention.
+        edges = np.tile(np.array([4, 7, 2, 0, 0], dtype=np.int64), (batch_size, 1))
+        current = np.full(batch_size, 4, dtype=np.int64)
+        edge_mask = np.tile(np.array([False, False, False, True, True]), (batch_size, 1))
+        if mask_case == "dead_end":
+            edge_mask[:, 1:] = True
+        elif mask_case == "mixed":
+            edge_mask[0, 1:] = True
+    
+        # Relabel every graph, including current/candidate indices and padded nodes.
+        for b in range(batch_size):
+            permutation = rng.permutation(n_nodes)
+            inverse = np.argsort(permutation)
+            nodes[b] = nodes[b, permutation]
+            node_mask[b] = node_mask[b, permutation]
+            adjacency[b] = adjacency[b][permutation][:, permutation]
+            edges[b] = inverse[edges[b]]
+            current[b] = inverse[current[b]]
+    
+        t_nodes = torch.from_numpy(nodes)
+        t_node_mask = torch.from_numpy(node_mask[:, None, :])
+        t_adjacency = torch.from_numpy(adjacency)
+        with torch.no_grad():
+            expected_nodes = reference.encode_graph(t_nodes, t_node_mask, t_adjacency)
+            expected = reference(
+                t_nodes,
+                torch.from_numpy(edges[:, None, :]),
+                torch.from_numpy(current[:, None, None]),
+                t_node_mask,
+                torch.from_numpy(edge_mask[:, None, :].copy()),
+                t_adjacency,
+            ).numpy()
+&gt;       with jax.default_device(jax.devices("cpu")[0]):
+                                ^^^^^^^^^^^^^^^^^^
+
+tests/benchmark/learning/test_ir2_policy_parity.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1094: in devices
+    return get_backend(backend).devices()
+           ^^^^^^^^^^^^^^^^^^^^
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1028: in get_backend
+    return _get_backend_uncached(platform)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+platform = 'cpu'
+
+    def _get_backend_uncached(
+        platform: None | str | xla_client.Client = None
+    ) -&gt; xla_client.Client:
+      # TODO(mattjj,skyewm): remove this input polymorphism after we clean up how
+      # 'backend' values are handled
+      if platform is not None and not isinstance(platform, str):
+        return platform
+    
+      platform = (platform or _XLA_BACKEND.value or _PLATFORM_NAME.value or None)
+    
+      bs = backends()
+      if platform is not None:
+        platform = canonicalize_platform(platform)
+        backend = bs.get(platform, None)
+        if backend is None:
+          if platform in _backend_errors:
+            raise RuntimeError(f"Backend '{platform}' failed to initialize: "
+                               f"{_backend_errors[platform]}. "
+                               f'Available backends are {list(bs)}')
+&gt;         raise RuntimeError(
+              f"Unknown backend {platform}. Available backends are {list(bs)}")
+E         RuntimeError: Unknown backend cpu. Available backends are ['cuda']
+
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1016: RuntimeError</failure></testcase><testcase classname="tests.benchmark.learning.test_ir2_policy_parity" name="test_policy_matches_original_weights[dead_end-2]" time="0.017"><failure message="RuntimeError: Unknown backend cpu. Available backends are ['cuda']">batch_size = 2, mask_case = 'dead_end'
+
+    @pytest.mark.parametrize("batch_size", [1, 2])
+    @pytest.mark.parametrize("mask_case", ["neighbors", "dead_end", "mixed"])
+    def test_policy_matches_original_weights(batch_size: int, mask_case: str) -&gt; None:
+        torch = pytest.importorskip("torch")
+        spec = importlib.util.spec_from_file_location(
+            "original_ir2_model", Path(__file__).resolve().parents[3] / "model.py"
+        )
+        assert spec is not None
+        assert spec.loader is not None
+        original = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(original)
+        torch.manual_seed(731)
+        reference = original.PolicyNet(6, 128).cpu().eval()
+        policy = GraphPolicy()
+        rng = np.random.default_rng(513)
+        n_nodes = 11
+        nodes = rng.normal(size=(batch_size, n_nodes, 6)).astype(np.float32)
+        node_mask = np.zeros((batch_size, n_nodes), dtype=bool)
+        node_mask[:, -2:] = True
+        nodes[:, -2:] = 0
+        edge_blocking_probability = 0.55
+        adjacency = rng.random((batch_size, n_nodes, n_nodes)) &gt; edge_blocking_probability
+        adjacency[:, np.arange(n_nodes), np.arange(n_nodes)] = False
+        adjacency[:, -1, :] = True  # Exercise original finite-mask all-blocked attention.
+        edges = np.tile(np.array([4, 7, 2, 0, 0], dtype=np.int64), (batch_size, 1))
+        current = np.full(batch_size, 4, dtype=np.int64)
+        edge_mask = np.tile(np.array([False, False, False, True, True]), (batch_size, 1))
+        if mask_case == "dead_end":
+            edge_mask[:, 1:] = True
+        elif mask_case == "mixed":
+            edge_mask[0, 1:] = True
+    
+        # Relabel every graph, including current/candidate indices and padded nodes.
+        for b in range(batch_size):
+            permutation = rng.permutation(n_nodes)
+            inverse = np.argsort(permutation)
+            nodes[b] = nodes[b, permutation]
+            node_mask[b] = node_mask[b, permutation]
+            adjacency[b] = adjacency[b][permutation][:, permutation]
+            edges[b] = inverse[edges[b]]
+            current[b] = inverse[current[b]]
+    
+        t_nodes = torch.from_numpy(nodes)
+        t_node_mask = torch.from_numpy(node_mask[:, None, :])
+        t_adjacency = torch.from_numpy(adjacency)
+        with torch.no_grad():
+            expected_nodes = reference.encode_graph(t_nodes, t_node_mask, t_adjacency)
+            expected = reference(
+                t_nodes,
+                torch.from_numpy(edges[:, None, :]),
+                torch.from_numpy(current[:, None, None]),
+                t_node_mask,
+                torch.from_numpy(edge_mask[:, None, :].copy()),
+                t_adjacency,
+            ).numpy()
+&gt;       with jax.default_device(jax.devices("cpu")[0]):
+                                ^^^^^^^^^^^^^^^^^^
+
+tests/benchmark/learning/test_ir2_policy_parity.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1094: in devices
+    return get_backend(backend).devices()
+           ^^^^^^^^^^^^^^^^^^^^
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1028: in get_backend
+    return _get_backend_uncached(platform)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+platform = 'cpu'
+
+    def _get_backend_uncached(
+        platform: None | str | xla_client.Client = None
+    ) -&gt; xla_client.Client:
+      # TODO(mattjj,skyewm): remove this input polymorphism after we clean up how
+      # 'backend' values are handled
+      if platform is not None and not isinstance(platform, str):
+        return platform
+    
+      platform = (platform or _XLA_BACKEND.value or _PLATFORM_NAME.value or None)
+    
+      bs = backends()
+      if platform is not None:
+        platform = canonicalize_platform(platform)
+        backend = bs.get(platform, None)
+        if backend is None:
+          if platform in _backend_errors:
+            raise RuntimeError(f"Backend '{platform}' failed to initialize: "
+                               f"{_backend_errors[platform]}. "
+                               f'Available backends are {list(bs)}')
+&gt;         raise RuntimeError(
+              f"Unknown backend {platform}. Available backends are {list(bs)}")
+E         RuntimeError: Unknown backend cpu. Available backends are ['cuda']
+
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1016: RuntimeError</failure></testcase><testcase classname="tests.benchmark.learning.test_ir2_policy_parity" name="test_policy_matches_original_weights[mixed-1]" time="0.016"><failure message="RuntimeError: Unknown backend cpu. Available backends are ['cuda']">batch_size = 1, mask_case = 'mixed'
+
+    @pytest.mark.parametrize("batch_size", [1, 2])
+    @pytest.mark.parametrize("mask_case", ["neighbors", "dead_end", "mixed"])
+    def test_policy_matches_original_weights(batch_size: int, mask_case: str) -&gt; None:
+        torch = pytest.importorskip("torch")
+        spec = importlib.util.spec_from_file_location(
+            "original_ir2_model", Path(__file__).resolve().parents[3] / "model.py"
+        )
+        assert spec is not None
+        assert spec.loader is not None
+        original = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(original)
+        torch.manual_seed(731)
+        reference = original.PolicyNet(6, 128).cpu().eval()
+        policy = GraphPolicy()
+        rng = np.random.default_rng(513)
+        n_nodes = 11
+        nodes = rng.normal(size=(batch_size, n_nodes, 6)).astype(np.float32)
+        node_mask = np.zeros((batch_size, n_nodes), dtype=bool)
+        node_mask[:, -2:] = True
+        nodes[:, -2:] = 0
+        edge_blocking_probability = 0.55
+        adjacency = rng.random((batch_size, n_nodes, n_nodes)) &gt; edge_blocking_probability
+        adjacency[:, np.arange(n_nodes), np.arange(n_nodes)] = False
+        adjacency[:, -1, :] = True  # Exercise original finite-mask all-blocked attention.
+        edges = np.tile(np.array([4, 7, 2, 0, 0], dtype=np.int64), (batch_size, 1))
+        current = np.full(batch_size, 4, dtype=np.int64)
+        edge_mask = np.tile(np.array([False, False, False, True, True]), (batch_size, 1))
+        if mask_case == "dead_end":
+            edge_mask[:, 1:] = True
+        elif mask_case == "mixed":
+            edge_mask[0, 1:] = True
+    
+        # Relabel every graph, including current/candidate indices and padded nodes.
+        for b in range(batch_size):
+            permutation = rng.permutation(n_nodes)
+            inverse = np.argsort(permutation)
+            nodes[b] = nodes[b, permutation]
+            node_mask[b] = node_mask[b, permutation]
+            adjacency[b] = adjacency[b][permutation][:, permutation]
+            edges[b] = inverse[edges[b]]
+            current[b] = inverse[current[b]]
+    
+        t_nodes = torch.from_numpy(nodes)
+        t_node_mask = torch.from_numpy(node_mask[:, None, :])
+        t_adjacency = torch.from_numpy(adjacency)
+        with torch.no_grad():
+            expected_nodes = reference.encode_graph(t_nodes, t_node_mask, t_adjacency)
+            expected = reference(
+                t_nodes,
+                torch.from_numpy(edges[:, None, :]),
+                torch.from_numpy(current[:, None, None]),
+                t_node_mask,
+                torch.from_numpy(edge_mask[:, None, :].copy()),
+                t_adjacency,
+            ).numpy()
+&gt;       with jax.default_device(jax.devices("cpu")[0]):
+                                ^^^^^^^^^^^^^^^^^^
+
+tests/benchmark/learning/test_ir2_policy_parity.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1094: in devices
+    return get_backend(backend).devices()
+           ^^^^^^^^^^^^^^^^^^^^
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1028: in get_backend
+    return _get_backend_uncached(platform)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+platform = 'cpu'
+
+    def _get_backend_uncached(
+        platform: None | str | xla_client.Client = None
+    ) -&gt; xla_client.Client:
+      # TODO(mattjj,skyewm): remove this input polymorphism after we clean up how
+      # 'backend' values are handled
+      if platform is not None and not isinstance(platform, str):
+        return platform
+    
+      platform = (platform or _XLA_BACKEND.value or _PLATFORM_NAME.value or None)
+    
+      bs = backends()
+      if platform is not None:
+        platform = canonicalize_platform(platform)
+        backend = bs.get(platform, None)
+        if backend is None:
+          if platform in _backend_errors:
+            raise RuntimeError(f"Backend '{platform}' failed to initialize: "
+                               f"{_backend_errors[platform]}. "
+                               f'Available backends are {list(bs)}')
+&gt;         raise RuntimeError(
+              f"Unknown backend {platform}. Available backends are {list(bs)}")
+E         RuntimeError: Unknown backend cpu. Available backends are ['cuda']
+
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1016: RuntimeError</failure></testcase><testcase classname="tests.benchmark.learning.test_ir2_policy_parity" name="test_policy_matches_original_weights[mixed-2]" time="0.018"><failure message="RuntimeError: Unknown backend cpu. Available backends are ['cuda']">batch_size = 2, mask_case = 'mixed'
+
+    @pytest.mark.parametrize("batch_size", [1, 2])
+    @pytest.mark.parametrize("mask_case", ["neighbors", "dead_end", "mixed"])
+    def test_policy_matches_original_weights(batch_size: int, mask_case: str) -&gt; None:
+        torch = pytest.importorskip("torch")
+        spec = importlib.util.spec_from_file_location(
+            "original_ir2_model", Path(__file__).resolve().parents[3] / "model.py"
+        )
+        assert spec is not None
+        assert spec.loader is not None
+        original = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(original)
+        torch.manual_seed(731)
+        reference = original.PolicyNet(6, 128).cpu().eval()
+        policy = GraphPolicy()
+        rng = np.random.default_rng(513)
+        n_nodes = 11
+        nodes = rng.normal(size=(batch_size, n_nodes, 6)).astype(np.float32)
+        node_mask = np.zeros((batch_size, n_nodes), dtype=bool)
+        node_mask[:, -2:] = True
+        nodes[:, -2:] = 0
+        edge_blocking_probability = 0.55
+        adjacency = rng.random((batch_size, n_nodes, n_nodes)) &gt; edge_blocking_probability
+        adjacency[:, np.arange(n_nodes), np.arange(n_nodes)] = False
+        adjacency[:, -1, :] = True  # Exercise original finite-mask all-blocked attention.
+        edges = np.tile(np.array([4, 7, 2, 0, 0], dtype=np.int64), (batch_size, 1))
+        current = np.full(batch_size, 4, dtype=np.int64)
+        edge_mask = np.tile(np.array([False, False, False, True, True]), (batch_size, 1))
+        if mask_case == "dead_end":
+            edge_mask[:, 1:] = True
+        elif mask_case == "mixed":
+            edge_mask[0, 1:] = True
+    
+        # Relabel every graph, including current/candidate indices and padded nodes.
+        for b in range(batch_size):
+            permutation = rng.permutation(n_nodes)
+            inverse = np.argsort(permutation)
+            nodes[b] = nodes[b, permutation]
+            node_mask[b] = node_mask[b, permutation]
+            adjacency[b] = adjacency[b][permutation][:, permutation]
+            edges[b] = inverse[edges[b]]
+            current[b] = inverse[current[b]]
+    
+        t_nodes = torch.from_numpy(nodes)
+        t_node_mask = torch.from_numpy(node_mask[:, None, :])
+        t_adjacency = torch.from_numpy(adjacency)
+        with torch.no_grad():
+            expected_nodes = reference.encode_graph(t_nodes, t_node_mask, t_adjacency)
+            expected = reference(
+                t_nodes,
+                torch.from_numpy(edges[:, None, :]),
+                torch.from_numpy(current[:, None, None]),
+                t_node_mask,
+                torch.from_numpy(edge_mask[:, None, :].copy()),
+                t_adjacency,
+            ).numpy()
+&gt;       with jax.default_device(jax.devices("cpu")[0]):
+                                ^^^^^^^^^^^^^^^^^^
+
+tests/benchmark/learning/test_ir2_policy_parity.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1094: in devices
+    return get_backend(backend).devices()
+           ^^^^^^^^^^^^^^^^^^^^
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1028: in get_backend
+    return _get_backend_uncached(platform)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+platform = 'cpu'
+
+    def _get_backend_uncached(
+        platform: None | str | xla_client.Client = None
+    ) -&gt; xla_client.Client:
+      # TODO(mattjj,skyewm): remove this input polymorphism after we clean up how
+      # 'backend' values are handled
+      if platform is not None and not isinstance(platform, str):
+        return platform
+    
+      platform = (platform or _XLA_BACKEND.value or _PLATFORM_NAME.value or None)
+    
+      bs = backends()
+      if platform is not None:
+        platform = canonicalize_platform(platform)
+        backend = bs.get(platform, None)
+        if backend is None:
+          if platform in _backend_errors:
+            raise RuntimeError(f"Backend '{platform}' failed to initialize: "
+                               f"{_backend_errors[platform]}. "
+                               f'Available backends are {list(bs)}')
+&gt;         raise RuntimeError(
+              f"Unknown backend {platform}. Available backends are {list(bs)}")
+E         RuntimeError: Unknown backend cpu. Available backends are ['cuda']
+
+/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/jax/_src/xla_bridge.py:1016: RuntimeError</failure></testcase><testcase classname="tests.benchmark.learning.test_ir2_policy_parity" name="test_native_initialization_and_feature_methods" time="3.208" /><testcase classname="tests.benchmark.learning.test_ir2_policy_parity" name="test_action_mask_retains_original_batch_fallback" time="0.177" /><testcase classname="tests.benchmark.learning.test_ir2_policy_parity" name="test_strict_actor_preserves_graph_policy_and_uses_full_graph" time="3.977" /><testcase classname="tests.benchmark.learning.test_ir2_policy_parity" name="test_masked_log_probs_only_enables_wait_for_empty_action_set" time="0.061"><failure message="AssertionError: &#10;Not equal to tolerance rtol=1e-07, atol=0&#10;&#10;Mismatched elements: 1 / 1 (100%)&#10;Max absolute difference among violations: 1.1920929e-07&#10;Max relative difference among violations: 1.1920929e-07&#10; ACTUAL: array(1., dtype=float32)&#10; DESIRED: array(1.)">def test_masked_log_probs_only_enables_wait_for_empty_action_set() -&gt; None:
+        logp = masked_log_probs(jnp.array([10.0, 2.0, 3.0]), jnp.array([False, True, True]))
+        assert np.isneginf(np.asarray(logp)[0])
+&gt;       np.testing.assert_allclose(jnp.exp(logp).sum(), 1.0)
+
+tests/benchmark/learning/test_ir2_policy_parity.py:172: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (&lt;function assert_allclose.&lt;locals&gt;.compare at 0x7e61304ac180&gt;, array(0.9999999, dtype=float32), array(1.))
+kwds = {'equal_nan': True, 'err_msg': '', 'header': 'Not equal to tolerance rtol=1e-07, atol=0', 'strict': False, ...}
+
+    @wraps(func)
+    def inner(*args, **kwds):
+        with self._recreate_cm():
+&gt;           return func(*args, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^
+E           AssertionError: 
+E           Not equal to tolerance rtol=1e-07, atol=0
+E           
+E           Mismatched elements: 1 / 1 (100%)
+E           Max absolute difference among violations: 1.1920929e-07
+E           Max relative difference among violations: 1.1920929e-07
+E            ACTUAL: array(1., dtype=float32)
+E            DESIRED: array(1.)
+
+/home/user/anaconda3/envs/ex/lib/python3.11/contextlib.py:81: AssertionError</failure></testcase></testsuite></testsuites>
