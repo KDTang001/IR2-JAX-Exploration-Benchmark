@@ -4,7 +4,7 @@
   "seed": 0,
   "scenarios": 25,
   "split": "validation",
-  "manifest_hash": "7b93d73980ed53f059ab2631d3a72e8a88dd412f3a9cabb1cff9143d0dcd0af7",
+  "manifest_hash": "0112548680511201eb0ef714429761da90de16951ade41578341111f7cb6b3b1",
   "base_config": {
     "n_agents": 4,
     "agent_bucket": 6,
