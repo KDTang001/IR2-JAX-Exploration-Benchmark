@@ -124,13 +124,18 @@ def rendezvous_utility(  # noqa: PLR0913, PLR0917 - explicit public JAX state ar
     local_map: Array,
     valid_shape: Array,
     repair_edges: Array | None = None,
+    *,
+    abort_unreachable: bool | Array = True,
 ) -> RendezvousResult:
     """Reproduce legacy map-delta route inflation, gating and graph fallbacks.
 
     ``surplus`` and peer gating are supplied by the receiver's delivered map
     cache. No ground truth or undisclosed peer knowledge is accessed here.
-    The caller must abort an episode with an unreachable eligible peer and
-    persist ``repair_edges`` when ``repaired`` is true.
+    By default, the caller must abort an episode with an unreachable eligible
+    peer. With ``abort_unreachable=False``, that peer contributes no utility
+    and subsequent peers are still evaluated. Both modes report failures in
+    ``unreachable`` and require persisting ``repair_edges`` when ``repaired``
+    is true.
     """
     nodes = jnp.asarray(nodes)
     valid = jnp.asarray(valid)
@@ -141,6 +146,7 @@ def rendezvous_utility(  # noqa: PLR0913, PLR0917 - explicit public JAX state ar
     surplus = jnp.asarray(surplus)
     local_map = jnp.asarray(local_map)
     valid_shape = jnp.asarray(valid_shape)
+    abort_unreachable = jnp.asarray(abort_unreachable)
     capacity = len(nodes)
     area = jnp.prod(valid_shape).astype(jnp.float32)
     utility = jnp.zeros(capacity, jnp.float32)
@@ -152,7 +158,11 @@ def rendezvous_utility(  # noqa: PLR0913, PLR0917 - explicit public JAX state ar
         index: Array, state: tuple[Array, Array, Array, Array]
     ) -> tuple[Array, Array, Array, Array]:
         values, failures, did_repair, graph = state
-        enabled = peer_enabled[index] & (surplus[index] >= area * 0.01) & ~jnp.any(failures)
+        enabled = (
+            peer_enabled[index]
+            & (surplus[index] >= area * 0.01)
+            & ~(abort_unreachable & jnp.any(failures))
+        )
 
         def generate() -> tuple[Array, Array, Array, Array]:
             distance = jnp.sum((nodes - peer_positions[index]).astype(jnp.float32) ** 2, axis=1)
@@ -199,5 +209,7 @@ def rendezvous_utility(  # noqa: PLR0913, PLR0917 - explicit public JAX state ar
         0, len(peer_positions), peer, (utility, unreachable, repaired, edges)
     )
     own_radius = jnp.sum((nodes - nodes[current_index]) ** 2, axis=1) <= 30**2
-    utility = jnp.where(valid & ~(own_radius & ~jnp.any(unreachable)), utility, 0)
+    utility = jnp.where(
+        valid & ~(own_radius & ~(abort_unreachable & jnp.any(unreachable))), utility, 0
+    )
     return RendezvousResult(utility, unreachable, repaired)

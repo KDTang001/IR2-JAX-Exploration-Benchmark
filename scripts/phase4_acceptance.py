@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import argparse
+import gc
 import importlib.util
 import json
 import os
@@ -13,7 +14,9 @@ import subprocess
 import sys
 import time
 from collections import Counter
+from concurrent.futures import ProcessPoolExecutor
 from dataclasses import asdict, replace
+from multiprocessing import get_context
 from pathlib import Path
 
 import jax
@@ -25,18 +28,50 @@ from ir2_benchmark.commands.common import manifest_sources
 from ir2_benchmark.config import HostConfig, load_config
 from ir2_benchmark.env.observe import observe
 from ir2_benchmark.env.reset import from_prepared_map, reset
-from ir2_benchmark.evaluation.records import completed_result
+from ir2_benchmark.evaluation.records import RunnerSummary, completed_result
 from ir2_benchmark.evaluation.runner import run_manifest
 from ir2_benchmark.evaluation.scenarios import (
     EvaluationMap,
     evaluation_maps,
     make_scenario,
+    read_task_manifest,
     tasks,
     write_task_manifest,
 )
 from ir2_benchmark.maps.manifest import obstacle_hash, scenario_hash
 from ir2_benchmark.maps.prepare import load_ir2_map, prepare_map, select_spawns
 from ir2_benchmark.models.ir2_policy import GraphPolicy
+
+
+def run_partition(paths: tuple[str, str]) -> RunnerSummary:
+    """Compile disjoint static groups in separate CUDA processes without task collisions."""
+    return run_manifest(Path(paths[0]), Path(paths[1]), batch_size=2, max_pending_tasks=32)
+
+
+def run_initial(manifest: Path, output: Path, workers: int) -> RunnerSummary:
+    """Assign each complete static inference group to exactly one process."""
+    if workers == 1:
+        return run_partition((str(manifest), str(output)))
+    planned = tuple(read_task_manifest(manifest))
+    keys = [(t.scenario.config_hash, t.scenario.bucket, t.method.method_id) for t in planned]
+    owners = {key: index % workers for index, key in enumerate(sorted(set(keys)))}
+    jobs = []
+    for worker in range(workers):
+        shard = output / f"tasks-worker-{worker}.jsonl"
+        write_task_manifest(
+            shard, (task for task, key in zip(planned, keys, strict=True) if owners[key] == worker)
+        )
+        jobs.append((str(shard), str(output)))
+    # Forking an already initialized CUDA client is unsafe; each child creates its own client.
+    jax.clear_caches()
+    gc.collect()
+    with ProcessPoolExecutor(workers, mp_context=get_context("spawn")) as pool:
+        summaries = tuple(pool.map(run_partition, jobs))
+    summary = RunnerSummary(
+        *(sum(getattr(s, field) for s in summaries) for field in RunnerSummary.__dataclass_fields__)
+    )
+    (output / "runner_summary.json").write_text(json.dumps(asdict(summary), indent=2))
+    return summary
 
 
 def reference_parity(
@@ -132,6 +167,7 @@ def main() -> int:  # noqa: C901, PLR0912, PLR0915
     parser.add_argument("--data-root", type=Path, required=True)
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--workers", type=int, choices=(1, 2), default=1)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     root = Path(__file__).resolve().parents[1]
@@ -252,7 +288,7 @@ def main() -> int:  # noqa: C901, PLR0912, PLR0915
     write_task_manifest(manifest, planned)
     (args.output / "acceptance-index.json").write_text(json.dumps(roles, indent=2))
     start = time.monotonic()
-    first = run_manifest(manifest, args.output, batch_size=2, max_pending_tasks=32)
+    first = run_initial(manifest, args.output, args.workers)
     assert first.requested == 312, first
     second = run_manifest(manifest, args.output, batch_size=2, max_pending_tasks=32)
     assert second.requested == second.resumed == 312
@@ -260,6 +296,35 @@ def main() -> int:  # noqa: C901, PLR0912, PLR0915
     assert second.failures == first.failures
     for task in planned:
         assert completed_result(args.output / "results" / f"{task.result_id}.json", task)
+    strict_scene = make_scenario(
+        development, replace(small, rendezvous_mode="strict_ir2"), 0, limited=True
+    )
+    strict_task = next(tasks((strict_scene,), (methods[-1],)))
+    strict_output = args.output / "strict-control"
+    strict_output.mkdir(exist_ok=True)
+    strict_manifest = strict_output / "tasks.jsonl"
+    write_task_manifest(strict_manifest, (strict_task,))
+    strict_summary = run_manifest(strict_manifest, strict_output, batch_size=1)
+    assert strict_summary.requested == strict_summary.failures == 1
+    strict_record = strict_output / "results" / f"{strict_task.result_id}.json"
+    assert completed_result(strict_record, strict_task)
+    strict_row = json.loads(strict_record.read_text())["result"]
+    assert strict_row["outcome"] == "environment_error"
+    assert "rendezvous graph remains disconnected" in strict_row["error"]
+    main_task = next(
+        task
+        for task in planned
+        if task.scenario.map_hash == development.map_hash
+        and task.scenario.spawn_seed == strict_scene.spawn_seed
+        and task.scenario.fault_mode == 0
+        and task.method.method_id == "ir2_mixed"
+        and task.scenario.budget == strict_scene.budget
+    )
+    assert main_task.scenario.fault_seed == strict_scene.fault_seed
+    main_row = json.loads((args.output / "results" / f"{main_task.result_id}.json").read_text())[
+        "result"
+    ]
+    assert main_row["outcome"] in ("success", "timeout")
     exogenous = {}
     for task in planned:
         scene = task.scenario
@@ -330,12 +395,19 @@ def main() -> int:  # noqa: C901, PLR0912, PLR0915
     result = {
         "status": "passed" if first.failures == 0 else "failed",
         "limited": True,
+        "workers": args.workers,
         "tasks": len(planned),
         "roles": dict(Counter(roles.values())),
         "initial": asdict(first),
         "resume": asdict(second),
         "reference_graphs": len(parity),
         "zero_budget_trajectories_equal_within_motion": True,
+        "strict_control": {
+            "summary": asdict(strict_summary),
+            "result_id": strict_task.result_id,
+            "outcome": strict_row["outcome"],
+            "main_result_id": main_task.result_id,
+        },
         "elapsed_seconds": time.monotonic() - start,
     }
     (args.output / "acceptance.json").write_text(json.dumps(result, indent=2) + "\n")

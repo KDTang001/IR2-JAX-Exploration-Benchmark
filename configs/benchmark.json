@@ -15,6 +15,7 @@
   "spawn_radius": 10,
   "signal_threshold": -70.0,
   "navigation_mode": "ir2_graph",
+  "rendezvous_mode": "reachable_only",
   "global_graph_fusion": false,
   "graph_nodes_per_axis": 50,
   "graph_local_radius": 80,

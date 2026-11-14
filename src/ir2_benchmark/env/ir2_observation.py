@@ -94,6 +94,7 @@ def ir2_observation(fields: LocalFields, config: HostConfig) -> LocalObservation
     # Contact evidence is a received packet, never a privileged connectivity graph.
     contacted = (fields.message_ages >= 0) & (fields.message_ages <= config.n_agents)
     eligible = peer_valid & ~contacted & (surplus >= jnp.prod(fields.valid_shape) * 0.01)
+    abort_unreachable = config.rendezvous_mode == "strict_ir2"
 
     def meeting(current: GraphMemory) -> tuple[GraphMemory, Array]:
         repaired = rebuild_graph_edges(
@@ -114,12 +115,13 @@ def ir2_observation(fields: LocalFields, config: HostConfig) -> LocalObservation
             fields.local_map,
             fields.valid_shape,
             repaired.edges,
+            abort_unreachable=abort_unreachable,
         )
         current = jax.tree.map(
             lambda new, old: jnp.where(result.repaired, new, old), repaired, current
         )
         return current._replace(
-            path_failed=current.path_failed | jnp.any(result.unreachable)
+            path_failed=current.path_failed | (abort_unreachable & jnp.any(result.unreachable))
         ), result.utility
 
     def meet(carry: tuple[Array, GraphMemory, Array]) -> tuple[Array, GraphMemory, Array]:
