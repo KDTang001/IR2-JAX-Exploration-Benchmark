@@ -206,13 +206,17 @@ def test_equal_routes_to_one_frontier_use_first_edge_coordinate_ties(candidates:
 
 
 @pytest.mark.parametrize("utility", [[0, 0, 1], [1, 0, 0], [0, 0, 0]])
-def test_no_reachable_frontier_waits_instead_of_moving_arbitrarily(utility: list[int]) -> None:
+def test_no_reachable_frontier_still_selects_a_legal_edge(utility: list[int]) -> None:
     # Given: a legal outgoing edge but no reachable noncurrent positive-utility node.
     observation = _observation([(2, 2), (3, 2), (9, 9)], [(0, 1)], utility, [0, 1])
     # When: choosing a frontier action.
     action = nearest_frontier_action(observation, HostConfig())
-    # Then: waiting preserves a legal action even when utility is absent or unreachable.
-    np.testing.assert_array_equal(action.waypoint, [2, 2])
+    # Then: a legal edge is selected instead of the masked self/wait action.
+    from ir2_benchmark.navigation.one_hop import navigate_edge  # noqa: PLC0415
+
+    np.testing.assert_array_equal(action.waypoint, [3, 2])
+    route = navigate_edge(observation.position, action.waypoint, observation.candidates, 5)
+    assert not bool(route.invalid_action)
 
 
 @pytest.mark.parametrize("utility", [[1, 0, 0, 0], [0, 0, 0, 1]])
@@ -227,8 +231,8 @@ def test_node_zero_cannot_be_a_future_target_or_transit_node(utility: list[int])
     )
     # When: selecting a route whose later actions must obey the original node-zero mask.
     action = nearest_frontier_action(observation, HostConfig())
-    # Then: the forbidden destination cannot attract a move into a dead-end route.
-    np.testing.assert_array_equal(action.waypoint, [2, 2])
+    # Then: no route through node zero is selected; the ordinary legal fallback applies.
+    np.testing.assert_array_equal(action.waypoint, [3, 2])
 
 
 @pytest.mark.parametrize(

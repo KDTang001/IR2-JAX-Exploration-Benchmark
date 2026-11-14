@@ -81,7 +81,9 @@ def verify_episode(job: tuple[str, str]) -> VerifiedEpisode | VerifiedFailure:  
     assert config["signal_model"] == "ir2"
     root = Path(__file__).resolve().parents[1]
     sys.path.insert(0, str(root))
+    sys.modules.setdefault("TRAINING", False)
     sensor_work = importlib.import_module("sensor").sensor_work
+    check_collision = importlib.import_module("graph_generator").Graph_generator.check_collision
     model = importlib.import_module("ss_realistic_model").SS_realistic_model(
         P_T=config["transmit_power"],
         threshold_ss=config["signal_threshold"],
@@ -163,6 +165,7 @@ def verify_episode(job: tuple[str, str]) -> VerifiedEpisode | VerifiedFailure:  
         assert abs(float(trace["initial_coverage"]) - initial) <= 1e-12
         active = np.flatnonzero(trace["active"])
         np.testing.assert_array_equal(active, np.arange(len(active)))
+        assert not np.any(trace["invalid_action"][active])
         for event in active:
             agent = int(trace["agent_id"][event])
             assert event == int(trace["event"][event])
@@ -216,6 +219,10 @@ def verify_episode(job: tuple[str, str]) -> VerifiedEpisode | VerifiedFailure:  
             length = 16 + size if send and balances[agent] >= 16 + size else 0
             assert int(trace["emitted_length"][event]) == length
             after = trace["positions"][event, :n]
+            others = np.arange(n) != agent
+            np.testing.assert_array_equal(after[others], positions[others])
+            receiver_belief = np.where(knowledge[agent].reshape(truth.shape), truth, 127)
+            assert not check_collision(None, positions[agent], after[agent], receiver_belief)
             physical = np.array(
                 [
                     receiver != agent

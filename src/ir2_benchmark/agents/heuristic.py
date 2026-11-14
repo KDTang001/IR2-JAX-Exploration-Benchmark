@@ -65,9 +65,16 @@ def _graph_waypoint(observation: LocalObservation) -> Array:
     _, _, _, selected = lax.while_loop(
         pending, expand, (distances, first, visited, jnp.asarray(slots, jnp.int32))
     )
-    return jnp.where(
-        selected < slots, points[slot_order[jnp.minimum(selected, slots - 1)]], observation.position
-    )
+    fallback = jnp.lexsort(
+        (
+            jnp.arange(slots),
+            points[:, 1],
+            points[:, 0],
+            jnp.where(legal, candidates.distances, jnp.inf),
+        )
+    )[0]
+    index = jnp.where(selected < slots, slot_order[jnp.minimum(selected, slots - 1)], fallback)
+    return jnp.where(jnp.any(legal), points[index], observation.position)
 
 
 def nearest_frontier_action(observation: LocalObservation, _config: HostConfig) -> Action:
