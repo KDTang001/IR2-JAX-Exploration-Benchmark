@@ -82,7 +82,7 @@ def nearest_frontier_action(observation: LocalObservation, _config: HostConfig) 
         eligible = candidates.mask & (candidates.distances > 0)
         at_frontier = eligible & frontier[points[:, 1], points[:, 0]]
         nearest = jnp.argmin(jnp.where(at_frontier, candidates.distances, jnp.inf))
-        fallback = jnp.argmin(jnp.where(eligible, candidates.distances, jnp.inf))
+        fallback = jnp.argmax(jnp.where(eligible, candidates.distances, -1))
         index = jnp.where(jnp.any(at_frontier), nearest, fallback)
         send, codec = fixed_communication(observation)
         waypoint = jnp.where(jnp.any(eligible), points[index], observation.position)
