@@ -16,7 +16,7 @@ from ir2_benchmark.agents.baselines import make_baseline_method
 from ir2_benchmark.config import load_config
 from ir2_benchmark.evaluation.episode import execute_episode, summarize_execution
 from ir2_benchmark.evaluation.records import completed_result, save_result
-from ir2_benchmark.evaluation.runner import _error_result
+from ir2_benchmark.evaluation.runner import _EXECUTION_ERRORS, _error_result
 from ir2_benchmark.evaluation.scenarios import (
     EvaluationMap,
     make_scenario,
@@ -77,7 +77,7 @@ def declare(selection: Path, config: Path, checkpoint: Path, output: Path) -> No
     (output / "core.json").write_text(json.dumps(declaration, indent=2) + "\n", encoding="utf-8")
 
 
-def run(manifest: Path, output: Path, limit: int | None) -> None:
+def run(manifest: Path, output: Path, limit: int | None, *, warm_full: bool) -> None:
     """Use production kernels/records, adding compact final-state graph diagnostics."""
     counts = Counter()
     for index, task in enumerate(read_task_manifest(manifest)):
@@ -88,7 +88,14 @@ def run(manifest: Path, output: Path, limit: int | None) -> None:
             counts["resumed"] += 1
             continue
         start = time.perf_counter()
-        execution = execute_episode(task)
+        try:
+            execution = execute_episode(task)
+        except _EXECUTION_ERRORS as error:
+            result = _error_result(task, error)
+            save_result(result_path, result)
+            counts["executed"] += 1
+            counts[result.outcome] += 1
+            continue
         state = execution.rollout.final_state
         graph = state.graph_memory
         diagnostic = {
@@ -105,6 +112,22 @@ def run(manifest: Path, output: Path, limit: int | None) -> None:
             "balances": np.asarray(state.balances).tolist(),
             "elapsed_seconds": time.perf_counter() - start,
         }
+        if (
+            warm_full
+            and task.scenario.fault_mode == 0
+            and task.method.communication == "mixed"
+            and task.scenario.budget == 8192  # noqa: PLR2004 - Declared main budget.
+        ):
+            start = time.perf_counter()
+            repeated = execute_episode(task)
+            diagnostic["warm_full_seconds"] = time.perf_counter() - start
+            diagnostic["warm_full_active_events"] = int(repeated.rollout.trace.active.sum())
+            diagnostic["repeat_positions_equal"] = bool(
+                np.array_equal(
+                    np.asarray(execution.rollout.trace.positions),
+                    np.asarray(repeated.rollout.trace.positions),
+                )
+            )
         try:
             result = summarize_execution(
                 task, execution, output / "traces" / f"{task.result_id}.npz"
@@ -160,10 +183,11 @@ def main() -> int:
     parser.add_argument("--manifest", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--limit", type=int)
+    parser.add_argument("--warm-full", action="store_true")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     if args.manifest:
-        run(args.manifest, args.output, args.limit)
+        run(args.manifest, args.output, args.limit, warm_full=args.warm_full)
     else:
         declare(args.selection, args.config, args.checkpoint, args.output)
     return 0

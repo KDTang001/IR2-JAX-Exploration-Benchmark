@@ -39,7 +39,7 @@ def main() -> int:
     if not args.worker:
         environment = os.environ.copy()
         environment.update(
-            JAX_PLATFORMS=args.device,
+            JAX_PLATFORMS="cuda" if args.device == "gpu" else "cpu",
             XLA_PYTHON_CLIENT_PREALLOCATE="false",
             JAX_ENABLE_COMPILATION_CACHE="false",
         )
