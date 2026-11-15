@@ -1,0 +1,198 @@
+{
+  "status": "complete",
+  "source_revision": "ade2b705a3caf9e39eeade7ce91df3d4f3945390",
+  "wheel_sha256": "077cad89fa8825a2aa4aa21fad2ced23de3bbec8a4f02c7f723eeffd60e06f7a",
+  "gate_status": "complete",
+  "functional_jobs_running": false,
+  "source_files_verified": 112,
+  "installed_python_files_verified_per_environment": 111,
+  "dependency_lock_sha256": {
+    "build.lock": "cdd5df9ab42696d6d0b89d3989e976377da518c8443786ab2f6be5c6b60e6b7e",
+    "cpu.lock": "e20b0aaaabadc9f5db169d07b2f7bda185f2497fff28b394c5554c78026d4e24",
+    "cuda.lock": "79a5537500df344f40fbfe4f217c9b09c9e217bb1f63342e5923d01de8072fe2"
+  },
+  "completed_utc": "2026-11-14T17:38:24.705063+00:00",
+  "performance_claim": false,
+  "training_events": 0,
+  "scopes": {
+    "cpu": {
+      "scope": "separate_cpu_installation_functional_microgeometry_v1",
+      "manifest_sha256": "4225927c6ced957d5034af97e4d43c5da136252110d00faf87e73d9c8cfcdb7b",
+      "interrupted_after_results": 1,
+      "actual_signal": "SIGTERM",
+      "interrupted_exit": -15,
+      "first_result_bytes_unchanged": true,
+      "resumed": {
+        "requested": 2,
+        "executed": 1,
+        "resumed": 1,
+        "failures": 0
+      },
+      "second_resume": {
+        "requested": 2,
+        "executed": 0,
+        "resumed": 2,
+        "failures": 0
+      },
+      "requested_manifest_complete": true,
+      "formal_complete": false,
+      "limited": true,
+      "start_utc": "2026-11-14T17:19:59Z",
+      "end_utc": "2026-11-14T17:26:40Z",
+      "records": [
+        {
+          "result_id": "728e8056a90f9bb03c0fca10f677c4c124c24586e1f18b67e6eef69b7a5eb423",
+          "method_id": "nf_off",
+          "outcome": "timeout",
+          "active_events": 1024,
+          "invalid_actions": 0,
+          "initial_coverage": 0.13978494623655913,
+          "metrics": {
+            "auc": 0.5357022974931169,
+            "final_coverage": 0.5483871102333069,
+            "observed_rounds": 512,
+            "outcome": "timeout",
+            "success": false,
+            "success_event_offset": null,
+            "success_round": null,
+            "timeout": true
+          },
+          "record_sha256": "9c65ce13e6cd09ae21c1343c86ec292e7d9455787ca3289085ea0f448804ddba",
+          "trace_sha256": "e9e0aae1df48ec5e035f27a915a66c45d453200ce522faf9195ee77143062ad9"
+        },
+        {
+          "result_id": "b334552141aa8e0505c3f74f3cc2eae979922dd492970cfff5c3ae8e735dbe3a",
+          "method_id": "nf_plan",
+          "outcome": "timeout",
+          "active_events": 1024,
+          "invalid_actions": 0,
+          "initial_coverage": 0.13978494623655913,
+          "metrics": {
+            "auc": 0.5352796453225892,
+            "final_coverage": 0.5483871102333069,
+            "observed_rounds": 512,
+            "outcome": "timeout",
+            "success": false,
+            "success_event_offset": null,
+            "success_round": null,
+            "timeout": true
+          },
+          "record_sha256": "ae8b62be86888c6cadf65fed000eba698d160996cac433164c68e17d07f0e592",
+          "trace_sha256": "23f4f1701c80016ecf78cfa5bf7a3446077e9f67faeb03b03fe427d29074c813"
+        }
+      ]
+    },
+    "cuda": {
+      "scope": "unchanged_first_two_native_phase5_tasks",
+      "manifest_sha256": "0619fd1ea9b6cd59e36606acb9ecc37a4713dc1b6398b7d4a7ff5a8ed576552a",
+      "interrupted_after_results": 1,
+      "actual_signal": "SIGTERM",
+      "interrupted_exit": -15,
+      "first_result_bytes_unchanged": true,
+      "resumed": {
+        "requested": 2,
+        "executed": 1,
+        "resumed": 1,
+        "failures": 0
+      },
+      "second_resume": {
+        "requested": 2,
+        "executed": 0,
+        "resumed": 2,
+        "failures": 0
+      },
+      "requested_manifest_complete": true,
+      "formal_complete": false,
+      "limited": true,
+      "start_utc": "2026-11-14T17:25:38Z",
+      "end_utc": "2026-11-14T17:38:23Z",
+      "records": [
+        {
+          "result_id": "5716bb85df992136d851af3b114aaeee009d4a04d79c1119d976779c1da2fade",
+          "method_id": "nf_off",
+          "outcome": "success",
+          "active_events": 681,
+          "invalid_actions": 0,
+          "initial_coverage": 0.0841974025974026,
+          "metrics": {
+            "auc": 0.7076400632795412,
+            "final_coverage": 0.9902961254119873,
+            "observed_rounds": 341,
+            "outcome": "success",
+            "success": true,
+            "success_event_offset": 0,
+            "success_round": 341,
+            "timeout": false
+          },
+          "record_sha256": "64bad84d481fde60273d40f18c5a0aed28df8b893ec89dd11043e1e303de215b",
+          "trace_sha256": "ce665c5255014bf660d66811585ac3ef657b0146ed8e91af794df652e100df2b"
+        },
+        {
+          "result_id": "7eb049487e348352a165a7147b6e00eaf4809c6a3aa818414b0c29e8b77da54e",
+          "method_id": "nf_plan",
+          "outcome": "success",
+          "active_events": 476,
+          "invalid_actions": 0,
+          "initial_coverage": 0.0841974025974026,
+          "metrics": {
+            "auc": 0.7784813959588064,
+            "final_coverage": 0.9902961254119873,
+            "observed_rounds": 238,
+            "outcome": "success",
+            "success": true,
+            "success_event_offset": 1,
+            "success_round": 238,
+            "timeout": false
+          },
+          "record_sha256": "77028ab1a29a246b26bd5d4fbee63396879dda3029923203e490f48d015604bc",
+          "trace_sha256": "b7d39c59637b2d7129bbb3831f86fa4b21c203adfdde332ff00b542ad6c11d57"
+        }
+      ]
+    }
+  },
+  "notes": [
+    "CPU uses separately predeclared 32x64 microgeometry and is not native512 CPU acceptance.",
+    "Target public fetch timed out60s(exit124); a fresh empty local public Git fetch succeeded.",
+    "Initial inherited-ignored SIGINT attempts were inconclusive; accepted retries use actual SIGTERM exit-15 after one result.",
+    "Legacy installed release metadata code_revision/runtime_lock is superseded by verified companion source/wheel/import/lock facts.",
+    "CPU helper parent_manifest_sha256 is native comparison context, not a subset relationship."
+  ],
+  "files": {
+    "phase5-reproduction.json": {
+      "sha256": "78263861568722520ce6cbec4006049d2c81f48527e44d755d5dd086dc0fa09f",
+      "bytes": 34061
+    },
+    "phase5-reproduction-gate.json": {
+      "sha256": "ed568cd3a96d6cfb1c2f5007365018b03d94e1fe6eae940534c20f884ba06389",
+      "bytes": 2421
+    },
+    "phase5-reproduction-cpu-import-origin.json": {
+      "sha256": "dd76b6be14d9d2ff9d9d0f21a99d56aa6242a868fc2260a18c180528afd56c08",
+      "bytes": 13836
+    },
+    "phase5-reproduction-cuda-import-origin.json": {
+      "sha256": "5003c34eb23fe3dce822cc74c8dfd9dfcb4d1eed0ecddc13ca9546fe7096d9db",
+      "bytes": 14314
+    },
+    "phase5-reproduction-source-verification.json": {
+      "sha256": "c0aa3945d1d5d1f198d0117360f03cc6e4fe8ee17c70ff92299a1d4eededd665",
+      "bytes": 12973
+    },
+    "phase5-reproduction-installation.json": {
+      "sha256": "7351ac93121253d31b15f117e726e34d48904918a6d96d800b922ca70ec2c72f",
+      "bytes": 5227
+    },
+    "phase5-reproduction-reports.json": {
+      "sha256": "503e915c97d0f94a8862f7b7e14e8c4fbd8657af6c4852c0c0d002e0a3f4d26d",
+      "bytes": 2929
+    },
+    "phase5-reproduction-cpu-report.json": {
+      "sha256": "88f53e7f5b18e940bc4d2f1ca9cc61bef457194d7212abac2e802ce46003abff",
+      "bytes": 2289
+    },
+    "phase5-reproduction-cuda-report.json": {
+      "sha256": "1d348b4a0a83066444adb77f46dba8d8a8780d3c7b1af0ab3736c8806815894e",
+      "bytes": 4086
+    }
+  }
+}

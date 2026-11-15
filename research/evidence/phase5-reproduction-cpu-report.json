@@ -1,0 +1,90 @@
+{
+  "requested_manifest_complete": true,
+  "formal_complete": false,
+  "core_complete": false,
+  "auxiliary_complete": false,
+  "workload_scope": {
+    "status": "unverified_scope",
+    "registry_path": null,
+    "registry_hash": null,
+    "declaration_hash": "b890bd12ec67b30cbd10bf19f0f02d2e8937f9697286caf6a77a7f8005c2fbf6",
+    "source_manifest_hashes": [],
+    "retained_maps": 0,
+    "retained_map_hash": null,
+    "scenario_seeds": [],
+    "base_config_hash": null,
+    "base_config_path": null,
+    "expected_core_blocks": null,
+    "expected_auxiliary_blocks": null,
+    "missing_core_blocks": null,
+    "missing_auxiliary_blocks": null,
+    "invalid_core_tasks": 0,
+    "invalid_auxiliary_tasks": 0,
+    "core_examples": [],
+    "auxiliary_examples": [],
+    "core_scope_complete": false,
+    "auxiliary_scope_complete": false
+  },
+  "requested": 2,
+  "requested_unique_tasks": 2,
+  "duplicate_requested_tasks": 0,
+  "unmatched_requested_results": 0,
+  "completed_results": 2,
+  "pending_results": 0,
+  "corrupt_records": [],
+  "limited": true,
+  "methods": [
+    {
+      "method_id": "nf_off",
+      "auc": 0.5357022974931169,
+      "ci_low": null,
+      "ci_high": null,
+      "success_rate": 0.0,
+      "training_seeds": [
+        -1
+      ],
+      "missing_training_seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "episodes": 1,
+      "errors": 0
+    },
+    {
+      "method_id": "nf_plan",
+      "auc": 0.5352796453225892,
+      "ci_low": null,
+      "ci_high": null,
+      "success_rate": 0.0,
+      "training_seeds": [
+        -1
+      ],
+      "missing_training_seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "episodes": 1,
+      "errors": 0
+    }
+  ],
+  "missing_matrix_conditions": [],
+  "missing_plan_telemetry": [],
+  "missing_recovery_pairs": [],
+  "invalid_training_quotas": [
+    "nf_off:-1:0",
+    "nf_plan:-1:0"
+  ],
+  "missing_auxiliary_conditions": [],
+  "invalid_auxiliary_training_quotas": [],
+  "auxiliary_results": 0,
+  "superseded_result_ids": [],
+  "overall_summary_role": "core_methods_only; primary curves by split/N/fault/p/duration",
+  "weighting": "scenario_mean_then_equal_maps_then_equal_families_then_training_seeds",
+  "uncertainty": "training_seed_and_map_hierarchical_bootstrap"
+}
