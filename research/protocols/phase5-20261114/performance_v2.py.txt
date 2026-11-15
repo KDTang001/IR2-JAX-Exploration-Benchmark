@@ -1,0 +1,270 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = []
+# ///
+# How to run: unchanged ex interpreter performance_v2.py prepare|pair|remaining|status.
+"""Versioned 4-event Phase5 measurements; all source and failed v1 evidence stay intact."""
+from __future__ import annotations
+
+import fcntl
+import hashlib
+import json
+import os
+import signal
+import subprocess
+import sys
+import time
+from threading import Event, Thread
+from collections.abc import Callable
+from dataclasses import asdict
+from datetime import UTC, datetime
+from pathlib import Path
+from typing import TypeAlias, TypeVar
+
+Json: TypeAlias = None | bool | int | float | str | list["Json"] | dict[str, "Json"]
+ROOT = Path('/home/user/Tz/acceptance/phase5-20261114')
+SOURCE = ROOT / 'source'
+OUT = ROOT / 'performance-v2'
+PYTHON = '/home/user/anaconda3/envs/ex/bin/python'
+SELF = ROOT / 'performance_v2.py'
+PHASES = ('reset', 'scripted_events', 'policy_rollout', 'ir2_policy_inference', 'ir2_policy_rollout')
+T = TypeVar('T')
+
+
+def stamp() -> str:
+    return datetime.now(UTC).isoformat()
+
+
+def save(path: Path, data: Json) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + '.tmp')
+    temporary.write_text(json.dumps(data, indent=2) + '\n')
+    temporary.replace(path)
+
+
+def digest(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def source_digest() -> str:
+    value = hashlib.sha256()
+    for path in sorted((SOURCE / 'src').rglob('*.py')):
+        value.update(str(path.relative_to(SOURCE)).encode())
+        value.update(path.read_bytes())
+    return value.hexdigest()
+
+
+def worker() -> None:
+    """Checkpoint whole completed phases outside the unchanged timing implementation."""
+    import runpy
+    import resource
+    import jax
+    import ir2_benchmark.commands.performance as command
+    import ir2_benchmark.evaluation.throughput as throughput
+    from ir2_benchmark.evaluation.timing import Timing
+    original = throughput.measure
+    phases = iter(PHASES)
+    output = Path(sys.argv[sys.argv.index('--output') + 1])
+    checkpoints = []
+
+    def measured(fn: Callable[[], T], units: Callable[[T], int], *, warmups: int = 3, repeats: int = 10) -> Timing:
+        name = next(phases)
+        before = time.perf_counter()
+        start = {'phase': name, 'status': 'running', 'started_utc': stamp()}
+        save(output / 'phase-progress.json', {'completed': checkpoints, 'current': start})
+        print(json.dumps(start), flush=True)
+        result = original(fn, units, warmups=warmups, repeats=repeats)
+        record = {'phase': name, 'status': 'measured', 'finished_utc': stamp(),
+                  'phase_wall_seconds': time.perf_counter() - before, 'timing': asdict(result),
+                  'kernel_host_high_water_rss_bytes': resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024,
+                  'jax_device_allocation_high_water_bytes': (jax.devices()[0].memory_stats() or {}).get('peak_bytes_in_use')}
+        checkpoints.append(record)
+        save(output / 'phase-progress.json', {'completed': checkpoints, 'current': None})
+        print(json.dumps(record), flush=True)
+        return result
+
+    command.measure = measured
+    throughput.measure = measured
+    sys.argv = [str(SOURCE / 'scripts/phase5_performance.py'), '--worker', *sys.argv[2:]]
+    runpy.run_path(str(SOURCE / 'scripts/phase5_performance.py'), run_name='__main__')
+
+
+def prepare() -> Json:
+    path = OUT / 'requested-manifest.json'
+    if path.exists():
+        return json.loads(path.read_text())
+    manifest = json.loads((ROOT / 'performance/requested-manifest.json').read_text())
+    assert manifest['source_sha256'] == source_digest(), 'source changed from v1'
+    assert manifest['driver_sha256'] == digest(SOURCE / 'scripts/phase5_performance.py')
+    for case in manifest['cases']:
+        argv = case['argv']
+        argv[argv.index(str(SOURCE / 'scripts/phase5_performance.py'))] = str(SELF)
+        argv.insert(argv.index(str(SELF)) + 1, 'worker')
+        argv[argv.index('--steps') + 1] = '4'
+        argv[argv.index('--output') + 1] = str(OUT / case['case_id'])
+        case['output'] = str(OUT / case['case_id'])
+    manifest.update(created_utc=stamp(), protocol='Phase5 performance v2 matched 4-event segments',
+                    supersedes_v1=False, steps=4, warmups=3, repeats=10,
+                    rationale='120s non-scoring diagnostic established expensive CPU steady execution; v1 CPU timed out1800s',
+                    v1_preserved_status={'measured': 1, 'timeout': 1, 'unmeasured': 52},
+                    wrapper_sha256=digest(SELF), case_timeout_seconds=1800, total_budget_seconds=86400,
+                    overall_deadline_utc='2026-11-16T12:12:00+00:00',
+                    remaining_gate=str(ROOT / 'control/long-complete.json'),
+                    reproduction_gate=str(ROOT / 'control/reproduction-complete.json'),
+                    memory_scope='fresh worker per case; kernel RSS high-water; JAX allocation high-water; NVML process sampling lower-bound',
+                    measurement_scope='same implementation/maps/N/B/seed/checkpoint for CPU and H100; no training or world models',
+                    cpu_physical_cores=list(range(8)),
+                    cpu_topology=query(['lscpu', '-e=CPU,CORE,SOCKET,NODE']),
+                    phase_instrumentation='JSON checkpoints before and after original measure(), never inside timed callable')
+    manifest.pop('gpu_pilot_prestarted_before_manifest', None)
+    save(path, manifest)
+    return manifest
+
+
+def query(argv: list[str]) -> str:
+    return subprocess.run(argv, capture_output=True, text=True, check=False).stdout.strip()
+
+
+def snapshot() -> Json:
+    return {'utc': stamp(), 'gpu': query(['nvidia-smi', '--query-gpu=name,uuid,utilization.gpu,memory.used,memory.total', '--format=csv,noheader,nounits']),
+            'compute_processes': query(['nvidia-smi', '--query-compute-apps=pid,process_name,used_memory', '--format=csv,noheader,nounits']),
+            'processes': query(['ps', '-eo', 'pid,psr,pcpu,comm,args', '--sort=-pcpu']),
+            'proc_stat': Path('/proc/stat').read_text()}
+
+
+def rss(pid: int) -> int | None:
+    try:
+        lines = Path(f'/proc/{pid}/status').read_text().splitlines()
+    except FileNotFoundError:
+        return None
+    values = [int(line.split()[1]) * 1024 for line in lines if line.startswith('VmHWM:')]
+    return values[0] if values else None
+
+
+def status() -> Json:
+    records = [json.loads(path.read_text()) for path in sorted((OUT / 'case-records').glob('*.json'))]
+    counts = {state: sum(row['status'] == state for row in records) for state in sorted({row['status'] for row in records})}
+    payload = {'updated_utc': stamp(), 'requested': 54, 'recorded': len(records), 'unrecorded': 54-len(records),
+               'counts': counts, 'all_requested_measured': counts.get('measured', 0) == 54, 'cases': records}
+    save(OUT / 'progress.json', payload)
+    return payload
+
+
+def run_case(case: Json, manifest: Json, deadline: float) -> Json:
+    """Preserve exact completed phases and kernel high-water RSS even on termination."""
+    before = snapshot()
+    time.sleep(1)
+    after_cpu = Path('/proc/stat').read_text()
+    first = {line.split()[0]: [int(v) for v in line.split()[1:9]] for line in before['proc_stat'].splitlines() if line.startswith('cpu')}
+    second = {line.split()[0]: [int(v) for v in line.split()[1:9]] for line in after_cpu.splitlines() if line.startswith('cpu')}
+    busy = []
+    for core in range(8):
+        a, b = first[f'cpu{core}'], second[f'cpu{core}']
+        total = sum(b)-sum(a)
+        idle = b[3]+b[4]-a[3]-a[4]
+        busy.append(100*(1-idle/total) if total else 0)
+    before['affinity_cpu_busy_percent'] = busy
+    before['affinity_cpu_busy_mean_percent'] = sum(busy)/8
+    save(OUT / 'resource-snapshots' / (case['case_id'] + '-before.json'), before)
+    assert sum(busy)/8 <= 10, 'CPU affinity mean utilization >10%; quiet preflight failed'
+    assert not before['compute_processes'], 'GPU compute process present; quiet preflight failed'
+    assert int(before['gpu'].split(',')[-3].strip()) <= 5, 'GPU utilization >5%; quiet preflight failed'
+    assert source_digest() == manifest['source_sha256'] and digest(SELF) == manifest['wrapper_sha256']
+    assert digest(SOURCE / 'scripts/phase5_performance.py') == manifest['driver_sha256']
+    assert digest(SOURCE / 'configs/benchmark.json') == manifest['config_sha256']
+    assert digest(Path(case['map']['path'])) == case['map_file_sha256']
+    assert digest(Path(manifest['checkpoint'])) == manifest['checkpoint_sha256']
+    env = os.environ.copy()
+    env.update(manifest['environment'])
+    env.update(JAX_PLATFORMS='cuda' if case['device'] == 'gpu' else 'cpu',
+               XLA_PYTHON_CLIENT_PREALLOCATE='false', JAX_ENABLE_COMPILATION_CACHE='false')
+    log_path = OUT / 'logs' / (case['case_id'] + '.log')
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    start = time.perf_counter()
+    started = stamp()
+    peak_rss = 0
+    peak_gpu_mib = 0
+    gpu_samples = []
+    with log_path.open('w') as log:
+        process = subprocess.Popen(case['argv'], cwd=SOURCE, env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+        timed_out = False
+        exited = Event()
+        finished_at = [0.0]
+        def observe_exit() -> None:
+            process.wait()
+            finished_at[0] = time.perf_counter()
+            exited.set()
+        observer = Thread(target=observe_exit, name='worker-exit')
+        observer.start()
+        save(OUT / 'current.json', {'case_id': case['case_id'], 'worker_pid': process.pid, 'started_utc': started})
+        while not exited.is_set():
+            peak_rss = max(peak_rss, rss(process.pid) or 0)
+            lines = query(['nvidia-smi', '--query-compute-apps=pid,used_memory', '--format=csv,noheader,nounits']).splitlines()
+            own = [int(line.split(',')[1]) for line in lines if line.split(',')[0].strip() == str(process.pid)]
+            if own:
+                peak_gpu_mib = max(peak_gpu_mib, own[0])
+                gpu_samples.append({'utc': stamp(), 'pid': process.pid, 'used_mib': own[0]})
+            if time.perf_counter() - start >= manifest['case_timeout_seconds'] or time.time() >= deadline:
+                timed_out = True
+                peak_rss = max(peak_rss, rss(process.pid) or 0)
+                os.killpg(process.pid, signal.SIGTERM)
+                try:
+                    process.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    os.killpg(process.pid, signal.SIGKILL)
+                break
+            exited.wait(1)
+        observer.join()
+        returncode = process.returncode
+    wall = finished_at[0] - start
+    source = Path(case['output']) / 'throughput.json'
+    artifact = json.loads(source.read_text()) if source.exists() else None
+    progress_path = Path(case['output']) / 'phase-progress.json'
+    partial = json.loads(progress_path.read_text()) if progress_path.exists() else None
+    state = 'timeout' if timed_out else 'nonzero' if returncode else artifact['cases'][0]['status'] if artifact else 'missing_artifact'
+    record = {'case_id': case['case_id'], 'status': state, 'started_utc': started, 'finished_utc': stamp(),
+              'worker_pid': process.pid, 'returncode': returncode, 'wall_seconds': wall,
+              'wall_scope': 'parent monotonic from Popen until independent wait thread observes child exit; includes startup/load/compilation/phases/save/exit',
+              'sampled_kernel_host_high_water_bytes': peak_rss, 'sampled_gpu_process_peak_mib_lower_bound': peak_gpu_mib,
+              'gpu_process_samples': gpu_samples, 'completed_phase_evidence': partial,
+              'measurement': artifact, 'log': str(log_path)}
+    save(OUT / 'case-records' / (case['case_id'] + '.json'), record)
+    save(OUT / 'resource-snapshots' / (case['case_id'] + '-after.json'), snapshot())
+    save(OUT / 'current.json', None)
+    status()
+    print(json.dumps({'case_id': case['case_id'], 'status': state, 'wall_seconds': wall}), flush=True)
+    return record
+
+
+def main() -> None:
+    action = sys.argv[1]
+    if action == 'worker':
+        worker()
+        return
+    manifest = prepare()
+    if action in ('prepare', 'status'):
+        print(json.dumps(status()), flush=True)
+        return
+    assert action in ('pair', 'remaining')
+    with (ROOT / 'control/performance.lock').open('a') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        assert Path(manifest['remaining_gate']).exists(), 'parent completion gate missing'
+        reproduction = json.loads(Path(manifest['reproduction_gate']).read_text())
+        assert reproduction['status'] == 'complete' and reproduction['functional_jobs_running'] is False
+        budget_path = OUT / 'budget.json'
+        if not budget_path.exists():
+            save(budget_path, {'started_utc': stamp(), 'deadline_epoch': min(time.time()+86400, datetime.fromisoformat(manifest['overall_deadline_utc']).timestamp())})
+        deadline = json.loads(budget_path.read_text())['deadline_epoch']
+        cases = manifest['cases'][:2] if action == 'pair' else manifest['cases']
+        for case in cases:
+            if time.time() >= deadline:
+                print('Budget exhausted; unrecorded requested cases remain pending', flush=True)
+                break
+            if not (OUT / 'case-records' / (case['case_id'] + '.json')).exists():
+                run_case(case, manifest, deadline)
+        save(OUT / ('pair-finished.json' if action == 'pair' else 'sweep-finished.json'), status())
+
+
+if __name__ == '__main__':
+    main()

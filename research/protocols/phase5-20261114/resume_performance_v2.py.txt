@@ -1,0 +1,63 @@
+"""Resume unchanged v2 cases under an explicitly recorded scheduling amendment."""
+import fcntl
+import hashlib
+import importlib.util
+import json
+import pathlib
+import sys
+import time
+from datetime import datetime, timezone
+
+ROOT=pathlib.Path('/home/user/Tz/acceptance/phase5-20261114')
+PATH=ROOT/'performance_v2.py'
+DEADLINE=datetime.fromisoformat('2026-11-16T12:12:00+00:00').timestamp()
+spec=importlib.util.spec_from_file_location('phase5_v2_frozen',PATH)
+module=importlib.util.module_from_spec(spec);sys.modules[spec.name]=module;spec.loader.exec_module(module)
+OUT=ROOT/'performance-v2'
+AMEND=OUT/'schedule-resumption-v1.json'
+
+def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
+
+with (ROOT/'control/performance.lock').open('a') as lock:
+ fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+ assert not AMEND.exists(), 'Resumption already declared; do not overwrite'
+ manifest=json.loads((OUT/'requested-manifest.json').read_text())
+ assert sha(PATH)==manifest['wrapper_sha256']
+ assert module.source_digest()==manifest['source_sha256']
+ gate=json.loads((ROOT/'control/long-complete.json').read_text())
+ assert gate['status']=='complete' and gate['all78_completed_result'] is True
+ assert json.loads((ROOT/'control/reproduction-complete.json').read_text())['functional_jobs_running'] is False
+ before={p.name:sha(p) for p in sorted((OUT/'case-records').glob('*.json'))}
+ assert set(before)=={'cpu-512-n2-b1.json','gpu-512-n2-b1.json'}
+ for name in before:
+  case=json.loads((OUT/'case-records'/name).read_text());assert case['status']=='measured'
+  phases=case['completed_phase_evidence']['completed'];assert len(phases)==5
+  assert [p['timing']['actual_units'] for p in phases]==[1,4,4,1,4]
+  assert all(len(p['timing']['samples_seconds'])==10 and p['timing']['warmup_count']==3 for p in phases)
+ old_budget=json.loads((OUT/'budget.json').read_text())
+ amendment=dict(protocol='phase5_performance_v2_schedule_resumption_v1',declared_utc=module.stamp(),
+   measurement_protocol_unchanged=True,requested_cases=54,previous_cases=2,remaining_cases=52,
+   explanation='Predeclared first-pair review finished before remaining dispatch; offline review gap preserved. Scheduling only is extended within the user-authorized original two-day resource window.',
+   original_manifest_sha256=sha(OUT/'requested-manifest.json'),original_budget_sha256=sha(OUT/'budget.json'),
+   original_deadline_epoch=old_budget['deadline_epoch'],amended_deadline_epoch=DEADLINE,
+   amended_deadline_utc='2026-11-16T12:12:00+00:00',case_timeout_seconds=1800,
+   original_budget_file_unchanged=True,original_case_bytes=before,source_sha256=manifest['source_sha256'],
+   wrapper_sha256=sha(PATH),scheduler_sha256=sha(pathlib.Path(__file__)),
+   note='Completion under this schedule is not a claim of completion within the original v2 24-hour wall-clock window.')
+ module.save(AMEND,amendment)
+ print(json.dumps({'declared':str(AMEND),'sha256':sha(AMEND),'remaining':52}),flush=True)
+ try:
+  for case in manifest['cases']:
+   if (OUT/'case-records'/(case['case_id']+'.json')).exists():continue
+   if time.time()>=DEADLINE:break
+   module.run_case(case,manifest,DEADLINE)
+  assert {name:sha(OUT/'case-records'/name) for name in before}==before
+  assert sha(PATH)==manifest['wrapper_sha256'] and module.source_digest()==manifest['source_sha256']
+  progress=module.status()
+  module.save(OUT/'resumption-finished.json',dict(status='complete' if progress['recorded']==54 else 'budget_exhausted',
+     finished_utc=module.stamp(),amendment_sha256=sha(AMEND),requested=54,recorded=progress['recorded'],
+     outcomes=progress['counts'],all_requested_measured=progress['all_requested_measured'],
+     original_cases_unchanged=True,source_sha256=manifest['source_sha256']))
+ except Exception as error:
+  module.save(OUT/'resumption-finished.json',dict(status='blocked',finished_utc=module.stamp(),error_type=type(error).__name__,error=str(error),amendment_sha256=sha(AMEND)))
+  raise

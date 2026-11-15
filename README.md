@@ -9,14 +9,14 @@ Use a fresh Python 3.11 environment:
 ```bash
 python -m pip install -r requirement.txt
 python -m pip install --no-deps -e .
-ir2-benchmark doctor --output artifacts/setup/doctor.json
+ir2-benchmark doctor --runtime-only --output artifacts/setup/doctor.json
 ```
 
 `requirement.txt` includes the JAX benchmark, original PyTorch/Ray reference tools and development dependencies. It records observed runtime versions where available; a clean installation on every operating system has not been validated. For Linux with a compatible NVIDIA driver, additionally install the CUDA runtime requirements:
 
 ```bash
 python -m pip install -r requirements-server.txt
-ir2-benchmark doctor --require-gpu --output artifacts/setup/doctor-gpu.json
+ir2-benchmark doctor --runtime-only --require-gpu --output artifacts/setup/doctor-gpu.json
 ```
 
 The original instructions below describe the upstream environment, not the new JAX environment. Generated training outputs and caches are ignored. Raw IR2 maps are in `DungeonMaps`; map generation and audit commands are documented in `docs/benchmark-running.md`.
@@ -25,7 +25,9 @@ The published snapshot also includes map manifests and 6,900 generated maps unde
 
 The independent communication-limited benchmark is documented in [docs/benchmark-running.md](docs/benchmark-running.md). Its entry points are `doctor`, `maps`, `rollout`, `validation-manifest`, `train-a`, `train-b`, `evaluate`, `report` and `throughput`; development smoke results are separate from formal experiment completion.
 
-Current fixed baseline evaluation uses `configs/benchmark.json` and `configs/evaluation/benchmark.json`, separate from the retained A/B research configurations. Eight methods combine nearest-frontier or upstream pretrained IR2 adapted navigation with off/PLAN/MAP_DELTA/mixed communication. See the [Phase 4 acceptance report](research/BASELINE_EVALUATION_REPORT.md) for target-server evidence, reference-weight provenance and limits; this does not certify full formal benchmark experiments or a data-fair retrained IR2 model.
+Current fixed baseline evaluation uses `configs/benchmark.json` and `configs/evaluation/benchmark.json`, separate from the retained A/B research configurations. Eight configurations combine two navigation methods, nearest-frontier or upstream pretrained IR2 adapted, with off/PLAN/MAP_DELTA/mixed communication. See the [Phase 4 acceptance report](research/BASELINE_EVALUATION_REPORT.md) for target-server evidence, reference-weight provenance and limits; this does not certify full formal benchmark experiments or a data-fair retrained IR2 model.
+
+Phase 5 has passed all 78 declared full-length validation episodes and clean Linux CPU/CUDA wheel installation, including real interruption/resume. The matched CPU/H100 performance sweep remains in progress; the completed first pair measures initial four-event segments. See the [full-episode report](research/FULL_EPISODE_VALIDATION_REPORT.md), [performance and reproduction report](research/PERFORMANCE_REPRODUCTION_REPORT.md), [pinned wheel reproduction](docs/phase5-reproduction.md), and [resource/scope proposals](research/EXPERIMENT_RESOURCE_PLAN.md). These are limited engineering results; formal paper experiments remain pending.
 
 Reward, message exchange, accounting and signal choices are described in [environment presets and custom methods](docs/environment-presets.md).
 

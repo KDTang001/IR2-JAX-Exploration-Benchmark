@@ -1,0 +1,341 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = []
+# ///
+# How to run: unchanged ex interpreter, env PYTHONPATH=source/src JAX_PLATFORMS=cpu,
+# taskset -c32-47 python post_long_supervisor.py; all authorizations are parent-controlled.
+"""Publish the final gate only after exact original replay, public resume/report, and idle proof."""
+# noqa: SIZE_OK - One deployable external helper keeps gate/deadline safety together across unreliable SSH.
+from __future__ import annotations
+
+import fcntl
+import hashlib
+import json
+import os
+import signal
+import subprocess
+import sys
+import time
+import traceback
+from contextlib import ExitStack
+from dataclasses import asdict
+from datetime import UTC, datetime
+from pathlib import Path
+from typing import TypeAlias, TypedDict
+
+Json: TypeAlias = None | bool | int | float | str | list['Json'] | dict[str, 'Json']
+ROOT = Path('/home/user/Tz/acceptance/phase5-20261114')
+SOURCE = ROOT / 'source'
+PYTHON = '/home/user/anaconda3/envs/ex/bin/python'
+MANIFEST = ROOT / 'evidence/tasks.jsonl'
+CORE = ROOT / 'evidence/core.json'
+FIRST_MANIFEST = ROOT / 'evidence/tasks-original-audit-first.jsonl'
+FIRST_AUDIT = ROOT / 'evidence/original-audit-first-cells.json'
+AUDITOR = SOURCE / 'scripts/audit_baseline_evaluation.py'
+GATE = ROOT / 'control/long-complete.json'
+STATE = ROOT / 'control/post-long-supervisor-state.json'
+EXPECTED_SOURCE = '5b496da6ed7f727146fc726c94ae07fba6e8988f1e347a57bb4a2416082d2c06'
+SOURCE_COMMIT = 'ade2b705a3caf9e39eeade7ce91df3d4f3945390'
+DEADLINE = datetime.fromisoformat('2026-11-16T12:12:00+00:00').timestamp()
+WORKERS = (732295, 732296)
+PROC = Path('/proc')
+
+
+class WorkerInstance(TypedDict):
+    pid: int
+    start_ticks: int
+    argv: list[str]
+
+
+def stamp() -> str:
+    return datetime.now(UTC).isoformat()
+
+
+def digest(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def source_digest() -> str:
+    value = hashlib.sha256()
+    for path in sorted((SOURCE / 'src').rglob('*.py')):
+        value.update(str(path.relative_to(SOURCE)).encode())
+        value.update(path.read_bytes())
+    return value.hexdigest()
+
+
+def save(path: Path, data: Json) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temp = path.with_name(path.name + '.tmp')
+    temp.write_text(json.dumps(data, indent=2) + '\n')
+    temp.replace(path)
+
+
+def stage(name: str) -> None:
+    save(STATE, {'status': 'working', 'stage': name, 'updated_utc': stamp()})
+    print(json.dumps({'stage': name, 'utc': stamp()}), flush=True)
+
+
+def worker_instance(pid: int) -> WorkerInstance | None:
+    """Read active process startticks and argv without authorizing reused or unrelated PIDs."""
+    try:
+        fields = (PROC / str(pid) / 'stat').read_text().rsplit(')', 1)[1].split()
+        argv = [part.decode() for part in (PROC / str(pid) / 'cmdline').read_bytes().split(b'\0') if part]
+    except FileNotFoundError:
+        return None
+    authorized = (fields[0] != 'Z' and any(Path(arg).name == 'phase5_full_episodes.py' for arg in argv)
+                  and '--output' in argv and argv.index('--output') + 1 < len(argv)
+                  and argv[argv.index('--output') + 1] == str(ROOT / 'long'))
+    return {'pid': pid, 'start_ticks': int(fields[19]), 'argv': argv} if authorized else None
+
+
+def same_instance(worker: WorkerInstance) -> bool:
+    return worker_instance(worker['pid']) == worker
+
+
+def signal_same_worker(worker: WorkerInstance, sig: signal.Signals) -> bool:
+    """Use a kernel PID handle so PID reuse between identity check and signal is harmless."""
+    try:
+        descriptor = os.pidfd_open(worker['pid'])
+    except ProcessLookupError:
+        return False
+    with ExitStack() as stack:
+        stack.callback(os.close, descriptor)
+        if not same_instance(worker):
+            return False
+        try:
+            signal.pidfd_send_signal(descriptor, sig)
+        except ProcessLookupError:
+            return False
+        return True
+
+
+def enforce_deadline(workers: list[WorkerInstance]) -> None:
+    """Only at the actual deadline, stop exactly the captured live worker instances."""
+    assert time.time() >= DEADLINE
+    actions = []
+    for worker in workers:
+        if signal_same_worker(worker, signal.SIGTERM):
+            actions.append({'pid': worker['pid'], 'signal': 'SIGTERM', 'start_ticks': worker['start_ticks']})
+    finish = time.monotonic() + 10
+    while any(same_instance(worker) for worker in workers) and time.monotonic() < finish:
+        time.sleep(0.2)
+    for worker in workers:
+        if signal_same_worker(worker, signal.SIGKILL):
+            actions.append({'pid': worker['pid'], 'signal': 'SIGKILL', 'start_ticks': worker['start_ticks']})
+    save(ROOT / 'control/deadline-enforcement.json', {'enforced_utc': stamp(), 'captured_workers': workers,
+         'actions': actions, 'record_policy': 'partial results/traces/logs retained without modification'})
+
+
+def read_when_ready(path: Path) -> Json:
+    """Retry incomplete producer JSON writes; never turn malformed data into a gate."""
+    while time.time() < DEADLINE:
+        if path.exists():
+            try:
+                return json.loads(path.read_text())
+            except (json.JSONDecodeError, UnicodeError):
+                pass
+        time.sleep(15)
+    raise TimeoutError(f'Overall deadline reached waiting for {path}')
+
+
+def task_rows(path: Path) -> list[Json]:
+    return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+
+
+def record_hashes() -> Json:
+    return {path.name: digest(path) for path in sorted((ROOT / 'long/results').glob('*.json'))}
+
+
+def run_job(argv: list[str], log: Path, timeout: int) -> None:
+    """Wait for subprocess exit and terminate its entire group on an actual deadline."""
+    environment = os.environ.copy()
+    environment.update(PYTHONPATH=str(SOURCE / 'src'), JAX_PLATFORMS='cpu',
+                       OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1', MKL_NUM_THREADS='1', MPLBACKEND='Agg')
+    remaining = min(timeout, DEADLINE-time.time())
+    assert remaining > 0
+    with log.open('w') as stream:
+        process = subprocess.Popen(argv, cwd=SOURCE, env=environment, stdout=stream,
+                                   stderr=subprocess.STDOUT, start_new_session=True)
+        save(ROOT / 'control/post-long-active-child.json', {'pid': process.pid, 'argv': argv, 'log': str(log), 'started_utc': stamp()})
+        try:
+            returncode = process.wait(timeout=remaining)
+        except subprocess.TimeoutExpired:
+            os.killpg(process.pid, signal.SIGTERM)
+            try:
+                process.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                os.killpg(process.pid, signal.SIGKILL)
+                process.wait()
+            raise
+        save(ROOT / 'control/post-long-active-child.json', {'pid': process.pid, 'returncode': returncode, 'finished_utc': stamp(), 'log': str(log)})
+        assert returncode == 0, f'{argv[3:]} failed exit{returncode}; see {log}'
+
+
+def public_resume_report() -> None:
+    """Drive the unchanged public APIs only after all78 intact completions were verified."""
+    from ir2_benchmark.evaluation.records import completed_result
+    from ir2_benchmark.evaluation.report import write_report
+    from ir2_benchmark.evaluation.runner import run_manifest
+    from ir2_benchmark.evaluation.scenarios import read_task_manifest
+    tasks = tuple(read_task_manifest(MANIFEST))
+    assert len(tasks) == len({task.result_id for task in tasks}) == 78
+    assert all(completed_result(ROOT / 'long/results' / f'{task.result_id}.json', task) for task in tasks)
+    before = record_hashes()
+    result = asdict(run_manifest(MANIFEST, ROOT / 'long'))
+    assert result == {'requested': 78, 'executed': 0, 'resumed': 78, 'failures': 0}, result
+    save(ROOT / 'evidence/public-resume.json', result)
+    declaration = json.loads(CORE.read_text())
+    declaration['training_seeds'] = [-1]
+    view = ROOT / 'evidence/core-reporting-view.json'
+    save(view, declaration)
+    report_path = write_report(ROOT / 'long', ROOT / 'long/public-report', manifest=MANIFEST,
+                               core=view, repetitions=1000)
+    report = json.loads(report_path.read_text())
+    assert report['requested'] == report['completed_results'] == 78
+    assert report['pending_results'] == 0 and not report['corrupt_records']
+    assert report['requested_manifest_complete'] is True
+    assert report['formal_complete'] is False and report['limited'] is True
+    assert record_hashes() == before, 'Public resume/report changed frozen result bytes'
+    save(ROOT / 'evidence/public-resume-report.json', {'status': 'passed', 'resume': result,
+         'report': str(report_path), 'report_sha256': digest(report_path), 'formal_complete': False,
+         'limited': True, 'record_bytes_unchanged': True, 'reporting_core_sha256': digest(view),
+         'reporting_training_seeds': [-1], 'source_core_sha256': digest(CORE)})
+
+
+def validate_audit(path: Path, identities: set[str]) -> Json:
+    payload = json.loads(path.read_text())
+    assert payload['status'] == 'passed' and payload['tasks'] == len(identities)
+    assert payload['execution_error_records'] == 0
+    assert len(payload['results']) == len(identities)
+    assert {row['result_id'] for row in payload['results']} == identities
+    return payload
+
+
+def quiescence() -> Json:
+    """Require no benchmark/oracle workers and two idle GPU snapshots before publication."""
+    snapshots = []
+    for _ in range(2):
+        processes = subprocess.run(['ps', '-eo', 'pid,args'], capture_output=True, text=True, check=True).stdout
+        forbidden = ('scripts/phase5_full_episodes.py', 'scripts/audit_baseline_evaluation.py',
+                     'phase5_performance.py', 'performance_v2.py worker', 'arithmetic_provenance.py', 'aggregate_long.py')
+        busy = [line for line in processes.splitlines() if any(token in line for token in forbidden)]
+        assert not busy, f'Measurement/oracle subprocesses still running: {busy}'
+        gpu = subprocess.run(['nvidia-smi', '--query-gpu=name,uuid,utilization.gpu,memory.used,memory.total',
+                              '--format=csv,noheader,nounits'], capture_output=True, text=True, check=True).stdout.strip()
+        apps = subprocess.run(['nvidia-smi', '--query-compute-apps=pid,process_name,used_memory',
+                               '--format=csv,noheader,nounits'], capture_output=True, text=True, check=True).stdout.strip()
+        assert not apps and int(gpu.split(',')[-3]) <= 5, f'GPU is not quiet: {gpu}; {apps}'
+        snapshots.append({'utc': stamp(), 'gpu': gpu, 'compute_processes': apps, 'processes': processes})
+        time.sleep(1)
+    return snapshots
+
+
+def supervise(workers: list[WorkerInstance]) -> None:
+    from ir2_benchmark.evaluation.records import completed_result
+    from ir2_benchmark.evaluation.scenarios import read_task_manifest
+    assert not GATE.exists(), 'Final gate already exists; supervisor must not replace it'
+    frozen_paths = (MANIFEST, CORE, FIRST_MANIFEST, AUDITOR, ROOT / 'aggregate_long.py', Path(__file__).resolve())
+    expected_hashes = {str(path): digest(path) for path in frozen_paths}
+    assert source_digest() == EXPECTED_SOURCE
+    stage('waiting_long_compute_and_reproduction_and_first54_audit')
+    compute_path = ROOT / 'control/long-compute-complete.json'
+    reproduction_path = ROOT / 'control/reproduction-complete.json'
+    compute = read_when_ready(compute_path)
+    assert compute['returncodes'] == [0, 0] and compute['workers'] == 2, compute
+    assert compute['expected_tasks'] == compute['records'] == 78, compute
+    assert not any(same_instance(worker) for worker in workers)
+    reproduction = read_when_ready(reproduction_path)
+    assert reproduction['status'] == 'complete' and reproduction['functional_jobs_running'] is False
+    read_when_ready(FIRST_AUDIT)
+    all_rows, first_rows = task_rows(MANIFEST), task_rows(FIRST_MANIFEST)
+    all_by_id = {row['result_id']: row for row in all_rows}
+    first_ids = {row['result_id'] for row in first_rows}
+    assert len(all_rows) == len(all_by_id) == 78 and len(first_rows) == len(first_ids) == 54
+    assert all(all_by_id[row['result_id']] == row for row in first_rows)
+    validate_audit(FIRST_AUDIT, first_ids)
+    stage('verifying_all78_completion_and_freezing_record_bytes')
+    tasks = tuple(read_task_manifest(MANIFEST))
+    assert all(completed_result(ROOT / 'long/results' / f'{task.result_id}.json', task) for task in tasks)
+    before = record_hashes()
+    assert len(before) == 78
+    for task in tasks:
+        row = json.loads((ROOT / 'long/results' / f'{task.result_id}.json').read_text())['result']
+        assert row['outcome'] in ('success', 'timeout') and row['error'] is None
+    remaining_rows = [row for row in all_rows if row['result_id'] not in first_ids]
+    remaining_ids = {row['result_id'] for row in remaining_rows}
+    assert len(remaining_rows) == len(remaining_ids) == 24 and not (remaining_ids & first_ids)
+    remaining_manifest = ROOT / 'evidence/tasks-original-audit-remaining.jsonl'
+    remaining_manifest.write_text(''.join(json.dumps(row, sort_keys=True) + '\n' for row in remaining_rows))
+    remaining_audit = ROOT / 'evidence/original-audit-remaining-cells.json'
+    stage('auditing_disjoint_remaining24_on_cpu32_47')
+    run_job(['/usr/bin/taskset', '-c', '32-47', PYTHON, str(AUDITOR), '--manifest', str(remaining_manifest),
+             '--results', str(ROOT / 'long'), '--output', str(remaining_audit), '--workers', '16'],
+            ROOT / 'logs/original-audit-remaining-cells.log', 14400)
+    validate_audit(remaining_audit, remaining_ids)
+    stage('public_run_manifest_resume78_execute0_and_write_report')
+    run_job(['/usr/bin/taskset', '-c', '32-47', PYTHON, str(Path(__file__).resolve()), 'public'],
+            ROOT / 'logs/public-resume-report.log', 3600)
+    assert record_hashes() == before
+    assert all(completed_result(ROOT / 'long/results' / f'{task.result_id}.json', task) for task in tasks)
+    assert {str(path): digest(path) for path in frozen_paths} == expected_hashes
+    assert source_digest() == EXPECTED_SOURCE
+    stage('parent_full_episode_aggregation_before_performance')
+    run_job(['/usr/bin/taskset', '-c', '48-49', PYTHON, str(ROOT / 'aggregate_long.py'), '--root', str(ROOT)],
+            ROOT / 'logs/full-episode-aggregation.log', 1800)
+    aggregate_path = ROOT / 'evidence/full-episode-summary.json'
+    aggregate = json.loads(aggregate_path.read_text())
+    assert aggregate['status'] == 'complete' and aggregate['requested'] == aggregate['measured'] == 78
+    gate_frozen_inputs = expected_hashes | {str(aggregate_path): digest(aggregate_path)}
+    assert record_hashes() == before and source_digest() == EXPECTED_SOURCE
+    assert {str(path): digest(path) for path in frozen_paths} == expected_hashes
+    stage('confirming_no_measurement_subprocesses_and_gpu_idle')
+    quiet = quiescence()
+    integrity_path = ROOT / 'evidence/post-long-record-integrity.json'
+    save(integrity_path, {'status': 'passed', 'record_hashes_before': before, 'record_hashes_after': record_hashes(),
+                         'all78_completed_result_after': True, 'frozen_inputs_sha256': expected_hashes,
+                         'source_sha256': EXPECTED_SOURCE, 'source_commit': SOURCE_COMMIT})
+    quiet_path = ROOT / 'evidence/post-long-quiescence.json'
+    save(quiet_path, quiet)
+    report_path = ROOT / 'long/public-report/report.json'
+    assert time.time() < DEADLINE, 'Overall deadline reached before gate publication'
+    assert digest(aggregate_path) == gate_frozen_inputs[str(aggregate_path)]
+    payload = {'status': 'complete', 'finished_utc': stamp(), 'source_commit': SOURCE_COMMIT,
+               'source_sha256': EXPECTED_SOURCE, 'requested': 78, 'all78_completed_result': True,
+               'original_audit_first54': {'path': str(FIRST_AUDIT), 'sha256': digest(FIRST_AUDIT)},
+               'original_audit_remaining24': {'path': str(remaining_audit), 'sha256': digest(remaining_audit)},
+               'audit_partition': {'first': 54, 'remaining': 24, 'disjoint': True, 'union': 78},
+               'public_resume': json.loads((ROOT / 'evidence/public-resume.json').read_text()),
+               'public_resume_evidence_sha256': digest(ROOT / 'evidence/public-resume-report.json'),
+               'public_report': {'path': str(report_path), 'sha256': digest(report_path), 'formal_complete': False, 'limited': True},
+               'record_integrity_sha256': digest(integrity_path), 'quiescence_sha256': digest(quiet_path),
+               'full_episode_summary': {'path': str(aggregate_path), 'sha256': digest(aggregate_path)},
+               'compute_gate_sha256': digest(compute_path), 'reproduction_gate_sha256': digest(reproduction_path),
+               'coverage_arithmetic_provenance_sha256': digest(ROOT / 'arithmetic-provenance/report.json'),
+               'frozen_inputs_sha256': gate_frozen_inputs, 'supervisor_sha256': digest(Path(__file__).resolve())}
+    save(STATE, {'status': 'complete', 'stage': 'all_gate_prerequisites_passed', 'finished_utc': stamp()})
+    save(GATE, payload)
+    print(json.dumps({'published_gate': str(GATE), 'sha256': digest(GATE)}), flush=True)
+
+
+def main() -> None:
+    if len(sys.argv) == 2 and sys.argv[1] == 'public':
+        public_resume_report()
+        return
+    with (ROOT / 'control/post-long-supervisor.lock').open('a') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        workers = [value for pid in WORKERS if (value := worker_instance(pid)) is not None]
+        save(ROOT / 'control/known-long-worker-instances.json', {'captured_utc': stamp(), 'workers': workers})
+        try:
+            supervise(workers)
+        except Exception as error:  # noqa: BROAD_EXCEPT_OK - CLI boundary preserves blocked evidence and exits nonzero.
+            if time.time() >= DEADLINE:
+                enforce_deadline(workers)
+            save(STATE, {'status': 'blocked', 'updated_utc': stamp(), 'error_type': type(error).__name__,
+                         'error': str(error), 'traceback': traceback.format_exc(), 'final_gate_created': GATE.exists()})
+            traceback.print_exc()
+            raise
+
+
+if __name__ == '__main__':
+    main()

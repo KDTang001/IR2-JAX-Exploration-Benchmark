@@ -1,0 +1,24 @@
+{
+  "protocol": "phase5_performance_v2_schedule_resumption_v1",
+  "declared_utc": "2026-11-15T15:31:09.149191+00:00",
+  "measurement_protocol_unchanged": true,
+  "requested_cases": 54,
+  "previous_cases": 2,
+  "remaining_cases": 52,
+  "explanation": "Predeclared first-pair review finished before remaining dispatch; offline review gap preserved. Scheduling only is extended within the user-authorized original two-day resource window.",
+  "original_manifest_sha256": "8f89d69691f0c0cb54ff6de0b2f135186733c4f5318a70bfeefe5f6acfb7d41e",
+  "original_budget_sha256": "a6bd28e19a3cc5bf66d672ebbd4d6471c715d0e59e5be5684dd53e6a0b571afa",
+  "original_deadline_epoch": 1794771511.4789438,
+  "amended_deadline_epoch": 1794831120.0,
+  "amended_deadline_utc": "2026-11-16T12:12:00+00:00",
+  "case_timeout_seconds": 1800,
+  "original_budget_file_unchanged": true,
+  "original_case_bytes": {
+    "cpu-512-n2-b1.json": "7fd43e69e616a2f1ec9c9bf8e32599fbd71f82eb282bdc2f0dccbf63628a4176",
+    "gpu-512-n2-b1.json": "0810fd1b750539a9112b1ccb27f03ec4dd55df8cbc9eda89b69b582dd2049713"
+  },
+  "source_sha256": "5b496da6ed7f727146fc726c94ae07fba6e8988f1e347a57bb4a2416082d2c06",
+  "wrapper_sha256": "e6e717ae0b0368bc35107d1ce0d0cb65a664898f3debc1f8f4c84c0022e09cd7",
+  "scheduler_sha256": "31234397148518a3b413fd43e808ce82d30b72d28908bab2eb940e6fcf17dca2",
+  "note": "Completion under this schedule is not a claim of completion within the original v2 24-hour wall-clock window."
+}
