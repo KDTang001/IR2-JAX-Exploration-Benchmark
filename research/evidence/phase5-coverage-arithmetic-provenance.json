@@ -1,0 +1,365 @@
+{
+  "status": "complete",
+  "scope": "non-scoring arithmetic provenance only; no package/auditor/trace mutations",
+  "device": "cuda:0",
+  "jax_version": "0.4.35",
+  "jax_enable_x64": false,
+  "environment": {
+    "JAX_PLATFORMS": "cuda",
+    "XLA_FLAGS": "--xla_dump_to=/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla --xla_dump_hlo_as_text",
+    "XLA_PYTHON_CLIENT_PREALLOCATE": "false"
+  },
+  "xla_default_debug_options": {
+    "xla_cpu_enable_fast_math": true,
+    "xla_cpu_fast_math_honor_division": true,
+    "xla_cpu_fast_math_honor_functions": true,
+    "xla_cpu_fast_math_honor_infs": true,
+    "xla_cpu_fast_math_honor_nans": false,
+    "xla_gpu_enable_fast_min_max": false
+  },
+  "source_function": "def _coverage(state: EnvState) -> Array:\n    \"\"\"Compute physical coverage only on the host-verified scoring component.\"\"\"\n    return jnp.sum(state.covered & state.component) / jnp.sum(state.component)\n",
+  "source_file_sha256": "7df54b75a8e13a078233473de858a88b0fa9bedc2c25722d7aeabd78854bf2af",
+  "boolean_input_shape": [
+    512,
+    512
+  ],
+  "exact_gpu_reduced_counts": [
+    65907,
+    96250
+  ],
+  "integer_count_origin": "original independent sensor replay diagnostic; boolean arrays isolate the identical integer-count reduction/division",
+  "original_diagnostic": {
+    "assertion": "('5716bb85df992136d851af3b114aaeee009d4a04d79c1119d976779c1da2fade', 406, 0.684748113155365, 0.684748051948052, 65907, 96250, 0.005891203875840745)",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/user/Tz/acceptance/phase5-20261114/diagnose_original_coverage.py\", line 7, in <module>\n    try:namespace[\"verify_episode\"]((line,str(r/\"long\")))\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/Tz/acceptance/phase5-20261114/source/scripts/audit_baseline_evaluation.py\", line 270, in verify_episode\n    assert abs(float(trace[\"coverage\"][event]) - fraction) <= 6e-8\nAssertionError: ('5716bb85df992136d851af3b114aaeee009d4a04d79c1119d976779c1da2fade', 406, 0.684748113155365, 0.684748051948052, 65907, 96250, 0.005891203875840745)\n"
+  },
+  "original_trace_matches": [
+    {
+      "result_id": "5716bb85df992136d851af3b114aaeee009d4a04d79c1119d976779c1da2fade",
+      "record": "/home/user/Tz/acceptance/phase5-20261114/long/results/5716bb85df992136d851af3b114aaeee009d4a04d79c1119d976779c1da2fade.json",
+      "trace": "/home/user/Tz/acceptance/phase5-20261114/long/traces/5716bb85df992136d851af3b114aaeee009d4a04d79c1119d976779c1da2fade.npz",
+      "trace_sha256": "ce665c5255014bf660d66811585ac3ef657b0146ed8e91af794df652e100df2b",
+      "event": 406,
+      "coverage": 0.684748113155365,
+      "coverage_bits": 1060064167,
+      "map_hash": "00cef694011d5372e1064600799daca419d41d082c1f9e71a93806fad80c3c82",
+      "n_agents": 2,
+      "method_id": "nf_off"
+    }
+  ],
+  "failed_trace": {
+    "value": 0.684748113155365,
+    "bits": 1060064167,
+    "decoded_cells": 65907
+  },
+  "variants": {
+    "numpy_nearest": {
+      "value": 0.6847480535507202,
+      "bits": 1060064166,
+      "equals_failed_trace": false,
+      "decoded_cells": 65907,
+      "cell_residual": 0.00015425682067871094
+    },
+    "source_eager": {
+      "value": 0.684748113155365,
+      "bits": 1060064167,
+      "equals_failed_trace": true,
+      "decoded_cells": 65907,
+      "cell_residual": 0.005891203880310059
+    },
+    "source_jit": {
+      "value": 0.684748113155365,
+      "bits": 1060064167,
+      "equals_failed_trace": true,
+      "decoded_cells": 65907,
+      "cell_residual": 0.005891203880310059
+    },
+    "scalar_dynamic_jit": {
+      "value": 0.684748113155365,
+      "bits": 1060064167,
+      "equals_failed_trace": true,
+      "decoded_cells": 65907,
+      "cell_residual": 0.005891203880310059
+    },
+    "scalar_constant_jit": {
+      "value": 0.6847480535507202,
+      "bits": 1060064166,
+      "equals_failed_trace": false,
+      "decoded_cells": 65907,
+      "cell_residual": 0.00015425682067871094
+    }
+  },
+  "decoding_tests": [
+    {
+      "area": 96250,
+      "all_numerators_tested": 96251,
+      "positive_mismatches": 0,
+      "plus_one_cell_negative_false_accepts": 0,
+      "minus_one_cell_negative_false_accepts": 0,
+      "maximum_absolute_cell_residual": 0.00764155387878418
+    },
+    {
+      "area": 123457,
+      "all_numerators_tested": 123458,
+      "positive_mismatches": 0,
+      "plus_one_cell_negative_false_accepts": 0,
+      "minus_one_cell_negative_false_accepts": 0,
+      "maximum_absolute_cell_residual": 0.004290521144866943
+    },
+    {
+      "area": 250000,
+      "all_numerators_tested": 250001,
+      "positive_mismatches": 0,
+      "plus_one_cell_negative_false_accepts": 0,
+      "minus_one_cell_negative_false_accepts": 0,
+      "maximum_absolute_cell_residual": 0.008073806762695312
+    },
+    {
+      "area": 262144,
+      "all_numerators_tested": 262145,
+      "positive_mismatches": 0,
+      "plus_one_cell_negative_false_accepts": 0,
+      "minus_one_cell_negative_false_accepts": 0,
+      "maximum_absolute_cell_residual": 0.0
+    },
+    {
+      "area": 500000,
+      "all_numerators_tested": 500001,
+      "positive_mismatches": 0,
+      "plus_one_cell_negative_false_accepts": 0,
+      "minus_one_cell_negative_false_accepts": 0,
+      "maximum_absolute_cell_residual": 0.016147613525390625
+    },
+    {
+      "area": 786432,
+      "all_numerators_tested": 786433,
+      "positive_mismatches": 0,
+      "plus_one_cell_negative_false_accepts": 0,
+      "minus_one_cell_negative_false_accepts": 0,
+      "maximum_absolute_cell_residual": 0.03125
+    },
+    {
+      "area": 1000000,
+      "all_numerators_tested": 1000001,
+      "positive_mismatches": 0,
+      "plus_one_cell_negative_false_accepts": 0,
+      "minus_one_cell_negative_false_accepts": 0,
+      "maximum_absolute_cell_residual": 0.03231048583984375
+    },
+    {
+      "area": 1048576,
+      "all_numerators_tested": 1048577,
+      "positive_mismatches": 0,
+      "plus_one_cell_negative_false_accepts": 0,
+      "minus_one_cell_negative_false_accepts": 0,
+      "maximum_absolute_cell_residual": 0.0
+    }
+  ],
+  "tested_numerators_total": 4066867,
+  "all_decoding_and_negative_tests_passed": true,
+  "test_scope_limit": "Exhaustive numerators at8 listed areas, not all possible denominators; no claim of changing environment outcomes.",
+  "artifacts": [
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/coverage-optimized-hlo.txt",
+      "bytes": 6460,
+      "sha256": "26f1ac050242ef02524d2b7d8eb49c6199baf920d244c7d5daba53f7e78346d1"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/coverage-preoptimized-hlo.txt",
+      "bytes": 994,
+      "sha256": "5243cc08d44e8289df689488090a6967cb05116d0f1535cdf4cf4894623e3f5e"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/coverage-stablehlo.txt",
+      "bytes": 1018,
+      "sha256": "5c87de626b90bda4177e10f515708c07957acacee6d179535a57e4492d53ba10"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/diagnostic.log",
+      "bytes": 5636,
+      "sha256": "755c592c841d0adf3e279fb4cd53c984df93c97209e70bceadcdd923184a252c"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/report-initial.json",
+      "bytes": 5636,
+      "sha256": "755c592c841d0adf3e279fb4cd53c984df93c97209e70bceadcdd923184a252c"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/scalar-constant-optimized-hlo.txt",
+      "bytes": 1187,
+      "sha256": "1a3cb5955f2adefa5c442bf7e689c76bd9cea1cb69978f9899d0826d17ac1887"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/scalar-dynamic-optimized-hlo.txt",
+      "bytes": 1512,
+      "sha256": "bd760571eb3db083b29822c8b572480a513169b5eb17c65fdd3647b40d8e6a5b"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0007.jit__coverage.before_optimizations.txt",
+      "bytes": 3055,
+      "sha256": "b292325bb114f9af63a0b826960fd0cbb8875154aef125bf71eccbe80cbf98f5"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0007.jit__coverage.ir-no-opt.ll",
+      "bytes": 51908,
+      "sha256": "1412a864d9053de82b8b9e0157fb5729b23a7f6da253c7fd0824cde7ea2940eb"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0007.jit__coverage.ir-with-opt.ll",
+      "bytes": 25306,
+      "sha256": "37378f1ca4eeeeece7793426dec492e30e30a1ae81df35ccefc30a268435d7f3"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0007.jit__coverage.ptx",
+      "bytes": 11539,
+      "sha256": "400085bc36740bb7b92c30db43f6b8247976b01480c3c8507a075804842adab3"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0007.jit__coverage.sm_9.0_gpu_after_optimizations-buffer-assignment.txt",
+      "bytes": 6216,
+      "sha256": "127fd7cdf4adeeacb3540c9ec50d19e1236a89c62bdcdb268a3f882420268518"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0007.jit__coverage.sm_9.0_gpu_after_optimizations-memory-usage-report.txt",
+      "bytes": 1948,
+      "sha256": "10415507ca78b15f6b3cf0ba8a60c23ca1320d07990ee4deffa3d1feb52a685d"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0007.jit__coverage.sm_9.0_gpu_after_optimizations.txt",
+      "bytes": 5749,
+      "sha256": "42cba5856b4f36c346078e6c08ea13ba7eee27b05382a07ea5087c4ea2d453d8"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0007.jit__coverage.thunk_sequence.txt",
+      "bytes": 382,
+      "sha256": "6195df4d06b490d25673a2a51a0da93a0cac4d68bd9ae2d4a20b5b982939ba8a"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0011.jit__lambda_.before_optimizations.txt",
+      "bytes": 925,
+      "sha256": "3e7401a407e5065063fc9f8a3c3bd3b0a9b18092389f9d35eaea8751bf69bc23"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0011.jit__lambda_.ir-no-opt.ll",
+      "bytes": 2099,
+      "sha256": "d54b3e16b78b2cf5cf2f83f89177abeadf61cf4b2ab3fb93bb793f8af0f180e6"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0011.jit__lambda_.ir-with-opt.ll",
+      "bytes": 1320,
+      "sha256": "ae118186a1e012aee2f06f2c4d48d759817f68e6ed9393eca6a10f62fc18444b"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0011.jit__lambda_.ptx",
+      "bytes": 796,
+      "sha256": "744f9d84442ff781f818c0c2d00adf66920eba8e834680407f24c265c08491d5"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0011.jit__lambda_.sm_9.0_gpu_after_optimizations-buffer-assignment.txt",
+      "bytes": 1372,
+      "sha256": "c32fe787fe0db3450933b2f500d69710967026ed1d1c07bb71771a319d4886cc"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0011.jit__lambda_.sm_9.0_gpu_after_optimizations-memory-usage-report.txt",
+      "bytes": 732,
+      "sha256": "934b4cda6400d5accf6a8f393cfbbdae5702bf76b68f9f69da418d0b6685bfa1"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0011.jit__lambda_.sm_9.0_gpu_after_optimizations.txt",
+      "bytes": 1367,
+      "sha256": "a745eafd93eea2bc560f873c086f3fa25fe28b4b44d1203d2534d39020097756"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0011.jit__lambda_.thunk_sequence.txt",
+      "bytes": 126,
+      "sha256": "c964ebbbdf551b6376b609cd41a40ae3c47cb1b803e14e2cd5f37dfeac0ccebb"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0013.jit__lambda_.before_optimizations.txt",
+      "bytes": 687,
+      "sha256": "84d8d3688b5a92a572e28e280b6b7d61f8906121bc3276923c3bb79cfdd27cb2"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0013.jit__lambda_.ir-no-opt.ll",
+      "bytes": 2092,
+      "sha256": "b42a1fce6c70e740aafac3e76e25e12409fbd51065a93e29699747473d07d844"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0013.jit__lambda_.ir-with-opt.ll",
+      "bytes": 1124,
+      "sha256": "b169eaf506d55288e0ca082c9e1d3e6a608c884487c6a27f07813a8143c9b814"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0013.jit__lambda_.ptx",
+      "bytes": 629,
+      "sha256": "b043dc5b996b4b602c0afdf9a7309c426805cdf6c06eeb0da48c513cf34001c4"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0013.jit__lambda_.sm_9.0_gpu_after_optimizations-buffer-assignment.txt",
+      "bytes": 1030,
+      "sha256": "76b6781ef434bc99a4d5a2f5f4335f6fb44be4484e8e1f98750a9fafe902d248"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0013.jit__lambda_.sm_9.0_gpu_after_optimizations-memory-usage-report.txt",
+      "bytes": 564,
+      "sha256": "f06c2215d36854424c61c369b69223bb905767b8982d67eb89ad6ce903c3247a"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0013.jit__lambda_.sm_9.0_gpu_after_optimizations.txt",
+      "bytes": 1094,
+      "sha256": "ddd7392dff0a0d5165046319001a92149c8db3d65f669ce742f1a2ade2375b1c"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0013.jit__lambda_.thunk_sequence.txt",
+      "bytes": 128,
+      "sha256": "3f4c852c710d6b83eaa2c444d3a87ff112f9006ff364fc04860b3b726a3afa90"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/arithmetic_provenance.py",
+      "bytes": 7117,
+      "sha256": "4954ee444dd4dea8b8d0ab71dcff29ba47dd7305e95c28db7598e226c393e1ea"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/evidence/original-audit-diagnostic.json",
+      "bytes": 810,
+      "sha256": "13d9b2e41f70f4c8e57596f0f708b41b153dbfe0f7624a2413b367480b89d313"
+    },
+    {
+      "path": "/home/user/Tz/acceptance/phase5-20261114/logs/original-coverage-diagnostic.log",
+      "bytes": 862,
+      "sha256": "2e70f69437573d26bb753f3b7993ba354268d3fe3a4b109dda2bafd58732f0bf"
+    }
+  ],
+  "ptx_lowering": {
+    "source_coverage_module": "module_0007.jit__coverage",
+    "dynamic_division_module": "module_0011.jit__lambda_",
+    "constant_denominator_module": "module_0013.jit__lambda_",
+    "dynamic_instruction": "div.full.f32",
+    "constant_instruction": "mul.rn.f32",
+    "instruction_lines": {
+      "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0007.jit__coverage.ptx": [
+        "div.full.f32 \t%f3, %f1, %f2;"
+      ],
+      "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0011.jit__lambda_.ptx": [
+        "div.full.f32 \t%f3, %f1, %f2;"
+      ],
+      "/home/user/Tz/acceptance/phase5-20261114/arithmetic-provenance/xla/module_0013.jit__lambda_.ptx": [
+        "mul.rn.f32 \t%f2, %f1, 0f372E4F09;"
+      ]
+    }
+  },
+  "ptx_isa_reference": {
+    "url": "https://docs.nvidia.com/cuda/parallel-thread-execution/#floating-point-instructions-div",
+    "claim": "div.full.f32 is a full-range approximate division with maximum2ULP error, unlike div.rn.f32 with IEEE754 rounding. Runtime LLVM contains plain fdiv and PTX contains div.full.f32; this does not depend on the unrelated fast-min/max flag."
+  },
+  "integer_decoding_bound": {
+    "area_maximum": 1048576,
+    "numerator_and_denominator_exactly_representable_float32": true,
+    "conservative_max_ulp_spacing_on_unit_interval": 1.1920928955078125e-07,
+    "conservative_error_ulps_including_half_ulp_initial_rounding": 2.5,
+    "maximum_cell_error_bound": 0.3125,
+    "half_cell_threshold": 0.5,
+    "decoder": "rint(float64(coverage) * area)",
+    "argument": "For integer counts0<=n<=area<=2^20, two-ULP approximate division plus half-ULP rounding gives at most0.3125cell error. Float64 multiplication by the20-bit area is exact for a24-bit float32 significand. Nearest-integer decoding therefore returns n; replacing n by n+/-1 fails exact equality."
+  },
+  "classification": "Representation issue reproduced bit-for-bit by unchanged CUDA coverage function from exact oracle integer count; no evidence here changes episode outcomes or replaces the full independent replay."
+}

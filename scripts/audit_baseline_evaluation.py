@@ -33,6 +33,9 @@ class VerifiedEpisode(TypedDict):
     delivered_payload_bytes: int
     overlap: float
     allocation_concentration: float
+    component_area: int
+    final_covered_cells: int
+    max_coverage_error_cells: float
 
 
 class VerifiedFailure(TypedDict):
@@ -109,6 +112,8 @@ def verify_episode(job: tuple[str, str]) -> VerifiedEpisode | VerifiedFailure:  
     labels, _ = label(truth == 255)
     component = labels == labels[y, x]
     area = int(component.sum())
+    # On the declared <=1024-square maps, FP32 coverage resolves individual cells.
+    assert 0 < area <= 1024**2
     cells = np.argwhere(component)[:, ::-1]
     squared = np.sum((cells - [x, y]) ** 2, axis=1)
     radius = max(config["spawn_radius"], int(np.ceil(np.sqrt(np.sort(squared)[n - 1]))))
@@ -161,6 +166,7 @@ def verify_episode(job: tuple[str, str]) -> VerifiedEpisode | VerifiedFailure:  
     seen = np.zeros(n, bool)
     cold = emitted = paid = payload_delivered = 0
     coverage = []
+    max_coverage_error_cells = 0.0
     with np.load(trace_file, allow_pickle=False) as trace:
         assert abs(float(trace["initial_coverage"]) - initial) <= 1e-12
         active = np.flatnonzero(trace["active"])
@@ -267,7 +273,15 @@ def verify_episode(job: tuple[str, str]) -> VerifiedEpisode | VerifiedFailure:  
             union[free] = True
             knowledge[agent, observed] = True
             fraction = union.sum() / area
-            assert abs(float(trace["coverage"][event]) - fraction) <= 6e-8
+            encoded_cells = float(trace["coverage"][event]) * area
+            covered_cells = int(union.sum())
+            assert np.isfinite(encoded_cells)
+            assert int(np.rint(encoded_cells)) == covered_cells, (
+                task["result_id"], event, encoded_cells, covered_cells
+            )
+            max_coverage_error_cells = max(
+                max_coverage_error_cells, abs(encoded_cells - covered_cells)
+            )
             coverage.append(fraction)
             cold += int(not seen[agent])
             seen |= deliveries
@@ -327,6 +341,9 @@ def verify_episode(job: tuple[str, str]) -> VerifiedEpisode | VerifiedFailure:  
         delivered_payload_bytes=payload_delivered,
         overlap=float(overlap),
         allocation_concentration=concentration,
+        component_area=area,
+        final_covered_cells=int(union.sum()),
+        max_coverage_error_cells=max_coverage_error_cells,
     )
 
 

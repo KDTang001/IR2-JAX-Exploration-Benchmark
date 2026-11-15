@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "scope": "auditor negative proof on isolated copies only",
+  "result_id": "5716bb85df992136d851af3b114aaeee009d4a04d79c1119d976779c1da2fade",
+  "event": 406,
+  "baseline_trace_sha256": "ce665c5255014bf660d66811585ac3ef657b0146ed8e91af794df652e100df2b",
+  "originals_unchanged": true,
+  "auditor_sha256": "b9a8fb43ec5fd64a455f962dd227f9863a90c13dd658fe4d9bc123affafc5a1f",
+  "cases": [
+    {
+      "change_cells": -1,
+      "rejected": true,
+      "assertion": [
+        "5716bb85df992136d851af3b114aaeee009d4a04d79c1119d976779c1da2fade",
+        406,
+        65906.00192546844,
+        65907
+      ],
+      "changed_trace_sha256": "0943bba8d73b597eb238696b4127f3af7c9ac68bc1a0f3050f92113dd7ab36a8"
+    },
+    {
+      "change_cells": 1,
+      "rejected": true,
+      "assertion": [
+        "5716bb85df992136d851af3b114aaeee009d4a04d79c1119d976779c1da2fade",
+        406,
+        65907.9983830452,
+        65907
+      ],
+      "changed_trace_sha256": "d29f47a3fa998f2c732d6b8b3cbe6856d33dc4163e30ff8a183c9d89e7c1808a"
+    }
+  ]
+}

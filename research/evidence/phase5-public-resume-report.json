@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "resume": {
+    "requested": 78,
+    "executed": 0,
+    "resumed": 78,
+    "failures": 0
+  },
+  "report": "/home/user/Tz/acceptance/phase5-20261114/long/public-report/report.json",
+  "report_sha256": "23d9827ef77257504dd3766e9467b0b4fbe6b17a2ed333854a107710ff723dd9",
+  "formal_complete": false,
+  "limited": true,
+  "record_bytes_unchanged": true,
+  "reporting_core_sha256": "81b4ab18ac59b7b99593689e1a99fa9312796c93a8c3c2ac308d9b8004b8afb3",
+  "reporting_training_seeds": [
+    -1
+  ],
+  "source_core_sha256": "b930d41c99aa57b43c99d732eae0f2addd73564cb363df1cc08549bf0998a25d"
+}

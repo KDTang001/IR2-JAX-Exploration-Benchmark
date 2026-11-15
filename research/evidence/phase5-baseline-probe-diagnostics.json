@@ -1,0 +1,58 @@
+{
+  "elapsed_seconds": 95.26348737592343,
+  "event": 659,
+  "round": 329,
+  "coverage": 0.9902961038961039,
+  "history_count": [
+    331,
+    330,
+    1,
+    1,
+    1,
+    1
+  ],
+  "graph_count": [
+    172,
+    168,
+    1,
+    1,
+    1,
+    1
+  ],
+  "global_count": [
+    108,
+    102,
+    0,
+    0,
+    0,
+    0
+  ],
+  "overflow": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "path_failed": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "balances": [
+    11,
+    11,
+    0,
+    0,
+    0,
+    0
+  ],
+  "active_events": 659,
+  "invalid_actions": 0,
+  "terminated": true,
+  "truncated": false
+}

@@ -1,0 +1,165 @@
+{
+  "requested_manifest_complete": true,
+  "formal_complete": false,
+  "core_complete": false,
+  "auxiliary_complete": false,
+  "workload_scope": {
+    "status": "unverified_scope",
+    "registry_path": null,
+    "registry_hash": null,
+    "declaration_hash": "81b4ab18ac59b7b99593689e1a99fa9312796c93a8c3c2ac308d9b8004b8afb3",
+    "source_manifest_hashes": [],
+    "retained_maps": 0,
+    "retained_map_hash": null,
+    "scenario_seeds": [],
+    "base_config_hash": null,
+    "base_config_path": null,
+    "expected_core_blocks": null,
+    "expected_auxiliary_blocks": null,
+    "missing_core_blocks": null,
+    "missing_auxiliary_blocks": null,
+    "invalid_core_tasks": 0,
+    "invalid_auxiliary_tasks": 0,
+    "core_examples": [],
+    "auxiliary_examples": [],
+    "core_scope_complete": false,
+    "auxiliary_scope_complete": false
+  },
+  "requested": 78,
+  "requested_unique_tasks": 78,
+  "duplicate_requested_tasks": 0,
+  "unmatched_requested_results": 0,
+  "completed_results": 78,
+  "pending_results": 0,
+  "corrupt_records": [],
+  "limited": true,
+  "methods": [
+    {
+      "method_id": "ir2_map",
+      "auc": 0.8259796826362921,
+      "ci_low": 0.7829968131554779,
+      "ci_high": 0.8556161148444517,
+      "success_rate": 1.0,
+      "training_seeds": [
+        -1
+      ],
+      "missing_training_seeds": [],
+      "episodes": 11,
+      "errors": 0
+    },
+    {
+      "method_id": "ir2_mixed",
+      "auc": 0.8762267619774017,
+      "ci_low": 0.8532441608986119,
+      "ci_high": 0.9161518628995206,
+      "success_rate": 1.0,
+      "training_seeds": [
+        -1
+      ],
+      "missing_training_seeds": [],
+      "episodes": 9,
+      "errors": 0
+    },
+    {
+      "method_id": "ir2_off",
+      "auc": 0.8271546783895852,
+      "ci_low": 0.7829968131554779,
+      "ci_high": 0.8591990935819922,
+      "success_rate": 1.0,
+      "training_seeds": [
+        -1
+      ],
+      "missing_training_seeds": [],
+      "episodes": 9,
+      "errors": 0
+    },
+    {
+      "method_id": "ir2_plan",
+      "auc": 0.8834063410726635,
+      "ci_low": 0.8426467321696691,
+      "ci_high": 0.9196209924242188,
+      "success_rate": 1.0,
+      "training_seeds": [
+        -1
+      ],
+      "missing_training_seeds": [],
+      "episodes": 10,
+      "errors": 0
+    },
+    {
+      "method_id": "nf_map",
+      "auc": 0.614588154359808,
+      "ci_low": 0.5397542845021235,
+      "ci_high": 0.7076400632795412,
+      "success_rate": 0.3333333333333333,
+      "training_seeds": [
+        -1
+      ],
+      "missing_training_seeds": [],
+      "episodes": 11,
+      "errors": 0
+    },
+    {
+      "method_id": "nf_mixed",
+      "auc": 0.6235141063928799,
+      "ci_low": 0.5392264215115574,
+      "ci_high": 0.7173532667463102,
+      "success_rate": 0.3333333333333333,
+      "training_seeds": [
+        -1
+      ],
+      "missing_training_seeds": [],
+      "episodes": 9,
+      "errors": 0
+    },
+    {
+      "method_id": "nf_off",
+      "auc": 0.614588154359808,
+      "ci_low": 0.5397542845021235,
+      "ci_high": 0.7076400632795412,
+      "success_rate": 0.3333333333333333,
+      "training_seeds": [
+        -1
+      ],
+      "missing_training_seeds": [],
+      "episodes": 9,
+      "errors": 0
+    },
+    {
+      "method_id": "nf_plan",
+      "auc": 0.6455808569108842,
+      "ci_low": 0.5392264215115574,
+      "ci_high": 0.7784813959588064,
+      "success_rate": 0.3333333333333333,
+      "training_seeds": [
+        -1
+      ],
+      "missing_training_seeds": [],
+      "episodes": 10,
+      "errors": 0
+    }
+  ],
+  "missing_matrix_conditions": [],
+  "missing_plan_telemetry": [],
+  "missing_recovery_pairs": [
+    "fa3a99de5f678302d9c00fc77b34d59f7876adb54bec18bd5480328c6c733ff9",
+    "fabe5150ec65aee267aa72e92c0f15da4aa9bbc4616e4e889722911789d04f8b"
+  ],
+  "invalid_training_quotas": [
+    "ir2_map:-1:0",
+    "ir2_mixed:-1:0",
+    "ir2_off:-1:0",
+    "ir2_plan:-1:0",
+    "nf_map:-1:0",
+    "nf_mixed:-1:0",
+    "nf_off:-1:0",
+    "nf_plan:-1:0"
+  ],
+  "missing_auxiliary_conditions": [],
+  "invalid_auxiliary_training_quotas": [],
+  "auxiliary_results": 0,
+  "superseded_result_ids": [],
+  "overall_summary_role": "core_methods_only; primary curves by split/N/fault/p/duration",
+  "weighting": "scenario_mean_then_equal_maps_then_equal_families_then_training_seeds",
+  "uncertainty": "training_seed_and_map_hierarchical_bootstrap"
+}

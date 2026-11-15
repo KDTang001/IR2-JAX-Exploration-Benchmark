@@ -1,0 +1,54 @@
+{
+  "status": "complete",
+  "finished_utc": "2026-11-14T19:38:25.093680+00:00",
+  "source_commit": "ade2b705a3caf9e39eeade7ce91df3d4f3945390",
+  "source_sha256": "5b496da6ed7f727146fc726c94ae07fba6e8988f1e347a57bb4a2416082d2c06",
+  "requested": 78,
+  "all78_completed_result": true,
+  "original_audit_first54": {
+    "path": "/home/user/Tz/acceptance/phase5-20261114/evidence/original-audit-first-cells.json",
+    "sha256": "0e3474be060ad3dd2a12e1e8b9b843614abe9fca3e46e3bee04e05b965db2a83"
+  },
+  "original_audit_remaining24": {
+    "path": "/home/user/Tz/acceptance/phase5-20261114/evidence/original-audit-remaining-cells.json",
+    "sha256": "149927fefc441b69270944bf1879db891ab846e92f4ad5dfdbadbc15d455ef56"
+  },
+  "audit_partition": {
+    "first": 54,
+    "remaining": 24,
+    "disjoint": true,
+    "union": 78
+  },
+  "public_resume": {
+    "requested": 78,
+    "executed": 0,
+    "resumed": 78,
+    "failures": 0
+  },
+  "public_resume_evidence_sha256": "b08671b555fa060bfbcaf7571a98fc0c1e0cbf7b01b4bc028dc0494f3ef0d0ac",
+  "public_report": {
+    "path": "/home/user/Tz/acceptance/phase5-20261114/long/public-report/report.json",
+    "sha256": "23d9827ef77257504dd3766e9467b0b4fbe6b17a2ed333854a107710ff723dd9",
+    "formal_complete": false,
+    "limited": true
+  },
+  "record_integrity_sha256": "179e3a1f543c21406c5cec8ade052ca62807340325b342d3160fc16dac5ebc3b",
+  "quiescence_sha256": "17603156450292cef46b9b45c60922b879fe9118a63a5084743a574ca985e349",
+  "full_episode_summary": {
+    "path": "/home/user/Tz/acceptance/phase5-20261114/evidence/full-episode-summary.json",
+    "sha256": "fcc8c8afe2d4e0e711ce2f2a163c6e27d2d7ed276f3d3929673caf0f674769a2"
+  },
+  "compute_gate_sha256": "b446d0a1e31bcda820afe0c3f2a0304e1747d73001beadaf040d1e389a6fba20",
+  "reproduction_gate_sha256": "ed568cd3a96d6cfb1c2f5007365018b03d94e1fe6eae940534c20f884ba06389",
+  "coverage_arithmetic_provenance_sha256": "920e890919335fe5645db731bfe2e32201882053f9cb80c5aac83651a49d9c42",
+  "frozen_inputs_sha256": {
+    "/home/user/Tz/acceptance/phase5-20261114/evidence/tasks.jsonl": "f8b6faf0274c353120f6b0094fb4314ab14b4c868f6cc29a306d36b10c7e71c7",
+    "/home/user/Tz/acceptance/phase5-20261114/evidence/core.json": "b930d41c99aa57b43c99d732eae0f2addd73564cb363df1cc08549bf0998a25d",
+    "/home/user/Tz/acceptance/phase5-20261114/evidence/tasks-original-audit-first.jsonl": "63652fe481b04bd032ed450cfb94745ee464755c1b066470fe79fc00f3d9227b",
+    "/home/user/Tz/acceptance/phase5-20261114/source/scripts/audit_baseline_evaluation.py": "b9a8fb43ec5fd64a455f962dd227f9863a90c13dd658fe4d9bc123affafc5a1f",
+    "/home/user/Tz/acceptance/phase5-20261114/aggregate_long.py": "b94d9fc9a559a3797b00e138e53ed7540a2999252bc8bf5920fa36641a345212",
+    "/home/user/Tz/acceptance/phase5-20261114/post_long_supervisor.py": "8bb7a41b0441b0d6d71f935d9e0a7ae4c648ccd77b7223f251c1b106231254a9",
+    "/home/user/Tz/acceptance/phase5-20261114/evidence/full-episode-summary.json": "fcc8c8afe2d4e0e711ce2f2a163c6e27d2d7ed276f3d3929673caf0f674769a2"
+  },
+  "supervisor_sha256": "8bb7a41b0441b0d6d71f935d9e0a7ae4c648ccd77b7223f251c1b106231254a9"
+}
