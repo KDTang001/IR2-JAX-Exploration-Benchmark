@@ -19,6 +19,12 @@ and the public CLI for a new installation or evaluation.
   unchanged, recording a separate scheduling amendment before dispatching the
   remaining 52 cases within the original two-day total resource window. See the
   [amendment](../../evidence/phase5-performance-v2-schedule-resumption-v1.json).
+- `recover_performance_v2.py.txt`: preserves the six existing records and the
+  fatal idle-preflight evidence, then waits and resamples on the three exact
+  resource-preflight failures without changing thresholds or timed functions.
+  The fixed request remains 54; the declared remaining order prioritizes matched
+  B1 cases and GPU scaling within the same final deadline. See the
+  [recovery declaration](../../evidence/phase5-performance-v2-idle-recovery-schedule.json).
 
 The measurement wrapper calls the same committed throughput functions; checkpoint
 writes and resource sampling occur outside each timed callable. Whole-case memory
