@@ -52,6 +52,10 @@ def cost_worker() -> None:
     from ir2_benchmark.cli import main as evaluate  # noqa: PLC0415
 
     output = Path(sys.argv[2])
+    if os.environ.get("IR2_COST_TIMING") == "1":
+        from phase6_batch_cost import instrument_worker  # noqa: PLC0415
+
+        instrument_worker(output.with_suffix(".timing.json"))
     sys.argv = ["ir2-benchmark", *sys.argv[3:]]
     status = evaluate()
     save(
@@ -116,7 +120,7 @@ def main() -> None:  # noqa: C901, PLR0912, PLR0915 - One bounded child lifecycl
                 "--format=csv,noheader,nounits",
             ),
         }
-        if before["processes"]:
+        if before["processes"] and not request.get("allow_shared_gpu", False):
             save(
                 root / f"{label}-stopped.json",
                 {"reason": "shared GPU occupied", "snapshot": before},
@@ -221,7 +225,7 @@ def main() -> None:  # noqa: C901, PLR0912, PLR0915 - One bounded child lifecycl
                 "--output",
                 str(case_out),
                 "--batch-size",
-                "1",
+                str(case.get("batch_size", 1)),
             ]
         assert (  # noqa: S101
             hashlib.sha256(Path(case["map"]["path"]).read_bytes()).hexdigest()
