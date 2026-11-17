@@ -1,0 +1,29 @@
+{
+  "status": "closed_complete",
+  "closed_utc": "2026-11-17T09:05:52.440876+00:00",
+  "completed_utc": "2026-11-17T08:27:13.213346+00:00",
+  "authorized_seconds": 14400,
+  "first_gpu_launch_to_completion_seconds": 3989.278633594513,
+  "isolated_worker_wall_seconds_sum": 3722.605293750763,
+  "completed_workers": {
+    "profiles": 6,
+    "optimization_pairs": 6,
+    "full_episode_cost": 2
+  },
+  "active_phase6_workers": [],
+  "gpu_processes_at_close": "",
+  "unused_budget_reused": false,
+  "full240_pilot_started": false,
+  "training_started": false,
+  "summary_hashes": {
+    "profile": "4fe677152c9b882e5f126142eac1aaeeb016b9b477ab315b056acee4f750666e",
+    "comparison": "b1c1189ba032c9027978c34066720ec3a3015cd9b0549ed97d303cb4ed558aed",
+    "mini": "2c7d0c881d00bef5a75346c47087f5d9127cacccc4b1f36ab357068dab15a201"
+  },
+  "worker_sources_at_close": {
+    "phase6_profile.py": "16a78c099ecf44070ea3c1d9f116f4aae393aeaab6d4cf0c8604f980a3671bc1",
+    "phase6_compare.py": "29cf37e50ad511842214edb559ca7d5ce7dabc1cb4c9d519948751563ceefb76",
+    "phase6_profile_supervisor.py": "fc70ad6bad2242c0599c6fb2821d3d1a218c9a9d7d7a4d6033f843f41dfa512f",
+    "after_comparison.py": "7bb06c01ac836d8ff4d30a033f946cd6573403f75c88dcdfceab87892cc06087"
+  }
+}

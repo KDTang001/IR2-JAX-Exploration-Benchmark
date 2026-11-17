@@ -1,0 +1,221 @@
+#!/usr/bin/env python3
+"""Run six isolated profiles inside a persisted, non-renewable four-hour GPU window.
+
+Usage: python phase6_profile_supervisor.py NEW_PHASE6_ROOT [compare]
+Requires source-baseline, phase6_profile.py and profile-request.json in that root.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import signal
+import subprocess
+import sys
+import time
+from datetime import UTC, datetime
+from pathlib import Path
+from typing import TypeAlias
+
+JsonValue: TypeAlias = str | int | float | bool | list["JsonValue"] | dict[str, "JsonValue"] | None
+
+
+def save(path: Path, value: JsonValue) -> None:
+    """Replace the ledger only after its complete JSON payload is written."""
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(value, indent=2) + "\n")
+    temporary.replace(path)
+
+
+def query(*argv: str) -> str:
+    """Read GPU state using the harness's fixed argument vectors without a shell."""
+    return subprocess.run(argv, capture_output=True, text=True, check=False).stdout.strip()  # noqa: S603
+
+
+def main() -> None:  # noqa: C901, PLR0915 - Keep deadline and child lifecycle in one loop.
+    """Supervise the frozen request without extending its persisted GPU deadline."""
+    root = Path(sys.argv[1]).resolve()
+    comparing = sys.argv[2:] == ["compare"]
+    label = "comparison" if comparing else "profile"
+    request = json.loads((root / "profile-request.json").read_text())
+    source = root / ("source-final" if comparing else "source-baseline")
+    out = root / ("optimization-pairs" if comparing else "profiles-baseline")
+    out.mkdir(exist_ok=True)
+    records = []
+    ledger = root / "gpu-window.json"
+    if ledger.exists() and not comparing:
+        raise RuntimeError("GPU window already exists; refusing to reset the authorized deadline")  # noqa: EM101, TRY003
+    if comparing and not ledger.is_file():
+        raise RuntimeError("Comparison requires the existing authorized GPU window")  # noqa: EM101, TRY003
+    for case in request["cases"]:
+        before = {
+            "utc": datetime.now(UTC).isoformat(),
+            "gpu": query(
+                "nvidia-smi",
+                "--query-gpu=name,uuid,utilization.gpu,memory.used,memory.total",
+                "--format=csv,noheader,nounits",
+            ),
+            "processes": query(
+                "nvidia-smi",
+                "--query-compute-apps=pid,process_name,used_memory",
+                "--format=csv,noheader,nounits",
+            ),
+        }
+        if before["processes"]:
+            save(
+                root / f"{label}-stopped.json",
+                {"reason": "shared GPU occupied", "snapshot": before},
+            )
+            break
+        if not ledger.exists():
+            now = time.time()
+            save(
+                ledger,
+                {
+                    "started_epoch": now,
+                    "deadline_epoch": now + 14400,
+                    "started_utc": datetime.now(UTC).isoformat(),
+                    "authorized_seconds": 14400,
+                    "includes_compilation": True,
+                },
+            )
+        deadline = json.loads(ledger.read_text())["deadline_epoch"]
+        if time.time() >= deadline:
+            break
+        case_out = out / case["case_id"]
+        log = out / (case["case_id"] + ".log")
+        env = os.environ.copy()
+        env.update(
+            PYTHONPATH=str(source / "src"),
+            JAX_PLATFORMS="cuda",
+            XLA_PYTHON_CLIENT_PREALLOCATE="false",
+            JAX_ENABLE_COMPILATION_CACHE="false",
+            OMP_NUM_THREADS="8",
+            OPENBLAS_NUM_THREADS="8",
+            MKL_NUM_THREADS="8",
+            LD_LIBRARY_PATH="/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/nvidia/cuda_cupti/lib:"
+            + env.get("LD_LIBRARY_PATH", ""),
+            XLA_FLAGS=f"--xla_dump_to={case_out}/xla --xla_dump_hlo_as_text",
+        )
+        # phase6_profile creates its output exclusively, so XLA must not initialize before it.
+        argv = [
+            "taskset",
+            "-c",
+            "0-7",
+            request["python"],
+            str(root / "phase6_profile.py"),
+            "--source",
+            str(source),
+            "--output",
+            str(case_out),
+            "--",
+            "--config",
+            str(source / "configs/benchmark.json"),
+            "--map",
+            case["map"]["path"],
+            "--bucket",
+            str(case["bucket"]),
+            "--agents",
+            str(case["n_agents"]),
+            "--batch-size",
+            str(case["batch_size"]),
+            "--device",
+            "gpu",
+            "--steps",
+            "4",
+            "--warmups",
+            "2",
+            "--repeats",
+            "5",
+            "--seed",
+            "7",
+            "--policy-checkpoint",
+            request["checkpoint"],
+            "--output",
+            str(case_out),
+        ]
+        if comparing:
+            env.pop("XLA_FLAGS", None)
+            argv = [
+                "taskset",
+                "-c",
+                "0-7",
+                request["python"],
+                str(root / "phase6_compare.py"),
+                str(root),
+                case["case_id"],
+            ]
+        assert (  # noqa: S101
+            hashlib.sha256(Path(case["map"]["path"]).read_bytes()).hexdigest()
+            == case["map_file_sha256"]
+        )
+        started = time.time()
+        with log.open("x") as stream:
+            # The frozen request supplies an argv vector, never shell command text.
+            child = subprocess.Popen(  # noqa: S603
+                argv,
+                cwd=source,
+                env=env,
+                stdin=subprocess.DEVNULL,
+                stdout=stream,
+                stderr=subprocess.STDOUT,
+                start_new_session=True,
+            )
+            save(
+                root / f"{label}-current.json",
+                {
+                    "case_id": case["case_id"],
+                    "pid": child.pid,
+                    "started_epoch": started,
+                    "argv": argv,
+                },
+            )
+            limit = min(deadline, started + 1800)
+            samples = []
+            while child.poll() is None and time.time() < limit:
+                samples.append(
+                    {
+                        "epoch": time.time(),
+                        "processes": query(
+                            "nvidia-smi",
+                            "--query-compute-apps=pid,used_memory",
+                            "--format=csv,noheader,nounits",
+                        ),
+                    }
+                )
+                time.sleep(2)
+            timed_out = child.poll() is None
+            if timed_out:
+                os.killpg(child.pid, signal.SIGTERM)
+                try:
+                    child.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    os.killpg(child.pid, signal.SIGKILL)
+            code = child.wait()
+        row = {
+            "case_id": case["case_id"],
+            "exit_code": code,
+            "timeout": timed_out,
+            "wall_seconds": time.time() - started,
+            "resource_before": before,
+            "gpu_samples": samples,
+            "argv": argv,
+        }
+        records.append(row)
+        save(out / (case["case_id"] + ".record.json"), row)
+        save(
+            root / f"{label}-summary.json",
+            {"requested": 6, "recorded": len(records), "cases": records},
+        )
+        # A systemic profiler failure is actionable; don't repeat it six times.
+        if code != 0:
+            break
+    save(
+        root / f"{label}-finished.json",
+        {"utc": datetime.now(UTC).isoformat(), "recorded": len(records), "requested": 6},
+    )
+
+
+if __name__ == "__main__":
+    main()

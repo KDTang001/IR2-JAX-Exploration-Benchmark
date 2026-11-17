@@ -10,3 +10,6 @@ research/evidence/*.md text eol=lf
 src/**/*.py text eol=lf
 # Preserve the exact externally executed helper bytes bound in audit evidence.
 research/protocols/phase5-20261114/*.py.txt -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/protocols/phase6-20261117/*.py.txt -text
+# Preserve generated test tracebacks byte-for-byte, including their whitespace.
+research/evidence/phase6-*.xml -text -whitespace

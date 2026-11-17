@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="16" time="46.679" timestamp="2026-11-17T15:35:16.562460+08:00" hostname="user-MZ73-LM1-000"><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_sparse_visibility_matches_all_rays_across_multiple_blocks" time="1.562" /><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_frontier_and_collision_match_original_endpoint_semantics" time="0.792" /><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_initialization_and_multistep_updates_preserve_utility_and_guidepost" time="3.192" /><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_merger_matches_original_when_only_one_unprotected_pair" time="5.581" /><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_overflow_blocks_observation_instead_of_eviction" time="3.991" /><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_full_original_worker_observation_current_nonzero_and_peer" time="1.691"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/home/user/Tz/acceptance/phase6-prep-20261117/source-candidate/multi_robot_worker.py'">originals = (&lt;module 'graph_generator' from '/home/user/Tz/acceptance/phase6-prep-20261117/source-candidate/graph_generator.py'&gt;, ... '/home/user/Tz/acceptance/phase6-prep-20261117/source-candidate/node.py'&gt;, &lt;function find_frontier at 0x737c91f071a0&gt;)
+
+    def test_full_original_worker_observation_current_nonzero_and_peer(originals):
+        import jax.numpy as jnp
+    
+        from ir2_benchmark.navigation.ir2_graph import graph_observation, initialize_graph
+    
+        # Given current node index != 0 and a distinct peer on the full graph.
+        config = _config()
+        local = np.zeros((64, 64), np.int32)
+        start = np.array([10, 10], np.int32)
+        reference = originals[0].Graph_generator(0, local.shape, 64, 80, "")
+        reference.route_node = [start]
+        reference.generate_graph(start, np.full_like(local, 255), np.empty((0, 2), int))
+        memory = initialize_graph(
+            jnp.asarray(local), jnp.asarray(start), jnp.array(local.shape), config=config
+        )
+        position, peer = reference.node_coords[8], reference.node_coords[22]
+        # When the actual original worker builds its complete observation.
+&gt;       expected = _worker_observation(reference, position, [peer], config)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/benchmark/geometry/test_ir2_graph_parity.py:360: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/benchmark/geometry/test_ir2_graph_parity.py:292: in _worker_observation
+    tree = ast.parse((ROOT / "multi_robot_worker.py").read_text(encoding="utf-8"))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/user/anaconda3/envs/ex/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/home/user/Tz/acceptance/phase6-prep-20261117/source-candidate/multi_robot_worker.py')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/user/Tz/acceptance/phase6-prep-20261117/source-candidate/multi_robot_worker.py'
+
+/home/user/anaconda3/envs/ex/lib/python3.11/pathlib.py:1044: FileNotFoundError</failure></testcase><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_native_50_point_grid_k30_ties_match_reference" time="1.469" /><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_duplicate_start_node_is_retained_like_original" time="0.360" /><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_offshoots_and_own_global_graph_match_original[False-False]" time="3.626" /><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_offshoots_and_own_global_graph_match_original[False-True]" time="3.378" /><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_offshoots_and_own_global_graph_match_original[True-False]" time="3.636" /><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_offshoots_and_own_global_graph_match_original[True-True]" time="3.393" /><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_partial_windows_node_removal_peer_window_and_observation" time="6.428"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/home/user/Tz/acceptance/phase6-prep-20261117/source-candidate/multi_robot_worker.py'">originals = (&lt;module 'graph_generator' from '/home/user/Tz/acceptance/phase6-prep-20261117/source-candidate/graph_generator.py'&gt;, ... '/home/user/Tz/acceptance/phase6-prep-20261117/source-candidate/node.py'&gt;, &lt;function find_frontier at 0x737bcf0afa60&gt;)
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x737bcf1bed50&gt;
+
+    def test_partial_windows_node_removal_peer_window_and_observation(originals, monkeypatch):
+        import jax
+        import jax.numpy as jnp
+    
+        from ir2_benchmark.navigation.ir2_graph import graph_observation, initialize_graph, update_graph
+    
+        # Given a full initial graph that must shrink to own80/peer20 windows.
+        monkeypatch.setattr(originals[0], "NUM_DENSE_COORDS_WIDTH", 10)
+        config = _config(
+            graph_nodes_per_axis=10, graph_padding_size=180, graph_capacity=180, max_candidates=29
+        )
+        local = np.zeros((256, 256), np.int32)
+        start = np.array([10, 10], np.int32)
+        reference = originals[0].Graph_generator(0, local.shape, 30, 80, "")
+        reference.route_node = [start]
+        reference.generate_graph(start, np.full_like(local, 255), np.empty((0, 2), int))
+        memory = initialize_graph(
+            jnp.asarray(local), jnp.asarray(start), jnp.array(local.shape), config=config
+        )
+        history, old_count = [], 0
+        empty_points, empty_valid = jnp.zeros((0, 2), jnp.int32), jnp.zeros(0, bool)
+        run = jax.jit(
+            lambda state, position, peer: update_graph(
+                state,
+                jnp.asarray(local),
+                position,
+                jnp.array(local.shape),
+                peer[None],
+                jnp.ones(1, bool),
+                empty_points,
+                empty_valid,
+                config=config,
+                extend_offshoots=False,
+            )
+        )
+        for step, (position, peer) in enumerate(
+            [(np.array([57, 57]), np.array([198, 198])), (np.array([85, 85]), np.array([227, 227]))],
+            start=1,
+        ):
+            # When movement removes old nodes and adds another local window.
+            reference.nodes_list[
+                reference.find_index_from_coords(reference.node_coords, position)
+            ].set_visited()
+            reference.route_node.append(position)
+            history.append(position)
+            reference.update_graph(
+                np.full_like(local, 255),
+                np.empty((0, 2), int),
+                np.empty((0, 2), int),
+                [position, peer],
+                [[history, []], [None, None]],
+                [[old_count, 0], [0, 0]],
+                step=step,
+            )
+            old_count = len(history)
+            memory = run(memory, jnp.asarray(position), jnp.asarray(peer))
+            # Then survivor ordering, full adjacency, and original-worker observation
+            # still match; stale edges cannot survive deletion in edge_order.
+            np.testing.assert_array_equal(np.asarray(memory.nodes)[memory.valid], reference.node_coords)
+            _assert_graph(memory, reference)
+&gt;           expected = _worker_observation(reference, position, [peer], config)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/benchmark/geometry/test_ir2_graph_parity.py:562: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/benchmark/geometry/test_ir2_graph_parity.py:292: in _worker_observation
+    tree = ast.parse((ROOT / "multi_robot_worker.py").read_text(encoding="utf-8"))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/user/anaconda3/envs/ex/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/home/user/Tz/acceptance/phase6-prep-20261117/source-candidate/multi_robot_worker.py')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/user/Tz/acceptance/phase6-prep-20261117/source-candidate/multi_robot_worker.py'
+
+/home/user/anaconda3/envs/ex/lib/python3.11/pathlib.py:1044: FileNotFoundError</failure></testcase><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_failed_merger_preserves_original_partial_dictionary_rollback" time="1.163" /><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_batched_insert_matches_sequential_first_occurrence_and_overflow" time="0.135" /><testcase classname="tests.benchmark.geometry.test_ir2_graph_parity" name="test_batched_graph_updates_match_independent_divergent_branches" time="6.154" /></testsuite></testsuites>

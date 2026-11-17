@@ -1,0 +1,48 @@
+"""Export small identities and execution records; retain large raw profiles in place."""
+
+import hashlib
+import json
+import pathlib
+import sys
+from datetime import datetime, timezone
+from importlib.metadata import distributions
+
+r = pathlib.Path('/home/user/Tz/acceptance/phase6-prep-20261117')
+request = json.loads((r / 'profile-request.json').read_text())
+summary = json.loads((r / 'profile-summary.json').read_text())
+records = []
+for row in summary['cases']:
+    name = row['case_id']
+    case = next(value for value in request['cases'] if value['case_id'] == name)
+    throughput = json.loads((r / 'profiles-baseline' / name / 'throughput.json').read_text())
+    samples = row['gpu_samples']
+    record = {key: value for key, value in row.items() if key != 'gpu_samples'}
+    record.update({
+        'map': case['map'], 'map_png_sha256': case['map_file_sha256'],
+        'bucket': case['bucket'], 'n_agents': case['n_agents'], 'batch_size': case['batch_size'],
+        'jax_version': throughput['jax_version'], 'jaxlib_version': throughput['jaxlib_version'],
+        'process_isolation': throughput['process_isolation'],
+        'driver_device_memory_query': throughput['driver_device_memory_query'],
+        'ir2_policy': throughput.get('ir2_policy'),
+        'gpu_sample_count': len(samples),
+        'gpu_samples_with_multiple_processes': sum(len(value['processes'].splitlines()) > 1 for value in samples),
+    })
+    records.append(record)
+inventory = sorted((item.metadata.get('Name') or '', item.version) for item in distributions())
+payload = {
+    'exported_utc': datetime.now(timezone.utc).isoformat(),
+    'base_commit': request['base_commit'], 'steps': 4, 'warmups': 2, 'repeats': 5,
+    'source_inventory_at_freeze': request['package_inventory'],
+    'profile_request_sha256': hashlib.sha256((r / 'profile-request.json').read_bytes()).hexdigest(),
+    'checkpoint_sha256': request['checkpoint_sha256'], 'records': records,
+    'runtime_inventory_observation': {
+        'scope': 'observed after completion in the same unchanged ex interpreter; per-worker JAX versions above',
+        'executable': sys.executable, 'prefix': sys.prefix, 'python': sys.version,
+        'installed_distributions': inventory,
+        'installed_distributions_sha256': hashlib.sha256(json.dumps(inventory, sort_keys=True).encode()).hexdigest(),
+        'jax_backend_initialized_by_export': False,
+    },
+}
+(r / 'profile-executions-public.json').write_text(json.dumps(payload, indent=2) + '\n')
+print(json.dumps({'cases': len(records), 'dependencies': len(inventory),
+                  'competing_gpu_samples': sum(row['gpu_samples_with_multiple_processes'] for row in records)}))

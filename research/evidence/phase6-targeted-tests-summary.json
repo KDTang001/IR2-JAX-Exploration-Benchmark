@@ -1,0 +1,260 @@
+{
+  "unique_tests": 62,
+  "passed": 62,
+  "latest_case_evidence": {
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[best-None-A-best_validation_auc]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[best-None-B-validation_auc]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[best-0.0-A-best_validation_auc]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[best-0.0-B-validation_auc]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[best-0.625-A-best_validation_auc]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[best-0.625-B-validation_auc]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[latest-None-A-best_validation_auc]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[latest-None-B-validation_auc]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[latest-0.0-A-best_validation_auc]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[latest-0.0-B-validation_auc]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[latest-0.625-A-best_validation_auc]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_release_selection_when_exporting_route_specific_summaries[latest-0.625-B-validation_auc]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_installed_release_does_not_inherit_unrelated_checkout": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_local_wheel_hash_is_observed_and_compared[matching]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_local_wheel_hash_is_observed_and_compared[wrong]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_local_wheel_hash_is_observed_and_compared[None]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_release_metadata::test_runtime_identity_without_backend_initialization": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_queue_flushes_same_group_without_loading_a_whole_manifest": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_queue_bound_flushes_oldest_partial_group_instead_of_accumulating_tasks": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_group_identity_does_not_include_checkpoint_hash_or_scenario_seed": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_batch_two_matches_serial_real_trajectories_and_reuses_compilation": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_bad_map_lane_is_saved_without_discarding_other_real_episodes": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_compute_failure_records_the_whole_batch_without_serial_retry[error0-oom]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_compute_failure_records_the_whole_batch_without_serial_retry[error1-oom]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_compute_failure_records_the_whole_batch_without_serial_retry[error2-model_error]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_compute_failure_records_the_whole_batch_without_serial_retry[error3-environment_error]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_batch_runner::test_compute_failure_records_the_whole_batch_without_serial_retry[error4-model_error]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_resource_pilot::test_planner_has_exact_factors_and_deterministic_validation_identities": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_resource_pilot::test_invalid_selection_never_falls_back[test]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_resource_pilot::test_invalid_selection_never_falls_back[ood]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_resource_pilot::test_invalid_selection_never_falls_back[excluded]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_resource_pilot::test_invalid_selection_never_falls_back[family]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_resource_pilot::test_invalid_selection_never_falls_back[hash]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_resource_pilot::test_invalid_selection_never_falls_back[source]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_resource_pilot::test_invalid_selection_never_falls_back[geometry]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_resource_pilot::test_cli_writes_only_plan_and_identity_sidecar": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_resource_pilot::test_root_aliases_and_manifest_order_preserve_selected_identities": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_resource_pilot::test_metadata_tampering_is_rejected[occupancy_hash]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_resource_pilot::test_metadata_tampering_is_rejected[canonical_hash]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_resource_pilot::test_metadata_tampering_is_rejected[scenario_hash]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_resource_pilot::test_metadata_tampering_is_rejected[source]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_resource_pilot::test_test_canonical_overlap_is_rejected": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_failure_boundaries::test_model_boundary_preserves_allocator_error[True]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_failure_boundaries::test_model_boundary_preserves_allocator_error[False]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_failure_boundaries::test_throughput_boundary_classifies_only_allocator_valueerror[True]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.evaluation.test_failure_boundaries::test_throughput_boundary_classifies_only_allocator_valueerror[False]": {
+      "status": "pass",
+      "evidence": "targeted-tests.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_sparse_visibility_matches_all_rays_across_multiple_blocks": {
+      "status": "pass",
+      "evidence": "graph-regression.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_frontier_and_collision_match_original_endpoint_semantics": {
+      "status": "pass",
+      "evidence": "graph-regression.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_initialization_and_multistep_updates_preserve_utility_and_guidepost": {
+      "status": "pass",
+      "evidence": "graph-regression.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_merger_matches_original_when_only_one_unprotected_pair": {
+      "status": "pass",
+      "evidence": "graph-regression.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_overflow_blocks_observation_instead_of_eviction": {
+      "status": "pass",
+      "evidence": "graph-regression.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_full_original_worker_observation_current_nonzero_and_peer": {
+      "status": "pass",
+      "evidence": "graph-oracle-completion.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_native_50_point_grid_k30_ties_match_reference": {
+      "status": "pass",
+      "evidence": "graph-regression.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_duplicate_start_node_is_retained_like_original": {
+      "status": "pass",
+      "evidence": "graph-regression.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_offshoots_and_own_global_graph_match_original[False-False]": {
+      "status": "pass",
+      "evidence": "graph-regression.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_offshoots_and_own_global_graph_match_original[False-True]": {
+      "status": "pass",
+      "evidence": "graph-regression.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_offshoots_and_own_global_graph_match_original[True-False]": {
+      "status": "pass",
+      "evidence": "graph-regression.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_offshoots_and_own_global_graph_match_original[True-True]": {
+      "status": "pass",
+      "evidence": "graph-regression.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_partial_windows_node_removal_peer_window_and_observation": {
+      "status": "pass",
+      "evidence": "graph-oracle-completion.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_failed_merger_preserves_original_partial_dictionary_rollback": {
+      "status": "pass",
+      "evidence": "graph-regression.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_batched_insert_matches_sequential_first_occurrence_and_overflow": {
+      "status": "pass",
+      "evidence": "graph-regression.xml"
+    },
+    "tests.benchmark.geometry.test_ir2_graph_parity::test_batched_graph_updates_match_independent_divergent_branches": {
+      "status": "pass",
+      "evidence": "graph-regression.xml"
+    }
+  },
+  "raw_xml_sha256": {
+    "targeted-tests.xml": "b50500f87f1f882bb164b6d18815f9ba6ecd5e9bceb0e6ae55f84bba4fc4609c",
+    "graph-regression.xml": "8c5b2e5d1f379795096d5756e42b140a8baead86c60b9da58fa0564403cbbda2",
+    "graph-oracle-completion.xml": "08147aa1b8ac0ba03467a500bfe723ffcf16ce6015d25da7960ea4f5c8c3b879"
+  },
+  "initial_export_failures": "original oracle test_parameter.py / multi_robot_worker.py were absent; originals supplied; production source unchanged"
+}

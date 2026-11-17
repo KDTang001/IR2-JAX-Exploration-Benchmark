@@ -1,0 +1,8 @@
+import pathlib,json,subprocess,time
+r=pathlib.Path('/home/user/Tz/acceptance/phase6-prep-20261117');deadline=json.loads((r/'gpu-window.json').read_text())['deadline_epoch']
+while not (r/'comparison-finished.json').exists() and time.time()<deadline:time.sleep(5)
+if not (r/'comparison-finished.json').exists():raise SystemExit('GPU window expired before comparisons finished')
+s=json.loads((r/'comparison-summary.json').read_text());assert len(s['cases'])==6 and all(x['exit_code']==0 for x in s['cases'])
+records=[row for p in (r/'optimization-pairs').glob('*/comparison.json') for row in json.loads(p.read_text())['records']];assert len(records)==22 and all(x['parity']['exact'] for x in records)
+with (r/'mini-supervisor.log').open('x') as log:p=subprocess.run(['/home/user/anaconda3/envs/ex/bin/python',str(r/'phase6_profile_supervisor.py'),str(r),'mini'],stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,check=False)
+(r/'after-comparison.exit').write_text(str(p.returncode)+'\n')
