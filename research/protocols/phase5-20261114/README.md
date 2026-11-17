@@ -25,6 +25,13 @@ and the public CLI for a new installation or evaluation.
   The fixed request remains 54; the declared remaining order prioritizes matched
   B1 cases and GPU scaling within the same final deadline. See the
   [recovery declaration](../../evidence/phase5-performance-v2-idle-recovery-schedule.json).
+- `supplement_performance_v2_cpu.py.txt`: after the user continued on November 17,
+  runs only the two previously unexecuted CPU cases in separate storage. The
+  original 52 case files and closed-window metadata are hash-checked unchanged.
+  The frozen measurement wrapper/inputs are reused; only storage/progress scope
+  changes. Each case is capped at 30 minutes, with a 90 minute total supplementary
+  window including identical idle checks. See the
+  [supplement declaration](../../evidence/phase5-performance-v2-cpu-supplement-declaration.json).
 
 The measurement wrapper calls the same committed throughput functions; checkpoint
 writes and resource sampling occur outside each timed callable. Whole-case memory
