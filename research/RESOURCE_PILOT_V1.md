@@ -180,4 +180,3 @@ Source-relative path: `validation_hybrid_00069.png`. Bucket 768; dimensions [768
 - Occupancy: `01b941fec60fbf6100ab1bd501a53fb5a4093efa8fb1ea637ff6179f22ee04b5`
 - Canonical: `01b941fec60fbf6100ab1bd501a53fb5a4093efa8fb1ea637ff6179f22ee04b5`
 - Map scenario: `b8da9d4051494b18459cb1148694536657f9a3479b843e38642609e4069cba77`
-

@@ -8,6 +8,9 @@ research/evidence/*.csv text eol=lf
 research/evidence/*.txt text eol=lf
 research/evidence/*.md text eol=lf
 src/**/*.py text eol=lf
+scripts/phase6_*.py text eol=lf
+scripts/analyze_phase6_profiles.py text eol=lf
+scripts/freeze_resource_pilot.py text eol=lf
 # Preserve the exact externally executed helper bytes bound in audit evidence.
 research/protocols/phase5-20261114/*.py.txt -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/protocols/phase6-20261117/*.py.txt -text

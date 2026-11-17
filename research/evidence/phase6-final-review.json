@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "review_mode": "primary agent inline review with target-server execution evidence",
+  "package_source_commit": "736ca08659d5753c7a3b9c6aab471004fb0fea82",
+  "package_files_verified": 111,
+  "targeted_unique_tests": 62,
+  "installed_wheel_assertions": 11,
+  "profile_cases": 6,
+  "profile_phases": 30,
+  "exact_optimization_pairs": 22,
+  "full_cost_tasks": 2,
+  "frozen_validation_tasks": 240,
+  "cost_ids_are_frozen_members": true,
+  "models_and_training_unchanged": true,
+  "phase1_to5_raw_evidence_unchanged": true,
+  "linked_files_exist": true,
+  "server_window_closed": true,
+  "docs": {
+    "research\\PHASE6_PREP_REPORT.md": "241fbe9276251cfe607a61611739833df58148a5a4bd4ab27e45fc19bc207096",
+    "research\\PERFORMANCE_PROFILE_REPORT.md": "f9d40744e29f3f69ee090983789d5a264ab56c573fd0d7bc3d2f6db5071757c6",
+    "research\\RESOURCE_PILOT_V1.md": "099bbeeb458111fde4ee7a52e2e347c7a6b44619d49e3a749247ca2906240903",
+    "research\\BASELINE_FAIRNESS_REPORT.md": "782970541a9c7f35d5d2a182b36081ee950832e438ecf3cd00e714bf2f606bf0",
+    "research\\PAPER_CORE_PROTOCOL_V1.md": "e0c7c2e003ecd843b91c434136201335f02fb2585477721473347094c40823e5"
+  },
+  "remaining": [
+    "full240 pilot not launched",
+    "full-length B4 and optimized large-map B16 not certified",
+    "external checkpoint exposure unverified",
+    "train-only SAC is design only",
+    "paper map count/resources await decision"
+  ]
+}
