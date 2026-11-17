@@ -145,12 +145,12 @@ def execute_batch(lanes: tuple[LoadedLane, ...]) -> tuple[EpisodeExecution, ...]
         )
         rollouts, physical = kernel(*values)
         jax.block_until_ready((rollouts, physical))
-    except RuntimeError as error:
+    except (RuntimeError, ValueError) as error:
         if is_oom(error) or lanes[0].prepared.model is None:
             raise
         detail = f"{type(error).__name__}:{error}"
         raise ModelExecutionError(detail) from error
-    except (TypeError, ValueError, KeyError, OSError) as error:
+    except (TypeError, KeyError, OSError) as error:
         if lanes[0].prepared.model is None:
             raise
         detail = f"{type(error).__name__}:{error}"

@@ -14,7 +14,7 @@ class ModelExecutionError(RuntimeError):
         return self.detail
 
 
-def is_oom(error: MemoryError | RuntimeError) -> bool:
+def is_oom(error: MemoryError | RuntimeError | ValueError) -> bool:
     """Recognize actual allocator failures without relabeling other runtime errors as OOM."""
     return isinstance(error, MemoryError) or any(
         marker in str(error).lower() for marker in ("out of memory", "resource_exhausted")
