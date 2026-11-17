@@ -1,0 +1,116 @@
+{
+  "scope": "supplement_only_two_previously_unexecuted_cpu_cases",
+  "updated_utc": "2026-11-17T02:44:52.632659+00:00",
+  "requested": 2,
+  "recorded": 2,
+  "unrecorded": 0,
+  "counts": {
+    "timeout": 2
+  },
+  "all_requested_recorded": true,
+  "all_requested_measured": false,
+  "cases": [
+    {
+      "case_id": "cpu-1024-n4-b16",
+      "status": "timeout",
+      "started_utc": "2026-11-17T01:44:44.735068+00:00",
+      "finished_utc": "2026-11-17T02:14:48.421724+00:00",
+      "worker_pid": 916286,
+      "returncode": -15,
+      "wall_seconds": 1803.6444261759752,
+      "wall_scope": "parent monotonic from Popen until independent wait thread observes child exit; includes startup/load/compilation/phases/save/exit",
+      "sampled_kernel_host_high_water_bytes": 51370958848,
+      "sampled_gpu_process_peak_mib_lower_bound": 0,
+      "gpu_process_samples": [],
+      "completed_phase_evidence": {
+        "completed": [
+          {
+            "phase": "reset",
+            "status": "measured",
+            "finished_utc": "2026-11-17T01:54:43.301219+00:00",
+            "phase_wall_seconds": 597.8990756600397,
+            "timing": {
+              "first_call_seconds": 36.45645475201309,
+              "samples_seconds": [
+                48.20414049702231,
+                63.96395655500237,
+                31.303790307953022,
+                31.385602651978843,
+                45.103853989974596,
+                31.38753271603491,
+                31.16793365601916,
+                31.58106193493586,
+                67.09526385297067,
+                48.95237636798993
+              ],
+              "mean_seconds": 43.01455125298817,
+              "actual_units": 16,
+              "units_per_second": 0.37196714911418494,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 51370958848,
+            "jax_device_allocation_high_water_bytes": null
+          }
+        ],
+        "current": {
+          "phase": "scripted_events",
+          "status": "running",
+          "started_utc": "2026-11-17T01:55:11.155013+00:00"
+        }
+      },
+      "measurement": null,
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2-supplement-20261117/logs/cpu-1024-n4-b16.log"
+    },
+    {
+      "case_id": "cpu-1024-n6-b16",
+      "status": "timeout",
+      "started_utc": "2026-11-17T02:14:49.773793+00:00",
+      "finished_utc": "2026-11-17T02:44:52.444427+00:00",
+      "worker_pid": 918997,
+      "returncode": -15,
+      "wall_seconds": 1802.6476163540501,
+      "wall_scope": "parent monotonic from Popen until independent wait thread observes child exit; includes startup/load/compilation/phases/save/exit",
+      "sampled_kernel_host_high_water_bytes": 51366756352,
+      "sampled_gpu_process_peak_mib_lower_bound": 0,
+      "gpu_process_samples": [],
+      "completed_phase_evidence": {
+        "completed": [
+          {
+            "phase": "reset",
+            "status": "measured",
+            "finished_utc": "2026-11-17T02:23:23.116354+00:00",
+            "phase_wall_seconds": 512.6835714569315,
+            "timing": {
+              "first_call_seconds": 35.70110777707305,
+              "samples_seconds": [
+                30.26659574592486,
+                29.852465613977984,
+                47.850070739979856,
+                29.836047207936645,
+                29.048749646986835,
+                29.474035342922434,
+                28.8764114320511,
+                29.423313089995645,
+                28.939541816012934,
+                29.51314115896821
+              ],
+              "mean_seconds": 31.30803717947565,
+              "actual_units": 16,
+              "units_per_second": 0.5110508815445316,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 51366756352,
+            "jax_device_allocation_high_water_bytes": null
+          }
+        ],
+        "current": {
+          "phase": "scripted_events",
+          "status": "running",
+          "started_utc": "2026-11-17T02:23:49.539579+00:00"
+        }
+      },
+      "measurement": null,
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2-supplement-20261117/logs/cpu-1024-n6-b16.log"
+    }
+  ]
+}

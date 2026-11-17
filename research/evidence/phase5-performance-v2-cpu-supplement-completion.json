@@ -1,0 +1,21 @@
+{
+  "status": "all_supplement_cases_recorded",
+  "finished_utc": "2026-11-17T02:44:52.639655+00:00",
+  "supplement_requested": 2,
+  "supplement_recorded": 2,
+  "combined_requested": 54,
+  "combined_recorded": 54,
+  "combined_outcomes": {
+    "measured": 37,
+    "nonzero": 6,
+    "timeout": 11
+  },
+  "pending": [],
+  "all_requested_recorded": true,
+  "all_requested_measured": false,
+  "original52_files_unchanged": true,
+  "original_window_remains_closed": true,
+  "supplement_manifest_sha256": "e509d0d0d0e9cd03d288df0cc823d56cc7796cdd9224463c800db3caca0f64d7",
+  "deferred_preflights": 0,
+  "note": "A timeout or allocation error is retained. Attempting all54 cases does not imply54 complete timings or formal paper completion."
+}

@@ -33,6 +33,13 @@ and the public CLI for a new installation or evaluation.
   window including identical idle checks. See the
   [supplement declaration](../../evidence/phase5-performance-v2-cpu-supplement-declaration.json).
 
+The supplement ended on November 17 at 10:44:52 CST with two per-case deadline
+stops. All 54 original identities now have execution records, with 37 complete
+five-phase measurements, six logged GPU OOMs and 11 CPU deadline stops. See the
+[combined ledger](../../evidence/phase5-performance-v2-combined-summary.json)
+and [supplement integrity proof](../../evidence/phase5-performance-v2-cpu-supplement-integrity.json).
+Neither the original resource window nor incomplete timing phases are rewritten.
+
 The measurement wrapper calls the same committed throughput functions; checkpoint
 writes and resource sampling occur outside each timed callable. Whole-case memory
 peaks include compilation and all phases. The four-event segments are initial
