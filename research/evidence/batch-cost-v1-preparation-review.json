@@ -1,0 +1,31 @@
+{
+  "status": "PREPARED_AND_QUEUED_NOT_GPU_ACCEPTED",
+  "review_mode": "primary-agent inline review per review-work Codex compatibility",
+  "frozen_parent_tasks": 10,
+  "new_episode_executions_requested": 20,
+  "gpu_cases_in_archived_snapshot": 0,
+  "package_changed": false,
+  "training_started": false,
+  "old_window_renewed": false,
+  "target_server_input_hashes_verified": 124,
+  "target_server_cpu_fixture_tasks": 3,
+  "target_server_cpu_fixture_failures": 0,
+  "boundary_checks": [
+    "closed window rejected",
+    "changed frozen input rejected"
+  ],
+  "helper_bytes_match_frozen_server_request": true,
+  "validation_only_and_parent_membership_checked": true,
+  "public_executable_paths_redacted": true,
+  "pending": [
+    "H100 idle availability",
+    "four complete GPU cases",
+    "ten B1/B4 trace pairs",
+    "uncontaminated throughput and memory results"
+  ],
+  "script_sha256": {
+    "phase6_batch_cost.py": "d68cc8c104b615851cbdb5c16e0143e17175ca612af1ca868eefe120173a19a2",
+    "phase6_profile_supervisor.py": "9167e19f8a5dccf7f1a27959827b6d9dcc542c796768504aedd094e09067d8fb",
+    "analyze_batch_cost.py": "ccdeb3e2811ea0dce5555babc0e76ea60fc38fad91a4aacd5ad75cc90b152048"
+  }
+}

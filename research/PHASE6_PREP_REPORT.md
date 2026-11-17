@@ -108,3 +108,14 @@ and concurrency; implement/approve the train-only learning baseline before claim
 a fair learned-policy comparison. Full-length B4 and optimized large-map B16 are
 not certified by this phase. The old Phase 5 allocation failures remain historical
 evidence, not rewritten results or a newly measured maximum parallelism.
+
+## Follow-up: full-episode B1/B4 cost check
+
+The user authorized another maximum four-hour window and explicitly selected an
+idle H100. [batch-cost-v1](BATCH_COST_V1_REPORT.md) freezes ten existing validation
+tasks, run as twenty B1/B4 executions in four processes. Its new window is
+2026-11-17 19:45:02–23:45:02 CST, including waiting and compilation. Target-server
+input verification and a tiny CPU check of the measurement wrappers passed.
+The archived snapshot is queued behind unrelated GPU work with **zero GPU cases
+executed**; full-episode B4 parity and speedup remain unverified. This is not an
+approval or execution of the full 240-task pilot, and the old window stays closed.

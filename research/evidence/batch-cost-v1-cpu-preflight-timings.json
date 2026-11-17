@@ -1,0 +1,94 @@
+{
+  "pid": 943598,
+  "boundaries": [
+    {
+      "phase": "load_lane",
+      "seconds": 0.10589284403249621,
+      "result_id": "f417c63f3581628f5191dd16bf176f75e2f2b1d96a72bf8dd1139711b7bd29bf",
+      "component_area": 10
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.0015792190097272396,
+      "result_id": "3548905034c360c82d1db1fec7e98b4cb1a7927977993aa203f65c954cd74504",
+      "component_area": 10
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 2,
+      "seconds": 2.01700022444129e-05
+    },
+    {
+      "phase": "lower_compile",
+      "batch_size": 2,
+      "seconds": 5.983346820925362
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 2,
+      "seconds": 0.06359011004678905
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 6.645302547025494,
+      "batch_size": 2,
+      "result_ids": [
+        "f417c63f3581628f5191dd16bf176f75e2f2b1d96a72bf8dd1139711b7bd29bf",
+        "3548905034c360c82d1db1fec7e98b4cb1a7927977993aa203f65c954cd74504"
+      ]
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.002388558001257479
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.0010834389831870794
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.00026350002735853195
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.00019153906032443047
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.0027804679702967405,
+      "result_id": "ce3ab6667fd2c737fe96d92ea8b923250fe15da70a620de264893681e122e5ef",
+      "component_area": 10
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 1,
+      "seconds": 9.289942681789398e-06
+    },
+    {
+      "phase": "lower_compile",
+      "batch_size": 1,
+      "seconds": 5.7646694330032915
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 1,
+      "seconds": 0.03819660993758589
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 5.929123118054122,
+      "batch_size": 1,
+      "result_ids": [
+        "ce3ab6667fd2c737fe96d92ea8b923250fe15da70a620de264893681e122e5ef"
+      ]
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.0016476979944854975
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.0002426400315016508
+    }
+  ]
+}

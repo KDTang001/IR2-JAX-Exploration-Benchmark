@@ -1,0 +1,12 @@
+{
+  "epoch": 1794916308.8224523,
+  "gpu": "98, 4136, 81559",
+  "processes": "940741, [unrelated executable path redacted], 756\n941406, [unrelated executable path redacted], 2280\n941458, [unrelated executable path redacted], 974",
+  "quiet_since": null,
+  "public_redaction": {
+    "field": "processes",
+    "reason": "omit unrelated project executable paths",
+    "original_sha256": "140bc13d983bd10b2058fe7bd9c04185be57fc8285c903b7a30aaf8ea963a8a2",
+    "original_retained_on_server": true
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "verified_inputs": 124,
+  "unique_tasks": 10,
+  "episode_executions": 20,
+  "package_files": 111,
+  "gpu_preflight": "75, 4136, 81559",
+  "compute_apps": "940741, [unrelated executable path redacted], 756\n941406, [unrelated executable path redacted], 2280\n941458, [unrelated executable path redacted], 974",
+  "frozen_result_ids": {
+    "nf_mixed": [
+      "e3a020a2fef2414f3e612aa99bde49956fb6045b7f06d925f5dc642a4e9aad9a",
+      "645727f71c5f60103211e0bcb7a8e680cf15ad4c61387cb05d275e19f72c8d88",
+      "2ab5d037d025ef4ab144cd1430c10701f34178575d7ee8785493fef1d90e8faa",
+      "e635e91878631d4c1115b5ccff1e00947d3540a7baf4c2f5e5d032bdf64d37c2",
+      "e83a2f8b076a3db14e1e5c6069231c8b76047132f1c4e04c0698e79c47d30d88"
+    ],
+    "ir2_mixed": [
+      "70ebf243ad67e3ee2653b3d746631d87658816e91bcf8f03b5a003628fcb8ad5",
+      "c9e603bb6592cb7148834b12ccb629a907affc1e3b47f68ba077f21a858694d0",
+      "0b76c2df2af8a93443f6e96e84052fc0c12317ab9fc03ded9cbcc5eeda728f7e",
+      "c28bde22f825563b41d44c7191fcd2181edb07b5b236ecbded9b5240108cc50f",
+      "f6ea51bc8630bfcd0ecabcb0b84c2448dd8f1c25c9407385b29fa4ff3a3db8ea"
+    ]
+  },
+  "public_redaction": {
+    "field": "compute_apps",
+    "reason": "omit unrelated project executable paths",
+    "original_sha256": "9d51682e14a4ec606c3e8265b61455823a65b0736f9d4ddfca310be31f439691",
+    "original_retained_on_server": true
+  }
+}
