@@ -1,0 +1,16 @@
+{
+  "status": "budget_exhausted",
+  "finished_utc": "2026-11-16T12:12:03.289516+00:00",
+  "requested": 54,
+  "recorded": 52,
+  "unrecorded": 2,
+  "outcomes": {
+    "measured": 37,
+    "nonzero": 6,
+    "timeout": 9
+  },
+  "all_requested_measured": false,
+  "retained_record_bytes_unchanged": true,
+  "declaration_sha256": "f422a8921e87d17543cd9942390fb80c88d7851593af8211232f835491abc8cd",
+  "deferred_preflights": 7
+}

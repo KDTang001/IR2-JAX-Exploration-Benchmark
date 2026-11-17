@@ -1,12 +1,12 @@
 {
-  "updated_utc": "2026-11-16T08:13:07.800276+00:00",
+  "updated_utc": "2026-11-16T12:12:03.266048+00:00",
   "requested": 54,
-  "recorded": 44,
-  "unrecorded": 10,
+  "recorded": 52,
+  "unrecorded": 2,
   "counts": {
     "measured": 37,
     "nonzero": 6,
-    "timeout": 1
+    "timeout": 9
   },
   "all_requested_measured": false,
   "cases": [
@@ -334,6 +334,57 @@
         }
       },
       "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-1024-n2-b1.log"
+    },
+    {
+      "case_id": "cpu-1024-n2-b16",
+      "status": "timeout",
+      "started_utc": "2026-11-16T11:43:45.241710+00:00",
+      "finished_utc": "2026-11-16T12:12:03.035774+00:00",
+      "worker_pid": 888550,
+      "returncode": -15,
+      "wall_seconds": 1697.7732266660314,
+      "wall_scope": "parent monotonic from Popen until independent wait thread observes child exit; includes startup/load/compilation/phases/save/exit",
+      "sampled_kernel_host_high_water_bytes": 51372191744,
+      "sampled_gpu_process_peak_mib_lower_bound": 0,
+      "gpu_process_samples": [],
+      "completed_phase_evidence": {
+        "completed": [
+          {
+            "phase": "reset",
+            "status": "measured",
+            "finished_utc": "2026-11-16T11:51:17.833821+00:00",
+            "phase_wall_seconds": 451.92880795302335,
+            "timing": {
+              "first_call_seconds": 35.632150536053814,
+              "samples_seconds": [
+                31.971877514966764,
+                31.68670686299447,
+                31.86173789598979,
+                31.655251170974225,
+                31.84945672901813,
+                31.624154955963604,
+                31.48343628901057,
+                31.754336573998444,
+                31.43141059600748,
+                31.667330653988756
+              ],
+              "mean_seconds": 31.698569924291224,
+              "actual_units": 16,
+              "units_per_second": 0.5047546320926892,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 51372191744,
+            "jax_device_allocation_high_water_bytes": null
+          }
+        ],
+        "current": {
+          "phase": "scripted_events",
+          "status": "running",
+          "started_utc": "2026-11-16T11:51:45.912550+00:00"
+        }
+      },
+      "measurement": null,
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-1024-n2-b16.log"
     },
     {
       "case_id": "cpu-1024-n2-b4",
@@ -986,6 +1037,138 @@
       "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-1024-n4-b1.log"
     },
     {
+      "case_id": "cpu-1024-n4-b4",
+      "status": "timeout",
+      "started_utc": "2026-11-16T08:13:09.030995+00:00",
+      "finished_utc": "2026-11-16T08:43:10.139590+00:00",
+      "worker_pid": 849834,
+      "returncode": -15,
+      "wall_seconds": 1801.0624840420205,
+      "wall_scope": "parent monotonic from Popen until independent wait thread observes child exit; includes startup/load/compilation/phases/save/exit",
+      "sampled_kernel_host_high_water_bytes": 13205078016,
+      "sampled_gpu_process_peak_mib_lower_bound": 0,
+      "gpu_process_samples": [],
+      "completed_phase_evidence": {
+        "completed": [
+          {
+            "phase": "reset",
+            "status": "measured",
+            "finished_utc": "2026-11-16T08:15:13.358334+00:00",
+            "phase_wall_seconds": 123.6744132770691,
+            "timing": {
+              "first_call_seconds": 11.16430597892031,
+              "samples_seconds": [
+                8.035986782982945,
+                8.098898299969733,
+                8.052817421965301,
+                7.95873933902476,
+                8.035561184049584,
+                8.004691438982263,
+                8.045280262012966,
+                8.01817829394713,
+                8.020933432970196,
+                8.032786769093946
+              ],
+              "mean_seconds": 8.030387322499882,
+              "actual_units": 4,
+              "units_per_second": 0.4981079790251996,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 13205078016,
+            "jax_device_allocation_high_water_bytes": null
+          },
+          {
+            "phase": "scripted_events",
+            "status": "measured",
+            "finished_utc": "2026-11-16T08:22:01.667633+00:00",
+            "phase_wall_seconds": 401.19808333495166,
+            "timing": {
+              "first_call_seconds": 58.90800067293458,
+              "samples_seconds": [
+                26.011537080979906,
+                26.48533302603755,
+                26.41531376191415,
+                26.12434887897689,
+                26.484323581913486,
+                26.030550880008377,
+                26.478886023978703,
+                25.905354995978996,
+                26.36828328995034,
+                26.365881277946755
+              ],
+              "mean_seconds": 26.266981279768515,
+              "actual_units": 16,
+              "units_per_second": 0.6091297598907416,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 13205078016,
+            "jax_device_allocation_high_water_bytes": null
+          },
+          {
+            "phase": "policy_rollout",
+            "status": "measured",
+            "finished_utc": "2026-11-16T08:32:59.502168+00:00",
+            "phase_wall_seconds": 657.8323318021139,
+            "timing": {
+              "first_call_seconds": 86.46216908702627,
+              "samples_seconds": [
+                44.15547580400016,
+                44.32780145003926,
+                43.78405258303974,
+                44.011014939052984,
+                44.2181384160649,
+                44.17181534797419,
+                43.7433782259468,
+                44.15519091207534,
+                43.69511453504674,
+                43.998986585997045
+              ],
+              "mean_seconds": 44.02609687992371,
+              "actual_units": 16,
+              "units_per_second": 0.3634208147871527,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 13205078016,
+            "jax_device_allocation_high_water_bytes": null
+          },
+          {
+            "phase": "ir2_policy_inference",
+            "status": "measured",
+            "finished_utc": "2026-11-16T08:33:07.973545+00:00",
+            "phase_wall_seconds": 2.035303310956806,
+            "timing": {
+              "first_call_seconds": 0.7946931089973077,
+              "samples_seconds": [
+                0.09360262600239366,
+                0.09423211694229394,
+                0.09634242404717952,
+                0.0954488409915939,
+                0.0954413809813559,
+                0.0950259700184688,
+                0.09512777999043465,
+                0.09564985195174813,
+                0.09537991101387888,
+                0.095440311008133
+              ],
+              "mean_seconds": 0.09516912129474804,
+              "actual_units": 4,
+              "units_per_second": 42.03043955414499,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 13205078016,
+            "jax_device_allocation_high_water_bytes": null
+          }
+        ],
+        "current": {
+          "phase": "ir2_policy_rollout",
+          "status": "running",
+          "started_utc": "2026-11-16T08:33:07.975153+00:00"
+        }
+      },
+      "measurement": null,
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-1024-n4-b4.log"
+    },
+    {
       "case_id": "cpu-1024-n6-b1",
       "status": "measured",
       "started_utc": "2026-11-16T04:50:30.722250+00:00",
@@ -1309,6 +1492,138 @@
         }
       },
       "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-1024-n6-b1.log"
+    },
+    {
+      "case_id": "cpu-1024-n6-b4",
+      "status": "timeout",
+      "started_utc": "2026-11-16T08:43:11.540466+00:00",
+      "finished_utc": "2026-11-16T09:13:12.701496+00:00",
+      "worker_pid": 855092,
+      "returncode": -15,
+      "wall_seconds": 1801.131120002945,
+      "wall_scope": "parent monotonic from Popen until independent wait thread observes child exit; includes startup/load/compilation/phases/save/exit",
+      "sampled_kernel_host_high_water_bytes": 13205303296,
+      "sampled_gpu_process_peak_mib_lower_bound": 0,
+      "gpu_process_samples": [],
+      "completed_phase_evidence": {
+        "completed": [
+          {
+            "phase": "reset",
+            "status": "measured",
+            "finished_utc": "2026-11-16T08:45:16.195907+00:00",
+            "phase_wall_seconds": 124.01697484008037,
+            "timing": {
+              "first_call_seconds": 11.162107863929123,
+              "samples_seconds": [
+                8.304177755024284,
+                8.199686983018182,
+                8.201545788906515,
+                8.13670620904304,
+                8.076632971991785,
+                8.150723965954967,
+                8.046765848994255,
+                8.00235177599825,
+                8.074966304935515,
+                8.084879331057891
+              ],
+              "mean_seconds": 8.12784369349247,
+              "actual_units": 4,
+              "units_per_second": 0.4921354483234695,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 13205303296,
+            "jax_device_allocation_high_water_bytes": null
+          },
+          {
+            "phase": "scripted_events",
+            "status": "measured",
+            "finished_utc": "2026-11-16T08:52:07.753101+00:00",
+            "phase_wall_seconds": 404.4486740330467,
+            "timing": {
+              "first_call_seconds": 59.21362072089687,
+              "samples_seconds": [
+                26.536710212007165,
+                26.802850277977996,
+                26.630668211961165,
+                26.260660797939636,
+                26.69919687404763,
+                26.79077210696414,
+                26.19438608805649,
+                26.663743293029256,
+                26.053508545970544,
+                26.481153442990035
+              ],
+              "mean_seconds": 26.511364985094406,
+              "actual_units": 16,
+              "units_per_second": 0.6035147571238126,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 13205303296,
+            "jax_device_allocation_high_water_bytes": null
+          },
+          {
+            "phase": "policy_rollout",
+            "status": "measured",
+            "finished_utc": "2026-11-16T09:03:09.237711+00:00",
+            "phase_wall_seconds": 661.482463494991,
+            "timing": {
+              "first_call_seconds": 87.65742340893485,
+              "samples_seconds": [
+                44.27815723698586,
+                43.91795972909313,
+                44.445859721978195,
+                44.34030538902152,
+                44.39976016397122,
+                44.0643310949672,
+                43.89522386796307,
+                44.1339610730065,
+                43.9201341670705,
+                44.18927811703179
+              ],
+              "mean_seconds": 44.1584970561089,
+              "actual_units": 16,
+              "units_per_second": 0.3623311721789353,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 13205303296,
+            "jax_device_allocation_high_water_bytes": null
+          },
+          {
+            "phase": "ir2_policy_inference",
+            "status": "measured",
+            "finished_utc": "2026-11-16T09:03:17.678825+00:00",
+            "phase_wall_seconds": 2.138341570040211,
+            "timing": {
+              "first_call_seconds": 0.89425258198753,
+              "samples_seconds": [
+                0.09520322794560343,
+                0.0960906979162246,
+                0.09528057905845344,
+                0.0953263200353831,
+                0.09612785803619772,
+                0.09450240898877382,
+                0.09450666897464544,
+                0.09554003202356398,
+                0.09679681598208845,
+                0.09601521701551974
+              ],
+              "mean_seconds": 0.09553898259764537,
+              "actual_units": 4,
+              "units_per_second": 41.86772656817661,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 13205303296,
+            "jax_device_allocation_high_water_bytes": null
+          }
+        ],
+        "current": {
+          "phase": "ir2_policy_rollout",
+          "status": "running",
+          "started_utc": "2026-11-16T09:03:17.680415+00:00"
+        }
+      },
+      "measurement": null,
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-1024-n6-b4.log"
     },
     {
       "case_id": "cpu-512-n2-b1",
@@ -2364,6 +2679,84 @@
       "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-512-n4-b1.log"
     },
     {
+      "case_id": "cpu-512-n4-b16",
+      "status": "timeout",
+      "started_utc": "2026-11-16T09:13:30.226196+00:00",
+      "finished_utc": "2026-11-16T09:43:31.859453+00:00",
+      "worker_pid": 861398,
+      "returncode": -15,
+      "wall_seconds": 1801.6046062249225,
+      "wall_scope": "parent monotonic from Popen until independent wait thread observes child exit; includes startup/load/compilation/phases/save/exit",
+      "sampled_kernel_host_high_water_bytes": 14115414016,
+      "sampled_gpu_process_peak_mib_lower_bound": 0,
+      "gpu_process_samples": [],
+      "completed_phase_evidence": {
+        "completed": [
+          {
+            "phase": "reset",
+            "status": "measured",
+            "finished_utc": "2026-11-16T09:17:28.407494+00:00",
+            "phase_wall_seconds": 237.639578054077,
+            "timing": {
+              "first_call_seconds": 22.641169679933228,
+              "samples_seconds": [
+                16.487232089973986,
+                16.467051643994637,
+                16.46022579690907,
+                16.456510970019735,
+                16.50201648392249,
+                16.47658633592073,
+                16.525626242975704,
+                16.535962051944807,
+                16.474212097004056,
+                16.35502875596285
+              ],
+              "mean_seconds": 16.474045246862808,
+              "actual_units": 16,
+              "units_per_second": 0.9712247210834218,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 14115414016,
+            "jax_device_allocation_high_water_bytes": null
+          },
+          {
+            "phase": "scripted_events",
+            "status": "measured",
+            "finished_utc": "2026-11-16T09:33:24.607641+00:00",
+            "phase_wall_seconds": 940.5194558810908,
+            "timing": {
+              "first_call_seconds": 97.27022045198828,
+              "samples_seconds": [
+                64.79978046193719,
+                64.82753871404566,
+                64.9153294529533,
+                64.33578666101675,
+                64.81550684501417,
+                65.25759015209042,
+                64.09849353902973,
+                64.90808529907372,
+                64.62644587806426,
+                64.84502945607528
+              ],
+              "mean_seconds": 64.74295864593005,
+              "actual_units": 64,
+              "units_per_second": 0.9885244872729221,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 14115414016,
+            "jax_device_allocation_high_water_bytes": null
+          }
+        ],
+        "current": {
+          "phase": "policy_rollout",
+          "status": "running",
+          "started_utc": "2026-11-16T09:33:24.610483+00:00"
+        }
+      },
+      "measurement": null,
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-512-n4-b16.log"
+    },
+    {
       "case_id": "cpu-512-n4-b4",
       "status": "measured",
       "started_utc": "2026-11-16T05:39:03.710265+00:00",
@@ -3012,6 +3405,84 @@
         }
       },
       "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-512-n6-b1.log"
+    },
+    {
+      "case_id": "cpu-512-n6-b16",
+      "status": "timeout",
+      "started_utc": "2026-11-16T09:43:33.253562+00:00",
+      "finished_utc": "2026-11-16T10:13:34.557313+00:00",
+      "worker_pid": 867432,
+      "returncode": -15,
+      "wall_seconds": 1801.2546699850354,
+      "wall_scope": "parent monotonic from Popen until independent wait thread observes child exit; includes startup/load/compilation/phases/save/exit",
+      "sampled_kernel_host_high_water_bytes": 14112772096,
+      "sampled_gpu_process_peak_mib_lower_bound": 0,
+      "gpu_process_samples": [],
+      "completed_phase_evidence": {
+        "completed": [
+          {
+            "phase": "reset",
+            "status": "measured",
+            "finished_utc": "2026-11-16T09:47:31.043063+00:00",
+            "phase_wall_seconds": 237.20061055803671,
+            "timing": {
+              "first_call_seconds": 22.707077863975428,
+              "samples_seconds": [
+                16.665060080005787,
+                16.22072661598213,
+                16.4336358649889,
+                16.283935104031116,
+                16.440710006980225,
+                16.305528759025037,
+                16.407685272977687,
+                16.43066989595536,
+                16.297300954000093,
+                16.31251300207805
+              ],
+              "mean_seconds": 16.37977655560244,
+              "actual_units": 16,
+              "units_per_second": 0.976814301812161,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 14112772096,
+            "jax_device_allocation_high_water_bytes": null
+          },
+          {
+            "phase": "scripted_events",
+            "status": "measured",
+            "finished_utc": "2026-11-16T10:03:23.022728+00:00",
+            "phase_wall_seconds": 936.4384731589817,
+            "timing": {
+              "first_call_seconds": 96.8844421110116,
+              "samples_seconds": [
+                64.92320100893266,
+                63.949429078027606,
+                64.71047554595862,
+                64.70835352200083,
+                65.00022855098359,
+                64.64642864908092,
+                64.70842727192212,
+                63.98981429100968,
+                64.48973711999133,
+                64.21851866901852
+              ],
+              "mean_seconds": 64.53446137069258,
+              "actual_units": 64,
+              "units_per_second": 0.9917182020374729,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 14112772096,
+            "jax_device_allocation_high_water_bytes": null
+          }
+        ],
+        "current": {
+          "phase": "policy_rollout",
+          "status": "running",
+          "started_utc": "2026-11-16T10:03:23.025453+00:00"
+        }
+      },
+      "measurement": null,
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-512-n6-b16.log"
     },
     {
       "case_id": "cpu-512-n6-b4",
@@ -3664,6 +4135,84 @@
       "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-768-n2-b1.log"
     },
     {
+      "case_id": "cpu-768-n2-b16",
+      "status": "timeout",
+      "started_utc": "2026-11-16T10:13:35.975062+00:00",
+      "finished_utc": "2026-11-16T10:43:37.641905+00:00",
+      "worker_pid": 875967,
+      "returncode": -15,
+      "wall_seconds": 1801.6520141550573,
+      "wall_scope": "parent monotonic from Popen until independent wait thread observes child exit; includes startup/load/compilation/phases/save/exit",
+      "sampled_kernel_host_high_water_bytes": 29856202752,
+      "sampled_gpu_process_peak_mib_lower_bound": 0,
+      "gpu_process_samples": [],
+      "completed_phase_evidence": {
+        "completed": [
+          {
+            "phase": "reset",
+            "status": "measured",
+            "finished_utc": "2026-11-16T10:19:17.005906+00:00",
+            "phase_wall_seconds": 340.4789798570564,
+            "timing": {
+              "first_call_seconds": 27.738310698070563,
+              "samples_seconds": [
+                23.434695735923015,
+                23.352720630937256,
+                23.403384331031702,
+                23.426065627019852,
+                23.172841896070167,
+                23.287722193053924,
+                23.580226649995893,
+                23.389301208080724,
+                27.045291344053112,
+                25.060550736961886
+              ],
+              "mean_seconds": 23.915280035312755,
+              "actual_units": 16,
+              "units_per_second": 0.6690283357073289,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 29847625728,
+            "jax_device_allocation_high_water_bytes": null
+          },
+          {
+            "phase": "scripted_events",
+            "status": "measured",
+            "finished_utc": "2026-11-16T10:37:16.309756+00:00",
+            "phase_wall_seconds": 1058.1421239480842,
+            "timing": {
+              "first_call_seconds": 106.21931418799795,
+              "samples_seconds": [
+                73.13704421103466,
+                73.41753107006662,
+                73.29754413699266,
+                73.0279226830462,
+                73.39919484895654,
+                72.34987911896314,
+                73.20979197800625,
+                73.08711027400568,
+                73.14436301996466,
+                72.95542183995713
+              ],
+              "mean_seconds": 73.10258031809936,
+              "actual_units": 64,
+              "units_per_second": 0.8754820927183379,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 29847625728,
+            "jax_device_allocation_high_water_bytes": null
+          }
+        ],
+        "current": {
+          "phase": "policy_rollout",
+          "status": "running",
+          "started_utc": "2026-11-16T10:37:16.312354+00:00"
+        }
+      },
+      "measurement": null,
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-768-n2-b16.log"
+    },
+    {
       "case_id": "cpu-768-n2-b4",
       "status": "measured",
       "started_utc": "2026-11-16T06:25:27.514310+00:00",
@@ -4314,6 +4863,84 @@
       "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-768-n4-b1.log"
     },
     {
+      "case_id": "cpu-768-n4-b16",
+      "status": "timeout",
+      "started_utc": "2026-11-16T10:43:39.067727+00:00",
+      "finished_utc": "2026-11-16T11:13:40.313844+00:00",
+      "worker_pid": 881068,
+      "returncode": -15,
+      "wall_seconds": 1801.2027635249542,
+      "wall_scope": "parent monotonic from Popen until independent wait thread observes child exit; includes startup/load/compilation/phases/save/exit",
+      "sampled_kernel_host_high_water_bytes": 29871644672,
+      "sampled_gpu_process_peak_mib_lower_bound": 0,
+      "gpu_process_samples": [],
+      "completed_phase_evidence": {
+        "completed": [
+          {
+            "phase": "reset",
+            "status": "measured",
+            "finished_utc": "2026-11-16T10:48:54.178478+00:00",
+            "phase_wall_seconds": 314.5598803869216,
+            "timing": {
+              "first_call_seconds": 26.797537005040795,
+              "samples_seconds": [
+                21.89562674111221,
+                21.884811826981604,
+                21.841230020974763,
+                21.965507040033117,
+                21.915481010917574,
+                22.040572897996753,
+                21.91749900893774,
+                22.047766071977094,
+                21.960943443933502,
+                22.028906909981743
+              ],
+              "mean_seconds": 21.94983449728461,
+              "actual_units": 16,
+              "units_per_second": 0.7289348811253835,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 29871644672,
+            "jax_device_allocation_high_water_bytes": null
+          },
+          {
+            "phase": "scripted_events",
+            "status": "measured",
+            "finished_utc": "2026-11-16T11:06:47.545858+00:00",
+            "phase_wall_seconds": 1053.6659409060376,
+            "timing": {
+              "first_call_seconds": 105.93407016899437,
+              "samples_seconds": [
+                73.2558239090722,
+                73.05909807607532,
+                72.93527173309121,
+                73.13798879808746,
+                72.83436674892437,
+                72.71896040590946,
+                72.87479993794113,
+                72.58992524992209,
+                72.87416517199017,
+                72.86556611792184
+              ],
+              "mean_seconds": 72.91459661489353,
+              "actual_units": 64,
+              "units_per_second": 0.8777392040995996,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 29871644672,
+            "jax_device_allocation_high_water_bytes": null
+          }
+        ],
+        "current": {
+          "phase": "policy_rollout",
+          "status": "running",
+          "started_utc": "2026-11-16T11:06:47.548597+00:00"
+        }
+      },
+      "measurement": null,
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-768-n4-b16.log"
+    },
+    {
       "case_id": "cpu-768-n4-b4",
       "status": "measured",
       "started_utc": "2026-11-16T06:50:31.975055+00:00",
@@ -4962,6 +5589,84 @@
         }
       },
       "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-768-n6-b1.log"
+    },
+    {
+      "case_id": "cpu-768-n6-b16",
+      "status": "timeout",
+      "started_utc": "2026-11-16T11:13:41.733128+00:00",
+      "finished_utc": "2026-11-16T11:43:43.838637+00:00",
+      "worker_pid": 885063,
+      "returncode": -15,
+      "wall_seconds": 1802.0927066110307,
+      "wall_scope": "parent monotonic from Popen until independent wait thread observes child exit; includes startup/load/compilation/phases/save/exit",
+      "sampled_kernel_host_high_water_bytes": 29877448704,
+      "sampled_gpu_process_peak_mib_lower_bound": 0,
+      "gpu_process_samples": [],
+      "completed_phase_evidence": {
+        "completed": [
+          {
+            "phase": "reset",
+            "status": "measured",
+            "finished_utc": "2026-11-16T11:19:51.733722+00:00",
+            "phase_wall_seconds": 369.4441450010054,
+            "timing": {
+              "first_call_seconds": 27.5252180499956,
+              "samples_seconds": [
+                31.832161539932713,
+                26.717705046059564,
+                26.679737593978643,
+                26.717806397005916,
+                26.732794367941096,
+                26.727181559079327,
+                26.636592609924264,
+                26.613537644967437,
+                26.629923186963424,
+                26.645964151015505
+              ],
+              "mean_seconds": 27.19334040968679,
+              "actual_units": 16,
+              "units_per_second": 0.5883793516702528,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 29877448704,
+            "jax_device_allocation_high_water_bytes": null
+          },
+          {
+            "phase": "scripted_events",
+            "status": "measured",
+            "finished_utc": "2026-11-16T11:37:50.743017+00:00",
+            "phase_wall_seconds": 1054.5873663439415,
+            "timing": {
+              "first_call_seconds": 106.12690604606178,
+              "samples_seconds": [
+                73.13455805310514,
+                72.60285419295542,
+                72.97652442101389,
+                73.00292107393034,
+                73.17685057304334,
+                72.88857054698747,
+                72.96487159398384,
+                73.07913086691406,
+                71.99835038802121,
+                73.04556983103976
+              ],
+              "mean_seconds": 72.88702015409945,
+              "actual_units": 64,
+              "units_per_second": 0.8780712925935193,
+              "warmup_count": 3
+            },
+            "kernel_host_high_water_rss_bytes": 29877448704,
+            "jax_device_allocation_high_water_bytes": null
+          }
+        ],
+        "current": {
+          "phase": "policy_rollout",
+          "status": "running",
+          "started_utc": "2026-11-16T11:37:50.745806+00:00"
+        }
+      },
+      "measurement": null,
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-768-n6-b16.log"
     },
     {
       "case_id": "cpu-768-n6-b4",
