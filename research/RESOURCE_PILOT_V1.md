@@ -1,0 +1,183 @@
+# Resource pilot v1: frozen planning specification
+
+Status: **FROZEN 240; two identities completed in a separate cost probe; full pilot not launched**.
+The final validation task manifest was generated
+successfully on the server from the `source-final` LF byte pin. This is a frozen plan,
+not paper results. The immutable freeze evidence records EXECUTED0 at freeze time.
+The later, predeclared two-task cost probe is reported separately below; 238 identities
+remain unscheduled.
+
+The final package identity is the verified `source-final` file inventory, not a guessed
+Git commit (the commit was pending at freeze). All 111 package files have now been
+bound to commit `736ca08659d5753c7a3b9c6aab471004fb0fea82` in the independent
+[source binding](evidence/phase6-source-binding.json); the original freeze is unchanged.
+Synthetic test manifests are not
+part of the resource pilot.
+
+## Selection and workload
+
+Select exactly one retained validation map from each of `ir2/easy`, `ir2/difficult`,
+`procedural/rooms`, `procedural/corridor`, `procedural/hybrid`. Within each stratum choose
+the minimum `occupancy_hash` (path is a deterministic tie breaker) **before any score**.
+Registry roots and manifests resolve relative to `artifacts/maps/sources.json`; image
+paths resolve relative to those roots, including normalized/symlink aliases.
+Test/OOD and excluded entries cannot fill a missing validation stratum. A selected
+canonical group overlapping test/OOD is rejected. Missing families, contradictory source
+metadata, missing files, changed occupancy/canonical/scenario identities, and mismatched
+native dimensions/buckets fail without substitution.
+
+The Cartesian grid is `5 maps × scenario seed 0 × N=4 × budgets {2048,8192} ×
+{Normal,Dropout0.3,Burst64} × {nearest_frontier,ir2_adapted} ×
+{off,plan,map,mixed} = 240 tasks` (30 environment scenarios, eight fixed methods).
+Faults are independent: Normal `(mode=0,p=0)`, Dropout `(mode=1,p=.3)`,
+Burst `(mode=2,p=0,duration=64,start=128)`. Inactive burst duration remains 64 as in the
+main config. Budgets are per robot. All tasks retain `limited=true`.
+
+`configs/benchmark.json` supplies the main benchmark configuration: 512 rounds,
+coverage target .99, graph capacity 400, graph history capacity 513 (=512+1), and
+inherited `reachable_only`. No shortened episodes or bucket substitutions are used.
+The planner reuses `make_baseline_method`, `make_scenario`, `tasks`, and
+`write_task_manifest`; it never invokes the episode runner or loads policy weights for inference.
+The formal `evaluation_maps()` function and test/OOD production readers are unchanged.
+
+## Frozen server artifacts and provenance
+
+The completed command used the approved CPU planning environment and the frozen source
+at `/home/user/Tz/acceptance/phase6-prep-20261117/source-final`. The parent execution-tool
+transcript supplies the exact invocation below; it is not claimed as a separately
+captured raw request. The parent reported exit 0 with empty stdout/stderr, and the
+remote `pilot-freeze.log` was downloaded and hashed. No planner was rerun for verification.
+
+```sh
+cd /home/user/Tz/acceptance/phase6-prep-20261117/source-final
+PYTHONPATH=/home/user/Tz/acceptance/phase6-prep-20261117/source-final/src \
+JAX_PLATFORMS=cpu OMP_NUM_THREADS=8 OPENBLAS_NUM_THREADS=8 MKL_NUM_THREADS=8 \
+taskset -c 24-31 /home/user/anaconda3/envs/ex/bin/python \
+  /home/user/Tz/acceptance/phase6-prep-20261117/source-final/scripts/freeze_resource_pilot.py \
+  --sources /home/user/Tz/ir2-benchmark/artifacts/maps/sources.json \
+  --config /home/user/Tz/acceptance/phase6-prep-20261117/source-final/configs/benchmark.json \
+  --checkpoint /home/user/Tz/acceptance/phase4-20261114/reference/policy.npz \
+  --output /home/user/Tz/acceptance/phase6-prep-20261117/resource-pilot-v1/tasks.jsonl
+```
+
+Compact immutable copies:
+
+- [Compressed task manifest](evidence/phase6-resource-pilot-v1-tasks.jsonl.gz)
+- [Selection and content identities](evidence/phase6-resource-pilot-v1-selection.json)
+- [Freeze provenance and verification](evidence/phase6-resource-pilot-v1-freeze.json)
+- [Final package inventory](evidence/phase6-package-inventory.json)
+
+The download used temporary files, parsed and verified their content, then replaced the
+final local targets. The decompressed task bytes match both the remote uncompressed
+manifest and the expected SHA256. Independent JSON checks verified 240 unique result
+IDs, 30 scenarios, five validation maps, eight navigation/communication methods, six
+scenario configuration hashes, three independent fault conditions, two budgets, N=4,
+512 rounds, native bucket768 and `limited=true`. Every scenario and result ID was
+recomputed from its frozen payload. Every package file in the inventory, selected PNG,
+selected source manifest, config, checkpoint, planner and source registry was read from
+the server and hash-checked. No tests, episodes, training or GPU jobs ran in this step.
+
+Eight method configurations means 2 navigation choices ×4 fixed communication choices;
+the six scenario configurations are 2 budgets ×3 independent fault conditions.
+
+| Identity | SHA256 |
+| --- | --- |
+| Decompressed task manifest | `714c7454e0789d7447b058a835c77449d356010731a1c8a8a883cb5d0dce478e` |
+| Compressed task artifact | `57d981fa25c8fb53c9053e1e36e52f7f58cc152422c7934f4385befe751a8cff` |
+| Selection artifact | `fa1f3c62e91291b832ede67bf1457b679211ae28361683dba951b1e1a5e01063` |
+| Final package code hash | `402942e2eefc04ad33aa65fe8d8e83e68b2411e05e932264548f8cff3d0a7fbd` |
+| Package implementation hash in tasks | `6c453207df98d1090c1d601324daedf73772ce0dcfb44345dea9fa7d7f32030f` |
+| Main configuration | `6ad34ff8b6ff7d2438034a78c13b7b346070fb9a5af656a237cbd81831602484` |
+| Pretrained checkpoint | `0a38ab8007bb64f36790d37549e70f7908cc1faba7d17a060ef0f99799193eb8` |
+| Frozen planner | `803076e6c7cc3099e1fce497e91850b72c5458257b6d310c0ecf7a63594920f0` |
+| Source registry | `04aef1454ac7557908d049d242932198de634503891c9f180634aeb7a9e44bae` |
+
+Package Python bytes participate in scenario/result IDs. These frozen artifacts are
+bound to the recorded source identity; later source edits do not rewrite this manifest.
+Full resolved map paths, native dimensions, PNG/occupancy/canonical/scenario hashes and
+source-manifest hashes are retained in the selection artifact.
+
+## Local verification
+
+Earlier actual registry map selection was decoded and checked locally before the final
+server freeze. Those historical checks remain unchanged. The identities below match the
+verified server selection and are selection evidence, not episode results.
+The published selection sidecar retains the full resolved paths, manifest hashes
+and identities. All five winners have native bucket **768**; the two
+IR2 maps are 480×640 and the three procedural maps are 768×768.
+
+Focused verification: 18 tests passed, including 15 new planner cases and three existing
+scenario identity tests. The real CLI was exercised with synthetic PNGs and arbitrary
+checkpoint bytes, proving that planning does not run/load the policy. Ruff ALL and
+format checks passed. These were local CPU development checks. The final targeted
+functional acceptance, including the planner cases, ran on the target Linux server;
+its XML and aggregate evidence are linked in the Phase 6-Prep report. Planning
+checks do not establish GPU throughput or complete-episode cost.
+
+## Separate complete-episode cost probe
+
+[Predeclared two-task subset](evidence/phase6-mini-declaration.json): IR2/easy
+`img_4775.png`, scenario seed0, N4/B1, 8192 bytes per robot, Normal, mixed,
+both navigation methods. Both IDs belong to the frozen 240. They retain the original
+512-round limit/.99 target; separate fresh processes and output directories are used.
+
+NF mixed reaches 99.7250% at round493 in 187.96 s; IR2 adapted mixed reaches the
+normal 512-round timeout at 98.6334% in 131.38 s. Zero execution errors/invalid actions.
+Both spend/emit 32,724 bytes, leave 11 bytes per robot, and continue moving after
+the last affordable transmission. Result/trace checksums, AUC, terminal state,
+event counts and byte balances pass independent reconstruction. See
+[cost and memory evidence](evidence/phase6-mini-cost.json) and
+[the performance report](PERFORMANCE_PROFILE_REPORT.md).
+
+This is one paired validation-map cost observation, not two independent map repeats
+or a navigation ranking. The five-family/budget/fault costs, full-length B4 behavior,
+and the complete 240-episode runtime remain unmeasured. The full pilot needs its own
+approved resource window. No training or formal test/OOD run was started.
+
+## Verified selected identities
+
+### ir2/easy
+
+Source-relative path: `train/easy/img_4775.png`. Bucket 768; dimensions [480, 640].
+
+- PNG: `53e6d113b45df199c5a911113f820323e9ed66f16d28a321cfb6e9b9fd50cc0e`
+- Occupancy: `000b6a254b76a6d763f7be6ff1ad556ca07d40a01541dccc579d08301bf32f50`
+- Canonical: `000b6a254b76a6d763f7be6ff1ad556ca07d40a01541dccc579d08301bf32f50`
+- Map scenario: `0a6211a8dddb0c5478d23834afcaa8d4c280d1b6206ead212bfe7e92ae50143b`
+
+### ir2/difficult
+
+Source-relative path: `train/difficult/img_5186.png`. Bucket 768; dimensions [480, 640].
+
+- PNG: `a21f267fb017b6074acf23898a31e686f32791c702bb7bc48a6a1cf3333bb9d1`
+- Occupancy: `0001330be22ac7899bad26d8eceab3130269d7b183ecdc50fc40712d2d0c9ef1`
+- Canonical: `0001330be22ac7899bad26d8eceab3130269d7b183ecdc50fc40712d2d0c9ef1`
+- Map scenario: `8e66ac41b5575563ef7115ce7eb3623fc309cb3fcc92d7d1b1f6468a07f32672`
+
+### procedural/rooms
+
+Source-relative path: `validation_rooms_00087.png`. Bucket 768; dimensions [768, 768].
+
+- PNG: `0cb1629e987b4c27d5cc993518b58369ba2edb101ec19c6a42aca7f375e8cc80`
+- Occupancy: `03daac474b644cd8da9ab3c4a565f78c3fc8970b31f341dd53c293f49016ef9d`
+- Canonical: `0115eff475c5a53abf46a8fac8889e063df57b2674e5e69c85493c1731f57193`
+- Map scenario: `a3c04b9cc1bec4b531ec4984c138a5688868f362e1fccd0a8576c2cc15118375`
+
+### procedural/corridor
+
+Source-relative path: `validation_corridor_00045.png`. Bucket 768; dimensions [768, 768].
+
+- PNG: `e5feefc418bba71f59392fc2bb38734ed08fb385437765873525b3dcfbbf9629`
+- Occupancy: `070859214f6cdf9929867328e50b6fe8ca1205697e71d0998b8f5b5b935a00c8`
+- Canonical: `070859214f6cdf9929867328e50b6fe8ca1205697e71d0998b8f5b5b935a00c8`
+- Map scenario: `d69e040082267d99f5d0ab9b05a7bf9cb7eb4cc68e643c51ada7f55e58f9cf81`
+
+### procedural/hybrid
+
+Source-relative path: `validation_hybrid_00069.png`. Bucket 768; dimensions [768, 768].
+
+- PNG: `2c50ec04942cc82eef4e042ebe583d6cee944102ae37991e64047ab46e8af3f6`
+- Occupancy: `01b941fec60fbf6100ab1bd501a53fb5a4093efa8fb1ea637ff6179f22ee04b5`
+- Canonical: `01b941fec60fbf6100ab1bd501a53fb5a4093efa8fb1ea637ff6179f22ee04b5`
+- Map scenario: `b8da9d4051494b18459cb1148694536657f9a3479b843e38642609e4069cba77`
+

@@ -1,0 +1,96 @@
+{
+  "status": "FROZEN240/EXECUTED0",
+  "verified_utc": "2026-11-17T08:03:55.474676+00:00",
+  "remote_root": "/home/user/Tz/acceptance/phase6-prep-20261117",
+  "source_root": "/home/user/Tz/acceptance/phase6-prep-20261117/source-final",
+  "git_commit": "pending; identity is source-final LF byte inventory",
+  "code_hash": "402942e2eefc04ad33aa65fe8d8e83e68b2411e05e932264548f8cff3d0a7fbd",
+  "package_implementation_hash": "6c453207df98d1090c1d601324daedf73772ce0dcfb44345dea9fa7d7f32030f",
+  "package_inventory": "phase6-package-inventory.json",
+  "package_inventory_sha256": "fcc789cb46401ece6aa75197035d4c18fe14911be5a2d3f73db6e1306a96e0c2",
+  "verified_package_files": 111,
+  "task_manifest_sha256": "714c7454e0789d7447b058a835c77449d356010731a1c8a8a883cb5d0dce478e",
+  "gzip_sha256": "57d981fa25c8fb53c9053e1e36e52f7f58cc152422c7934f4385befe751a8cff",
+  "selection_sha256": "fa1f3c62e91291b832ede67bf1457b679211ae28361683dba951b1e1a5e01063",
+  "artifacts": {
+    "configuration": {
+      "path": "/home/user/Tz/acceptance/phase6-prep-20261117/source-final/configs/benchmark.json",
+      "sha256": "6ad34ff8b6ff7d2438034a78c13b7b346070fb9a5af656a237cbd81831602484"
+    },
+    "checkpoint": {
+      "path": "/home/user/Tz/acceptance/phase4-20261114/reference/policy.npz",
+      "sha256": "0a38ab8007bb64f36790d37549e70f7908cc1faba7d17a060ef0f99799193eb8"
+    },
+    "planner": {
+      "path": "/home/user/Tz/acceptance/phase6-prep-20261117/source-final/scripts/freeze_resource_pilot.py",
+      "sha256": "803076e6c7cc3099e1fce497e91850b72c5458257b6d310c0ecf7a63594920f0"
+    },
+    "registry": {
+      "path": "/home/user/Tz/ir2-benchmark/artifacts/maps/sources.json",
+      "sha256": "04aef1454ac7557908d049d242932198de634503891c9f180634aeb7a9e44bae"
+    }
+  },
+  "command_provenance": "parentexecutiontooltranscript",
+  "invocation": [
+    "taskset",
+    "-c",
+    "24-31",
+    "/home/user/anaconda3/envs/ex/bin/python",
+    "/home/user/Tz/acceptance/phase6-prep-20261117/source-final/scripts/freeze_resource_pilot.py",
+    "--sources",
+    "/home/user/Tz/ir2-benchmark/artifacts/maps/sources.json",
+    "--config",
+    "/home/user/Tz/acceptance/phase6-prep-20261117/source-final/configs/benchmark.json",
+    "--checkpoint",
+    "/home/user/Tz/acceptance/phase4-20261114/reference/policy.npz",
+    "--output",
+    "/home/user/Tz/acceptance/phase6-prep-20261117/resource-pilot-v1/tasks.jsonl"
+  ],
+  "cwd": "/home/user/Tz/acceptance/phase6-prep-20261117/source-final",
+  "environment_overrides": {
+    "PYTHONPATH": "/home/user/Tz/acceptance/phase6-prep-20261117/source-final/src",
+    "JAX_PLATFORMS": "cpu",
+    "OMP_NUM_THREADS": "8",
+    "OPENBLAS_NUM_THREADS": "8",
+    "MKL_NUM_THREADS": "8"
+  },
+  "subprocess_options": {
+    "capture_output": true,
+    "text": true,
+    "timeout": 120
+  },
+  "parent_reported_returncode": 0,
+  "parent_reported_stdout": "",
+  "parent_reported_stderr": "",
+  "remote_log": "/home/user/Tz/acceptance/phase6-prep-20261117/pilot-freeze.log",
+  "remote_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "verification": {
+    "task_count": 240,
+    "unique_result_ids": 240,
+    "scenario_count": 30,
+    "map_count": 5,
+    "method_configurations": 8,
+    "scenario_configurations": 6,
+    "conditions": 3,
+    "budgets": [
+      2048,
+      8192
+    ],
+    "n_agents": 4,
+    "max_rounds": 512,
+    "bucket": 768,
+    "split": "validation",
+    "limited": true,
+    "decoded_gzip_matches_remote_tasks": true,
+    "result_ids_recomputed": true,
+    "scenario_ids_recomputed": true,
+    "source_files_verified_against_inventory": true,
+    "selected_png_and_source_manifest_hashes_verified": true
+  },
+  "executed_episodes_at_freeze": 0,
+  "results_status": "planning only; no episode or paper results",
+  "notes": [
+    "Eight configurations means eight navigation/communication methods; there are six unique scenario config hashes (two budgets times three faults).",
+    "No planner, test, or GPU workload was run during artifact verification."
+  ]
+}
