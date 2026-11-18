@@ -21,6 +21,15 @@ not effective Burst exposure or robustness; 8KiB faults remain a separate gate.
 The original C400 data and all-240 limits remain.
 The [merge plan](RELEASE_MERGE_PLAN.md) verifies PR dependency without merging.
 
+The following [8KiB offline exposure preflight](BURST_EXPOSURE_PREFLIGHT_REPORT.md)
+checked twenty archived Normal executions (ten exact B1/B4 pairs) against the
+ten frozen future Burst tasks. All ten have actual Normal emissions and targeted
+deliveries during the window; static overlay identifies 817 receiver copies.
+Nine have post-recovery Normal activity/delivery, while one already succeeded.
+The weakest task has only two targeted copies and remains in the cohort.
+No environment, JAX/GPU, training or new resource window was started. This
+supports requesting a bounded actual Burst run, not claiming a Burst result.
+
 ## Scope and resource boundary
 
 The authorized H100 window is at most four hours, including compilation. It began

@@ -189,6 +189,14 @@ mixed/2KiB, not off/PLAN/MAP_DELTA or 8KiB faults. Do not mechanically multiply
 these costs into a validated full-pilot or paper-matrix prediction. The paper
 protocol remains proposed; train-only SAC is unimplemented and untrained.
 
+The subsequent [8KiB Normal-trace exposure preflight](BURST_EXPOSURE_PREFLIGHT_REPORT.md)
+supports all ten frozen mixed/Burst tasks having measurement opportunity: all
+have in-window emissions and targeted successful Normal deliveries. Static
+overlay identifies 817 potentially blocked receiver copies, not observed Burst
+losses. Nine Normal traces also support a post-recovery observation; one ended
+successfully earlier. This offline check did not start a GPU window or run any
+new episode; the actual 8KiB Burst gate is still pending authorization/execution.
+
 ## Evidence and review
 
 The [post-run target check](evidence/resource-pilot-v2-c1024-20261118/postrun-verification.json)

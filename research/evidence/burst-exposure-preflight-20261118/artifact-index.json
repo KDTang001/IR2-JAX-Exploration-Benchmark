@@ -1,0 +1,17 @@
+{
+  "files": {
+    "preflight.json": {
+      "sha256": "4fdc509250e0622d655f64d2fe592531528c208df68ff771a6c2a1dfa1dc985d",
+      "bytes": 27131
+    },
+    "review.json": {
+      "sha256": "d848e0c282dac90369b6107c17dab3908ca07702050b5cd9238130af9676e3d4",
+      "bytes": 5090
+    },
+    "selected-burst-tasks.jsonl": {
+      "sha256": "6499107bab45f48063b2772f73277235998f42c24311dd31aada8593411e07db",
+      "bytes": 31865
+    }
+  },
+  "self_excluded": "artifact-index.json"
+}
