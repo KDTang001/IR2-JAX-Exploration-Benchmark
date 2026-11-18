@@ -1,0 +1,27 @@
+{
+  "path": "/tmp/ir2-resource-v2-export-20261118.tar.gz",
+  "sha256": "a882fc15757140c03291c10b27580fdd677adaad779f2ad8b461ca8d12ac6fae",
+  "bytes": 1745717,
+  "files": 107,
+  "postrun": {
+    "observed_epoch": 1794991392.059704,
+    "pinned_inputs_verified": 140,
+    "core_source_files_verified": 111,
+    "worker_gpu_processes_remaining": [],
+    "gpu_processes_at_postrun_observation": "",
+    "runtime_postrun_observation": {
+      "python": "3.11.0 (main, Mar  1 2023, 18:26:19) [GCC 11.2.0]",
+      "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+      "packages": {
+        "jax": "0.4.35",
+        "jaxlib": "0.4.34",
+        "numpy": "2.0.2",
+        "flax": "0.10.2",
+        "optax": "0.2.4"
+      },
+      "jax_initialized": false
+    },
+    "existing_raw_files_modified": false
+  },
+  "temporary_remote_bundle_removed": true
+}

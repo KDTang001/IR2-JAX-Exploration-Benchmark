@@ -12,8 +12,13 @@ Latest follow-up, November 18: separate C1024 complete-episode acceptance passed
 The following review identified remaining C400 references in the paper/SAC
 proposal. They now share C1024 as an explicitly unfinalized candidate. The
 [independent v2 pilot declaration](RESOURCE_PILOT_V2_C1024.md) freezes 240 new
-identities and authorizes only a 30-task 2KiB/Normal/Dropout/Burst probe under a
-new maximum-four-hour window. The original C400 data and all-240 limits remain.
+identities. Its authorized 30-task 2KiB/Normal/Dropout/Burst H100 probe passed:
+52,567 active events, 12 coverage successes and 18 normal timeouts, with no
+execution/graph/OOM errors. The window closed at 16:42:06 after 78 minutes 21
+seconds. All ten Burst runs had zero emitted bytes in the fault window, because
+the final transmission occurred at zero-based round76. This verifies scheduling,
+not effective Burst exposure or robustness; 8KiB faults remain a separate gate.
+The original C400 data and all-240 limits remain.
 The [merge plan](RELEASE_MERGE_PLAN.md) verifies PR dependency without merging.
 
 ## Scope and resource boundary

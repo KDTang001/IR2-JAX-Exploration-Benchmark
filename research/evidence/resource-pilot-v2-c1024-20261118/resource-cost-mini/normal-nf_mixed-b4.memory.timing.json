@@ -1,0 +1,330 @@
+{
+  "pid": 966345,
+  "boundaries": [
+    {
+      "phase": "load_lane",
+      "seconds": 0.6208619829267263,
+      "result_id": "6e8cc15710d1674b4081e9e8d08edd76fa88b61034c7c7e07f4e13bbf55b2fc5",
+      "component_area": 128000
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.12349810497835279,
+      "result_id": "c5d5efbc534d41930e53420255c279a7e90a320fcb6d53ed5db024c732ea432a",
+      "component_area": 128000
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.36243960401043296,
+      "result_id": "07c9b4ec2bf644c5fd2be780c05583673db7c2f0fd2c6604d5b6ba1cdba25a8f",
+      "component_area": 551540
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.413740842952393,
+      "result_id": "c85faf1001382043a9ad541c52e96ea7781d174345df4f09e3288e6103b0cad0",
+      "component_area": 198968
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 4,
+      "seconds": 0.003287993953563273
+    },
+    {
+      "phase": "lower_compile",
+      "batch_size": 4,
+      "seconds": 54.45601385005284
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 4,
+      "seconds": 584.1941048279405
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 640.2160661789821,
+      "batch_size": 4,
+      "result_ids": [
+        "6e8cc15710d1674b4081e9e8d08edd76fa88b61034c7c7e07f4e13bbf55b2fc5",
+        "c5d5efbc534d41930e53420255c279a7e90a320fcb6d53ed5db024c732ea432a",
+        "07c9b4ec2bf644c5fd2be780c05583673db7c2f0fd2c6604d5b6ba1cdba25a8f",
+        "c85faf1001382043a9ad541c52e96ea7781d174345df4f09e3288e6103b0cad0"
+      ],
+      "graph_terminal": [
+        {
+          "result_id": "6e8cc15710d1674b4081e9e8d08edd76fa88b61034c7c7e07f4e13bbf55b2fc5",
+          "event_final": 1997,
+          "local_nodes": [
+            195,
+            189,
+            200,
+            201
+          ],
+          "global_nodes": [
+            134,
+            147,
+            153,
+            154
+          ],
+          "history_counts": [
+            501,
+            500,
+            500,
+            500
+          ],
+          "max_outgoing_degrees": [
+            30,
+            30,
+            30,
+            30
+          ],
+          "overflow": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "path_failed": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "result_id": "c5d5efbc534d41930e53420255c279a7e90a320fcb6d53ed5db024c732ea432a",
+          "event_final": 1994,
+          "local_nodes": [
+            144,
+            243,
+            264,
+            149
+          ],
+          "global_nodes": [
+            100,
+            212,
+            211,
+            104
+          ],
+          "history_counts": [
+            500,
+            500,
+            499,
+            499
+          ],
+          "max_outgoing_degrees": [
+            30,
+            30,
+            30,
+            30
+          ],
+          "overflow": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "path_failed": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "result_id": "07c9b4ec2bf644c5fd2be780c05583673db7c2f0fd2c6604d5b6ba1cdba25a8f",
+          "event_final": 2048,
+          "local_nodes": [
+            543,
+            585,
+            613,
+            614
+          ],
+          "global_nodes": [
+            506,
+            543,
+            574,
+            575
+          ],
+          "history_counts": [
+            513,
+            513,
+            513,
+            513
+          ],
+          "max_outgoing_degrees": [
+            23,
+            28,
+            29,
+            29
+          ],
+          "overflow": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "path_failed": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "result_id": "c85faf1001382043a9ad541c52e96ea7781d174345df4f09e3288e6103b0cad0",
+          "event_final": 2048,
+          "local_nodes": [
+            499,
+            498,
+            497,
+            498
+          ],
+          "global_nodes": [
+            494,
+            493,
+            493,
+            493
+          ],
+          "history_counts": [
+            513,
+            513,
+            513,
+            513
+          ],
+          "max_outgoing_degrees": [
+            30,
+            30,
+            30,
+            30
+          ],
+          "overflow": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "path_failed": [
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ],
+      "graph_diagnostics_seconds": 0.1677986029535532
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.04564253892749548
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.016679739928804338
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.024049761006608605
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.018650006968528032
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.000397298950701952
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.0001894149463623762
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.00017534499056637287
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.00016845506615936756
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.2829957070061937,
+      "result_id": "cd67a62c6486741e8f5d60be74d82bcede9a1e8a462e2737bc3b4fc13b29a0f8",
+      "component_area": 373504
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 1,
+      "seconds": 6.4498046413064e-05
+    },
+    {
+      "phase": "lower_compile",
+      "batch_size": 1,
+      "seconds": 51.29761091992259
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 1,
+      "seconds": 205.8073199869832
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 257.54150529694743,
+      "batch_size": 1,
+      "result_ids": [
+        "cd67a62c6486741e8f5d60be74d82bcede9a1e8a462e2737bc3b4fc13b29a0f8"
+      ],
+      "graph_terminal": [
+        {
+          "result_id": "cd67a62c6486741e8f5d60be74d82bcede9a1e8a462e2737bc3b4fc13b29a0f8",
+          "event_final": 2048,
+          "local_nodes": [
+            361,
+            361,
+            367,
+            359
+          ],
+          "global_nodes": [
+            333,
+            333,
+            329,
+            334
+          ],
+          "history_counts": [
+            513,
+            513,
+            513,
+            513
+          ],
+          "max_outgoing_degrees": [
+            28,
+            28,
+            28,
+            29
+          ],
+          "overflow": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "path_failed": [
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ],
+      "graph_diagnostics_seconds": 0.001985986949875951
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.02560615004040301
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.00029120699036866426
+    }
+  ]
+}

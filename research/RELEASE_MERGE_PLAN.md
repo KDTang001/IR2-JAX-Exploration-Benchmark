@@ -24,8 +24,10 @@ Later pushed heads require a fresh metadata check before any merge.
 1. Freeze the exact proposed PR2 head, confirm all changed environment/package
    source bytes against accepted evidence, and review supported presets and new
    measurement-only changes. Preserve every old manifest/error/result artifact.
-2. Finish or explicitly bound the separate v2 30-task probe. C1024 remains a
-   candidate for wider conditions; do not call all 240 or the paper matrix done.
+2. The separate v2 30-task probe now passed scoped execution/audit acceptance.
+   Its 2KiB/mixed Burst cohort had zero in-window emitted bytes; retain that
+   exposure limit in release notes. C1024 remains a candidate for wider
+   conditions; do not call all 240 or the paper matrix done.
 3. After explicit merge approval, integrate PR1 first. Prefer a merge preserving
    its audit ancestry if repository policy allows it; do not publish/tag that
    intermediate tree as the completed release because PR2 contains metadata/OOM
