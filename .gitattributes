@@ -12,6 +12,8 @@ scripts/phase6_*.py text eol=lf
 scripts/analyze_phase6_profiles.py text eol=lf
 scripts/analyze_batch_cost.py text eol=lf
 scripts/freeze_resource_pilot.py text eol=lf
+scripts/freeze_capacity_check.py text eol=lf
+configs/benchmark_capacity1024.json text eol=lf
 # Preserve the exact externally executed helper bytes bound in audit evidence.
 research/protocols/phase5-20261114/*.py.txt -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/protocols/phase6-20261117/*.py.txt -text

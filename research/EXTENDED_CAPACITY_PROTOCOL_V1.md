@@ -24,12 +24,12 @@ separate capacity acceptance subset, not a rewrite of resource-pilot-v1 or its
 
 ## Work and necessary checks
 
-- [ ] Add the preset and a small freeze-only script. Reject changes to any other
+- [x] Add the preset and a small freeze-only script. Reject changes to any other
   config field, non-validation tasks, wrong scope, changed original identities
   and existing output paths. Use existing scenario/task identity functions.
-- [ ] Run focused freeze/identity checks on target Linux CPU. No full regression
+- [x] Run focused freeze/identity checks on target Linux CPU. No full regression
   suite is needed for a configuration-only environment change.
-- [ ] Freeze source, helper, manifest, map and checkpoint hashes before execution.
+- [x] Freeze source, helper, manifest, map and checkpoint hashes before execution.
   Keep all new measurements in a new server root.
 - [ ] Run a 64-event C400/C1024 pre-limit H100 comparison for all ten tasks.
   Validate both graph states. Compare actions, physical coverage integer counts,
