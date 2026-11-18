@@ -9,6 +9,13 @@ Latest follow-up, November 18: separate C1024 complete-episode acceptance passed
 20 executions and ten exact B1/B4 pairs; C400 controls remain unchanged. See
 [the final capacity report](EXTENDED_CAPACITY_REPORT.md) for scope and costs.
 
+The following review identified remaining C400 references in the paper/SAC
+proposal. They now share C1024 as an explicitly unfinalized candidate. The
+[independent v2 pilot declaration](RESOURCE_PILOT_V2_C1024.md) freezes 240 new
+identities and authorizes only a 30-task 2KiB/Normal/Dropout/Burst probe under a
+new maximum-four-hour window. The original C400 data and all-240 limits remain.
+The [merge plan](RELEASE_MERGE_PLAN.md) verifies PR dependency without merging.
+
 ## Scope and resource boundary
 
 The authorized H100 window is at most four hours, including compilation. It began

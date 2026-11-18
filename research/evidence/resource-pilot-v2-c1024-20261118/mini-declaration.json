@@ -1,0 +1,67 @@
+{
+  "name": "resource-pilot-v2-C1024-probe-v1",
+  "cases": [
+    {
+      "case_id": "normal-nf_mixed-b4",
+      "batch_size": 4,
+      "task_manifest": "/home/user/Tz/acceptance/resource-pilot-v2-c1024-20261118/normal-nf_mixed-b4.jsonl",
+      "task_manifest_sha256": "ad89ab3500e543c5519e238f3145c9c3579310bf6c0cffad9d6a13c4105ee4d4",
+      "map": {
+        "path": "/home/user/Tz/ir2-benchmark/DungeonMaps/train/easy/img_4775.png"
+      },
+      "map_file_sha256": "53e6d113b45df199c5a911113f820323e9ed66f16d28a321cfb6e9b9fd50cc0e"
+    },
+    {
+      "case_id": "normal-ir2_mixed-b4",
+      "batch_size": 4,
+      "task_manifest": "/home/user/Tz/acceptance/resource-pilot-v2-c1024-20261118/normal-ir2_mixed-b4.jsonl",
+      "task_manifest_sha256": "d41ec235457f9ec6034894f67d7f9f404481776951b2e945e2b6fc3bc3ac18e5",
+      "map": {
+        "path": "/home/user/Tz/ir2-benchmark/DungeonMaps/train/easy/img_4775.png"
+      },
+      "map_file_sha256": "53e6d113b45df199c5a911113f820323e9ed66f16d28a321cfb6e9b9fd50cc0e"
+    },
+    {
+      "case_id": "drop03-nf_mixed-b4",
+      "batch_size": 4,
+      "task_manifest": "/home/user/Tz/acceptance/resource-pilot-v2-c1024-20261118/drop03-nf_mixed-b4.jsonl",
+      "task_manifest_sha256": "b03ecf78f965c948bce8d7ef8f6abab8e4cadfc3668dd318c9147481935309b2",
+      "map": {
+        "path": "/home/user/Tz/ir2-benchmark/DungeonMaps/train/easy/img_4775.png"
+      },
+      "map_file_sha256": "53e6d113b45df199c5a911113f820323e9ed66f16d28a321cfb6e9b9fd50cc0e"
+    },
+    {
+      "case_id": "drop03-ir2_mixed-b4",
+      "batch_size": 4,
+      "task_manifest": "/home/user/Tz/acceptance/resource-pilot-v2-c1024-20261118/drop03-ir2_mixed-b4.jsonl",
+      "task_manifest_sha256": "a38807161bab38dcaa693e11155346a63f9f577315c6ccbfd2760f9b1068ed89",
+      "map": {
+        "path": "/home/user/Tz/ir2-benchmark/DungeonMaps/train/easy/img_4775.png"
+      },
+      "map_file_sha256": "53e6d113b45df199c5a911113f820323e9ed66f16d28a321cfb6e9b9fd50cc0e"
+    },
+    {
+      "case_id": "burst64-nf_mixed-b4",
+      "batch_size": 4,
+      "task_manifest": "/home/user/Tz/acceptance/resource-pilot-v2-c1024-20261118/burst64-nf_mixed-b4.jsonl",
+      "task_manifest_sha256": "a52780a3e29d345aeaccdad4064a6d80db500c9125844626cb5c1c9808a8f0b1",
+      "map": {
+        "path": "/home/user/Tz/ir2-benchmark/DungeonMaps/train/easy/img_4775.png"
+      },
+      "map_file_sha256": "53e6d113b45df199c5a911113f820323e9ed66f16d28a321cfb6e9b9fd50cc0e"
+    },
+    {
+      "case_id": "burst64-ir2_mixed-b4",
+      "batch_size": 4,
+      "task_manifest": "/home/user/Tz/acceptance/resource-pilot-v2-c1024-20261118/burst64-ir2_mixed-b4.jsonl",
+      "task_manifest_sha256": "1e2cd6dff7cef4f37f5a7429f04b8709f9cdcafdf705c7378b68faeff1b0edaa",
+      "map": {
+        "path": "/home/user/Tz/ir2-benchmark/DungeonMaps/train/easy/img_4775.png"
+      },
+      "map_file_sha256": "53e6d113b45df199c5a911113f820323e9ed66f16d28a321cfb6e9b9fd50cc0e"
+    }
+  ],
+  "case_timeout_seconds": 1800,
+  "planned_executions": 30
+}

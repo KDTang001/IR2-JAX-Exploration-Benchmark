@@ -1,0 +1,10 @@
+{
+  "user_answer": "maximum four hours",
+  "authorized_seconds": 14400,
+  "includes_waiting_and_compilation": true,
+  "idle_gpu_required": true,
+  "probe_executions": 30,
+  "all240_authorized": false,
+  "training_authorized": false,
+  "recorded_epoch": 1794986625.9403293
+}
