@@ -157,7 +157,8 @@ def main() -> None:  # noqa: C901, PLR0912, PLR0915 - One bounded child lifecycl
             XLA_FLAGS=f"--xla_dump_to={case_out}/xla --xla_dump_hlo_as_text",
         )
         # phase6_profile creates its output exclusively, so XLA must not initialize before it.
-        argv = [
+        # Full-episode manifests do not contain profiler-only bucket/n_agents fields.
+        argv = [] if comparing or mini else [
             "taskset",
             "-c",
             "0-7",
