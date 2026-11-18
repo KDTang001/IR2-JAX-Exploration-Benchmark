@@ -149,3 +149,14 @@ A larger-capacity preset would require new configuration/task identities and
 complete-episode feasibility checks before replacing any pilot proposal. C512
 is a proposed first candidate, not an executed or certified replacement. The
 240-task pilot and paper experiment scale therefore remain unapproved.
+
+### Separate C1024 continuation, approved November 18
+
+The user approved a separate expanded-capacity preset, retaining C400 as the
+original-capacity comparison. C1024 changes only storage and node padding, with
+new task identities and the same maps/seeds/weights/K30. Six target-Linux CPU
+checks and all ten 64-event C400/C1024 H100 comparisons passed; compact traces
+matched exactly. Complete-episode B1/B4 execution is now in progress under the
+same absolute 14:10 CST deadline, not a renewed four-hour window. This does not
+replace the C400 pilot manifest or start all 240 tasks. Current evidence and
+remaining gates are in [the expanded-capacity report](EXTENDED_CAPACITY_REPORT.md).

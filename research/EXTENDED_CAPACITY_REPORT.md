@@ -1,6 +1,6 @@
 # C1024 complete-episode and B1/B4 acceptance
 
-Status on 2026-11-18: **running; acceptance not yet established**. This report
+Status on 2026-11-18: **64-event pre-limit comparison passed; full episodes running**. This report
 tracks a separate declared storage extension. The C400 results and original
 240-task pilot remain unchanged. See [the execution protocol](EXTENDED_CAPACITY_PROTOCOL_V1.md).
 
@@ -27,6 +27,14 @@ task scope. The environment's 111-file frozen source remains unchanged.
 The new request binds 147 inputs. Server root:
 `/home/user/Tz/acceptance/batch-cost-c1024-v1-20261118`.
 
+The [new frozen manifest](evidence/capacity-check-v1-c1024-20261118/capacity-tasks.jsonl)
+has SHA256 `5e64e95541f3686899f5c438800b39d2567764feb8b33b876e9004b571a2d0bf`;
+the configuration identity is
+`7dcf454f6e042f75f4f9d3a4c0279870c3601e7a491dda727ef107474b3201ba`.
+The [old/new task mapping](evidence/capacity-check-v1-c1024-20261118/capacity-tasks.capacity.json)
+and [CPU results](evidence/capacity-check-v1-c1024-20261118/cpu-tests.xml)
+are separate from the original C400 evidence.
+
 ## Execution and acceptance gates
 
 The new continuation ledger started at 11:11:15 CST and inherits the existing
@@ -41,6 +49,19 @@ requires all four complete-episode cases and ten same-configuration B1/B4 trace
 pairs to pass the existing independent analyzer. Successful C400 NF/easy and
 NF/difficult traces are additional cross-capacity controls, not B1/B4 pairs.
 Timing comparability separately requires clean process telemetry.
+
+The [H100 prefix comparison](evidence/capacity-check-v1-c1024-20261118/prefix-parity.json)
+completed all ten pairs successfully in 268.375 seconds including compilation.
+All recorded compact trace fields matched exactly, with no nonzero floating
+differences. Physical/cognitive state fields were compared except differently
+padded node storage; graph comparisons cover valid node order, utilities,
+visibility, local/global edges and global node coordinates. Both graph states
+passed validation. This is a 64-event behavior check, not a throughput result or
+a comparison beyond the original capacity limit.
+
+The first full case, NF/mixed B1, started at **11:16:44 CST**. Subsequent cases
+remain scheduled only if all preceding work passes and the absolute time bound
+permits it.
 
 No result, speedup, maximum supported parallelism or complete-cohort acceptance
 is claimed until those recorded gates pass. A runtime capacity error remains an

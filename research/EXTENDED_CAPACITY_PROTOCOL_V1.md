@@ -31,7 +31,7 @@ separate capacity acceptance subset, not a rewrite of resource-pilot-v1 or its
   suite is needed for a configuration-only environment change.
 - [x] Freeze source, helper, manifest, map and checkpoint hashes before execution.
   Keep all new measurements in a new server root.
-- [ ] Run a 64-event C400/C1024 pre-limit H100 comparison for all ten tasks.
+- [x] Run a 64-event C400/C1024 pre-limit H100 comparison for all ten tasks.
   Validate both graph states. Compare actions, physical coverage integer counts,
   links, packets, delivery, balances, termination and rewards. Allow only the
   already declared coverage/reward floating tolerances. Any action mismatch fails.

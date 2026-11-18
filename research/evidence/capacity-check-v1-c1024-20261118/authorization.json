@@ -1,0 +1,9 @@
+{
+  "user_instruction": "Add expanded capacity, retain C400 original control, continue full episodes and B1/B4 acceptance",
+  "parent_root": "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118",
+  "absolute_deadline_epoch": 1794982205.5080109,
+  "renews_parent_deadline": false,
+  "training_authorized": false,
+  "all240_authorized": false,
+  "recorded_epoch": 1794971475.7488039
+}

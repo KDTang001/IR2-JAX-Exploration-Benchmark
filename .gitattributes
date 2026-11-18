@@ -23,3 +23,4 @@ research/evidence/phase6-*.xml -text -whitespace
 research/evidence/batch-cost-v1-dispatch-*.xml -text -whitespace
 # Preserve raw server evidence and bound diagnostic source identities.
 research/evidence/batch-cost-v1-recovery-run-20261118/** -text -whitespace
+research/evidence/capacity-check-v1-c1024-20261118/** -text -whitespace
