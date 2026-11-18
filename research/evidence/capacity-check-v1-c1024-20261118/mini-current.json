@@ -1,0 +1,25 @@
+{
+  "case_id": "ir2_mixed-b1",
+  "pid": 963317,
+  "started_epoch": 1794973929.3238413,
+  "argv": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "3600.000s",
+    "taskset",
+    "-c",
+    "0-7",
+    "/home/user/anaconda3/envs/ex/bin/python",
+    "/home/user/Tz/acceptance/batch-cost-c1024-v1-20261118/phase6_profile_supervisor.py",
+    "--cost-worker",
+    "/home/user/Tz/acceptance/batch-cost-c1024-v1-20261118/resource-cost-mini/ir2_mixed-b1.memory.json",
+    "evaluate",
+    "--task-manifest",
+    "/home/user/Tz/acceptance/batch-cost-c1024-v1-20261118/ir2_mixed.jsonl",
+    "--output",
+    "/home/user/Tz/acceptance/batch-cost-c1024-v1-20261118/resource-cost-mini/ir2_mixed-b1",
+    "--batch-size",
+    "1"
+  ]
+}

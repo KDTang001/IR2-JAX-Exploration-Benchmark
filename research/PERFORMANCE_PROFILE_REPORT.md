@@ -11,6 +11,14 @@ local limit. B4 was not started; no complete-episode paired throughput or new
 maximum batch size is certified. This does not revise the profiler/short-segment
 results below. See [full-episode evidence and next capacity gate](BATCH_COST_V1_REPORT.md).
 
+The subsequently approved **separate C1024 preset** passed 20 full episodes and
+ten exact B1/B4 pairs, with clean sampled GPU telemetry. Complete-five-map cold
+process B4 speedups were 1.217× NF and 1.167× IR2; device-only ratios 1.365× and
+1.298×. B4's true four-map batch and separately compiled single-map tail are
+reported independently. These are N4/768-bucket/Normal/mixed/8KiB observations,
+not replacements for the C400 profiler data or a B16 certificate. See the
+[capacity and complete-episode performance report](EXTENDED_CAPACITY_REPORT.md).
+
 ## Measurement and evidence
 
 Each of the six configurations uses a fresh process. The three validation maps

@@ -5,6 +5,10 @@ Working branch: `codex/phase6-prep`. Target: the existing shared H100 server.
 Status: **complete within the declared preparation scope**. This is benchmark
 preparation, with no policy/world-model training or formal test run.
 
+Latest follow-up, November 18: separate C1024 complete-episode acceptance passed
+20 executions and ten exact B1/B4 pairs; C400 controls remain unchanged. See
+[the final capacity report](EXTENDED_CAPACITY_REPORT.md) for scope and costs.
+
 ## Scope and resource boundary
 
 The authorized H100 window is at most four hours, including compilation. It began
@@ -105,8 +109,9 @@ and [full cost audit](evidence/phase6-mini-cost.json) contain the final outcomes
 Remaining decisions: separately approve the full validation pilot and its time
 budget; use a broader complete-episode cost sample to choose the paper map count
 and concurrency; implement/approve the train-only learning baseline before claiming
-a fair learned-policy comparison. Full-length B4 and optimized large-map B16 are
-not certified by this phase. The old Phase 5 allocation failures remain historical
+a fair learned-policy comparison. The initial C400 preparation did not certify
+full-length B4 or optimized large-map B16; the separate C1024 follow-up is below.
+The old Phase 5 allocation failures remain historical
 evidence, not rewritten results or a newly measured maximum parallelism.
 
 ## Follow-up: full-episode B1/B4 cost check
@@ -156,7 +161,16 @@ The user approved a separate expanded-capacity preset, retaining C400 as the
 original-capacity comparison. C1024 changes only storage and node padding, with
 new task identities and the same maps/seeds/weights/K30. Six target-Linux CPU
 checks and all ten 64-event C400/C1024 H100 comparisons passed; compact traces
-matched exactly. Complete-episode B1/B4 execution is now in progress under the
-same absolute 14:10 CST deadline, not a renewed four-hour window. This does not
-replace the C400 pilot manifest or start all 240 tasks. Current evidence and
-remaining gates are in [the expanded-capacity report](EXTENDED_CAPACITY_REPORT.md).
+matched exactly. Complete-episode acceptance then passed: 20 valid executions,
+36,016 active events, ten exact B1/B4 trace pairs and three exact complete C400
+controls. There were eight successes, twelve normal timeouts, zero execution
+errors/OOMs/illegal actions, and clean recorded GPU telemetry. All 147 pinned
+inputs remained unchanged. The continuation closed at 12:05:46 CST, within the
+unchanged 14:10 deadline; no training or further GPU work is active.
+
+Whole-five-map B4 speedup was 1.217× NF and 1.167× IR2 including cold compilation,
+loading and writes; device-only ratios were 1.365× and 1.298×. B4 executed actual
+4+1 groups, with an independently compiled tail. Sampled own NVML peaks were
+10.60/10.71 GiB. These single-process observations certify this subset's B4,
+not maximum parallelism, other map buckets or all 240 pilot tasks. The C400
+manifest and failed results remain unchanged. See [the expanded-capacity report](EXTENDED_CAPACITY_REPORT.md).

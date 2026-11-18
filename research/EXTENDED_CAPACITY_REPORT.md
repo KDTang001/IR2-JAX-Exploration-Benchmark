@@ -1,6 +1,6 @@
 # C1024 complete-episode and B1/B4 acceptance
 
-Status on 2026-11-18: **64-event pre-limit comparison passed; full episodes running**. This report
+Status on 2026-11-18: **PASS in the declared C1024 validation scope**. This report
 tracks a separate declared storage extension. The C400 results and original
 240-task pilot remain unchanged. See [the execution protocol](EXTENDED_CAPACITY_PROTOCOL_V1.md).
 
@@ -60,19 +60,114 @@ passed validation. This is a 64-event behavior check, not a throughput result or
 a comparison beyond the original capacity limit.
 
 The first full case, NF/mixed B1, started at **11:16:44 CST**. Subsequent cases
-remain scheduled only if all preceding work passes and the absolute time bound
-permits it.
+completed in the declared order: NF B1, NF B4, IR2 B4, IR2 B1. The coordinator
+closed successfully at **12:05:46 CST**, before the unchanged 14:10 deadline.
+The continuation, including idle wait and prefix compilation, took **54m30s**;
+the four full-episode worker processes totaled **49m01s**. No GPU work remains.
 
-No result, speedup, maximum supported parallelism or complete-cohort acceptance
-is claimed until those recorded gates pass. A runtime capacity error remains an
-environment error; the runner cannot silently trim graphs or convert it to a
-normal episode timeout.
+## Complete-episode results and parity
+
+All **20 executions** produced valid results: **8 early successes, 12 normal
+512-round timeouts, zero environment/model errors, zero OOMs and zero illegal
+actions**. There were **36,016 active robot events**; frozen scan slots are
+excluded from that count. The three procedural NF tasks that failed C400 now
+each complete 2,048 active events under C1024, without silent graph truncation.
+
+The target-server [independent full-cohort audit](evidence/capacity-check-v1-c1024-20261118/batch-cost-audit.json)
+reports `complete=true`, four cases and ten passed B1/B4 pairs. Every compact
+trace field matches exactly, including coverage, rewards, movement, packet bytes,
+links, delivery, spending and termination; no floating tolerance was needed.
+The audit independently checks result/trace checksums, configuration/map/weight
+identity, accounting, integer coverage monotonicity, AUC, actual batch order and
+outcomes. All four process records have clean sampled GPU telemetry.
+
+Three existing complete C400 controls also match C1024 exactly: NF/easy,
+NF/difficult and IR2/easy. The third uses the previously published cost trace;
+no extra GPU repeat was run. The [summary and control checks](evidence/capacity-check-v1-c1024-20261118/capacity-summary.json)
+are reproducible with the
+[offline summary script](protocols/phase6-20261118/summarize_capacity_check.py.txt).
+The [final input check](evidence/capacity-check-v1-c1024-20261118/final-input-preflight.json)
+verified all 147 pinned inputs unchanged and observed no remaining GPU compute
+processes. Its dependency versions are explicitly a post-run observation.
+
+The following outcomes are identical at B1 and B4. They describe one fixed
+validation seed per map and serve execution acceptance, not an algorithm ranking.
+
+| Family | NF outcome | NF final coverage | IR2 adapted outcome | IR2 final coverage |
+|---|---|---:|---|---:|
+| IR2 easy | success, round 493 | 99.7250% | timeout, round 512 | 98.6336% |
+| IR2 difficult | success, round 495 | 99.1656% | success, round 178 | 99.1016% |
+| rooms | timeout, round 512 | 55.9156% | timeout, round 512 | 95.4865% |
+| corridor | timeout, round 512 | 52.2230% | timeout, round 512 | 59.0457% |
+| hybrid | timeout, round 512 | 87.1627% | success, round 266 | 99.2105% |
+
+## Measured complete-workload costs
+
+Each row is a fresh process on the same H100, eight host cores/threads, the same
+ordered five-map workload and C1024 configuration. B1 executes `1+1+1+1+1`; B4
+executes `4+1`. No competing GPU PID or failed telemetry query was recorded.
+These are single cold-process observations, not repeated timing distributions.
+
+| Method | Batch limit | Active events | Process wall s | Lower/compile s | Synchronized device s | End-to-end active events/s |
+|---|---:|---:|---:|---:|---:|---:|
+| NF mixed | 1 | 10,093 | 782.289 | 51.725 | 724.667 | 12.902 |
+| NF mixed | 4 | 10,093 | 642.857 | 105.858 | 531.001 | 15.700 |
+| IR2 mixed | 1 | 7,915 | 816.511 | 52.987 | 758.145 | 9.694 |
+| IR2 mixed | 4 | 7,915 | 699.487 | 108.993 | 584.234 | 11.315 |
+
+Whole-workload B4 speedup is **1.217× NF / 1.167× IR2** including compilation,
+loading and result writes. Device-only speedup is **1.365× / 1.298×**.
+The single-lane tail receives its own B1 compilation in the B4 process, so the
+four-lane batch alone must not be used to price the complete five-map workload.
+
+| B4 process / actual batch | Active events | Lower/compile s | Device s | Batch boundary s |
+|---|---:|---:|---:|---:|
+| NF, first four maps | 8,045 | 54.479 | 402.268 | 458.307 |
+| NF, one-map tail | 2,048 | 51.379 | 128.733 | 180.545 |
+| IR2, first four maps | 6,854 | 56.123 | 436.356 | 494.388 |
+| IR2, one-map tail | 1,061 | 52.871 | 147.878 | 201.174 |
+
+Batch-boundary time contains compilation/device time and is nested, not an
+additional independent phase to sum. Process wall also includes loading,
+initialization and serialization outside those boundaries. Device event rates
+count active robot events while retaining frozen-lane runtime in the denominator.
+
+## Process memory and supported scope
+
+| Method / batch limit | Host process peak GiB | JAX live-allocation peak GiB | Sampled own NVML peak GiB |
+|---|---:|---:|---:|
+| NF B1 | 1.26 | 1.37 | 3.08 |
+| NF B4 | 2.00 | 8.31 | 10.60 |
+| IR2 B1 | 1.47 | 1.38 | 3.15 |
+| IR2 B4 | 2.29 | 8.35 | 10.71 |
+
+These are independent process peaks; B4 includes its compiled single-lane tail.
+NVML is sampled every two seconds and includes context/pool overhead, so its
+sample maximum is a lower bound on physical peak, not JAX live allocation or
+per-environment memory. No maximum parallelism or linear memory increment is
+certified. This proves B4 for the declared N4/five-map/768-bucket/Normal/mixed/8KiB
+subset. B16, other map/robot buckets and the complete 240-task pilot were not run.
+
+Raw server originals remain under the declared root. The public archive retains
+compact traces, case/compilation/memory records and checksummed task identities;
+the source package, old C400 failures and Phase 1–5 evidence remain intact.
+The [artifact index](evidence/capacity-check-v1-c1024-20261118/artifact-index.json)
+binds exported file hashes/sizes; the [review](evidence/capacity-check-v1-c1024-20261118/review.json)
+records the final count and scope checks. Compact evidence is approximately
+2.3 MB; it contains no training products or full profiler dumps.
+Run new measurements only with a fresh output root and an applicable resource
+authorization; the closed ledger cannot be restarted.
+
+A runtime capacity error remains an environment error; the runner cannot
+silently trim graphs or convert it to a normal episode timeout. The passed gates
+above certify only the declared C1024 subset.
 
 ## Interpretation
 
 C1024 extends the task beyond the original C400 capacity limit. It is not a
 semantics-preserving performance optimization beyond the point where C400 fails.
-Within the valid C400 range, behavior preservation must be measured. IR2 adapted
+Within the valid C400 range, behavior preservation is supported by the ten prefix
+checks and three complete controls above. IR2 adapted
 uses the same external weights with a larger masked graph input; successful
 inference does not certify train-only fairness or generalization beyond its
 original training graph sizes. This run does not start training or the full pilot.

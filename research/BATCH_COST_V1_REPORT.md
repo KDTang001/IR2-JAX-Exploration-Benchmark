@@ -11,6 +11,11 @@ procedural failure to a local graph reaching the declared 400-node limit. No
 capacity, action, budget or frozen task was changed. This is not an OOM result,
 a valid batch speedup measurement or completion of the 240-task pilot.
 
+The user subsequently approved a **separate C1024 declaration**, preserving this
+C400 control. Its 20 executions and ten exact B1/B4 pairs passed; it does not
+rewrite this failed C400 workload. See [the expanded-capacity report](EXTENDED_CAPACITY_REPORT.md)
+for the new identities, three complete C400 controls and measured costs.
+
 ## Original authorization and resource policy, November 17
 
 The user authorized a **new four-hour maximum** for full-episode B1/B4 checks and

@@ -1,0 +1,89 @@
+"""Summarize accepted B1/B4 costs and compare available complete C400 controls."""
+import hashlib
+import json
+import pathlib
+import sys
+import numpy as np
+
+repo = pathlib.Path(sys.argv[1]).resolve()
+base = repo / "research/evidence/capacity-check-v1-c1024-20261118"
+audit = json.loads((base / "batch-cost-audit.json").read_text())
+assert audit["complete"] and audit["timing_comparable"]
+assert audit["case_count"] == 4 and audit["paired_task_count"] == 10
+mapping = json.loads((base / "capacity-tasks.capacity.json").read_text())["task_mapping"]
+identity = {row["parent_result_id"]: row["result_id"] for row in mapping}
+costs = []
+for case in audit["cases"]:
+    phases = case["phases_seconds"]
+    memory = case["memory"]
+    events = sum(row["active_events"] for row in case["episodes"])
+    timing = json.loads((base / "resource-cost-mini" /
+                         (case["case_id"] + ".memory.timing.json")).read_text())["boundaries"]
+    groups = []
+    compile_seconds = 0
+    for boundary in timing:
+        if boundary["phase"] == "lower_compile":
+            compile_seconds += boundary["seconds"]
+        if boundary["phase"] == "device_execute":
+            device_seconds = boundary["seconds"]
+        if boundary["phase"] == "execute_batch":
+            groups.append({"batch_size": boundary["batch_size"],
+                           "active_events": sum(row["active_events"] for row in case["episodes"]
+                                                if row["result_id"] in boundary["result_ids"]),
+                           "compile_seconds": compile_seconds, "device_seconds": device_seconds,
+                           "batch_boundary_seconds": boundary["seconds"]})
+            compile_seconds = 0
+    costs.append({"case_id": case["case_id"], "active_events": events,
+                  "wall_seconds": case["supervised_wall_seconds"],
+                  "compile_seconds": phases["lower_compile"],
+                  "device_seconds": phases["device_execute"],
+                  "end_to_end_events_per_second": events / case["supervised_wall_seconds"],
+                  "device_events_per_second": events / phases["device_execute"],
+                  "batch_sizes": [row["batch_size"] for row in case["batches"]],
+                  "batch_timings": groups,
+                  "host_peak_rss_bytes": memory["host_peak_rss_bytes"],
+                  "jax_peak_bytes": memory["jax_device_memory"]["peak_bytes_in_use"],
+                  "nvml_sampled_peak_mib_lower_bound": case["sampled_own_nvml_peak_mib"]})
+controls = []
+old = repo / "research/evidence/batch-cost-v1-recovery-run-20261118/run/resource-cost-mini/nf_mixed-b1"
+references = [(path, old / "events" / (path.stem + ".npz"))
+              for path in (old / "results").glob("*.json")
+              if json.loads(path.read_text())["result"]["outcome"] == "success"]
+original_ir2 = json.loads((repo / "research/evidence/phase6-mini-cost.json").read_text())["rows"][1]["result"]
+references.append((original_ir2, repo / "research/evidence/phase6-mini-ir2_mixed-trace.npz"))
+for original, trace in references:
+    row = json.loads(original.read_text())["result"] if isinstance(original, pathlib.Path) else original
+    result_id = identity[row["result_id"]]
+    case_id = row["method_id"] + "-b1"
+    episode = next(episode for case in audit["cases"] if case["case_id"] == case_id
+                   for episode in case["episodes"] if episode["result_id"] == result_id)
+    candidate = base / "resource-cost-mini" / case_id / "events" / (result_id + ".npz")
+    assert hashlib.sha256(trace.read_bytes()).hexdigest() == row["trace_hash"]
+    differences = []
+    with np.load(trace, allow_pickle=False) as left, np.load(candidate, allow_pickle=False) as right:
+        assert set(left.files) == set(right.files)
+        for field in left.files:
+            x, y = left[field], right[field]
+            assert x.shape == y.shape and x.dtype == y.dtype
+            if np.array_equal(x, y):
+                continue
+            if field in ("coverage", "initial_coverage"):
+                area = episode["component_area"]
+                assert np.array_equal(np.rint(x.astype(float) * area), np.rint(y.astype(float) * area))
+                assert np.all(abs(x - y) <= 2 * np.spacing(np.maximum(abs(x), abs(y))))
+            elif field == "reward":
+                assert np.allclose(x, y, rtol=0, atol=3e-5)
+            else:
+                raise AssertionError(f"Cross-capacity trajectory changed: {result_id}:{field}")
+            differences.append(field)
+    controls.append({"parent_result_id": row["result_id"], "result_id": result_id,
+                     "method_id": row["method_id"], "family": row["family"],
+                     "passed": True, "float_differences": differences})
+summary = {"complete": True, "timing_comparable": True, "cases": costs,
+           "b1_b4_pairs": 10, "complete_c400_controls": controls,
+           "scope": "C1024, five validation maps, N4, 8192 bytes, Normal, mixed, 512 rounds",
+           "paper_results": False, "maximal_parallelism_certified": False}
+with (base / "capacity-summary.json").open("x") as out:
+    json.dump(summary, out, indent=2)
+    out.write("\n")
+print(json.dumps(summary, indent=2))

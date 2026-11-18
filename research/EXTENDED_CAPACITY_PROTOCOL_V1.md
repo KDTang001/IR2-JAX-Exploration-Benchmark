@@ -35,13 +35,13 @@ separate capacity acceptance subset, not a rewrite of resource-pilot-v1 or its
   Validate both graph states. Compare actions, physical coverage integer counts,
   links, packets, delivery, balances, termination and rewards. Allow only the
   already declared coverage/reward floating tolerances. Any action mismatch fails.
-- [ ] Run the full C1024 five-map workload in four fresh processes: NF B1,
+- [x] Run the full C1024 five-map workload in four fresh processes: NF B1,
   NF B4, IR2 B4, IR2 B1. B4 must actually use groups 4+1; retain separate timings
   for the full batch and tail. Stop subsequent cases on errors.
-- [ ] Reuse the independent full-cohort analyzer: all four cases and ten paired
+- [x] Reuse the independent full-cohort analyzer: all four cases and ten paired
   traces must pass, with unchanged task/config identities on both batch sizes.
   Compare the successful C400 NF/easy and NF/difficult traces against C1024 too.
-- [ ] Publish outcome, compiler/device/end-to-end costs, host/JAX/NVML memory,
+- [x] Publish outcome, compiler/device/end-to-end costs, host/JAX/NVML memory,
   limitations and raw compact evidence; update the existing review branch/PR.
 
 ## Resource bound and stopping rules

@@ -17,10 +17,12 @@ rounds. The manifest remains unchanged; it is not currently certified for comple
 execution. A larger-capacity preset requires a separate declaration, new hashes
 and feasibility checks. No failed map is silently excluded or replaced.
 
-The user has since approved a separate C1024 acceptance subset. It retains these
-maps and seeds with new task/config identities; the original pilot remains C400.
-See [expanded-capacity acceptance](EXTENDED_CAPACITY_REPORT.md) for its own scope
-and outcomes. It does not authorize or silently migrate the full 240-task pilot.
+The user has since approved a separate C1024 acceptance subset, which passed all
+20 complete executions and ten exact B1/B4 pairs. It retains these maps and seeds
+with new task/config identities; those are not additional completed C400 pilot
+identities. The original pilot remains C400. See
+[expanded-capacity acceptance](EXTENDED_CAPACITY_REPORT.md) for its own scope and
+outcomes. It does not authorize or silently migrate the full 240-task pilot.
 
 The final package identity is the verified `source-final` file inventory, not a guessed
 Git commit (the commit was pending at freeze). All 111 package files have now been

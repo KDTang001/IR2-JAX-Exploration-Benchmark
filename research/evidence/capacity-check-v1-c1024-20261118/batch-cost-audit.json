@@ -1,0 +1,771 @@
+{
+  "complete": true,
+  "timing_comparable": true,
+  "case_count": 4,
+  "paired_task_count": 10,
+  "cases": [
+    {
+      "case_id": "nf_mixed-b1",
+      "supervised_wall_seconds": 782.2891850471497,
+      "phases_seconds": {
+        "load_lane": 1.743868961930275,
+        "input_ready": 0.003556635114364326,
+        "lower_compile": 51.72484082309529,
+        "device_execute": 724.6665103830164,
+        "execute_batch": 777.3107764068991,
+        "summarize_trace_write": 0.15738752111792564,
+        "result_write": 0.001800048048608005
+      },
+      "batches": [
+        {
+          "phase": "execute_batch",
+          "seconds": 223.0835742839845,
+          "batch_size": 1,
+          "result_ids": [
+            "e797eda433a9b37e3c9a0c4d08b1d68a31079d167cb9f5e0e1b2e383f12857ae"
+          ]
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 143.53237281891052,
+          "batch_size": 1,
+          "result_ids": [
+            "44e90cd603ee7c5f6d7d64f56ed265bfd6ea69b2f99e3f7546862a44cb52a423"
+          ]
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 174.265199181973,
+          "batch_size": 1,
+          "result_ids": [
+            "ee57076c74e972c6ca41b354cd30fc90049aa0e2444c3cd5a943433e94ccddfe"
+          ]
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 107.70508185995277,
+          "batch_size": 1,
+          "result_ids": [
+            "39600b6ea099f5132d9f3b35a8e77a21f84c1c658cfa4d5b03251766b9bd8a1a"
+          ]
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 128.72454826207832,
+          "batch_size": 1,
+          "result_ids": [
+            "1a5788f618f6c9797df4aa77af6a43bffc5500c61f5c4314dc2fe90f5e4775e3"
+          ]
+        }
+      ],
+      "episodes": [
+        {
+          "result_id": "e797eda433a9b37e3c9a0c4d08b1d68a31079d167cb9f5e0e1b2e383f12857ae",
+          "family": "easy",
+          "active_events": 1971,
+          "outcome": "success",
+          "final_coverage": 0.9972500205039978,
+          "auc": 0.545372261407465,
+          "success_round": 493,
+          "component_area": 128000,
+          "trace_sha256": "0d3d3419cdc342ac72228c0c44e7a36fe237618bed9607f25dc02aa7dce8de94",
+          "trace_bytes": 84407,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "44e90cd603ee7c5f6d7d64f56ed265bfd6ea69b2f99e3f7546862a44cb52a423",
+          "family": "difficult",
+          "active_events": 1978,
+          "outcome": "success",
+          "final_coverage": 0.9916563034057617,
+          "auc": 0.5353271122803562,
+          "success_round": 495,
+          "component_area": 128000,
+          "trace_sha256": "ba3cff1209baa8256fc8a818edb23949167ee61fc284acde1dff7e7aeff08bd2",
+          "trace_bytes": 72042,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "ee57076c74e972c6ca41b354cd30fc90049aa0e2444c3cd5a943433e94ccddfe",
+          "family": "rooms",
+          "active_events": 2048,
+          "outcome": "timeout",
+          "final_coverage": 0.5591561794281006,
+          "auc": 0.31881295295443124,
+          "success_round": null,
+          "component_area": 551540,
+          "trace_sha256": "28ed1b9955e9a132df1494dcb0b9d5291666ebd34f17ac6f7b2b377adcf467c4",
+          "trace_bytes": 116177,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "39600b6ea099f5132d9f3b35a8e77a21f84c1c658cfa4d5b03251766b9bd8a1a",
+          "family": "corridor",
+          "active_events": 2048,
+          "outcome": "timeout",
+          "final_coverage": 0.5222297310829163,
+          "auc": 0.28531432871022844,
+          "success_round": null,
+          "component_area": 198968,
+          "trace_sha256": "00926685be64a18942c58f213db0ebec41c19879a0d1b50c412a09f36d1efb56",
+          "trace_bytes": 78941,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "1a5788f618f6c9797df4aa77af6a43bffc5500c61f5c4314dc2fe90f5e4775e3",
+          "family": "hybrid",
+          "active_events": 2048,
+          "outcome": "timeout",
+          "final_coverage": 0.8716265559196472,
+          "auc": 0.44002083403029246,
+          "success_round": null,
+          "component_area": 373504,
+          "trace_sha256": "c10e02bac19360937d4e59ce73a2d9a7f701af4ef144af8e4eb69989cfed3b3a",
+          "trace_bytes": 88953,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        }
+      ],
+      "device_active_events_per_second": 13.927785892389906,
+      "sampled_own_nvml_peak_mib": 3152,
+      "foreign_gpu_pids": [],
+      "telemetry_failures": 0,
+      "clean_timing": true,
+      "memory": {
+        "pid": 960096,
+        "host_peak_rss_bytes": 1352859648,
+        "jax_device_memory": {
+          "num_allocs": 2355,
+          "bytes_in_use": 0,
+          "peak_bytes_in_use": 1472489216,
+          "largest_alloc_size": 1138883328,
+          "bytes_limit": 63696912384,
+          "bytes_reserved": 0,
+          "peak_bytes_reserved": 0,
+          "largest_free_block_bytes": 0,
+          "pool_bytes": 2690646016,
+          "peak_pool_bytes": 2690646016
+        }
+      }
+    },
+    {
+      "case_id": "nf_mixed-b4",
+      "supervised_wall_seconds": 642.8570330142975,
+      "phases_seconds": {
+        "load_lane": 1.8153767517069355,
+        "input_ready": 0.0033806258579716086,
+        "lower_compile": 105.8576677790843,
+        "device_execute": 531.0013187349541,
+        "execute_batch": 638.8520689798752,
+        "summarize_trace_write": 0.14014436211436987,
+        "result_write": 0.0012108500814065337
+      },
+      "batches": [
+        {
+          "phase": "execute_batch",
+          "seconds": 458.3068371709669,
+          "batch_size": 4,
+          "result_ids": [
+            "e797eda433a9b37e3c9a0c4d08b1d68a31079d167cb9f5e0e1b2e383f12857ae",
+            "44e90cd603ee7c5f6d7d64f56ed265bfd6ea69b2f99e3f7546862a44cb52a423",
+            "ee57076c74e972c6ca41b354cd30fc90049aa0e2444c3cd5a943433e94ccddfe",
+            "39600b6ea099f5132d9f3b35a8e77a21f84c1c658cfa4d5b03251766b9bd8a1a"
+          ]
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 180.54523180890828,
+          "batch_size": 1,
+          "result_ids": [
+            "1a5788f618f6c9797df4aa77af6a43bffc5500c61f5c4314dc2fe90f5e4775e3"
+          ]
+        }
+      ],
+      "episodes": [
+        {
+          "result_id": "e797eda433a9b37e3c9a0c4d08b1d68a31079d167cb9f5e0e1b2e383f12857ae",
+          "family": "easy",
+          "active_events": 1971,
+          "outcome": "success",
+          "final_coverage": 0.9972500205039978,
+          "auc": 0.545372261407465,
+          "success_round": 493,
+          "component_area": 128000,
+          "trace_sha256": "0d3d3419cdc342ac72228c0c44e7a36fe237618bed9607f25dc02aa7dce8de94",
+          "trace_bytes": 84407,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "44e90cd603ee7c5f6d7d64f56ed265bfd6ea69b2f99e3f7546862a44cb52a423",
+          "family": "difficult",
+          "active_events": 1978,
+          "outcome": "success",
+          "final_coverage": 0.9916563034057617,
+          "auc": 0.5353271122803562,
+          "success_round": 495,
+          "component_area": 128000,
+          "trace_sha256": "ba3cff1209baa8256fc8a818edb23949167ee61fc284acde1dff7e7aeff08bd2",
+          "trace_bytes": 72042,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "ee57076c74e972c6ca41b354cd30fc90049aa0e2444c3cd5a943433e94ccddfe",
+          "family": "rooms",
+          "active_events": 2048,
+          "outcome": "timeout",
+          "final_coverage": 0.5591561794281006,
+          "auc": 0.31881295295443124,
+          "success_round": null,
+          "component_area": 551540,
+          "trace_sha256": "28ed1b9955e9a132df1494dcb0b9d5291666ebd34f17ac6f7b2b377adcf467c4",
+          "trace_bytes": 116177,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "39600b6ea099f5132d9f3b35a8e77a21f84c1c658cfa4d5b03251766b9bd8a1a",
+          "family": "corridor",
+          "active_events": 2048,
+          "outcome": "timeout",
+          "final_coverage": 0.5222297310829163,
+          "auc": 0.28531432871022844,
+          "success_round": null,
+          "component_area": 198968,
+          "trace_sha256": "00926685be64a18942c58f213db0ebec41c19879a0d1b50c412a09f36d1efb56",
+          "trace_bytes": 78941,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "1a5788f618f6c9797df4aa77af6a43bffc5500c61f5c4314dc2fe90f5e4775e3",
+          "family": "hybrid",
+          "active_events": 2048,
+          "outcome": "timeout",
+          "final_coverage": 0.8716265559196472,
+          "auc": 0.44002083403029246,
+          "success_round": null,
+          "component_area": 373504,
+          "trace_sha256": "c10e02bac19360937d4e59ce73a2d9a7f701af4ef144af8e4eb69989cfed3b3a",
+          "trace_bytes": 88953,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        }
+      ],
+      "device_active_events_per_second": 19.00748575172156,
+      "sampled_own_nvml_peak_mib": 10854,
+      "foreign_gpu_pids": [],
+      "telemetry_failures": 0,
+      "clean_timing": true,
+      "memory": {
+        "pid": 961261,
+        "host_peak_rss_bytes": 2148532224,
+        "jax_device_memory": {
+          "num_allocs": 2129,
+          "bytes_in_use": 0,
+          "peak_bytes_in_use": 8924364800,
+          "largest_alloc_size": 7675657216,
+          "bytes_limit": 63696912384,
+          "bytes_reserved": 0,
+          "peak_bytes_reserved": 0,
+          "largest_free_block_bytes": 0,
+          "pool_bytes": 10752098304,
+          "peak_pool_bytes": 10752098304
+        }
+      }
+    },
+    {
+      "case_id": "ir2_mixed-b4",
+      "supervised_wall_seconds": 699.4866089820862,
+      "phases_seconds": {
+        "load_lane": 1.910698015941307,
+        "input_ready": 0.0038414921145886183,
+        "lower_compile": 108.99309499596711,
+        "device_execute": 584.2343702280195,
+        "execute_batch": 695.5626491699368,
+        "summarize_trace_write": 0.16403032385278493,
+        "result_write": 0.0011880069505423307
+      },
+      "batches": [
+        {
+          "phase": "execute_batch",
+          "seconds": 494.3883126209257,
+          "batch_size": 4,
+          "result_ids": [
+            "0d2cd8c468931c3aaee698bdf440c23123aac5d1a2d483ee1e72ef9ded5d5956",
+            "eaffde81424daab0e19cf2b7bac4905dd9db691e18acb8a6870e2c43aab7e3cf",
+            "6de53b45ec6452cb9b14fd250634be5d87e4001f62168866af6ce722fef302a6",
+            "6b4203739217ef3acc59102c293d1bafcf38d6e0f4a97c25a3c36e3399e3a16c"
+          ]
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 201.17433654901106,
+          "batch_size": 1,
+          "result_ids": [
+            "6b27f55a59d08e86fec0262214717df0b7a74e85eae15140257b23893e3abb5b"
+          ]
+        }
+      ],
+      "episodes": [
+        {
+          "result_id": "0d2cd8c468931c3aaee698bdf440c23123aac5d1a2d483ee1e72ef9ded5d5956",
+          "family": "easy",
+          "active_events": 2048,
+          "outcome": "timeout",
+          "final_coverage": 0.9863359928131104,
+          "auc": 0.4352632122609066,
+          "success_round": null,
+          "component_area": 128000,
+          "trace_sha256": "85f74de03e7af63b0e2261b6e14756a64358124d2c5dfb251a2acc65fac5d16a",
+          "trace_bytes": 109385,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "eaffde81424daab0e19cf2b7bac4905dd9db691e18acb8a6870e2c43aab7e3cf",
+          "family": "difficult",
+          "active_events": 710,
+          "outcome": "success",
+          "final_coverage": 0.9910156726837158,
+          "auc": 0.9196512134658406,
+          "success_round": 178,
+          "component_area": 128000,
+          "trace_sha256": "d6d0d331a31b79aa2cab12f2121164dfd0ea3adbb0746a07ec88d19ef235b8a4",
+          "trace_bytes": 51065,
+          "emitted_bytes": 25216,
+          "spent_bytes": 25216,
+          "final_balances": [
+            1888,
+            1888,
+            1888,
+            1888,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "6de53b45ec6452cb9b14fd250634be5d87e4001f62168866af6ce722fef302a6",
+          "family": "rooms",
+          "active_events": 2048,
+          "outcome": "timeout",
+          "final_coverage": 0.9548645615577698,
+          "auc": 0.7198905419900257,
+          "success_round": null,
+          "component_area": 551540,
+          "trace_sha256": "e1418ce6ee9e5350dd6312a89801c48a46585554e39fa9481a2ff047cdccd064",
+          "trace_bytes": 152965,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "6b4203739217ef3acc59102c293d1bafcf38d6e0f4a97c25a3c36e3399e3a16c",
+          "family": "corridor",
+          "active_events": 2048,
+          "outcome": "timeout",
+          "final_coverage": 0.5904567837715149,
+          "auc": 0.47530840283252473,
+          "success_round": null,
+          "component_area": 198968,
+          "trace_sha256": "49cb313fb19b0bad63609d8c2172c06f17cef807edd5ab26431a93171aefc537",
+          "trace_bytes": 125646,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "6b27f55a59d08e86fec0262214717df0b7a74e85eae15140257b23893e3abb5b",
+          "family": "hybrid",
+          "active_events": 1061,
+          "outcome": "success",
+          "final_coverage": 0.9921045303344727,
+          "auc": 0.8740653223321715,
+          "success_round": 266,
+          "component_area": 373504,
+          "trace_sha256": "c98d389d17a0dc6ba69a67b8d0f15422a9282c50f802417076b8f802888ce047",
+          "trace_bytes": 81907,
+          "emitted_bytes": 32564,
+          "spent_bytes": 32564,
+          "final_balances": [
+            51,
+            51,
+            51,
+            51,
+            0,
+            0
+          ]
+        }
+      ],
+      "device_active_events_per_second": 13.547645265907365,
+      "sampled_own_nvml_peak_mib": 10966,
+      "foreign_gpu_pids": [],
+      "telemetry_failures": 0,
+      "clean_timing": true,
+      "memory": {
+        "pid": 962297,
+        "host_peak_rss_bytes": 2456592384,
+        "jax_device_memory": {
+          "num_allocs": 2775,
+          "bytes_in_use": 0,
+          "peak_bytes_in_use": 8961939712,
+          "largest_alloc_size": 7675663616,
+          "bytes_limit": 63696912384,
+          "bytes_reserved": 0,
+          "peak_bytes_reserved": 0,
+          "largest_free_block_bytes": 0,
+          "pool_bytes": 10802429952,
+          "peak_pool_bytes": 10802429952
+        }
+      }
+    },
+    {
+      "case_id": "ir2_mixed-b1",
+      "supervised_wall_seconds": 816.5111770629883,
+      "phases_seconds": {
+        "load_lane": 1.9120786350686103,
+        "input_ready": 0.005323586869053543,
+        "lower_compile": 52.987381221028045,
+        "device_execute": 758.1447876460152,
+        "execute_batch": 812.1216566489311,
+        "summarize_trace_write": 0.16021981905214489,
+        "result_write": 0.0019108351552858949
+      },
+      "batches": [
+        {
+          "phase": "execute_batch",
+          "seconds": 164.56945392198395,
+          "batch_size": 1,
+          "result_ids": [
+            "0d2cd8c468931c3aaee698bdf440c23123aac5d1a2d483ee1e72ef9ded5d5956"
+          ]
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 163.43305246299133,
+          "batch_size": 1,
+          "result_ids": [
+            "eaffde81424daab0e19cf2b7bac4905dd9db691e18acb8a6870e2c43aab7e3cf"
+          ]
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 206.86042547796387,
+          "batch_size": 1,
+          "result_ids": [
+            "6de53b45ec6452cb9b14fd250634be5d87e4001f62168866af6ce722fef302a6"
+          ]
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 129.21690013993066,
+          "batch_size": 1,
+          "result_ids": [
+            "6b4203739217ef3acc59102c293d1bafcf38d6e0f4a97c25a3c36e3399e3a16c"
+          ]
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 148.0418246460613,
+          "batch_size": 1,
+          "result_ids": [
+            "6b27f55a59d08e86fec0262214717df0b7a74e85eae15140257b23893e3abb5b"
+          ]
+        }
+      ],
+      "episodes": [
+        {
+          "result_id": "0d2cd8c468931c3aaee698bdf440c23123aac5d1a2d483ee1e72ef9ded5d5956",
+          "family": "easy",
+          "active_events": 2048,
+          "outcome": "timeout",
+          "final_coverage": 0.9863359928131104,
+          "auc": 0.4352632122609066,
+          "success_round": null,
+          "component_area": 128000,
+          "trace_sha256": "85f74de03e7af63b0e2261b6e14756a64358124d2c5dfb251a2acc65fac5d16a",
+          "trace_bytes": 109385,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "eaffde81424daab0e19cf2b7bac4905dd9db691e18acb8a6870e2c43aab7e3cf",
+          "family": "difficult",
+          "active_events": 710,
+          "outcome": "success",
+          "final_coverage": 0.9910156726837158,
+          "auc": 0.9196512134658406,
+          "success_round": 178,
+          "component_area": 128000,
+          "trace_sha256": "d6d0d331a31b79aa2cab12f2121164dfd0ea3adbb0746a07ec88d19ef235b8a4",
+          "trace_bytes": 51065,
+          "emitted_bytes": 25216,
+          "spent_bytes": 25216,
+          "final_balances": [
+            1888,
+            1888,
+            1888,
+            1888,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "6de53b45ec6452cb9b14fd250634be5d87e4001f62168866af6ce722fef302a6",
+          "family": "rooms",
+          "active_events": 2048,
+          "outcome": "timeout",
+          "final_coverage": 0.9548645615577698,
+          "auc": 0.7198905419900257,
+          "success_round": null,
+          "component_area": 551540,
+          "trace_sha256": "e1418ce6ee9e5350dd6312a89801c48a46585554e39fa9481a2ff047cdccd064",
+          "trace_bytes": 152965,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "6b4203739217ef3acc59102c293d1bafcf38d6e0f4a97c25a3c36e3399e3a16c",
+          "family": "corridor",
+          "active_events": 2048,
+          "outcome": "timeout",
+          "final_coverage": 0.5904567837715149,
+          "auc": 0.47530840283252473,
+          "success_round": null,
+          "component_area": 198968,
+          "trace_sha256": "49cb313fb19b0bad63609d8c2172c06f17cef807edd5ab26431a93171aefc537",
+          "trace_bytes": 125646,
+          "emitted_bytes": 32724,
+          "spent_bytes": 32724,
+          "final_balances": [
+            11,
+            11,
+            11,
+            11,
+            0,
+            0
+          ]
+        },
+        {
+          "result_id": "6b27f55a59d08e86fec0262214717df0b7a74e85eae15140257b23893e3abb5b",
+          "family": "hybrid",
+          "active_events": 1061,
+          "outcome": "success",
+          "final_coverage": 0.9921045303344727,
+          "auc": 0.8740653223321715,
+          "success_round": 266,
+          "component_area": 373504,
+          "trace_sha256": "c98d389d17a0dc6ba69a67b8d0f15422a9282c50f802417076b8f802888ce047",
+          "trace_bytes": 81907,
+          "emitted_bytes": 32564,
+          "spent_bytes": 32564,
+          "final_balances": [
+            51,
+            51,
+            51,
+            51,
+            0,
+            0
+          ]
+        }
+      ],
+      "device_active_events_per_second": 10.439958341698166,
+      "sampled_own_nvml_peak_mib": 3226,
+      "foreign_gpu_pids": [],
+      "telemetry_failures": 0,
+      "clean_timing": true,
+      "memory": {
+        "pid": 963318,
+        "host_peak_rss_bytes": 1583038464,
+        "jax_device_memory": {
+          "num_allocs": 2911,
+          "bytes_in_use": 0,
+          "peak_bytes_in_use": 1484410368,
+          "largest_alloc_size": 1138889216,
+          "bytes_limit": 63696912384,
+          "bytes_reserved": 0,
+          "peak_bytes_reserved": 0,
+          "largest_free_block_bytes": 0,
+          "pool_bytes": 2699034624,
+          "peak_pool_bytes": 2699034624
+        }
+      }
+    }
+  ],
+  "pairs": [
+    {
+      "result_id": "e797eda433a9b37e3c9a0c4d08b1d68a31079d167cb9f5e0e1b2e383f12857ae",
+      "passed": true,
+      "float_differences": []
+    },
+    {
+      "result_id": "44e90cd603ee7c5f6d7d64f56ed265bfd6ea69b2f99e3f7546862a44cb52a423",
+      "passed": true,
+      "float_differences": []
+    },
+    {
+      "result_id": "ee57076c74e972c6ca41b354cd30fc90049aa0e2444c3cd5a943433e94ccddfe",
+      "passed": true,
+      "float_differences": []
+    },
+    {
+      "result_id": "39600b6ea099f5132d9f3b35a8e77a21f84c1c658cfa4d5b03251766b9bd8a1a",
+      "passed": true,
+      "float_differences": []
+    },
+    {
+      "result_id": "1a5788f618f6c9797df4aa77af6a43bffc5500c61f5c4314dc2fe90f5e4775e3",
+      "passed": true,
+      "float_differences": []
+    },
+    {
+      "result_id": "0d2cd8c468931c3aaee698bdf440c23123aac5d1a2d483ee1e72ef9ded5d5956",
+      "passed": true,
+      "float_differences": []
+    },
+    {
+      "result_id": "eaffde81424daab0e19cf2b7bac4905dd9db691e18acb8a6870e2c43aab7e3cf",
+      "passed": true,
+      "float_differences": []
+    },
+    {
+      "result_id": "6de53b45ec6452cb9b14fd250634be5d87e4001f62168866af6ce722fef302a6",
+      "passed": true,
+      "float_differences": []
+    },
+    {
+      "result_id": "6b4203739217ef3acc59102c293d1bafcf38d6e0f4a97c25a3c36e3399e3a16c",
+      "passed": true,
+      "float_differences": []
+    },
+    {
+      "result_id": "6b27f55a59d08e86fec0262214717df0b7a74e85eae15140257b23893e3abb5b",
+      "passed": true,
+      "float_differences": []
+    }
+  ],
+  "analyzer_sha256": "ccdeb3e2811ea0dce5555babc0e76ea60fc38fad91a4aacd5ad75cc90b152048"
+}
