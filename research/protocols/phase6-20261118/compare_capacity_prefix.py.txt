@@ -1,0 +1,97 @@
+"""H100 diagnostic: compare 64 live events before C400 can overflow."""
+import json
+import pathlib
+import sys
+import time
+import jax
+import numpy as np
+from ir2_benchmark.agents.baselines import baseline_action, spec_from_method
+from ir2_benchmark.env.reset import reset
+from ir2_benchmark.env.rollout import rollout
+from ir2_benchmark.evaluation.batching import ParameterCache, prepare_task
+from ir2_benchmark.evaluation.episode import load_lane
+from ir2_benchmark.evaluation.scenarios import read_task_manifest
+from ir2_benchmark.types import validate_graph_state
+
+root = pathlib.Path(sys.argv[1])
+out = root / "prefix-parity.json"
+assert not out.exists() and jax.devices()[0].platform == "gpu"
+parents = tuple(read_task_manifest(root / "parent-tasks.jsonl"))
+children = tuple(read_task_manifest(root / "capacity-tasks.jsonl"))
+cache = ParameterCache(1)
+kernels = {}
+records = []
+
+def arrays_equal(left, right, name, area):
+    left, right = np.asarray(left), np.asarray(right)
+    assert left.shape == right.shape and left.dtype == right.dtype, name
+    if np.array_equal(left, right):
+        return 0.0
+    if name == "coverage":
+        assert np.array_equal(np.rint(left.astype(float) * area),
+                              np.rint(right.astype(float) * area)), name
+        assert np.all(abs(left - right) <= 2 * np.spacing(np.maximum(abs(left), abs(right)))), name
+    elif name == "reward":
+        assert np.allclose(left, right, rtol=0, atol=3e-5), name
+    else:
+        raise AssertionError(name)
+    return float(np.max(abs(left - right)))
+
+def run(task):
+    config = task.scenario.config
+    spec = spec_from_method(task.method)
+    key = config, spec
+    if key not in kernels:
+        def single(parameters, data, key, spawns, fault_key, isolated):
+            initial = reset(data, config, key, spawns)._replace(
+                key=fault_key, isolated_mask=isolated)
+            return rollout(initial, config, steps=64,
+                           policy=lambda observation, settings:
+                           baseline_action(observation, settings, spec, parameters))
+        kernels[key] = jax.jit(jax.vmap(single))
+    lane = load_lane(prepare_task(task), cache)
+    arguments = jax.tree.map(lambda value: np.stack([value]),
+                             (lane.parameters, lane.map_data, lane.policy_key, lane.spawns,
+                              lane.fault_key, lane.isolated_mask))
+    result = jax.block_until_ready(kernels[key](*arguments))
+    result = jax.tree.map(lambda value: value[0], result)
+    validate_graph_state(result.final_state)
+    return result, lane.component_area
+
+for parent, child in zip(parents, children, strict=True):
+    started = time.time()
+    left, area = run(parent)
+    right, right_area = run(child)
+    assert area == right_area
+    differences = {}
+    for name in left.trace._fields:
+        x, y = getattr(left.trace, name), getattr(right.trace, name)
+        if x is not None:
+            differences[name] = arrays_equal(x, y, name, area)
+    # Compare all physical and cognitive state fields except differently padded node storage.
+    for name in left.final_state._fields:
+        if name in ("graph_memory", "graph_nodes"):
+            continue
+        for x, y in zip(jax.tree.leaves(getattr(left.final_state, name)),
+                        jax.tree.leaves(getattr(right.final_state, name)), strict=True):
+            arrays_equal(x, y, name, area)
+    a, b = left.final_state.graph_memory, right.final_state.graph_memory
+    for agent in range(4):
+        valid_a, valid_b = np.asarray(a.valid[agent]), np.asarray(b.valid[agent])
+        global_a, global_b = np.asarray(a.global_valid[agent]), np.asarray(b.global_valid[agent])
+        for name in ("nodes", "edge_order", "utility", "zero_utility", "observable"):
+            arrays_equal(np.asarray(getattr(a, name)[agent])[valid_a],
+                         np.asarray(getattr(b, name)[agent])[valid_b], name, area)
+        for name, mask_a, mask_b in (("edges", valid_a, valid_b),
+                                    ("global_edges", global_a, global_b)):
+            arrays_equal(np.asarray(getattr(a, name)[agent])[np.ix_(mask_a, mask_a)],
+                         np.asarray(getattr(b, name)[agent])[np.ix_(mask_b, mask_b)], name, area)
+        arrays_equal(np.asarray(a.global_nodes[agent])[global_a],
+                     np.asarray(b.global_nodes[agent])[global_b], "global_nodes", area)
+    records.append({"parent_result_id": parent.result_id, "result_id": child.result_id,
+                    "family": child.scenario.family, "method_id": child.method.method_id,
+                    "events": 64, "passed": True,
+                    "nonzero_float_differences": {k: v for k, v in differences.items() if v},
+                    "wall_seconds_including_compile": time.time() - started})
+    out.write_text(json.dumps({"complete": len(records) == 10, "records": records}, indent=2) + "\n")
+    print(json.dumps(records[-1]), flush=True)
