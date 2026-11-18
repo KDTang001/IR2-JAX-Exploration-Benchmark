@@ -1,0 +1,20 @@
+"""Run only the new authorized probe, then perform a GPU-free independent audit."""
+import json
+import os
+import pathlib
+import subprocess
+import sys
+root = pathlib.Path(sys.argv[1]).resolve()
+sys.path.insert(0, str(root / "scripts"))
+from phase6_batch_cost import supervise
+os.environ["IR2_COST_TIMING"] = "1"
+os.environ["IR2_GRAPH_DIAGNOSTICS"] = "1"
+supervise(root)
+with (root / "probe-audit.log").open("x") as stream:
+    result = subprocess.run([sys.executable, str(root / "audit_resource_probe.py"), str(root)],
+                            stdout=stream, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
+                            env={**os.environ, "JAX_PLATFORMS": "cpu"}, check=False, timeout=180)
+with (root / "probe-finished.json").open("x") as stream:
+    json.dump({"audit_exit_code": result.returncode,
+               "complete": result.returncode == 0}, stream, indent=2)
+raise SystemExit(result.returncode)

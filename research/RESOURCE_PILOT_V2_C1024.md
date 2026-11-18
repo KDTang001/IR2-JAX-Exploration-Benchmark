@@ -43,6 +43,12 @@ fresh processes in order Normal NF/IR2, Dropout NF/IR2, Burst NF/IR2. Each uses 
 batch limit of four and actual groups 4+1. This is not a new B1/B4 speedup test.
 The previous 8KiB Normal cohort is a reference; 8KiB faults remain untested here.
 
+Record actual emitted bytes during the Burst window and the last emission event.
+Earlier 8KiB NF traces spend 4,552 bytes per robot before round128; the 2KiB
+probe can therefore lose affordable transmissions before the declared burst.
+Fault-mask correctness and actual communication exposure are separate findings.
+Do not treat zero exposure or equal scores as evidence that Burst is harmless.
+
 Accept complete valid successes or normal 512-round timeouts. Require unchanged
 source/map/config/checkpoint identities, legal actions, valid graph states,
 consistent wire bytes/delivery/balances, correct independent fault conditions,
@@ -54,7 +60,7 @@ must remain enabled throughout the rollout. Capacity errors stay errors.
 The coordinator starts a new persisted deadline immediately before waiting for
 an idle GPU: no compute applications and utilization below 10% for 60 seconds.
 The four-hour bound includes that wait and compilation. Each child has an
-independent timeout no later than the global deadline, with termination reserve.
+independent 1800-second timeout no later than the global deadline, with termination reserve.
 Stop later cases on OOM, execution/identity/graph errors or global cutoff, retain
 partial outcomes and never clip nodes, drop maps or renew the window.
 
