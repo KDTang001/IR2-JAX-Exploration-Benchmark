@@ -1,11 +1,21 @@
 # Resource pilot v1: frozen planning specification
 
-Status: **FROZEN 240; two identities completed in a separate cost probe; full pilot not launched**.
+Status: **FROZEN 240; capacity-blocked; full pilot not launched**.
 The final validation task manifest was generated
 successfully on the server from the `source-final` LF byte pin. This is a frozen plan,
 not paper results. The immutable freeze evidence records EXECUTED0 at freeze time.
-The later, predeclared two-task cost probe is reported separately below; 238 identities
-remain unscheduled.
+The initial two-task cost probe is reported separately below. After the November 18
+B1 follow-up, six distinct pilot identities have been attempted: three have valid
+episode results (two success, one normal timeout), three have environment errors,
+and 234 remain unattempted. The original NF/easy identity was repeated, so raw
+execution counts must not be mistaken for unique task counts. No B4 pairing has
+completed. These bounded cost/feasibility probes are not a full pilot execution.
+
+The [November 18 follow-up](BATCH_COST_V1_REPORT.md) found all three procedural
+nearest-frontier/mixed graphs reaching the frozen 400-node limit before 512
+rounds. The manifest remains unchanged; it is not currently certified for complete
+execution. A larger-capacity preset requires a separate declaration, new hashes
+and feasibility checks. No failed map is silently excluded or replaced.
 
 The final package identity is the verified `source-final` file inventory, not a guessed
 Git commit (the commit was pending at freeze). All 111 package files have now been

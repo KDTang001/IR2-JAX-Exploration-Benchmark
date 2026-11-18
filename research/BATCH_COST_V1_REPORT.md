@@ -1,15 +1,17 @@
 # Full-episode B1/B4 resource check: batch-cost-v1
 
-Status reviewed on 2026-11-18: **failed before launching the first GPU worker**.
-The window closed at **20:32:27 CST on November 17** after 47 minutes 25 seconds,
-including resource waiting. Zero GPU cases and zero trajectory pairs completed.
-The coordinator and offline collector have exited. B4 full-episode parity and
-throughput remain unverified.
+Status reviewed on 2026-11-18: **H100 full-episode acceptance remains blocked**.
+The repaired dispatcher launched the first B1 case on all five frozen validation
+maps. The two IR2 maps succeeded; all three procedural maps failed graph-state
+validation. The coordinator stopped before B4 or IR2-adapted execution: **5/20
+executions attempted, 2 successful results, 3 environment errors, 0 B1/B4 pairs**.
 
-The dispatcher has since been repaired and checked on the target Linux CPU.
-No new H100 run has started. See the failure and recovery evidence below.
+A bounded diagnostic on the same H100, tasks and configuration localized each
+procedural failure to a local graph reaching the declared 400-node limit. No
+capacity, action, budget or frozen task was changed. This is not an OOM result,
+a valid batch speedup measurement or completion of the 240-task pilot.
 
-## Authorization and resource policy
+## Original authorization and resource policy, November 17
 
 The user authorized a **new four-hour maximum** for full-episode B1/B4 checks and
 explicitly selected **waiting for an idle H100** to make performance comparable.
@@ -121,7 +123,7 @@ a direct comparison of every such tensor.
   Unrelated projects' executable paths are redacted in public snapshots; the
   original bytes and their digests are retained on the server.
 
-## Observed failure and repair, November 18
+## November 17 dispatch failure, diagnosed and repaired November 18
 
 The H100 became idle, and the queue observed 60 seconds of continuous availability.
 At 20:32:27 CST the parent dispatcher entered full-episode (`mini`) mode. It first
@@ -159,14 +161,112 @@ Target-server evidence:
 - The repaired helper still rejects the actual closed November 17 window.
   No GPU measurement was restarted during this repair.
 
-The proposed recovery is prepared at
+The recovery was initially prepared at
 `/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118`, with the same ten task
 identities and four-case order, plus updated helper hashes. Its
 [request](evidence/batch-cost-v1-recovery-profile-request.json) and
 [preflight](evidence/batch-cost-v1-recovery-prepared.json) bind 124 verified inputs.
-There is no GPU ledger or active worker in this prepared root. It retains the
-idle-GPU requirement and needs a new measurement-window authorization. The full
-240-task pilot and paper core matrix remain pending.
+Those preparation snapshots predate authorization and execution; they are kept
+unchanged. The subsequent approved request, window and actual results are archived
+separately below. The full 240-task pilot and paper core matrix remain pending.
+
+## Authorized H100 recovery, November 18
+
+The user approved a **new maximum four-hour window**, including waiting and
+compilation, starting **10:10:05.508 CST**, with an absolute deadline of
+**14:10:05.508 CST**. It retained the 60-second idle-GPU gate. The approved request
+pins 125 inputs, including the new authorization record. The source package and
+all original task bytes remain unchanged; dispatch uses revision `490252a3`.
+
+The first case, `nf_mixed-b1`, ran for **618.395 seconds** and exited with code 1,
+without a timeout. The parent closed at **10:21:24.239 CST**, after 678.731 seconds
+including the idle wait. Its outcomes were:
+
+| Validation family | Outcome | Active events in valid trace | Final physical coverage |
+|---|---|---:|---:|
+| IR2 easy | success | 1,971 | 99.7250% |
+| IR2 difficult | success | 1,978 | 99.1656% |
+| Procedural rooms | environment_error | unavailable | unavailable |
+| Procedural corridor | environment_error | unavailable | unavailable |
+| Procedural hybrid | environment_error | unavailable | unavailable |
+
+All three errors report `IR2 graph/history capacity exhausted; increase the
+declared capacity before running`. Their error envelopes contain null metrics
+and an `active_events=0` placeholder; that placeholder does **not** mean the
+simulation performed no actions. Failed tasks are not successes or normal
+timeouts and are not used for an aggregate event-throughput estimate.
+
+The recorded host process peak was 1,276,997,632 bytes; JAX allocator peak was
+456,595,968 bytes. These are distinct host/device measurements for this one B1
+process, not per-environment memory, NVML peak or a certified parallel limit.
+The GPU was idle before launch. No allocation error was recorded. The offline
+full-cohort analyzer correctly rejected this case with
+`RuntimeError: case failed: nf_mixed-b1`; no completed paired audit was produced.
+
+Actual execution evidence is under
+[the recovery run](evidence/batch-cost-v1-recovery-run-20261118/run/profile-request.json),
+including the [closed window](evidence/batch-cost-v1-recovery-run-20261118/run/gpu-window-closed.json)
+and [case record](evidence/batch-cost-v1-recovery-run-20261118/run/resource-cost-mini/nf_mixed-b1.record.json).
+The server originals remain at
+`/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118`.
+The two valid traces passed a separate [partial audit](evidence/batch-cost-v1-recovery-run-20261118/partial-audit.json)
+of result/trace checksums, task identities, legal actions, integer coverage
+monotonicity, AUC, termination and communication/balance accounting. Its
+`complete=false` and `cohort_accepted=false` distinguish this from full paired
+acceptance. The [audit script](protocols/phase6-20261118/audit_recovery.py.txt)
+imports NumPy only, with no environment execution or GPU initialization.
+
+### First-overflow localization, unchanged configuration
+
+A separate diagnostic, bounded to ten minutes and the same absolute 14:10
+deadline, used the remaining authorization. It did not reopen the closed parent
+ledger. Its jitted B1 kernel follows the same reset, observation, baseline action
+and environment transition, stopping at the **first** graph error. This omits
+benchmark scoring and trace recording; its runtime is not evaluation throughput.
+The diagnostic completed all three procedural maps on the H100.
+
+| Family | Event counter at first failure | Local node counts, four real robots | Largest global node count | Largest history count | Largest outgoing degree |
+|---|---:|---|---:|---:|---:|
+| rooms | 1,278 | 339 / **400** / 342 / 343 | 341 | 321 | 29 |
+| corridor | 1,563 | 399 / 397 / **400** / 397 | 386 | 392 | 30 |
+| hybrid | 1,609 | **400** / 396 / 385 / 396 | 362 | 404 | 30 |
+
+`graph_capacity=graph_padding_size=400`, history capacity 513 and permitted degree
+30 were unchanged. Padded robot slots in the raw arrays are not real robots.
+Each first overflow coincides with a real robot's local graph reaching 400;
+global node counts and history remain below their limits, degree does not exceed
+30, and no `path_failed` flag is set. The guard in `ir2_graph.py` rejects
+`sum(valid) >= graph_padding_size`. This identifies the active limit; it is not
+evidence that additional limits could never be reached with larger graphs.
+
+See [diagnostic counts](evidence/batch-cost-v1-recovery-run-20261118/diagnostic/first-overflow/diagnostic.json),
+[budget binding](evidence/batch-cost-v1-recovery-run-20261118/diagnostic/budget-link.json)
+and [executed script](protocols/phase6-20261118/capacity_diagnostic.py.txt).
+The diagnostic's worker took 158.422 seconds including its first compilation.
+It exited within its bound. A final server check verified all 125 pinned inputs
+again and found no GPU compute processes; see the
+[closure check](evidence/batch-cost-v1-recovery-run-20261118/diagnostic/follow-up-closed.json).
+No further GPU work is planned in this window; the unused authorization is not
+carried forward. Training and the full pilot remain stopped.
+
+### Next gate: declare capacity policy before rerunning
+
+The frozen C400 workload cannot currently provide ten valid B1/B4 pairs. Original
+IR2's worker also rejects graphs at its node-padding limit; therefore silently
+discarding these procedural maps, truncating graph nodes, or converting errors
+to timeouts would not constitute acceptance. This is a benchmark capacity-policy
+decision, not a demonstrated JAX performance regression.
+
+The concrete next proposal is a **separate, versioned extended-capacity preset**:
+retain the strict C400 result and original preset, increase only graph storage
+and node padding together, and retain history, edge construction, the 30-choice
+limit, maps, seeds, budgets and communication. A first candidate is C512; it is
+not yet proven sufficient or approved as the pilot replacement. Regenerate
+configuration hashes/task identities and a new manifest, disclose that this
+extends original capacity, and first check complete-episode feasibility and
+pre-limit behavior against C400. Any later B1/B4 comparison must use that same
+new preset on both sides. Increasing `max_candidates` is excluded: it also changes
+graph construction. No such capacity change or replacement pilot has been run.
 
 ## Reproduction after results exist
 
@@ -177,8 +277,22 @@ each case record. Offline audit, without initializing JAX:
 
 ```sh
 /home/user/anaconda3/envs/ex/bin/python scripts/analyze_batch_cost.py \
-  /home/user/Tz/acceptance/batch-cost-v1-20261117
+  /home/user/Tz/acceptance/batch-cost-v1-recovery-20261118
 ```
 
-The analyzer writes `batch-cost-audit.json`; its `complete` field must remain
-false until all four cases and ten trajectory pairs have actually passed.
+This currently **rejects** the failed case before writing a completed audit.
+Only a fully valid cohort can produce the corresponding paired acceptance.
+To reproduce the limited valid-trace audit from the public archive, copy the
+evidence directory to a new destination, remove only its generated
+`partial-audit.json`, and run:
+
+```sh
+python research/protocols/phase6-20261118/audit_recovery.py.txt \
+  /path/to/evidence-copy research/evidence/batch-cost-v1-tasks.jsonl.gz
+```
+
+The helper uses exclusive creation for the audit output and cannot overwrite the
+published snapshot. The result must retain `complete=false` and
+`cohort_accepted=false`. [Artifact identities](evidence/batch-cost-v1-recovery-run-20261118/artifact-index.json)
+and the [review](evidence/batch-cost-v1-recovery-run-20261118/review.json) bind these
+compact exports; full server originals remain intact.

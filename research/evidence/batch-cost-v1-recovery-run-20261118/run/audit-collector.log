@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118/analyze_batch_cost.py", line 254, in <module>
+    main(root_path)
+  File "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118/analyze_batch_cost.py", line 49, in main
+    require(record["exit_code"] == 0 and not record["timeout"], f"case failed: {name}")
+  File "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118/analyze_batch_cost.py", line 26, in require
+    raise RuntimeError(detail)
+RuntimeError: case failed: nf_mixed-b1

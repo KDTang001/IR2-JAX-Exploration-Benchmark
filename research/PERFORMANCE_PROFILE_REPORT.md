@@ -4,6 +4,13 @@ Target: the shared NVIDIA H100, fixed host affinity 0–7, eight BLAS/OpenMP thr
 JAX 0.4.35 / jaxlib 0.4.34, unchanged `ex` environment. No training. Base source:
 `d3d6c5fdec831de3076b7ede70e25b72108e59bf`.
 
+November 18 complete-episode follow-up: the repaired H100 runner executed five
+nearest-frontier B1 tasks, with two IR2 successes and three procedural graph
+capacity errors. First-overflow diagnostics identified the declared 400-node
+local limit. B4 was not started; no complete-episode paired throughput or new
+maximum batch size is certified. This does not revise the profiler/short-segment
+results below. See [full-episode evidence and next capacity gate](BATCH_COST_V1_REPORT.md).
+
 ## Measurement and evidence
 
 Each of the six configurations uses a fresh process. The three validation maps

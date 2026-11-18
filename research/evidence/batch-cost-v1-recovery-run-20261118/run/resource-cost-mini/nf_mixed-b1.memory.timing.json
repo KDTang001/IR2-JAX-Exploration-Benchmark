@@ -1,0 +1,158 @@
+{
+  "pid": 957913,
+  "boundaries": [
+    {
+      "phase": "load_lane",
+      "seconds": 0.6221809290582314,
+      "result_id": "e3a020a2fef2414f3e612aa99bde49956fb6045b7f06d925f5dc642a4e9aad9a",
+      "component_area": 128000
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 1,
+      "seconds": 0.0032855269964784384
+    },
+    {
+      "phase": "lower_compile",
+      "batch_size": 1,
+      "seconds": 49.18361728999298
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 1,
+      "seconds": 137.25258252897765
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 187.25126562605146,
+      "batch_size": 1,
+      "result_ids": [
+        "e3a020a2fef2414f3e612aa99bde49956fb6045b7f06d925f5dc642a4e9aad9a"
+      ]
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.05440849799197167
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.00036990002263337374
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.123033482930623,
+      "result_id": "645727f71c5f60103211e0bcb7a8e680cf15ad4c61387cb05d275e19f72c8d88",
+      "component_area": 128000
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 1,
+      "seconds": 6.579991895705462e-05
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 1,
+      "seconds": 115.55916305596475
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 115.58667292399332,
+      "batch_size": 1,
+      "result_ids": [
+        "645727f71c5f60103211e0bcb7a8e680cf15ad4c61387cb05d275e19f72c8d88"
+      ]
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.025493307039141655
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.0003945800708606839
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.36304390407167375,
+      "result_id": "2ab5d037d025ef4ab144cd1430c10701f34178575d7ee8785493fef1d90e8faa",
+      "component_area": 551540
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 1,
+      "seconds": 9.642099030315876e-05
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 1,
+      "seconds": 126.08553257398307
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 126.10707848600578,
+      "batch_size": 1,
+      "result_ids": [
+        "2ab5d037d025ef4ab144cd1430c10701f34178575d7ee8785493fef1d90e8faa"
+      ]
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.00040481099858880043
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.41331843996886164,
+      "result_id": "e635e91878631d4c1115b5ccff1e00947d3540a7baf4c2f5e5d032bdf64d37c2",
+      "component_area": 198968
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 1,
+      "seconds": 9.647989645600319e-05
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 1,
+      "seconds": 84.49601030698977
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 84.52396936994046,
+      "batch_size": 1,
+      "result_ids": [
+        "e635e91878631d4c1115b5ccff1e00947d3540a7baf4c2f5e5d032bdf64d37c2"
+      ]
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.0003935110289603472
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.2859361539594829,
+      "result_id": "e83a2f8b076a3db14e1e5c6069231c8b76047132f1c4e04c0698e79c47d30d88",
+      "component_area": 373504
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 1,
+      "seconds": 7.236003875732422e-05
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 1,
+      "seconds": 101.35990878008306
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 101.38734208291862,
+      "batch_size": 1,
+      "result_ids": [
+        "e83a2f8b076a3db14e1e5c6069231c8b76047132f1c4e04c0698e79c47d30d88"
+      ]
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.00039544200990349054
+    }
+  ]
+}

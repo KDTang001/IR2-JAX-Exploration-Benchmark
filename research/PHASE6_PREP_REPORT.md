@@ -78,7 +78,7 @@ The separately predeclared two-episode, full-length validation cost subset compl
 NF mixed succeeded at round493 (187.96 s); IR2 adapted mixed reached the normal
 512-round timeout (131.38 s). Both use N4/B1 on one validation map, and include
 compilation/loading/result writes. Independent metric/accounting audits pass.
-These are **2/240 task identities used for cost only**, with 238 unscheduled;
+At that initial probe's completion these were **2/240 task identities used for cost only**, with 238 unscheduled;
 the full pilot was not launched. One map cannot price or rank the complete matrix.
 
 The external IR2 checkpoint's training exposure cannot be certified against the
@@ -123,3 +123,29 @@ server's two dispatch regressions and a real CPU parent/child B1/B4 smoke check
 passed. Full-episode H100 parity and speedup remain unverified. The failed root
 and all original inputs remain intact; a new window is required for recovery.
 This is not approval or execution of the full 240-task pilot.
+
+### November 18 authorized H100 recovery: capacity gate remains open
+
+The user subsequently approved a new four-hour maximum, 10:10:05–14:10:05 CST,
+including idle waiting and compilation. The repaired dispatcher launched the
+five-map nearest-frontier B1 case. IR2 easy and difficult succeeded at 1,971 and
+1,978 active events. Rooms, corridor and hybrid returned `environment_error`;
+the coordinator stopped at 10:21:24 before any B4 or IR2-adapted case. The full
+cohort analyzer rejected the failed case as intended. No paired speedup or new
+complete-matrix resource estimate is supported.
+
+A ten-minute diagnostic within the same authorization stopped at first overflow
+on these three unchanged procedural tasks. Their local graphs reached the
+declared 400-node limit at event counters 1,278 / 1,563 / 1,609. History and global
+nodes remained below their limits, outgoing degree did not exceed 30, and no path
+failure was set. This is a graph-capacity block, not an observed GPU allocation
+failure. Both valid traces passed independent checksum, coverage, event and byte
+accounting audits. Further GPU work in this window is stopped; no training ran.
+
+See [the full recovery and capacity report](BATCH_COST_V1_REPORT.md) and
+[partial audit](evidence/batch-cost-v1-recovery-run-20261118/partial-audit.json).
+The strict C400 configuration and all original failed results remain intact.
+A larger-capacity preset would require new configuration/task identities and
+complete-episode feasibility checks before replacing any pilot proposal. C512
+is a proposed first candidate, not an executed or certified replacement. The
+240-task pilot and paper experiment scale therefore remain unapproved.

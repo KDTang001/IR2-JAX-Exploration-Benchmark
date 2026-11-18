@@ -1,0 +1,15 @@
+{
+  "bundle": "/home/user/Tz/acceptance/batch-cost-capacity-diagnostic-20261118/evidence-export.tar.gz",
+  "sha256": "2dafa93b2ba259ab40e9c7d413f1c89d8e3e47c8e8081706ec9a4e86f781c6ec",
+  "files": 31,
+  "raw_bytes": 277825,
+  "status": {
+    "verified_at_epoch": 1794969931.0534704,
+    "pinned_inputs": 125,
+    "changed_inputs": [],
+    "gpu": "0, 24, 81559",
+    "compute_process_count": 0,
+    "further_gpu_work_planned_in_this_window": false,
+    "reason": "First full case failed; three first-overflow diagnostics completed; frozen B4/capacity unchanged."
+  }
+}

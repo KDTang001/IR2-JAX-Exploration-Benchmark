@@ -1,0 +1,70 @@
+{
+  "complete": false,
+  "cohort_accepted": false,
+  "attempted_executions": 5,
+  "planned_executions": 20,
+  "paired_trajectories": 0,
+  "valid_traces_audited": 2,
+  "records": [
+    {
+      "result_id": "2ab5d037d025ef4ab144cd1430c10701f34178575d7ee8785493fef1d90e8faa",
+      "family": "rooms",
+      "outcome": "environment_error",
+      "error": "IR2 graph/history capacity exhausted; increase the declared capacity before running",
+      "active_events": null
+    },
+    {
+      "result_id": "645727f71c5f60103211e0bcb7a8e680cf15ad4c61387cb05d275e19f72c8d88",
+      "family": "difficult",
+      "outcome": "success",
+      "error": null,
+      "active_events": 1978,
+      "metrics": {
+        "auc": 0.5353271122803562,
+        "final_coverage": 0.9916563034057617,
+        "observed_rounds": 495,
+        "outcome": "success",
+        "success": true,
+        "success_event_offset": 1,
+        "success_round": 495,
+        "timeout": false
+      },
+      "trace_sha256": "ba3cff1209baa8256fc8a818edb23949167ee61fc284acde1dff7e7aeff08bd2",
+      "accounting_and_metrics_pass": true
+    },
+    {
+      "result_id": "e3a020a2fef2414f3e612aa99bde49956fb6045b7f06d925f5dc642a4e9aad9a",
+      "family": "easy",
+      "outcome": "success",
+      "error": null,
+      "active_events": 1971,
+      "metrics": {
+        "auc": 0.545372261407465,
+        "final_coverage": 0.9972500205039978,
+        "observed_rounds": 493,
+        "outcome": "success",
+        "success": true,
+        "success_event_offset": 2,
+        "success_round": 493,
+        "timeout": false
+      },
+      "trace_sha256": "0d3d3419cdc342ac72228c0c44e7a36fe237618bed9607f25dc02aa7dce8de94",
+      "accounting_and_metrics_pass": true
+    },
+    {
+      "result_id": "e635e91878631d4c1115b5ccff1e00947d3540a7baf4c2f5e5d032bdf64d37c2",
+      "family": "corridor",
+      "outcome": "environment_error",
+      "error": "IR2 graph/history capacity exhausted; increase the declared capacity before running",
+      "active_events": null
+    },
+    {
+      "result_id": "e83a2f8b076a3db14e1e5c6069231c8b76047132f1c4e04c0698e79c47d30d88",
+      "family": "hybrid",
+      "outcome": "environment_error",
+      "error": "IR2 graph/history capacity exhausted; increase the declared capacity before running",
+      "active_events": null
+    }
+  ],
+  "diagnostic_within_parent_deadline": true
+}

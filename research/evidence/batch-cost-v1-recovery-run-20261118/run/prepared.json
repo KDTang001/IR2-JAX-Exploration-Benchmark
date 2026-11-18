@@ -1,0 +1,14 @@
+{
+  "prepared": true,
+  "authorized_to_start": false,
+  "gpu_window_created": false,
+  "gpu_worker_started": false,
+  "verified_inputs": 124,
+  "unique_tasks": 10,
+  "planned_executions": 20,
+  "idle_gpu_required": true,
+  "source_and_task_semantics_unchanged": true,
+  "fixed_supervisor_sha256": "82dbfb8135b8a68787937f32ebe8fc258f3f0b3610579e36abef013c65a677d0",
+  "prepared_epoch": 1794967484.2531219,
+  "output_root": "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118"
+}

@@ -1,0 +1,18 @@
+{
+  "reviewed_utc": "2026-11-18T02:50:44.940429+00:00",
+  "self_review": true,
+  "production_changes_this_commit": false,
+  "artifact_hashes_verified": 33,
+  "full_cohort_accepted": false,
+  "valid_trace_audits": 2,
+  "first_overflow_cases": 3,
+  "b4_executions": 0,
+  "gpu_telemetry_failures": 0,
+  "foreign_gpu_pids": [],
+  "nvml_sample_peak_mib_lower_bound": 1100,
+  "old_results_overwritten": false,
+  "training_started": false,
+  "capacity_configuration_changed": false,
+  "remaining_gate": "Versioned graph capacity policy and full-episode B1/B4 feasibility",
+  "protocol_syntax_checked": true
+}

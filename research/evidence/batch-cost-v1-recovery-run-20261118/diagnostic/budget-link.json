@@ -1,0 +1,10 @@
+{
+  "parent_root": "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118",
+  "parent_deadline_epoch": 1794982205.5080109,
+  "diagnostic_deadline_epoch": 1794970249.8315556,
+  "renews_authorization": false,
+  "selected_parent_tasks": "three failed procedural nearest-frontier tasks",
+  "configuration_changed": false,
+  "scored_as_benchmark": false,
+  "script_sha256": "4c0e2c0580434d6d02e421dff60547ec9ae539f3cde77f06ced51407dcc93e31"
+}

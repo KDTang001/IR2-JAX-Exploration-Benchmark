@@ -19,3 +19,5 @@ research/protocols/phase6-20261118/*.py.txt -text
 # Preserve generated test tracebacks byte-for-byte, including their whitespace.
 research/evidence/phase6-*.xml -text -whitespace
 research/evidence/batch-cost-v1-dispatch-*.xml -text -whitespace
+# Preserve raw server evidence and bound diagnostic source identities.
+research/evidence/batch-cost-v1-recovery-run-20261118/** -text -whitespace

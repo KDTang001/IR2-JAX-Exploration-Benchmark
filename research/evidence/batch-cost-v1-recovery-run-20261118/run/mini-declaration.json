@@ -1,0 +1,72 @@
+{
+  "name": "batch-cost-v1-recovery-20261118",
+  "unique_tasks": 10,
+  "episode_executions": 20,
+  "case_timeout_seconds": 3600,
+  "cases": [
+    {
+      "case_id": "nf_mixed-b1",
+      "batch_size": 1,
+      "task_manifest": "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118/nf_mixed.jsonl",
+      "task_manifest_sha256": "d13f940bf9cff00a5767c890d8d177e67eba58f23c4ea51a24f1e45265761204",
+      "map": {
+        "bucket": 768,
+        "family": "easy",
+        "map_hash": "000b6a254b76a6d763f7be6ff1ad556ca07d40a01541dccc579d08301bf32f50",
+        "path": "/home/user/Tz/ir2-benchmark/DungeonMaps/train/easy/img_4775.png",
+        "scenario_hash": "0a6211a8dddb0c5478d23834afcaa8d4c280d1b6206ead212bfe7e92ae50143b",
+        "source": "ir2",
+        "split": "validation"
+      },
+      "map_file_sha256": "53e6d113b45df199c5a911113f820323e9ed66f16d28a321cfb6e9b9fd50cc0e"
+    },
+    {
+      "case_id": "nf_mixed-b4",
+      "batch_size": 4,
+      "task_manifest": "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118/nf_mixed.jsonl",
+      "task_manifest_sha256": "d13f940bf9cff00a5767c890d8d177e67eba58f23c4ea51a24f1e45265761204",
+      "map": {
+        "bucket": 768,
+        "family": "easy",
+        "map_hash": "000b6a254b76a6d763f7be6ff1ad556ca07d40a01541dccc579d08301bf32f50",
+        "path": "/home/user/Tz/ir2-benchmark/DungeonMaps/train/easy/img_4775.png",
+        "scenario_hash": "0a6211a8dddb0c5478d23834afcaa8d4c280d1b6206ead212bfe7e92ae50143b",
+        "source": "ir2",
+        "split": "validation"
+      },
+      "map_file_sha256": "53e6d113b45df199c5a911113f820323e9ed66f16d28a321cfb6e9b9fd50cc0e"
+    },
+    {
+      "case_id": "ir2_mixed-b4",
+      "batch_size": 4,
+      "task_manifest": "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118/ir2_mixed.jsonl",
+      "task_manifest_sha256": "4c199069298635ea901c2c2f98597e748d83e64e4af7504bc28fde0cab66313a",
+      "map": {
+        "bucket": 768,
+        "family": "easy",
+        "map_hash": "000b6a254b76a6d763f7be6ff1ad556ca07d40a01541dccc579d08301bf32f50",
+        "path": "/home/user/Tz/ir2-benchmark/DungeonMaps/train/easy/img_4775.png",
+        "scenario_hash": "0a6211a8dddb0c5478d23834afcaa8d4c280d1b6206ead212bfe7e92ae50143b",
+        "source": "ir2",
+        "split": "validation"
+      },
+      "map_file_sha256": "53e6d113b45df199c5a911113f820323e9ed66f16d28a321cfb6e9b9fd50cc0e"
+    },
+    {
+      "case_id": "ir2_mixed-b1",
+      "batch_size": 1,
+      "task_manifest": "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118/ir2_mixed.jsonl",
+      "task_manifest_sha256": "4c199069298635ea901c2c2f98597e748d83e64e4af7504bc28fde0cab66313a",
+      "map": {
+        "bucket": 768,
+        "family": "easy",
+        "map_hash": "000b6a254b76a6d763f7be6ff1ad556ca07d40a01541dccc579d08301bf32f50",
+        "path": "/home/user/Tz/ir2-benchmark/DungeonMaps/train/easy/img_4775.png",
+        "scenario_hash": "0a6211a8dddb0c5478d23834afcaa8d4c280d1b6206ead212bfe7e92ae50143b",
+        "source": "ir2",
+        "split": "validation"
+      },
+      "map_file_sha256": "53e6d113b45df199c5a911113f820323e9ed66f16d28a321cfb6e9b9fd50cc0e"
+    }
+  ]
+}
