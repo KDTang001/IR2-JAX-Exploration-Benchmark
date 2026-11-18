@@ -1,6 +1,6 @@
 # PAPER_CORE_PROTOCOL_V1 — 待批准的论文核心协议
 
-日期：2026-11-17；状态 **PROPOSED / NOT FROZEN / NOT RUN**。这是Phase6-Prep的可审议协议，不是正式评测启动声明。原Phase1–5证据不可改写；旧2,294,784项矩阵、240项validation资源先导和58,320项论文草案均没有因此得到执行批准。当前H100四小时仅用于profiler、必要的配对优化验证和极小validation成本子集，包含编译时间，**不含训练或正式test/OOD试验**。
+起草于2026-11-17，容量修订于2026-11-18；状态 **PROPOSED / NOT FROZEN / NOT RUN**。这是Phase6-Prep的可审议论文协议，不是正式评测启动声明。原Phase1–5证据不可改写；旧2,294,784项矩阵、全量240项validation先导和58,320项论文草案均未获执行批准。此前profiler/配对优化/成本测量窗口均已关闭；本轮新四小时只授权下述30项validation探针，包含等待和编译，**不含训练或正式test/OOD试验**。
 
 2026-11-18 容量规格修订：**C1024 是下一版论文与 train-only SAC 的共同候选规格**，
 C400 保留为原始容量对照。C1024 已通过指定五图 N4/Normal/8KiB/mixed 完整回合，
