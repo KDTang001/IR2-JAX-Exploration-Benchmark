@@ -24,11 +24,32 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
     from ir2_benchmark.evaluation.batching import EvaluationKernel, PreparedTask
+    from ir2_benchmark.evaluation.episode import EpisodeExecution, LoadedLane
 
 P = ParamSpec("P")
 R = TypeVar("R")
 IDLE_UTILIZATION_LIMIT: Final = 10
 IDLE_SECONDS: Final = 60
+
+
+def terminal_graph(lane: LoadedLane, execution: EpisodeExecution) -> dict[str, object]:
+    """Record terminal counts and sticky failures, not trajectory maxima."""
+    state = execution.rollout.final_state
+    memory = state.graph_memory
+    if memory is None:
+        detail = "Graph diagnostics require ir2_graph execution"
+        raise RuntimeError(detail)
+    count = lane.prepared.task.scenario.n_agents
+    return {
+        "result_id": lane.prepared.task.result_id,
+        "event_final": int(state.event),
+        "local_nodes": memory.valid.sum(-1)[:count].tolist(),
+        "global_nodes": memory.global_valid.sum(-1)[:count].tolist(),
+        "history_counts": memory.history_count[:count].tolist(),
+        "max_outgoing_degrees": memory.edges.sum(-1).max(-1)[:count].tolist(),
+        "overflow": memory.overflow[:count].tolist(),
+        "path_failed": memory.path_failed[:count].tolist(),
+    }
 
 
 def instrument_worker(output: Path) -> None:
@@ -57,6 +78,13 @@ def instrument_worker(output: Path) -> None:
                     batch_size=len(args[0]),
                     result_ids=[lane.prepared.task.result_id for lane in args[0]],
                 )
+                if os.environ.get("IR2_GRAPH_DIAGNOSTICS") == "1":
+                    diagnostic_started = time.perf_counter()
+                    row["graph_terminal"] = [
+                        terminal_graph(lane, execution)
+                        for lane, execution in zip(args[0], result, strict=True)
+                    ]
+                    row["graph_diagnostics_seconds"] = time.perf_counter() - diagnostic_started
             rows.append(row)
             save(output, {"pid": os.getpid(), "boundaries": rows})
             return result
@@ -132,7 +160,10 @@ def supervise(root: Path) -> None:
             "started_utc": datetime.now(UTC).isoformat(),
             "authorized_seconds": 14400,
             "includes_compilation_and_waiting": True,
-            "authorization": "User reply: maximum four hours; full-episode B1/B4 pairs only",
+            "authorization": request.get(
+                "authorization_summary",
+                "User reply: maximum four hours; full-episode B1/B4 pairs only",
+            ),
         },
     )
     idle_since = None

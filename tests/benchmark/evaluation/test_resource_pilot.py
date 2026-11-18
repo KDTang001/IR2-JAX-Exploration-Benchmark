@@ -151,6 +151,46 @@ def test_planner_has_exact_factors_and_deterministic_validation_identities(
     assert {row.split for row in formal_before} == {"test", "ood"}
 
 
+def test_c1024_version_preserves_selection_seeds_and_changes_all_c400_ids(
+    registry: Path, tmp_path: Path,
+) -> None:
+    checkpoint = tmp_path / "policy.npz"
+    checkpoint.write_bytes(b"identity-only-test-checkpoint")
+    original, v1 = PILOT.plan_resource_pilot(
+        registry, ROOT / "configs/benchmark.json", checkpoint
+    )
+    selected, v2 = PILOT.plan_resource_pilot(
+        registry, ROOT / "configs/benchmark_capacity1024.json", checkpoint,
+        protocol="resource-pilot-v2-C1024",
+    )
+    assert selected == original
+    assert len(v2) == len({task.result_id for task in v2}) == 240
+    assert not {task.result_id for task in v1} & {task.result_id for task in v2}
+    for old, new in zip(v1, v2, strict=True):
+        assert old.method == new.method
+        assert old.scenario.spawn_seed == new.scenario.spawn_seed
+        assert old.scenario.fault_seed == new.scenario.fault_seed
+        assert new.scenario.config.graph_capacity == 1024
+        assert new.scenario.config.graph_padding_size == 1024
+    probe = [task for task in v2
+             if task.scenario.budget == 2048 and task.method.communication == "mixed"]
+    assert len(probe) == 30
+    assert {task.scenario.fault_mode for task in probe} == {0, 1, 2}
+
+
+@pytest.mark.parametrize(("protocol", "config"), [
+    ("resource-pilot-v1", "benchmark_capacity1024.json"),
+    ("resource-pilot-v2-C1024", "benchmark.json"),
+])
+def test_protocol_rejects_capacity_mismatch_before_planning(
+    registry: Path, tmp_path: Path, protocol: str, config: str,
+) -> None:
+    with pytest.raises(ConfigError, match="declared benchmark capacity"):
+        PILOT.plan_resource_pilot(
+            registry, ROOT / "configs" / config, tmp_path / "unused.npz", protocol=protocol
+        )
+
+
 @pytest.mark.parametrize(
     "mutation", ["test", "ood", "excluded", "family", "hash", "source", "geometry"]
 )

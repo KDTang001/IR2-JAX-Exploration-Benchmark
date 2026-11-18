@@ -1,4 +1,4 @@
-"""Freeze resource-pilot-v1 validation tasks; never execute an episode."""
+"""Freeze explicitly versioned C400/C1024 validation tasks; never execute them."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ import argparse
 import json
 from dataclasses import asdict, dataclass, replace
 from pathlib import Path
-from typing import TYPE_CHECKING, Final
+from typing import TYPE_CHECKING, Final, Literal
 
 from ir2_benchmark.agents.baselines import make_baseline_method
 from ir2_benchmark.commands.common import manifest_sources
@@ -37,6 +37,8 @@ STRATA: Final = (
     ("procedural", "hybrid"),
 )
 CONDITIONS: Final = ((0, 0.0, 64), (1, 0.3, 64), (2, 0.0, 64))
+PilotProtocol = Literal["resource-pilot-v1", "resource-pilot-v2-C1024"]
+CAPACITIES: Final = {"resource-pilot-v1": 400, "resource-pilot-v2-C1024": 1024}
 
 
 @dataclass(frozen=True, slots=True)
@@ -140,19 +142,24 @@ def plan_resource_pilot(
     registry: Path,
     config_path: Path,
     checkpoint: Path,
+    *,
+    protocol: PilotProtocol = "resource-pilot-v1",
 ) -> tuple[tuple[SelectedMap, ...], tuple[EvaluationTask, ...]]:
     """Build exactly 240 limited tasks with independent faults and eight fixed methods."""
     base = load_config(config_path)
+    if protocol not in CAPACITIES:
+        raise ConfigError(field="pilot.protocol", detail="unknown resource pilot version")
     expected = {
         "max_rounds": 512,
         "coverage_target": 0.99,
-        "graph_capacity": 400,
+        "graph_capacity": CAPACITIES[protocol],
+        "graph_padding_size": CAPACITIES[protocol],
         "rendezvous_mode": "reachable_only",
         "burst_start": 128,
     }
     if any(getattr(base, name) != value for name, value in expected.items()):
         raise ConfigError(
-            field="pilot.config", detail="resource-pilot-v1 requires the main benchmark config"
+            field="pilot.config", detail=f"{protocol} requires its declared benchmark capacity"
         )
     selected = select_validation_maps(manifest_sources(registry))
     methods = tuple(
@@ -191,17 +198,22 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--sources", type=Path, default=Path("artifacts/maps/sources.json"))
     parser.add_argument("--config", type=Path, default=Path("configs/benchmark.json"))
+    parser.add_argument("--protocol", choices=tuple(CAPACITIES), default="resource-pilot-v1")
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    selected, planned = plan_resource_pilot(args.sources, args.config, args.checkpoint)
+    selected, planned = plan_resource_pilot(
+        args.sources, args.config, args.checkpoint, protocol=args.protocol
+    )
     if args.output.exists() or args.output.with_suffix(".selection.json").exists():
         raise ConfigError(
             field="pilot.output", detail="refusing to overwrite an existing frozen plan"
         )
     count = write_task_manifest(args.output, planned)
     evidence = {
-        "name": "resource-pilot-v1",
+        "name": args.protocol,
+        "graph_capacity": CAPACITIES[args.protocol],
+        "graph_padding_size": CAPACITIES[args.protocol],
         "status": "planning_only",
         "limited": True,
         "task_count": count,

@@ -2,6 +2,12 @@
 
 日期：2026-11-17；状态 **PROPOSED / NOT FROZEN / NOT RUN**。这是Phase6-Prep的可审议协议，不是正式评测启动声明。原Phase1–5证据不可改写；旧2,294,784项矩阵、240项validation资源先导和58,320项论文草案均没有因此得到执行批准。当前H100四小时仅用于profiler、必要的配对优化验证和极小validation成本子集，包含编译时间，**不含训练或正式test/OOD试验**。
 
+2026-11-18 容量规格修订：**C1024 是下一版论文与 train-only SAC 的共同候选规格**，
+C400 保留为原始容量对照。C1024 已通过指定五图 N4/Normal/8KiB/mixed 完整回合，
+其余预算、故障、N 和桶仍须验证；本次修订不等于论文主配置已最终冻结。
+独立 [resource-pilot-v2-C1024](RESOURCE_PILOT_V2_C1024.md) 重新生成任务身份，
+本轮只授权其预先选定的 30 项 2KiB/mixed 完整回合，不授权全量先导、训练或正式评测。
+
 ## 1. 问题、比较对象与结论边界
 
 主问题：在相同导航、地图、出生、预算和故障条件下，固定消息调度对探索覆盖和通信成本的影响；并比较两种导航对这些条件的敏感性。最近前沿与外部预训练IR2 adapted配off/PLAN/MAP_DELTA/mixed，合计八个配置。外部IR2的暴露未经新划分认证，其结果仅作外部参考；不能写成train-only公平学习比较。[公平性与独立重训提案](BASELINE_FAIRNESS_REPORT.md)
@@ -31,7 +37,8 @@ Phase4工程验收曾使用部分test/OOD地图，既有证据保留且不用于
 | Burst | 开始round128、持续64round，p=0；隔离机器人由fault_seed排序选择floor(N/2)，记录身份 |
 | 导航×通信 | 2×4=8配置，通信每4次自身动作一次，mixed为PLAN→MAP_DELTA→MAP_DELTA→POSITION |
 | 时长/终止 | 最多512轮；以anchor可达自由区域物理覆盖≥.99为成功，成功后冻结；不是总PNG面积 |
-| 共同环境 | `configs/benchmark.json`语义，IR2图K=30、400节点、传感器80、reachable_only、关闭global graph fusion；发布时绑定精确配置/实现hash |
+| 共同环境候选 | `configs/benchmark_capacity1024.json`：IR2图K=30、1024节点存储与padding、传感器80、reachable_only、关闭global graph fusion；适用性验收后再冻结精确配置/实现hash |
+| 原始容量对照 | `configs/benchmark.json` 的 C400；独立身份与结果层，不替代 C1024 缺失结果，也不混入主配置统计 |
 
 Normal、Dropout、Burst是三项独立条件，不形成混合故障交叉。`make_scenario`目前以map_hash、map_scenario_hash、scenario_seed的identity摘要派生spawn_seed/fault_seed；正式manifest必须存实际整数与isolated robot列表，使八配置共享同一场景，不能依赖全局RNG或方法完成顺序。[现有场景构造](../src/ir2_benchmark/evaluation/scenarios.py)
 
@@ -46,6 +53,10 @@ Normal、Dropout、Burst是三项独立条件，不形成混合故障交叉。`m
 次终点：最终覆盖、99%成功率、成功轮次/轮内事件偏移、实际active robot events、移动距离、重复探索（如使用，必须绑定现有定义）、emitted/spent/delivered bytes及预算利用率。delivered按接收副本计，不等于单次物理发射。N/预算/故障分别报告，不把总通信费用或机器人事件误作团队轮次。距离和完成时间同时报告成功率，不能仅在各自成功子集上宣称更快。
 
 512轮合法未完成是探索timeout；墙钟截止、OOM、map/model/environment_error是执行失败，metric保持缺失，不能记作0分或成功。每个配置列requested/success/timeout/error/pending及配对完整数。主配对推断只在预声明完整匹配块上计算，并同时报告缺失模式；若失败与方法相关，不把complete-case估计解释为全体效应。必要时给0..1 AUC缺失上下界，或只出工程结果。正式完成须声明清单全部有有效终态，不能用“尝试过”代替有效计分完成。
+
+容量身份属于统计匹配块：同一配对必须使用相同容量、环境实现、地图、种子和预算/故障。
+C400 容量失败保留为工程结果，指标缺失；不得把 C400 与 C1024 结果混合后解释为算法
+差异，或仅挑两个容量都成功的地图而省略缺失模式。更换论文容量须先修订并重新冻结身份。
 
 ## 5. 统计单位与预声明比较
 

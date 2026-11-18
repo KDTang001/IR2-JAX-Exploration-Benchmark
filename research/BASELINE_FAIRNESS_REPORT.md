@@ -44,16 +44,21 @@ driver 实现 replay 上的离散 SAC：双 Q 取小值、目标 Q、策略概�
 
 SAC 的方法出处为最大熵、离策略 actor-critic；此处离散图动作和具体更新日程以 IR2 源码为准，不声称原 SAC 连续动作实验就是本协议。[SAC 原论文](https://arxiv.org/abs/1801.01290v2)
 
-## 3. 首选候选：IR2-SAC train-only v1（NOT IMPLEMENTED / NOT TRAINED）
+## 3. 首选候选：IR2-SAC train-only C1024 v1（NOT IMPLEMENTED / NOT TRAINED）
 
 这是既有 IR2/SAC 的可复现重训基线提案，不提出方法论文新算法。它需后续独立实现和训练授权；本次四小时资源窗不包含训练。建议优先完成一个共同导航策略，然后同一 checkpoint 配四种固定通信，不为每种通信挑选不同权重。
+
+容量已统一为 `configs/benchmark_capacity1024.json` 的候选规格，与下一版论文方案及
+resource-pilot-v2-C1024 对齐。旧 C400 训练设计尚未实现或训练，不存在可重标的权重；
+C400 仍是独立原始容量对照。只有 C1024 适用范围与训练资源预检通过后才冻结训练配置，
+不能把 N4/Normal/8KiB 的验收扩大为 N2/N6、零预算、全部故障和桶的训练资格证明。
 
 | 项目 | 待实现但明确的候选约定 |
 | --- | --- |
 | 数据资格 | 只读 registry 中 `split=train` 且 exclusion_reason 为空的 11,625 图（IR2 5,625 + procedural 6,000）；拒绝 split/占据/场景/文件哈希不符，禁止目录 fallback |
 | 采样 | 复用已审计 TrainingMapSampler 的均衡来源、族/桶和 N=2/4/6 调度；保存每个 episode_id→map/scenario/hash 映射。不得按 test 成绩调整采样 |
 | 初始化 | 三个独立训练种子 17001/17002/17003；actor、两 Q 随机初始化，target 从对应 Q 拷贝；空 replay、全新 optimizer，log_alpha=-2；禁止载入外部 IR2 或 A/B 权重 |
-| 观测/动作 | 本 Benchmark `ir2_graph` 的六维局部图、合法一跳邻边、K=30、400节点容量；相同128维六层 actor/Q；训练 categorical sampling，评测 masked greedy；不把真值地图或隐藏队友状态输入 actor/critic |
+| 观测/动作 | 候选 `benchmark_capacity1024.json`：`ir2_graph` 六维局部图、合法一跳邻边、K=30、1024节点存储/padding；相同128维六层 actor/Q；训练 categorical sampling，评测 masked greedy；不把真值地图或隐藏队友状态输入 actor/critic |
 | 环境 | 固定 benchmark传感器80、实际尺寸/原出生规则、reachable_only、关闭global graph fusion；512轮/99%物理覆盖终止。它是 benchmark-adapted 重训，不是原训练完全复现 |
 | 通信分布 | 每个训练episode按 episode_id 确定性均衡 off/plan/map/mixed；非零预算2048/8192均衡；normal/dropout .3/burst64均衡；N=2/4/6均衡。发送周期和编码器与固定基线相同，不学习通信策略 |
 | 奖励来源 | 复用原env表达式：new_frontiers/25 + new_pose_explore_util/50 + new_pose_rendezvous_util - distance/512，加完成团队奖励40。移植前逐项定义与benchmark状态的映射并用独立小场景验证，禁止未经声明改成另一奖励；不向网络暴露奖励计算用的真值状态 |
@@ -62,7 +67,8 @@ SAC 的方法出处为最大熵、离策略 actor-critic；此处离散图动作
 | 提议训练上限 | 每种子最多1,000,000实际active robot transitions或100,000更新批，先到即停；精确执行时不越界。另需批准硬件墙钟上限；本数字是可审议起点，不是收敛/成本保证 |
 | checkpoint | step0，随后每5,000更新批和终态；保存actor/Q/target/alpha/optimizer/replay/RNG/环境/调度计数及hash；崩溃恢复不得只恢复actor |
 | 模型选择 | 924张validation池中，五个来源/族各按(occupancy_hash,scenario_hash,path)取前5，共25图；场景种子0/1/2，N=4、8192、normal、mixed。每checkpoint同样75回合，无梯度、无replay写入；按族等权地图AUC选择，每训练种子独立选，精确并列取较早更新批 |
-| 评测身份 | 新 `ir2_sac_trainonly_v1_*` 身份，实际训练种子/事件数/数据和checkpoint摘要；不得用 `training_seed=-1`；在独立扩展矩阵中计训练重复成本，不悄悄加入旧八配置矩阵 |
+| 显存与有效批次 | 有效 batch 仍为128；候选使用固定 microbatch8 累积16次后每个优化器只更新一次，target/alpha/actor版本以有效更新批计数。须先检验损失/梯度/目标更新与完整批的数值一致性并测前反向显存；8尚未证明足够，不按OOM自动改批次或更新频率。本轮不做训练预检 |
+| 评测身份 | 新 `ir2_sac_trainonly_c1024_v1_*` 身份，实际训练种子/事件数/数据和checkpoint摘要；不得用 `training_seed=-1` 或旧 C400 提案身份；在独立扩展矩阵中计训练重复成本，不悄悄加入旧八配置矩阵 |
 
 924是资格池，不是声称每次用924图调参。25图规则需发布新选择清单与hash，不假定已有25图manifest的完整配置和此方案相同。正式 test/OOD 不用于超参、奖励、checkpoint选择、早停、性能优化或训练。若训练不足上限或不收敛，报告实际预算与学习曲线，不宣称SAC已被公平击败。
 
