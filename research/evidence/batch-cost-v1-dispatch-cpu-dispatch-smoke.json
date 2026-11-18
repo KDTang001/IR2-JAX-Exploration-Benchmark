@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "backend": "cpu",
+  "formal_gpu_cases": 0,
+  "fixture_tasks": 5,
+  "fixture_executions": 10,
+  "exact_trace_pairs": 5,
+  "actual_groups": {
+    "B1": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "B4": [
+      4,
+      1
+    ]
+  },
+  "ledger_unchanged": true,
+  "launches": [
+    {
+      "argv": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=5s",
+        "120.000s",
+        "taskset",
+        "-c",
+        "0-7",
+        "/home/user/anaconda3/envs/ex/bin/python",
+        "/home/user/Tz/acceptance/batch-cost-dispatch-fix-20261118/scripts/phase6_profile_supervisor.py",
+        "--cost-worker",
+        "/home/user/Tz/acceptance/batch-cost-dispatch-fix-20261118/cpu-dispatch-smoke/resource-cost-mini/cpu-b1.memory.json",
+        "evaluate",
+        "--task-manifest",
+        "/home/user/Tz/acceptance/batch-cost-dispatch-fix-20261118/cpu-dispatch-smoke/tasks.jsonl",
+        "--output",
+        "/home/user/Tz/acceptance/batch-cost-dispatch-fix-20261118/cpu-dispatch-smoke/resource-cost-mini/cpu-b1",
+        "--batch-size",
+        "1"
+      ],
+      "effective_jax_platforms": "cpu"
+    },
+    {
+      "argv": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=5s",
+        "120.000s",
+        "taskset",
+        "-c",
+        "0-7",
+        "/home/user/anaconda3/envs/ex/bin/python",
+        "/home/user/Tz/acceptance/batch-cost-dispatch-fix-20261118/scripts/phase6_profile_supervisor.py",
+        "--cost-worker",
+        "/home/user/Tz/acceptance/batch-cost-dispatch-fix-20261118/cpu-dispatch-smoke/resource-cost-mini/cpu-b4.memory.json",
+        "evaluate",
+        "--task-manifest",
+        "/home/user/Tz/acceptance/batch-cost-dispatch-fix-20261118/cpu-dispatch-smoke/tasks.jsonl",
+        "--output",
+        "/home/user/Tz/acceptance/batch-cost-dispatch-fix-20261118/cpu-dispatch-smoke/resource-cost-mini/cpu-b4",
+        "--batch-size",
+        "4"
+      ],
+      "effective_jax_platforms": "cpu"
+    }
+  ],
+  "script_sha256": "d05e47aec65d4dea956c17327c1b99d59dc1404d6cc91e45aecc397aefe67cb4"
+}

@@ -1,0 +1,38 @@
+{
+  "status": "DISPATCH_FIX_VERIFIED_H100_ACCEPTANCE_PENDING",
+  "production_environment_changed": false,
+  "original_failed_attempt_preserved": true,
+  "original_verified_inputs": 124,
+  "parent_dispatch_regression_before": {
+    "failed": 2,
+    "reason": "KeyError: bucket"
+  },
+  "parent_dispatch_regression_after": {
+    "passed": 2
+  },
+  "real_cpu_parent_child_smoke": {
+    "fixture_executions": 10,
+    "exact_trace_pairs": 5,
+    "batches": {
+      "B1": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "B4": [
+        4,
+        1
+      ]
+    }
+  },
+  "formal_gpu_cases_completed": 0,
+  "closed_window_rejected_by_fixed_helper": true,
+  "fresh_recovery_prepared": true,
+  "fresh_gpu_window_started": false,
+  "new_gpu_budget_authorization_pending": true,
+  "fixed_supervisor_sha256": "82dbfb8135b8a68787937f32ebe8fc258f3f0b3610579e36abef013c65a677d0",
+  "document_links_checked": true,
+  "temporary_transfer_bundles_removed": true
+}

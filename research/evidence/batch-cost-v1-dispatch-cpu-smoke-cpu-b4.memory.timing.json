@@ -1,0 +1,124 @@
+{
+  "pid": 957367,
+  "boundaries": [
+    {
+      "phase": "load_lane",
+      "seconds": 0.10035424900706857,
+      "result_id": "58656613dbd46b14fd0df900795e57a36f1ebe2290de5c4c24bcf6fed89c42f1",
+      "component_area": 10
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.001564193982630968,
+      "result_id": "15a3c881db99d5fffe5e548025a46c0487a6776da8c153fc317ac87c9354ccec",
+      "component_area": 10
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.0012223459780216217,
+      "result_id": "a70e0899fa9799e72b1d95e6820cbbb8f6d534a9c342a387733d0c61b7303428",
+      "component_area": 10
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.0011576489778235555,
+      "result_id": "4459667c7183aeb1073b1c692e0f72144136e2717178f3e7c09bf54ecaefff37",
+      "component_area": 10
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 4,
+      "seconds": 1.7929007299244404e-05
+    },
+    {
+      "phase": "lower_compile",
+      "batch_size": 4,
+      "seconds": 5.557377257035114
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 4,
+      "seconds": 0.1390396470669657
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 6.396515044034459,
+      "batch_size": 4,
+      "result_ids": [
+        "58656613dbd46b14fd0df900795e57a36f1ebe2290de5c4c24bcf6fed89c42f1",
+        "15a3c881db99d5fffe5e548025a46c0487a6776da8c153fc317ac87c9354ccec",
+        "a70e0899fa9799e72b1d95e6820cbbb8f6d534a9c342a387733d0c61b7303428",
+        "4459667c7183aeb1073b1c692e0f72144136e2717178f3e7c09bf54ecaefff37"
+      ]
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.0021726539125666022
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.0010844719363376498
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.0010100239887833595
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.0010021650232374668
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.00026917096693068743
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.00017986400052905083
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.00021403201390057802
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.0001772040268406272
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.0019593220204114914,
+      "result_id": "aa6b35ef4c7b533b4518204d18874a4b31d8aad09342ca8b5ad2595542075f24",
+      "component_area": 10
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 1,
+      "seconds": 9.050010703504086e-06
+    },
+    {
+      "phase": "lower_compile",
+      "batch_size": 1,
+      "seconds": 5.53417925699614
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 1,
+      "seconds": 0.03883259207941592
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 5.697241560090333,
+      "batch_size": 1,
+      "result_ids": [
+        "aa6b35ef4c7b533b4518204d18874a4b31d8aad09342ca8b5ad2595542075f24"
+      ]
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.0013956320472061634
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.0002277230378240347
+    }
+  ]
+}

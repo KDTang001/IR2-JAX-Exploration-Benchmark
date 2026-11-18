@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/user/Tz/acceptance/batch-cost-v1-20261117/phase6_batch_cost.py", line 187, in <module>
+    supervise(Path(sys.argv[1]).resolve())
+  File "/home/user/Tz/acceptance/batch-cost-v1-20261117/phase6_batch_cost.py", line 168, in supervise
+    run_cases()
+  File "/home/user/Tz/acceptance/batch-cost-v1-20261117/phase6_profile_supervisor.py", line 176, in main
+    str(case["bucket"]),
+        ~~~~^^^^^^^^^^
+KeyError: 'bucket'

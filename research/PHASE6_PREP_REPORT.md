@@ -116,6 +116,10 @@ idle H100. [batch-cost-v1](BATCH_COST_V1_REPORT.md) freezes ten existing validat
 tasks, run as twenty B1/B4 executions in four processes. Its new window is
 2026-11-17 19:45:02–23:45:02 CST, including waiting and compilation. Target-server
 input verification and a tiny CPU check of the measurement wrappers passed.
-The archived snapshot is queued behind unrelated GPU work with **zero GPU cases
-executed**; full-episode B4 parity and speedup remain unverified. This is not an
-approval or execution of the full 240-task pilot, and the old window stays closed.
+On November 18 the final record showed a dispatcher `KeyError: 'bucket'` at
+20:32:27 CST, after the GPU became available and before any worker launched.
+**Zero GPU cases executed**. The command-construction bug is repaired; the target
+server's two dispatch regressions and a real CPU parent/child B1/B4 smoke check
+passed. Full-episode H100 parity and speedup remain unverified. The failed root
+and all original inputs remain intact; a new window is required for recovery.
+This is not approval or execution of the full 240-task pilot.

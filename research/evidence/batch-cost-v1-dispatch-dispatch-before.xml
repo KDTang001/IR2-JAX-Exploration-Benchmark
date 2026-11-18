@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="0.050" timestamp="2026-11-18T09:56:06.980832+08:00" hostname="user-MZ73-LM1-000"><testcase classname="Tz.acceptance.batch-cost-dispatch-fix-20261118.tests.benchmark.evaluation.test_profile_supervisor" name="test_full_episode_dispatch_without_profiler_geometry_fields[1]" time="0.004"><failure message="KeyError: 'bucket'">tmp_path = PosixPath('/tmp/pytest-of-user/pytest-29/test_full_episode_dispatch_wit0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7a456cac7050&gt;
+batch_size = 1
+
+    @pytest.mark.parametrize("batch_size", [1, 4])
+    def test_full_episode_dispatch_without_profiler_geometry_fields(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, batch_size: int
+    ) -&gt; None:
+        script = Path(__file__).resolve().parents[3] / "scripts/phase6_profile_supervisor.py"
+        spec = importlib.util.spec_from_file_location("supervisor_under_test", script)
+        assert spec is not None and spec.loader is not None
+        supervisor = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(supervisor)
+        source = tmp_path / "source-final/src/ir2_benchmark"
+        source.mkdir(parents=True)
+        (tmp_path / "final-package-inventory.json").write_text("{}")
+        manifest, image = tmp_path / "tasks.jsonl", tmp_path / "map.png"
+        manifest.write_bytes(b"dispatch-only fixture; never loaded as an episode\n")
+        image.write_bytes(b"dispatch-only hash fixture\n")
+        case = {
+            "case_id": f"fixed-b{batch_size}",
+            "batch_size": batch_size,
+            "task_manifest": str(manifest),
+            "task_manifest_sha256": hashlib.sha256(manifest.read_bytes()).hexdigest(),
+            "map": {"path": str(image)},
+            "map_file_sha256": hashlib.sha256(image.read_bytes()).hexdigest(),
+        }
+        (tmp_path / "profile-request.json").write_text(
+            json.dumps({"cases": [case], "python": sys.executable})
+        )
+        (tmp_path / "mini-declaration.json").write_text(
+            json.dumps({"cases": [case], "case_timeout_seconds": 60})
+        )
+        ledger = tmp_path / "gpu-window.json"
+        ledger.write_text(json.dumps({"deadline_epoch": time.time() + 600}))
+        original_ledger = ledger.read_bytes()
+        calls = []
+    
+        def intercept(argv: Sequence[str], **_options) -&gt; CompletedChild:  # noqa: ANN003
+            calls.append(list(argv))
+            return CompletedChild()
+    
+        monkeypatch.setattr(supervisor, "query", lambda *_args: "")
+        monkeypatch.setattr(supervisor, "which", lambda _name: "/usr/bin/timeout")
+        monkeypatch.setattr(supervisor.subprocess, "Popen", intercept)
+        monkeypatch.setattr(sys, "argv", [str(script), str(tmp_path), "mini"])
+&gt;       supervisor.main()
+
+Tz/acceptance/batch-cost-dispatch-fix-20261118/tests/benchmark/evaluation/test_profile_supervisor.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def main() -&gt; None:  # noqa: C901, PLR0912, PLR0915 - One bounded child lifecycle for all workloads.
+        """Supervise the frozen request without extending its persisted GPU deadline."""
+        root = Path(sys.argv[1]).resolve()
+        if (root / "gpu-window-closed.json").exists():
+            raise RuntimeError("This measurement window is closed; use a new authorized run")  # noqa: EM101, TRY003
+        comparing = sys.argv[2:] == ["compare"]
+        mini = sys.argv[2:] == ["mini"]
+        label = "mini" if mini else "comparison" if comparing else "profile"
+        request = json.loads((root / "profile-request.json").read_text())
+        source = root / ("source-final" if comparing or mini else "source-baseline")
+        out = root / (
+            "resource-cost-mini" if mini else "optimization-pairs" if comparing else "profiles-baseline"
+        )
+        out.mkdir(exist_ok=True)
+        records = []
+        ledger = root / "gpu-window.json"
+        if ledger.exists() and not (comparing or mini):
+            raise RuntimeError("GPU window already exists; refusing to reset the authorized deadline")  # noqa: EM101, TRY003
+        if (comparing or mini) and not ledger.is_file():
+            raise RuntimeError("Comparison requires the existing authorized GPU window")  # noqa: EM101, TRY003
+        cases = request["cases"]
+        case_timeout = 1800
+        if comparing or mini:
+            expected = json.loads((root / "final-package-inventory.json").read_text())
+            actual = {
+                str(path.relative_to(source / "src/ir2_benchmark")): hashlib.sha256(
+                    path.read_bytes()
+                ).hexdigest()
+                for path in (source / "src/ir2_benchmark").rglob("*.py")
+            }
+            if actual != expected:
+                raise RuntimeError("Frozen package identity changed")  # noqa: EM101, TRY003
+        if mini:
+            if which("timeout") is None:
+                raise RuntimeError("The independent GNU timeout guard is unavailable")  # noqa: EM101, TRY003
+            declaration = json.loads((root / "mini-declaration.json").read_text())
+            cases, case_timeout = declaration["cases"], declaration["case_timeout_seconds"]
+        for case in cases:
+            before = {
+                "utc": datetime.now(UTC).isoformat(),
+                "gpu": query(
+                    "nvidia-smi",
+                    "--query-gpu=name,uuid,utilization.gpu,memory.used,memory.total",
+                    "--format=csv,noheader,nounits",
+                ),
+                "processes": query(
+                    "nvidia-smi",
+                    "--query-compute-apps=pid,process_name,used_memory",
+                    "--format=csv,noheader,nounits",
+                ),
+            }
+            if before["processes"] and not request.get("allow_shared_gpu", False):
+                save(
+                    root / f"{label}-stopped.json",
+                    {"reason": "shared GPU occupied", "snapshot": before},
+                )
+                break
+            if not ledger.exists():
+                now = time.time()
+                save(
+                    ledger,
+                    {
+                        "started_epoch": now,
+                        "deadline_epoch": now + 14400,
+                        "started_utc": datetime.now(UTC).isoformat(),
+                        "authorized_seconds": 14400,
+                        "includes_compilation": True,
+                    },
+                )
+            deadline = json.loads(ledger.read_text())["deadline_epoch"]
+            if time.time() &gt;= deadline:
+                break
+            case_out = out / case["case_id"]
+            log = out / (case["case_id"] + ".log")
+            env = os.environ.copy()
+            env.update(
+                PYTHONPATH=str(source / "src"),
+                JAX_PLATFORMS="cuda",
+                XLA_PYTHON_CLIENT_PREALLOCATE="false",
+                JAX_ENABLE_COMPILATION_CACHE="false",
+                OMP_NUM_THREADS="8",
+                OPENBLAS_NUM_THREADS="8",
+                MKL_NUM_THREADS="8",
+                LD_LIBRARY_PATH="/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/nvidia/cuda_cupti/lib:"
+                + env.get("LD_LIBRARY_PATH", ""),
+                XLA_FLAGS=f"--xla_dump_to={case_out}/xla --xla_dump_hlo_as_text",
+            )
+            # phase6_profile creates its output exclusively, so XLA must not initialize before it.
+            argv = [
+                "taskset",
+                "-c",
+                "0-7",
+                request["python"],
+                str(root / "phase6_profile.py"),
+                "--source",
+                str(source),
+                "--output",
+                str(case_out),
+                "--",
+                "--config",
+                str(source / "configs/benchmark.json"),
+                "--map",
+                case["map"]["path"],
+                "--bucket",
+&gt;               str(case["bucket"]),
+                    ^^^^^^^^^^^^^^
+                "--agents",
+                str(case["n_agents"]),
+                "--batch-size",
+                str(case["batch_size"]),
+                "--device",
+                "gpu",
+                "--steps",
+                "4",
+                "--warmups",
+                "2",
+                "--repeats",
+                "5",
+                "--seed",
+                "7",
+                "--policy-checkpoint",
+                request["checkpoint"],
+                "--output",
+                str(case_out),
+            ]
+E           KeyError: 'bucket'
+
+Tz/acceptance/batch-cost-dispatch-fix-20261118/scripts/phase6_profile_supervisor.py:176: KeyError</failure></testcase><testcase classname="Tz.acceptance.batch-cost-dispatch-fix-20261118.tests.benchmark.evaluation.test_profile_supervisor" name="test_full_episode_dispatch_without_profiler_geometry_fields[4]" time="0.002"><failure message="KeyError: 'bucket'">tmp_path = PosixPath('/tmp/pytest-of-user/pytest-29/test_full_episode_dispatch_wit1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7a456c430650&gt;
+batch_size = 4
+
+    @pytest.mark.parametrize("batch_size", [1, 4])
+    def test_full_episode_dispatch_without_profiler_geometry_fields(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, batch_size: int
+    ) -&gt; None:
+        script = Path(__file__).resolve().parents[3] / "scripts/phase6_profile_supervisor.py"
+        spec = importlib.util.spec_from_file_location("supervisor_under_test", script)
+        assert spec is not None and spec.loader is not None
+        supervisor = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(supervisor)
+        source = tmp_path / "source-final/src/ir2_benchmark"
+        source.mkdir(parents=True)
+        (tmp_path / "final-package-inventory.json").write_text("{}")
+        manifest, image = tmp_path / "tasks.jsonl", tmp_path / "map.png"
+        manifest.write_bytes(b"dispatch-only fixture; never loaded as an episode\n")
+        image.write_bytes(b"dispatch-only hash fixture\n")
+        case = {
+            "case_id": f"fixed-b{batch_size}",
+            "batch_size": batch_size,
+            "task_manifest": str(manifest),
+            "task_manifest_sha256": hashlib.sha256(manifest.read_bytes()).hexdigest(),
+            "map": {"path": str(image)},
+            "map_file_sha256": hashlib.sha256(image.read_bytes()).hexdigest(),
+        }
+        (tmp_path / "profile-request.json").write_text(
+            json.dumps({"cases": [case], "python": sys.executable})
+        )
+        (tmp_path / "mini-declaration.json").write_text(
+            json.dumps({"cases": [case], "case_timeout_seconds": 60})
+        )
+        ledger = tmp_path / "gpu-window.json"
+        ledger.write_text(json.dumps({"deadline_epoch": time.time() + 600}))
+        original_ledger = ledger.read_bytes()
+        calls = []
+    
+        def intercept(argv: Sequence[str], **_options) -&gt; CompletedChild:  # noqa: ANN003
+            calls.append(list(argv))
+            return CompletedChild()
+    
+        monkeypatch.setattr(supervisor, "query", lambda *_args: "")
+        monkeypatch.setattr(supervisor, "which", lambda _name: "/usr/bin/timeout")
+        monkeypatch.setattr(supervisor.subprocess, "Popen", intercept)
+        monkeypatch.setattr(sys, "argv", [str(script), str(tmp_path), "mini"])
+&gt;       supervisor.main()
+
+Tz/acceptance/batch-cost-dispatch-fix-20261118/tests/benchmark/evaluation/test_profile_supervisor.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def main() -&gt; None:  # noqa: C901, PLR0912, PLR0915 - One bounded child lifecycle for all workloads.
+        """Supervise the frozen request without extending its persisted GPU deadline."""
+        root = Path(sys.argv[1]).resolve()
+        if (root / "gpu-window-closed.json").exists():
+            raise RuntimeError("This measurement window is closed; use a new authorized run")  # noqa: EM101, TRY003
+        comparing = sys.argv[2:] == ["compare"]
+        mini = sys.argv[2:] == ["mini"]
+        label = "mini" if mini else "comparison" if comparing else "profile"
+        request = json.loads((root / "profile-request.json").read_text())
+        source = root / ("source-final" if comparing or mini else "source-baseline")
+        out = root / (
+            "resource-cost-mini" if mini else "optimization-pairs" if comparing else "profiles-baseline"
+        )
+        out.mkdir(exist_ok=True)
+        records = []
+        ledger = root / "gpu-window.json"
+        if ledger.exists() and not (comparing or mini):
+            raise RuntimeError("GPU window already exists; refusing to reset the authorized deadline")  # noqa: EM101, TRY003
+        if (comparing or mini) and not ledger.is_file():
+            raise RuntimeError("Comparison requires the existing authorized GPU window")  # noqa: EM101, TRY003
+        cases = request["cases"]
+        case_timeout = 1800
+        if comparing or mini:
+            expected = json.loads((root / "final-package-inventory.json").read_text())
+            actual = {
+                str(path.relative_to(source / "src/ir2_benchmark")): hashlib.sha256(
+                    path.read_bytes()
+                ).hexdigest()
+                for path in (source / "src/ir2_benchmark").rglob("*.py")
+            }
+            if actual != expected:
+                raise RuntimeError("Frozen package identity changed")  # noqa: EM101, TRY003
+        if mini:
+            if which("timeout") is None:
+                raise RuntimeError("The independent GNU timeout guard is unavailable")  # noqa: EM101, TRY003
+            declaration = json.loads((root / "mini-declaration.json").read_text())
+            cases, case_timeout = declaration["cases"], declaration["case_timeout_seconds"]
+        for case in cases:
+            before = {
+                "utc": datetime.now(UTC).isoformat(),
+                "gpu": query(
+                    "nvidia-smi",
+                    "--query-gpu=name,uuid,utilization.gpu,memory.used,memory.total",
+                    "--format=csv,noheader,nounits",
+                ),
+                "processes": query(
+                    "nvidia-smi",
+                    "--query-compute-apps=pid,process_name,used_memory",
+                    "--format=csv,noheader,nounits",
+                ),
+            }
+            if before["processes"] and not request.get("allow_shared_gpu", False):
+                save(
+                    root / f"{label}-stopped.json",
+                    {"reason": "shared GPU occupied", "snapshot": before},
+                )
+                break
+            if not ledger.exists():
+                now = time.time()
+                save(
+                    ledger,
+                    {
+                        "started_epoch": now,
+                        "deadline_epoch": now + 14400,
+                        "started_utc": datetime.now(UTC).isoformat(),
+                        "authorized_seconds": 14400,
+                        "includes_compilation": True,
+                    },
+                )
+            deadline = json.loads(ledger.read_text())["deadline_epoch"]
+            if time.time() &gt;= deadline:
+                break
+            case_out = out / case["case_id"]
+            log = out / (case["case_id"] + ".log")
+            env = os.environ.copy()
+            env.update(
+                PYTHONPATH=str(source / "src"),
+                JAX_PLATFORMS="cuda",
+                XLA_PYTHON_CLIENT_PREALLOCATE="false",
+                JAX_ENABLE_COMPILATION_CACHE="false",
+                OMP_NUM_THREADS="8",
+                OPENBLAS_NUM_THREADS="8",
+                MKL_NUM_THREADS="8",
+                LD_LIBRARY_PATH="/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/nvidia/cuda_cupti/lib:"
+                + env.get("LD_LIBRARY_PATH", ""),
+                XLA_FLAGS=f"--xla_dump_to={case_out}/xla --xla_dump_hlo_as_text",
+            )
+            # phase6_profile creates its output exclusively, so XLA must not initialize before it.
+            argv = [
+                "taskset",
+                "-c",
+                "0-7",
+                request["python"],
+                str(root / "phase6_profile.py"),
+                "--source",
+                str(source),
+                "--output",
+                str(case_out),
+                "--",
+                "--config",
+                str(source / "configs/benchmark.json"),
+                "--map",
+                case["map"]["path"],
+                "--bucket",
+&gt;               str(case["bucket"]),
+                    ^^^^^^^^^^^^^^
+                "--agents",
+                str(case["n_agents"]),
+                "--batch-size",
+                str(case["batch_size"]),
+                "--device",
+                "gpu",
+                "--steps",
+                "4",
+                "--warmups",
+                "2",
+                "--repeats",
+                "5",
+                "--seed",
+                "7",
+                "--policy-checkpoint",
+                request["checkpoint"],
+                "--output",
+                str(case_out),
+            ]
+E           KeyError: 'bucket'
+
+Tz/acceptance/batch-cost-dispatch-fix-20261118/scripts/phase6_profile_supervisor.py:176: KeyError</failure></testcase></testsuite></testsuites>

@@ -1,15 +1,21 @@
 # Full-episode B1/B4 resource check: batch-cost-v1
 
-Status at the recorded queue snapshot: **prepared and queued; zero GPU cases
-executed**. This document does not certify B4 full-episode parity or throughput.
-The server queue continues independently of the interactive SSH connection.
+Status reviewed on 2026-11-18: **failed before launching the first GPU worker**.
+The window closed at **20:32:27 CST on November 17** after 47 minutes 25 seconds,
+including resource waiting. Zero GPU cases and zero trajectory pairs completed.
+The coordinator and offline collector have exited. B4 full-episode parity and
+throughput remain unverified.
+
+The dispatcher has since been repaired and checked on the target Linux CPU.
+No new H100 run has started. See the failure and recovery evidence below.
 
 ## Authorization and resource policy
 
 The user authorized a **new four-hour maximum** for full-episode B1/B4 checks and
 explicitly selected **waiting for an idle H100** to make performance comparable.
-The window started on **2026-11-17 at 19:45:02 CST** and ends at **23:45:02 CST**;
-waiting and compilation count toward that limit. It cannot be renewed by restarting
+The window started on **2026-11-17 at 19:45:02 CST**, with an original deadline of
+**23:45:02 CST**; waiting and compilation count toward that limit. It closed early
+on the dispatch failure. It cannot be renewed by restarting
 the script. The previous Phase 6 window remains closed.
 
 The first recorded queue snapshots found three other GPU applications and
@@ -21,19 +27,19 @@ later than the global deadline minus the termination reserve. A resource error,
 runner failure or wall-clock interruption stops subsequent cases.
 
 The immutable server root is
-`/home/user/Tz/acceptance/batch-cost-v1-20261117`. Live state is in
-`queue-current.json`, `gpu-window.json`, `mini-current.json` (when running),
-`resource-cost-mini/*.record.json` (completed cases), and
-`gpu-window-closed.json` (closed window). The reused runner's directory label
+`/home/user/Tz/acceptance/batch-cost-v1-20261117`. Final state is in
+`queue-current.json`, `gpu-window.json`, and `gpu-window-closed.json`. No
+`mini-current.json` worker-launch record or completed case records were created.
+The reused runner's directory label
 `resource-cost-mini` does not change this protocol's identity.
 
 ## Frozen workload
 
 This check selects ten **existing** result IDs from `resource-pilot-v1`, preserving
-the original JSONL task bytes. Each is run once at B1 and once at B4, yielding
-twenty executions in four fresh processes:
+the original JSONL task bytes. The planned workload runs each once at B1 and once
+at B4, yielding twenty executions in four fresh processes:
 
-| Order | Navigation / communication | Batch limit | Actual groups |
+| Order | Navigation / communication | Batch limit | Planned groups |
 |---|---|---:|---|
 | 1 | nearest frontier / mixed | 1 | 1+1+1+1+1 |
 | 2 | nearest frontier / mixed | 4 | 4+1 |
@@ -115,8 +121,52 @@ a direct comparison of every such tensor.
   Unrelated projects' executable paths are redacted in public snapshots; the
   original bytes and their digests are retained on the server.
 
-No full-episode B4 result or speedup is available in this snapshot. The remaining
-decision about the full 240-task pilot and the paper core matrix stays open.
+## Observed failure and repair, November 18
+
+The H100 became idle, and the queue observed 60 seconds of continuous availability.
+At 20:32:27 CST the parent dispatcher entered full-episode (`mini`) mode. It first
+constructed an unused profiler command, reading `case["bucket"]` before reaching
+the full-episode command. These manifest entries intentionally have no top-level
+`bucket` or `n_agents` fields. The resulting `KeyError: 'bucket'` occurred before
+`Popen`. This was a measurement-harness error, with no evidence about environment
+correctness or GPU capacity. The previous wrapper-only smoke check missed the
+parent dispatch path.
+
+The fix skips profiler command construction in full-episode and comparison modes.
+It changes no environment or model code, manifest tasks, budgets or graph rules.
+All 124 original frozen inputs remain intact. The original failed root, helper,
+request, logs and closed marker have not been overwritten.
+
+Target-server evidence:
+
+- [Failure summary](evidence/batch-cost-v1-dispatch-failure-summary.json),
+  [original traceback](evidence/batch-cost-v1-dispatch-last-run-queue-driver.txt),
+  [closed-window record](evidence/batch-cost-v1-dispatch-last-run-gpu-window-closed.json)
+  and [redacted queue history](evidence/batch-cost-v1-dispatch-queue-public.jsonl.gz).
+- The new B1/B4 dispatch regression failed twice on the original helper with this
+  exact exception: [before XML](evidence/batch-cost-v1-dispatch-dispatch-before.xml).
+  The corrected helper passed both cases:
+  [after XML](evidence/batch-cost-v1-dispatch-dispatch-after.xml).
+  This check intercepts the launch boundary and does not execute a GPU workload.
+- The real parent dispatcher then launched real **CPU** workers on five tiny
+  generated fixtures: B1 groups `1+1+1+1+1`, B4 groups `4+1`; ten executions,
+  zero failures, five exact compact-trace pairs. See the
+  [CPU result](evidence/batch-cost-v1-dispatch-cpu-dispatch-smoke.json) and
+  [executed diagnostic script](protocols/phase6-20261118/cpu_dispatch_smoke.py.txt).
+  Only the child platform was explicitly changed to CPU in this diagnostic.
+  These fixtures are not the frozen full-size validation episodes and do not
+  certify H100 performance.
+- The repaired helper still rejects the actual closed November 17 window.
+  No GPU measurement was restarted during this repair.
+
+The proposed recovery is prepared at
+`/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118`, with the same ten task
+identities and four-case order, plus updated helper hashes. Its
+[request](evidence/batch-cost-v1-recovery-profile-request.json) and
+[preflight](evidence/batch-cost-v1-recovery-prepared.json) bind 124 verified inputs.
+There is no GPU ledger or active worker in this prepared root. It retains the
+idle-GPU requirement and needs a new measurement-window authorization. The full
+240-task pilot and paper core matrix remain pending.
 
 ## Reproduction after results exist
 
