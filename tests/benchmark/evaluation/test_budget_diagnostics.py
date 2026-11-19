@@ -12,6 +12,7 @@ from PIL import Image
 from ir2_benchmark.commands.evaluate import add_evaluate_arguments, evaluate_handler
 from ir2_benchmark.config import HostConfig
 from ir2_benchmark.evaluation.budgets import allocate_budget
+from ir2_benchmark.evaluation.metrics import EpisodeMetrics, EpisodeOutcome
 from ir2_benchmark.evaluation.records import completed_result, file_hash
 from ir2_benchmark.evaluation.report import load_report_rows
 from ir2_benchmark.evaluation.scenarios import (
@@ -118,7 +119,18 @@ def test_core_ids_and_old_manifest_and_result_checksums_remain_compatible(tmp_pa
             "config": asdict(config),
         }
     )
-    assert scene.scenario_id == legacy_id
+    assert scene.scenario_id == identity(
+        {
+            "map_hash": "occupancy",
+            "map_scenario_hash": "anchor",
+            "split": "test",
+            "spawn_seed": scene.spawn_seed,
+            "fault_seed": scene.fault_seed,
+            "config": asdict(config),
+            "implementations": scene.implementations,
+        }
+    )
+    scene = replace(scene, scenario_id=legacy_id, implementations=None)
     method = Method(
         "A_learned_predict", "A", "learned", "predict", 0, "checkpoint", "weights", 2000000
     )
@@ -127,30 +139,48 @@ def test_core_ids_and_old_manifest_and_result_checksums_remain_compatible(tmp_pa
         [legacy_id, {name: value for name, value in asdict(method).items() if name != "checkpoint"}]
     )
     raw_task = asdict(task)
-    for field in ("budget_mode", "requested_team_bytes", "unallocated_bytes"):
+    for field in ("budget_mode", "requested_team_bytes", "unallocated_bytes", "implementations"):
         raw_task["scenario"].pop(field)
     manifest = tmp_path / "old-tasks.jsonl"
     manifest.write_text(json.dumps(raw_task) + "\n", encoding="utf-8")
     trace = tmp_path / "old-trace.npz"
     np.savez(trace, coverage=np.array([0.25]))
-    raw = {
-        "result_id": task.result_id,
-        "method_id": method.method_id,
-        "training_seed": 0,
-        "source": "ir2",
-        "family": "rooms",
-        "map_hash": "occupancy",
-        "outcome": "timeout",
-        "checkpoint_hash": "weights",
-        "configuration_hash": scene.config_hash,
-        "trace_file": str(trace),
-        "trace_hash": file_hash(trace),
-        "metrics": {"auc": 0.25},
-    }
+    raw = (
+        asdict(scene)
+        | asdict(method)
+        | {
+            "result_id": task.result_id,
+            "method_id": method.method_id,
+            "training_seed": 0,
+            "source": "ir2",
+            "family": "rooms",
+            "map_hash": "occupancy",
+            "outcome": "timeout",
+            "checkpoint_hash": "weights",
+            "configuration_hash": scene.config_hash,
+            "trace_file": str(trace),
+            "trace_hash": file_hash(trace),
+            "metrics": asdict(
+                EpisodeMetrics(
+                    outcome=EpisodeOutcome.TIMEOUT,
+                    success=False,
+                    timeout=True,
+                    auc=0.25,
+                    final_coverage=0.25,
+                    success_round=None,
+                    success_event_offset=None,
+                    observed_rounds=scene.max_rounds,
+                )
+            ),
+        }
+    )
+    for field in ("budget_mode", "requested_team_bytes", "unallocated_bytes"):
+        raw.pop(field)
     envelope = {"result": raw, "checksum": identity(raw)}
     path = tmp_path / "results" / f"{task.result_id}.json"
     path.parent.mkdir()
-    path.write_text(json.dumps(envelope), encoding="utf-8")
+    original_json = json.dumps(envelope)
+    path.write_text(original_json, encoding="utf-8")
     # When: restoring old tasks and loading old result envelopes before applying defaults.
     assert next(read_task_manifest(manifest)) == task
     assert completed_result(path, task)
@@ -158,7 +188,7 @@ def test_core_ids_and_old_manifest_and_result_checksums_remain_compatible(tmp_pa
     # Then: default provenance does not change the original checksum or identity.
     assert corrupt == ()
     assert rows[0].budget_mode == "per_robot"
-    assert json.loads(path.read_text()) == envelope
+    assert path.read_text(encoding="utf-8") == original_json
 
 
 @pytest.mark.parametrize(

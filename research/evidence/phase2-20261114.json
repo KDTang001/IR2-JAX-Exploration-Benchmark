@@ -1,0 +1,4326 @@
+{
+  "date": "2026-11-14",
+  "base_commit": "10a6fa5e31e465bc3bddbeb872ed325f716810a7",
+  "scope": "Phase 2 Windows CPU communication acceptance plus adjacent Phase 1 integration regression; no training, full-dataset or GPU certification.",
+  "runtime": {
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.0",
+    "backend": "cpu",
+    "observe_module_path": "E:\\method\\IR2-Multi-Robot-RL-Exploration\\src\\ir2_benchmark\\env\\observe.py",
+    "versions": {
+      "jax": "0.4.35",
+      "jaxlib": "0.4.34",
+      "numpy": "2.0.2",
+      "scipy": "1.13.1",
+      "scikit-image": "0.24.0",
+      "pytest": "8.4.2",
+      "flax": "0.10.2",
+      "optax": "0.2.4",
+      "ruff": "0.17.5"
+    }
+  },
+  "result": {
+    "communication_tests": 118,
+    "adjacent_regressions": 28,
+    "unique_passed": 146,
+    "failed": 0,
+    "skipped": 0
+  },
+  "test_groups": {
+    "tests.benchmark.integration.test_phase2_acceptance": 39,
+    "tests.benchmark.integration.test_event_step": 10,
+    "tests.benchmark.integration.test_ir2_contract": 9,
+    "tests.benchmark.integration.test_phase1_acceptance": 9,
+    "tests.benchmark.unit.test_packet": 25,
+    "tests.benchmark.unit.test_channel": 20,
+    "tests.benchmark.unit.test_ledger": 6,
+    "tests.benchmark.unit.test_signal": 12,
+    "tests.benchmark.integration.test_presets": 16
+  },
+  "runs": [
+    {
+      "run": "foundation",
+      "tests": "79",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "time": "24.425"
+    },
+    {
+      "run": "initial",
+      "tests": "9",
+      "errors": "0",
+      "failures": "1",
+      "skipped": "0",
+      "time": "16.676"
+    },
+    {
+      "run": "fixed",
+      "tests": "9",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "time": "19.207"
+    },
+    {
+      "run": "matrix",
+      "tests": "20",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "time": "19.873"
+    },
+    {
+      "run": "regression",
+      "tests": "36",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "time": "170.235"
+    },
+    {
+      "run": "formal-boundaries",
+      "tests": "2",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "time": "3.077"
+    },
+    {
+      "run": "final",
+      "tests": "118",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "time": "59.191"
+    }
+  ],
+  "test_cases": [
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_burst_selects_exact_active_population_once[2]",
+      "seconds": 0.001,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_burst_selects_exact_active_population_once[3]",
+      "seconds": 0.001,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_burst_selects_exact_active_population_once[4]",
+      "seconds": 0.001,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_burst_selects_exact_active_population_once[6]",
+      "seconds": 0.001,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_malformed_wire_never_charges_or_changes_inbox[reserved]",
+      "seconds": 0.093,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_malformed_wire_never_charges_or_changes_inbox[sender]",
+      "seconds": 0.003,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_malformed_wire_never_charges_or_changes_inbox[length]",
+      "seconds": 0.003,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_malformed_wire_never_charges_or_changes_inbox[map_state]",
+      "seconds": 0.003,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_later_robot_uses_new_message_and_earlier_robot_waits_until_next_turn",
+      "seconds": 4.76,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_observe_is_pure_and_ignores_hidden_remote_truth",
+      "seconds": 1.004,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_ir2_graph_observation_ignores_unsent_peer_state_and_hidden_truth",
+      "seconds": 6.488,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_map_delta_is_locked_before_movement_and_new_sensing",
+      "seconds": 1.223,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_paid_map_overlay_does_not_increase_physical_coverage",
+      "seconds": 1.291,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_all_dropped_transmission_still_charges_actual_packet_bytes",
+      "seconds": 0.891,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_link_reachability_uses_post_move_positions",
+      "seconds": 1.482,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_time_limit_freezes_state_without_claiming_coverage_completion",
+      "seconds": 2.814,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_padded_robots_never_observe_move_or_receive_budget",
+      "seconds": 2.276,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_compiled_event_matches_eager_state",
+      "seconds": 2.18,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_real_and_imagined_edges_share_the_full_graph_contract",
+      "seconds": 28.24,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_ir2_individual_reward_uses_decision_time_target_utility",
+      "seconds": 9.125,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_only_paid_delivered_map_adds_peer_map_and_global_nodes[False-True-True-True]",
+      "seconds": 2.144,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_only_paid_delivered_map_adds_peer_map_and_global_nodes[True-True-True-True]",
+      "seconds": 8.868,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_only_paid_delivered_map_adds_peer_map_and_global_nodes[True-False-True-True]",
+      "seconds": 2.778,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_only_paid_delivered_map_adds_peer_map_and_global_nodes[False-False-True-True]",
+      "seconds": 2.212,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_only_paid_delivered_map_adds_peer_map_and_global_nodes[True-True-False-True]",
+      "seconds": 2.229,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_only_paid_delivered_map_adds_peer_map_and_global_nodes[True-True-True-False]",
+      "seconds": 2.324,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_ir2_contract::test_plan_only_peer_has_no_map_surplus_utility",
+      "seconds": 9.349,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_ordered_map_episode_matches_sensor_oracle_and_retains_history[False-False]",
+      "seconds": 10.43,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_ordered_map_episode_matches_sensor_oracle_and_retains_history[True-False]",
+      "seconds": 11.479,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_ordered_map_episode_matches_sensor_oracle_and_retains_history[True-True]",
+      "seconds": 9.635,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_failure_latches_and_evaluation_rejects_invalid_graph[history]",
+      "seconds": 8.95,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_failure_latches_and_evaluation_rejects_invalid_graph[path]",
+      "seconds": 9.447,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_ir2_terminal_state_freezes_every_field[terminated]",
+      "seconds": 7.0,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_ir2_terminal_state_freezes_every_field[truncated]",
+      "seconds": 6.954,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_nonzero_rendezvous_observation_isolated_from_hidden_peer_truth",
+      "seconds": 3.918,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase1_acceptance::test_original_positive_map_difference_includes_encoding_order",
+      "seconds": 8.869,
+      "status": "passed",
+      "last_run": "regression"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_coordinate_wire_when_asymmetric_or_maximum[coordinate0-encode_position-1]",
+      "seconds": 0.576,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_coordinate_wire_when_asymmetric_or_maximum[coordinate0-encode_goal-2]",
+      "seconds": 0.029,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_coordinate_wire_when_asymmetric_or_maximum[coordinate1-encode_position-1]",
+      "seconds": 0.004,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_coordinate_wire_when_asymmetric_or_maximum[coordinate1-encode_goal-2]",
+      "seconds": 0.004,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_plan_wire_when_horizon_is_five",
+      "seconds": 0.085,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_map_delta_wire_when_count_controls_actual_length[0]",
+      "seconds": 0.285,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_map_delta_wire_when_count_controls_actual_length[2]",
+      "seconds": 0.03,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_map_delta_wire_when_count_controls_actual_length[47]",
+      "seconds": 0.014,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_host_and_device_reject_when_structure_is_invalid[0-2]",
+      "seconds": 0.02,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_host_and_device_reject_when_structure_is_invalid[1-31]",
+      "seconds": 0.006,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_host_and_device_reject_when_structure_is_invalid[3-1]",
+      "seconds": 0.006,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_host_and_device_reject_when_structure_is_invalid[12-5]",
+      "seconds": 0.007,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_host_and_device_reject_when_structure_is_invalid[14-15]",
+      "seconds": 0.005,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_host_and_device_reject_when_structure_is_invalid[15-1]",
+      "seconds": 0.005,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_custom_when_at_capacity_and_beyond",
+      "seconds": 0.008,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_host_when_standard_content_is_malformed[3-\\x03\\x00\\x0b\\x00\\x06\\x00\\x0b\\x00\\x06\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00]",
+      "seconds": 0.005,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_host_when_standard_content_is_malformed[4-\\x01\\x03\\x00\\x0b\\x00\\x02]",
+      "seconds": 0.004,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_host_when_standard_content_is_malformed[4-0\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00]",
+      "seconds": 0.004,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_host_when_standard_content_is_malformed[5-\\x05\\x00\\x07\\x00\\x00\\x00]",
+      "seconds": 0.004,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_map_delta_when_coordinates_are_structurally_valid_but_outside_a_map",
+      "seconds": 0.185,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_forward_when_rebroadcast_preserves_charged_origin",
+      "seconds": 0.204,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_forward_when_original_payload_leaves_no_envelope_capacity",
+      "seconds": 0.02,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_map_selection_when_cursor_rotates_without_acknowledgement",
+      "seconds": 0.113,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_map_selection_when_unknown_entries_have_newer_timestamps",
+      "seconds": 0.046,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_packet::test_packet_when_vectorized_matches_individual_encoding",
+      "seconds": 0.131,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_broadcast_when_no_receivers_many_receivers_or_insufficient_budget[50-reachable0-45-5-expected_delivery0]",
+      "seconds": 0.17,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_broadcast_when_no_receivers_many_receivers_or_insufficient_budget[50-reachable1-45-5-expected_delivery1]",
+      "seconds": 0.004,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_broadcast_when_no_receivers_many_receivers_or_insufficient_budget[44-reachable2-0-44-expected_delivery2]",
+      "seconds": 0.003,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_broadcast_when_receiver_faults_differ_and_forwarding_is_explicit",
+      "seconds": 0.277,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_broadcast_when_unread_newer_packet_replaces_same_direct_source",
+      "seconds": 0.109,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_broadcast_when_stale_delivery_cannot_replace_newer_unread_packet",
+      "seconds": 0.04,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_consume_when_receiver_takes_its_event",
+      "seconds": 0.023,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_forward_when_relay_pays_for_origin_and_sends_only_on_its_action",
+      "seconds": 0.069,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_faults_when_normal_dropout_endpoints_or_burst[0-1.0-isolated0-True-expected0]",
+      "seconds": 0.159,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_faults_when_normal_dropout_endpoints_or_burst[1-0.0-isolated1-False-expected1]",
+      "seconds": 0.001,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_faults_when_normal_dropout_endpoints_or_burst[1-1.0-isolated2-False-expected2]",
+      "seconds": 0.001,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_faults_when_normal_dropout_endpoints_or_burst[2-0.0-isolated3-True-expected3]",
+      "seconds": 0.001,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_faults_when_normal_dropout_endpoints_or_burst[2-0.0-isolated4-False-expected4]",
+      "seconds": 0.001,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_burst_when_nonisolated_sender_cannot_reach_isolated_receivers",
+      "seconds": 0.125,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_random_streams_when_purpose_or_event_changes",
+      "seconds": 0.017,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_faults_when_vmap_keeps_each_receiver_key_independent",
+      "seconds": 0.182,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_burst_selection_when_bucket_contains_inactive_robots",
+      "seconds": 0.256,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_broadcast_when_vmap_compares_different_receiver_conditions",
+      "seconds": 0.078,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_broadcast_when_static_bucket_has_inactive_robot_slots",
+      "seconds": 0.158,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_channel::test_broadcast_when_wire_sender_does_not_match_acting_robot",
+      "seconds": 0.01,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_ledger::test_attempt_when_budget_and_request_gate_transmission[50-True-True-expected0]",
+      "seconds": 0.031,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_ledger::test_attempt_when_budget_and_request_gate_transmission[44-True-True-expected1]",
+      "seconds": 0.001,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_ledger::test_attempt_when_budget_and_request_gate_transmission[45-True-True-expected2]",
+      "seconds": 0.001,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_ledger::test_attempt_when_budget_and_request_gate_transmission[50-False-True-expected3]",
+      "seconds": 0.001,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_ledger::test_attempt_when_budget_and_request_gate_transmission[50-True-False-expected4]",
+      "seconds": 0.001,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_ledger::test_attempt_when_vectorized_budgets_differ",
+      "seconds": 0.021,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_signal::test_physical_lengths_when_axis_diagonal_or_colocated[start0-end0-1.0]",
+      "seconds": 0.389,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_signal::test_physical_lengths_when_axis_diagonal_or_colocated[start1-end1-3.0]",
+      "seconds": 0.003,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_signal::test_physical_lengths_when_axis_diagonal_or_colocated[start2-end2-1.4142135623730951]",
+      "seconds": 0.003,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_signal::test_physical_lengths_when_axis_diagonal_or_colocated[start3-end3-1.4142135623730951]",
+      "seconds": 0.003,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_signal::test_physical_lengths_when_axis_diagonal_or_colocated[start4-end4-0.0]",
+      "seconds": 0.003,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_signal::test_signal_when_touching_wall_only_at_corner",
+      "seconds": 0.058,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_signal::test_signal_when_piecewise_loss_or_colocation_applies[36-False--51.0]",
+      "seconds": 0.054,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_signal::test_signal_when_piecewise_loss_or_colocation_applies[71-False--57.020599913279625]",
+      "seconds": 0.051,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_signal::test_signal_when_piecewise_loss_or_colocation_applies[11-True--91.0]",
+      "seconds": 0.047,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_signal::test_signal_when_piecewise_loss_or_colocation_applies[1-True--51.0]",
+      "seconds": 0.04,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_signal::test_signal_when_strength_equals_threshold_is_unreachable",
+      "seconds": 0.05,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.unit.test_signal::test_signal_when_jit_vmap_matches_independent_random_geometry",
+      "seconds": 0.465,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_default_reward_and_wire_remain_compatible",
+      "seconds": 1.687,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_success_charge_respects_faults_and_budget[attempt-1.0-45]",
+      "seconds": 0.871,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_success_charge_respects_faults_and_budget[success-1.0-0]",
+      "seconds": 0.809,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_success_charge_respects_faults_and_budget[success-0.0-45]",
+      "seconds": 0.952,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_addressed_map_only_updates_actual_recipient_and_not_coverage",
+      "seconds": 3.416,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_sending_presets_and_codec_override",
+      "seconds": 3.39,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_reward_presets_success_once_timeout_and_batching",
+      "seconds": 4.432,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_physical_models_wall_range_and_strength_validity",
+      "seconds": 0.398,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_ir2_signal_matches_original_all_octants_and_episode_noise",
+      "seconds": 0.455,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_ir2_individual_formula_from_original_source",
+      "seconds": 0.021,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_custom_registration_json_identity_and_real_compiled_step",
+      "seconds": 1.293,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_invalid_config_fails_before_compiling[kwargs0]",
+      "seconds": 0.0,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_invalid_config_fails_before_compiling[kwargs1]",
+      "seconds": 0.0,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_invalid_config_fails_before_compiling[kwargs2]",
+      "seconds": 0.0,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_invalid_config_fails_before_compiling[kwargs3]",
+      "seconds": 0.0,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_presets::test_invalid_config_fails_before_compiling[kwargs4]",
+      "seconds": 0.0,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_separate_conditions_recompute_each_event[attempt-normal]",
+      "seconds": 1.715,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_separate_conditions_recompute_each_event[attempt-dropout]",
+      "seconds": 1.378,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_separate_conditions_recompute_each_event[attempt-burst]",
+      "seconds": 1.294,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_separate_conditions_recompute_each_event[success-normal]",
+      "seconds": 1.251,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_separate_conditions_recompute_each_event[success-dropout]",
+      "seconds": 1.522,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_separate_conditions_recompute_each_event[success-burst]",
+      "seconds": 1.179,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_map_payload_outside_valid_shape_never_reveals_padding",
+      "seconds": 9.355,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_non_dropout_config_rejects_mixed_probability[0]",
+      "seconds": 0.0,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_non_dropout_config_rejects_mixed_probability[2]",
+      "seconds": 0.0,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_physical_model_and_external_fault_are_separate[0-ideal]",
+      "seconds": 1.235,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_physical_model_and_external_fault_are_separate[0-range]",
+      "seconds": 0.636,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_physical_model_and_external_fault_are_separate[0-los_range]",
+      "seconds": 0.733,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_physical_model_and_external_fault_are_separate[0-attenuation]",
+      "seconds": 0.981,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_physical_model_and_external_fault_are_separate[0-ir2]",
+      "seconds": 0.754,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_physical_model_and_external_fault_are_separate[1-ideal]",
+      "seconds": 0.663,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_physical_model_and_external_fault_are_separate[1-range]",
+      "seconds": 0.716,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_physical_model_and_external_fault_are_separate[1-los_range]",
+      "seconds": 0.709,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_physical_model_and_external_fault_are_separate[1-attenuation]",
+      "seconds": 0.818,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_physical_model_and_external_fault_are_separate[1-ir2]",
+      "seconds": 0.739,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_physical_model_and_external_fault_are_separate[2-ideal]",
+      "seconds": 0.851,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_physical_model_and_external_fault_are_separate[2-range]",
+      "seconds": 0.701,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_physical_model_and_external_fault_are_separate[2-los_range]",
+      "seconds": 0.694,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_physical_model_and_external_fault_are_separate[2-attenuation]",
+      "seconds": 0.687,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_physical_model_and_external_fault_are_separate[2-ir2]",
+      "seconds": 0.798,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_dropout_rate_and_receiver_joint_frequency[0.1]",
+      "seconds": 0.2,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_dropout_rate_and_receiver_joint_frequency[0.3]",
+      "seconds": 0.131,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_dropout_rate_and_receiver_joint_frequency[0.5]",
+      "seconds": 0.12,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_zero_budget_can_receive_move_and_sense",
+      "seconds": 2.397,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_custom_wire_and_explicit_forwarding_use_paid_event_boundary",
+      "seconds": 2.323,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_formal_burst_round_boundaries_and_recovery[64]",
+      "seconds": 0.632,
+      "status": "passed",
+      "last_run": "final"
+    },
+    {
+      "id": "tests.benchmark.integration.test_phase2_acceptance::test_formal_burst_round_boundaries_and_recovery[128]",
+      "seconds": 0.666,
+      "status": "passed",
+      "last_run": "final"
+    }
+  ],
+  "pre_fix_failures": [
+    {
+      "id": "test_map_payload_outside_valid_shape_never_reveals_padding",
+      "message": "assert 0 == 2\n +  where 0 = int(Array(0, dtype=uint8))"
+    }
+  ],
+  "source_text_sha256_normalized_newlines": {
+    "src/ir2_benchmark/codecs/packet.py": "9ef8de8094d9dd7866d0eaa0db57f079fceeef0fc25809371d4982661ee658de",
+    "src/ir2_benchmark/codecs/standard.py": "19a83044738e008478a1c82e8ac1d1691ece6c152ac38e39134af40a4f5060f3",
+    "src/ir2_benchmark/communication/channel.py": "9afdbb0dd691654c05c329129a0b2eaf0c840a3deaab8c7faf204b323ec0d6d2",
+    "src/ir2_benchmark/communication/ledger.py": "f638031e31b4cfe0a21d344522c9b20efd86d2307c0c17cbc63a00da4287141a",
+    "src/ir2_benchmark/communication/faults.py": "a784d4a6d6fec4cd751e24e38fd10e0e9a24cbdea2b8389cc61475237265f9eb",
+    "src/ir2_benchmark/communication/propagation.py": "d6a7956be1fc6f6a8f94f37e18508c2a18431f1ce3d765d9298aaa7ff8c609f0",
+    "src/ir2_benchmark/communication/signal.py": "51647a74e1214fb6d0a830a1b8b21409db40033a05175e92677f2736146dddaa",
+    "src/ir2_benchmark/env/observe.py": "6d16746d141b5f6b8da7ba992551ae171204be03812eafc06483fc3bbb876924",
+    "src/ir2_benchmark/env/step.py": "be11ad15245ce9eb2bf4797218b294a542e9fec6cae8caa2e2c34ecdf78ace5b",
+    "src/ir2_benchmark/training/imagination.py": "21465b70d3a7c86cd55fa860adb1681f4392972b1fc73e4b1b2ab0472ddd9213",
+    "src/ir2_benchmark/visualization/replay.py": "1adc1a4aab02e072f96546d9a870cb9140af84d63e8503d9c56921de65f5f50f",
+    "src/ir2_benchmark/config.py": "ae638c133f9713a940cc30f41f31e28fa31a8841d4756bc723b7fe92f5493bf8",
+    "ss_realistic_model.py": "dee2f76a4673dd663138acfe1a4654f2cccb0ba103dac0346d5c7bace0f26b92",
+    "tests/benchmark/integration/test_phase2_acceptance.py": "7743853f6855efa16d247d294c99e9f1f3e6ceeb36a449b56372fb744c7d0822"
+  },
+  "condition_traces": [
+    {
+      "condition": "burst",
+      "charge_mode": "attempt",
+      "events": 32,
+      "isolated": [
+        true,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "records": [
+        {
+          "event": 0,
+          "round": 0,
+          "sender": 0,
+          "wire_hex": "01010000000000000000000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 1,
+          "round": 0,
+          "sender": 1,
+          "wire_hex": "01010100000000000100000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 2,
+          "round": 0,
+          "sender": 2,
+          "wire_hex": "01010200000000000200000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 3,
+          "round": 0,
+          "sender": 3,
+          "wire_hex": "010103000000000003000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 4,
+          "round": 1,
+          "sender": 0,
+          "wire_hex": "01020000010000000400000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 5,
+          "round": 1,
+          "sender": 1,
+          "wire_hex": "01020100010000000500000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 6,
+          "round": 1,
+          "sender": 2,
+          "wire_hex": "01020200010000000600000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 7,
+          "round": 1,
+          "sender": 3,
+          "wire_hex": "010203000100000007000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 8,
+          "round": 2,
+          "sender": 0,
+          "wire_hex": "0103000002000000080000001d000e000500030006000300010600030006000300060003000600030006000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 9,
+          "round": 2,
+          "sender": 1,
+          "wire_hex": "0103010002000000090000001d000d000e0003000f000300010f0003000f0003000f0003000f0003000f000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 10,
+          "round": 2,
+          "sender": 2,
+          "wire_hex": "01030200020000000a0000001d000b00190003001a000300011a0003001a0003001a0003001a0003001a000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            false,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 11,
+          "round": 2,
+          "sender": 3,
+          "wire_hex": "01030300020000000b0000001d0007002d0003002e000300012e0003002e0003002e0003002e0003002e000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 12,
+          "round": 3,
+          "sender": 0,
+          "wire_hex": "01040000030000000c00000029000e000805000300000600020001060003000006000400010700030000040003000005000200010500040001",
+          "spent": 57,
+          "delivered": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 8050
+        },
+        {
+          "event": 13,
+          "round": 3,
+          "sender": 1,
+          "wire_hex": "01040100030000000d00000029000d00080e000300000f000200010f000300000f0004000110000300000d000300000e000200010e00040001",
+          "spent": 57,
+          "delivered": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 8050
+        },
+        {
+          "event": 14,
+          "round": 3,
+          "sender": 2,
+          "wire_hex": "01040200030000000e00000029000b000819000300001a000200011a000300001a000400011b00030000180003000019000200011900040001",
+          "spent": 57,
+          "delivered": [
+            false,
+            false,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8050
+        },
+        {
+          "event": 15,
+          "round": 3,
+          "sender": 3,
+          "wire_hex": "01040300030000000f000000510007001018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002d000300002e000200012e000300002e000400012f000300002c000300002d000200012d00040001",
+          "spent": 97,
+          "delivered": [
+            false,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8010
+        },
+        {
+          "event": 16,
+          "round": 4,
+          "sender": 0,
+          "wire_hex": "01010000040000001000000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8030
+        },
+        {
+          "event": 17,
+          "round": 4,
+          "sender": 1,
+          "wire_hex": "01010100040000001100000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8030
+        },
+        {
+          "event": 18,
+          "round": 4,
+          "sender": 2,
+          "wire_hex": "01010200040000001200000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8030
+        },
+        {
+          "event": 19,
+          "round": 4,
+          "sender": 3,
+          "wire_hex": "010103000400000013000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7990
+        },
+        {
+          "event": 20,
+          "round": 5,
+          "sender": 0,
+          "wire_hex": "01020000050000001400000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8010
+        },
+        {
+          "event": 21,
+          "round": 5,
+          "sender": 1,
+          "wire_hex": "01020100050000001500000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8010
+        },
+        {
+          "event": 22,
+          "round": 5,
+          "sender": 2,
+          "wire_hex": "01020200050000001600000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8010
+        },
+        {
+          "event": 23,
+          "round": 5,
+          "sender": 3,
+          "wire_hex": "010203000500000017000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7970
+        },
+        {
+          "event": 24,
+          "round": 6,
+          "sender": 0,
+          "wire_hex": "0103000006000000180000001d000e000500030006000300010600030006000300060003000600030006000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7965
+        },
+        {
+          "event": 25,
+          "round": 6,
+          "sender": 1,
+          "wire_hex": "0103010006000000190000001d000d000e0003000f000300010f0003000f0003000f0003000f0003000f000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7965
+        },
+        {
+          "event": 26,
+          "round": 6,
+          "sender": 2,
+          "wire_hex": "01030200060000001a0000001d000b00190003001a000300011a0003001a0003001a0003001a0003001a000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7965
+        },
+        {
+          "event": 27,
+          "round": 6,
+          "sender": 3,
+          "wire_hex": "01030300060000001b0000001d0007002d0003002e000300012e0003002e0003002e0003002e0003002e000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7925
+        },
+        {
+          "event": 28,
+          "round": 7,
+          "sender": 0,
+          "wire_hex": "01040000070000001c00000029000e000805000300000600020001060003000006000400010700030000040003000005000200010500040001",
+          "spent": 57,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7908
+        },
+        {
+          "event": 29,
+          "round": 7,
+          "sender": 1,
+          "wire_hex": "01040100070000001d00000051000d0010040003000005000200010500030000050004000106000200010600030000060004000107000300000e000300000f000200010f000300000f0004000110000300000d000300000e000200010e00040001",
+          "spent": 97,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7868
+        },
+        {
+          "event": 30,
+          "round": 7,
+          "sender": 2,
+          "wire_hex": "01040200070000001e000000a1000b0020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000019000300001a000200011a000300001a000400011b000300001800030000190002000119000400012c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7788
+        },
+        {
+          "event": 31,
+          "round": 7,
+          "sender": 3,
+          "wire_hex": "01040300070000001f000000a100070020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7748
+        }
+      ],
+      "summary": {
+        "spent": 1456,
+        "receiver_deliveries": 76
+      }
+    },
+    {
+      "condition": "burst",
+      "charge_mode": "success",
+      "events": 32,
+      "isolated": [
+        true,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "records": [
+        {
+          "event": 0,
+          "round": 0,
+          "sender": 0,
+          "wire_hex": "01010000000000000000000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 1,
+          "round": 0,
+          "sender": 1,
+          "wire_hex": "01010100000000000100000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 2,
+          "round": 0,
+          "sender": 2,
+          "wire_hex": "01010200000000000200000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 3,
+          "round": 0,
+          "sender": 3,
+          "wire_hex": "010103000000000003000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 4,
+          "round": 1,
+          "sender": 0,
+          "wire_hex": "01020000010000000400000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 5,
+          "round": 1,
+          "sender": 1,
+          "wire_hex": "01020100010000000500000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 6,
+          "round": 1,
+          "sender": 2,
+          "wire_hex": "01020200010000000600000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 7,
+          "round": 1,
+          "sender": 3,
+          "wire_hex": "010203000100000007000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 8,
+          "round": 2,
+          "sender": 0,
+          "wire_hex": "0103000002000000080000001d000e000500030006000300010600030006000300060003000600030006000300",
+          "spent": 0,
+          "delivered": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 9,
+          "round": 2,
+          "sender": 1,
+          "wire_hex": "0103010002000000090000001d000d000e0003000f000300010f0003000f0003000f0003000f0003000f000300",
+          "spent": 0,
+          "delivered": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 10,
+          "round": 2,
+          "sender": 2,
+          "wire_hex": "01030200020000000a0000001d000b00190003001a000300011a0003001a0003001a0003001a0003001a000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            false,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 11,
+          "round": 2,
+          "sender": 3,
+          "wire_hex": "01030300020000000b0000001d0007002d0003002e000300012e0003002e0003002e0003002e0003002e000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 12,
+          "round": 3,
+          "sender": 0,
+          "wire_hex": "01040000030000000c00000029000e000805000300000600020001060003000006000400010700030000040003000005000200010500040001",
+          "spent": 0,
+          "delivered": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 13,
+          "round": 3,
+          "sender": 1,
+          "wire_hex": "01040100030000000d00000029000d00080e000300000f000200010f000300000f0004000110000300000d000300000e000200010e00040001",
+          "spent": 0,
+          "delivered": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 14,
+          "round": 3,
+          "sender": 2,
+          "wire_hex": "01040200030000000e00000029000b000819000300001a000200011a000300001a000400011b00030000180003000019000200011900040001",
+          "spent": 57,
+          "delivered": [
+            false,
+            false,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8050
+        },
+        {
+          "event": 15,
+          "round": 3,
+          "sender": 3,
+          "wire_hex": "01040300030000000f000000510007001018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002d000300002e000200012e000300002e000400012f000300002c000300002d000200012d00040001",
+          "spent": 97,
+          "delivered": [
+            false,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8010
+        },
+        {
+          "event": 16,
+          "round": 4,
+          "sender": 0,
+          "wire_hex": "01010000040000001000000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8132
+        },
+        {
+          "event": 17,
+          "round": 4,
+          "sender": 1,
+          "wire_hex": "01010100040000001100000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8132
+        },
+        {
+          "event": 18,
+          "round": 4,
+          "sender": 2,
+          "wire_hex": "01010200040000001200000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8030
+        },
+        {
+          "event": 19,
+          "round": 4,
+          "sender": 3,
+          "wire_hex": "010103000400000013000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7990
+        },
+        {
+          "event": 20,
+          "round": 5,
+          "sender": 0,
+          "wire_hex": "01020000050000001400000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8112
+        },
+        {
+          "event": 21,
+          "round": 5,
+          "sender": 1,
+          "wire_hex": "01020100050000001500000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8112
+        },
+        {
+          "event": 22,
+          "round": 5,
+          "sender": 2,
+          "wire_hex": "01020200050000001600000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8010
+        },
+        {
+          "event": 23,
+          "round": 5,
+          "sender": 3,
+          "wire_hex": "010203000500000017000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7970
+        },
+        {
+          "event": 24,
+          "round": 6,
+          "sender": 0,
+          "wire_hex": "0103000006000000180000001d000e000500030006000300010600030006000300060003000600030006000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8067
+        },
+        {
+          "event": 25,
+          "round": 6,
+          "sender": 1,
+          "wire_hex": "0103010006000000190000001d000d000e0003000f000300010f0003000f0003000f0003000f0003000f000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8067
+        },
+        {
+          "event": 26,
+          "round": 6,
+          "sender": 2,
+          "wire_hex": "01030200060000001a0000001d000b00190003001a000300011a0003001a0003001a0003001a0003001a000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7965
+        },
+        {
+          "event": 27,
+          "round": 6,
+          "sender": 3,
+          "wire_hex": "01030300060000001b0000001d0007002d0003002e000300012e0003002e0003002e0003002e0003002e000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7925
+        },
+        {
+          "event": 28,
+          "round": 7,
+          "sender": 0,
+          "wire_hex": "01040000070000001c00000029000e000805000300000600020001060003000006000400010700030000040003000005000200010500040001",
+          "spent": 57,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8010
+        },
+        {
+          "event": 29,
+          "round": 7,
+          "sender": 1,
+          "wire_hex": "01040100070000001d00000051000d0010040003000005000200010500030000050004000106000200010600030000060004000107000300000e000300000f000200010f000300000f0004000110000300000d000300000e000200010e00040001",
+          "spent": 97,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7970
+        },
+        {
+          "event": 30,
+          "round": 7,
+          "sender": 2,
+          "wire_hex": "01040200070000001e000000a1000b0020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000019000300001a000200011a000300001a000400011b000300001800030000190002000119000400012c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7788
+        },
+        {
+          "event": 31,
+          "round": 7,
+          "sender": 3,
+          "wire_hex": "01040300070000001f000000a100070020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7748
+        }
+      ],
+      "summary": {
+        "spent": 1252,
+        "receiver_deliveries": 76
+      }
+    },
+    {
+      "condition": "dropout",
+      "charge_mode": "attempt",
+      "events": 32,
+      "isolated": [
+        true,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "records": [
+        {
+          "event": 0,
+          "round": 0,
+          "sender": 0,
+          "wire_hex": "01010000000000000000000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 1,
+          "round": 0,
+          "sender": 1,
+          "wire_hex": "01010100000000000100000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 2,
+          "round": 0,
+          "sender": 2,
+          "wire_hex": "01010200000000000200000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 3,
+          "round": 0,
+          "sender": 3,
+          "wire_hex": "010103000000000003000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 4,
+          "round": 1,
+          "sender": 0,
+          "wire_hex": "01020000010000000400000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 5,
+          "round": 1,
+          "sender": 1,
+          "wire_hex": "01020100010000000500000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 6,
+          "round": 1,
+          "sender": 2,
+          "wire_hex": "01020200010000000600000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            false,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 7,
+          "round": 1,
+          "sender": 3,
+          "wire_hex": "010203000100000007000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 8,
+          "round": 2,
+          "sender": 0,
+          "wire_hex": "0103000002000000080000001d000e000500030006000300010600030006000300060003000600030006000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 9,
+          "round": 2,
+          "sender": 1,
+          "wire_hex": "0103010002000000090000001d000d000e0003000f000300010f0003000f0003000f0003000f0003000f000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 10,
+          "round": 2,
+          "sender": 2,
+          "wire_hex": "01030200020000000a0000001d000b00190003001a000300011a0003001a0003001a0003001a0003001a000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 11,
+          "round": 2,
+          "sender": 3,
+          "wire_hex": "01030300020000000b0000001d0007002d0003002e000300012e0003002e0003002e0003002e0003002e000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 12,
+          "round": 3,
+          "sender": 0,
+          "wire_hex": "01040000030000000c00000029000e000805000300000600020001060003000006000400010700030000040003000005000200010500040001",
+          "spent": 57,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8050
+        },
+        {
+          "event": 13,
+          "round": 3,
+          "sender": 1,
+          "wire_hex": "01040100030000000d00000051000d0010040003000005000200010500030000050004000106000200010600030000060004000107000300000e000300000f000200010f000300000f0004000110000300000d000300000e000200010e00040001",
+          "spent": 97,
+          "delivered": [
+            false,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8010
+        },
+        {
+          "event": 14,
+          "round": 3,
+          "sender": 2,
+          "wire_hex": "01040200030000000e00000079000b0018040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000019000300001a000200011a000300001a000400011b00030000180003000019000200011900040001",
+          "spent": 137,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7970
+        },
+        {
+          "event": 15,
+          "round": 3,
+          "sender": 3,
+          "wire_hex": "01040300030000000f000000a100070020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002d000300002e000200012e000300002e000400012f000300002c000300002d000200012d00040001",
+          "spent": 177,
+          "delivered": [
+            false,
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 7930
+        },
+        {
+          "event": 16,
+          "round": 4,
+          "sender": 0,
+          "wire_hex": "01010000040000001000000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8030
+        },
+        {
+          "event": 17,
+          "round": 4,
+          "sender": 1,
+          "wire_hex": "01010100040000001100000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7990
+        },
+        {
+          "event": 18,
+          "round": 4,
+          "sender": 2,
+          "wire_hex": "01010200040000001200000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 7950
+        },
+        {
+          "event": 19,
+          "round": 4,
+          "sender": 3,
+          "wire_hex": "010103000400000013000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 7910
+        },
+        {
+          "event": 20,
+          "round": 5,
+          "sender": 0,
+          "wire_hex": "01020000050000001400000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 8010
+        },
+        {
+          "event": 21,
+          "round": 5,
+          "sender": 1,
+          "wire_hex": "01020100050000001500000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 7970
+        },
+        {
+          "event": 22,
+          "round": 5,
+          "sender": 2,
+          "wire_hex": "01020200050000001600000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 7930
+        },
+        {
+          "event": 23,
+          "round": 5,
+          "sender": 3,
+          "wire_hex": "010203000500000017000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7890
+        },
+        {
+          "event": 24,
+          "round": 6,
+          "sender": 0,
+          "wire_hex": "0103000006000000180000001d000e000500030006000300010600030006000300060003000600030006000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7965
+        },
+        {
+          "event": 25,
+          "round": 6,
+          "sender": 1,
+          "wire_hex": "0103010006000000190000001d000d000e0003000f000300010f0003000f0003000f0003000f0003000f000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7925
+        },
+        {
+          "event": 26,
+          "round": 6,
+          "sender": 2,
+          "wire_hex": "01030200060000001a0000001d000b00190003001a000300011a0003001a0003001a0003001a0003001a000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7885
+        },
+        {
+          "event": 27,
+          "round": 6,
+          "sender": 3,
+          "wire_hex": "01030300060000001b0000001d0007002d0003002e000300012e0003002e0003002e0003002e0003002e000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7845
+        },
+        {
+          "event": 28,
+          "round": 7,
+          "sender": 0,
+          "wire_hex": "01040000070000001c00000079000e0018050003000006000200010600030000060004000107000300000400030000050002000105000400010d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b00030000",
+          "spent": 137,
+          "delivered": [
+            false,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7828
+        },
+        {
+          "event": 29,
+          "round": 7,
+          "sender": 1,
+          "wire_hex": "01040100070000001d000000a1000d0020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            false,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7748
+        },
+        {
+          "event": 30,
+          "round": 7,
+          "sender": 2,
+          "wire_hex": "01040200070000001e000000a1000b0020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            true,
+            false,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7708
+        },
+        {
+          "event": 31,
+          "round": 7,
+          "sender": 3,
+          "wire_hex": "01040300070000001f000000a100070020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7668
+        }
+      ],
+      "summary": {
+        "spent": 1816,
+        "receiver_deliveries": 66
+      }
+    },
+    {
+      "condition": "dropout",
+      "charge_mode": "success",
+      "events": 32,
+      "isolated": [
+        true,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "records": [
+        {
+          "event": 0,
+          "round": 0,
+          "sender": 0,
+          "wire_hex": "01010000000000000000000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 1,
+          "round": 0,
+          "sender": 1,
+          "wire_hex": "01010100000000000100000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 2,
+          "round": 0,
+          "sender": 2,
+          "wire_hex": "01010200000000000200000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 3,
+          "round": 0,
+          "sender": 3,
+          "wire_hex": "010103000000000003000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 4,
+          "round": 1,
+          "sender": 0,
+          "wire_hex": "01020000010000000400000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 5,
+          "round": 1,
+          "sender": 1,
+          "wire_hex": "01020100010000000500000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 6,
+          "round": 1,
+          "sender": 2,
+          "wire_hex": "01020200010000000600000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            false,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 7,
+          "round": 1,
+          "sender": 3,
+          "wire_hex": "010203000100000007000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 8,
+          "round": 2,
+          "sender": 0,
+          "wire_hex": "0103000002000000080000001d000e000500030006000300010600030006000300060003000600030006000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 9,
+          "round": 2,
+          "sender": 1,
+          "wire_hex": "0103010002000000090000001d000d000e0003000f000300010f0003000f0003000f0003000f0003000f000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 10,
+          "round": 2,
+          "sender": 2,
+          "wire_hex": "01030200020000000a0000001d000b00190003001a000300011a0003001a0003001a0003001a0003001a000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 11,
+          "round": 2,
+          "sender": 3,
+          "wire_hex": "01030300020000000b0000001d0007002d0003002e000300012e0003002e0003002e0003002e0003002e000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 12,
+          "round": 3,
+          "sender": 0,
+          "wire_hex": "01040000030000000c00000029000e000805000300000600020001060003000006000400010700030000040003000005000200010500040001",
+          "spent": 57,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8050
+        },
+        {
+          "event": 13,
+          "round": 3,
+          "sender": 1,
+          "wire_hex": "01040100030000000d00000051000d0010040003000005000200010500030000050004000106000200010600030000060004000107000300000e000300000f000200010f000300000f0004000110000300000d000300000e000200010e00040001",
+          "spent": 97,
+          "delivered": [
+            false,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8010
+        },
+        {
+          "event": 14,
+          "round": 3,
+          "sender": 2,
+          "wire_hex": "01040200030000000e00000079000b0018040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000019000300001a000200011a000300001a000400011b00030000180003000019000200011900040001",
+          "spent": 137,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7970
+        },
+        {
+          "event": 15,
+          "round": 3,
+          "sender": 3,
+          "wire_hex": "01040300030000000f000000a100070020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002d000300002e000200012e000300002e000400012f000300002c000300002d000200012d00040001",
+          "spent": 177,
+          "delivered": [
+            false,
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 7930
+        },
+        {
+          "event": 16,
+          "round": 4,
+          "sender": 0,
+          "wire_hex": "01010000040000001000000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8030
+        },
+        {
+          "event": 17,
+          "round": 4,
+          "sender": 1,
+          "wire_hex": "01010100040000001100000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7990
+        },
+        {
+          "event": 18,
+          "round": 4,
+          "sender": 2,
+          "wire_hex": "01010200040000001200000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 7950
+        },
+        {
+          "event": 19,
+          "round": 4,
+          "sender": 3,
+          "wire_hex": "010103000400000013000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 7910
+        },
+        {
+          "event": 20,
+          "round": 5,
+          "sender": 0,
+          "wire_hex": "01020000050000001400000004000e0005000300",
+          "spent": 0,
+          "delivered": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 8030
+        },
+        {
+          "event": 21,
+          "round": 5,
+          "sender": 1,
+          "wire_hex": "01020100050000001500000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 7970
+        },
+        {
+          "event": 22,
+          "round": 5,
+          "sender": 2,
+          "wire_hex": "01020200050000001600000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "balance": 7930
+        },
+        {
+          "event": 23,
+          "round": 5,
+          "sender": 3,
+          "wire_hex": "010203000500000017000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7890
+        },
+        {
+          "event": 24,
+          "round": 6,
+          "sender": 0,
+          "wire_hex": "0103000006000000180000001d000e000500030006000300010600030006000300060003000600030006000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7985
+        },
+        {
+          "event": 25,
+          "round": 6,
+          "sender": 1,
+          "wire_hex": "0103010006000000190000001d000d000e0003000f000300010f0003000f0003000f0003000f0003000f000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7925
+        },
+        {
+          "event": 26,
+          "round": 6,
+          "sender": 2,
+          "wire_hex": "01030200060000001a0000001d000b00190003001a000300011a0003001a0003001a0003001a0003001a000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7885
+        },
+        {
+          "event": 27,
+          "round": 6,
+          "sender": 3,
+          "wire_hex": "01030300060000001b0000001d0007002d0003002e000300012e0003002e0003002e0003002e0003002e000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7845
+        },
+        {
+          "event": 28,
+          "round": 7,
+          "sender": 0,
+          "wire_hex": "01040000070000001c00000079000e0018050003000006000200010600030000060004000107000300000400030000050002000105000400010d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b00030000",
+          "spent": 137,
+          "delivered": [
+            false,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7848
+        },
+        {
+          "event": 29,
+          "round": 7,
+          "sender": 1,
+          "wire_hex": "01040100070000001d000000a1000d0020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            false,
+            false,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7748
+        },
+        {
+          "event": 30,
+          "round": 7,
+          "sender": 2,
+          "wire_hex": "01040200070000001e000000a1000b0020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            true,
+            false,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7708
+        },
+        {
+          "event": 31,
+          "round": 7,
+          "sender": 3,
+          "wire_hex": "01040300070000001f000000a100070020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7668
+        }
+      ],
+      "summary": {
+        "spent": 1796,
+        "receiver_deliveries": 66
+      }
+    },
+    {
+      "condition": "normal",
+      "charge_mode": "attempt",
+      "events": 32,
+      "isolated": [
+        true,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "records": [
+        {
+          "event": 0,
+          "round": 0,
+          "sender": 0,
+          "wire_hex": "01010000000000000000000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 1,
+          "round": 0,
+          "sender": 1,
+          "wire_hex": "01010100000000000100000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 2,
+          "round": 0,
+          "sender": 2,
+          "wire_hex": "01010200000000000200000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 3,
+          "round": 0,
+          "sender": 3,
+          "wire_hex": "010103000000000003000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 4,
+          "round": 1,
+          "sender": 0,
+          "wire_hex": "01020000010000000400000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 5,
+          "round": 1,
+          "sender": 1,
+          "wire_hex": "01020100010000000500000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 6,
+          "round": 1,
+          "sender": 2,
+          "wire_hex": "01020200010000000600000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 7,
+          "round": 1,
+          "sender": 3,
+          "wire_hex": "010203000100000007000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 8,
+          "round": 2,
+          "sender": 0,
+          "wire_hex": "0103000002000000080000001d000e000500030006000300010600030006000300060003000600030006000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 9,
+          "round": 2,
+          "sender": 1,
+          "wire_hex": "0103010002000000090000001d000d000e0003000f000300010f0003000f0003000f0003000f0003000f000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 10,
+          "round": 2,
+          "sender": 2,
+          "wire_hex": "01030200020000000a0000001d000b00190003001a000300011a0003001a0003001a0003001a0003001a000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 11,
+          "round": 2,
+          "sender": 3,
+          "wire_hex": "01030300020000000b0000001d0007002d0003002e000300012e0003002e0003002e0003002e0003002e000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 12,
+          "round": 3,
+          "sender": 0,
+          "wire_hex": "01040000030000000c00000029000e000805000300000600020001060003000006000400010700030000040003000005000200010500040001",
+          "spent": 57,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8050
+        },
+        {
+          "event": 13,
+          "round": 3,
+          "sender": 1,
+          "wire_hex": "01040100030000000d00000051000d0010040003000005000200010500030000050004000106000200010600030000060004000107000300000e000300000f000200010f000300000f0004000110000300000d000300000e000200010e00040001",
+          "spent": 97,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8010
+        },
+        {
+          "event": 14,
+          "round": 3,
+          "sender": 2,
+          "wire_hex": "01040200030000000e00000079000b0018040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000019000300001a000200011a000300001a000400011b00030000180003000019000200011900040001",
+          "spent": 137,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7970
+        },
+        {
+          "event": 15,
+          "round": 3,
+          "sender": 3,
+          "wire_hex": "01040300030000000f000000a100070020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002d000300002e000200012e000300002e000400012f000300002c000300002d000200012d00040001",
+          "spent": 177,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7930
+        },
+        {
+          "event": 16,
+          "round": 4,
+          "sender": 0,
+          "wire_hex": "01010000040000001000000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8030
+        },
+        {
+          "event": 17,
+          "round": 4,
+          "sender": 1,
+          "wire_hex": "01010100040000001100000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7990
+        },
+        {
+          "event": 18,
+          "round": 4,
+          "sender": 2,
+          "wire_hex": "01010200040000001200000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7950
+        },
+        {
+          "event": 19,
+          "round": 4,
+          "sender": 3,
+          "wire_hex": "010103000400000013000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7910
+        },
+        {
+          "event": 20,
+          "round": 5,
+          "sender": 0,
+          "wire_hex": "01020000050000001400000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8010
+        },
+        {
+          "event": 21,
+          "round": 5,
+          "sender": 1,
+          "wire_hex": "01020100050000001500000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7970
+        },
+        {
+          "event": 22,
+          "round": 5,
+          "sender": 2,
+          "wire_hex": "01020200050000001600000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7930
+        },
+        {
+          "event": 23,
+          "round": 5,
+          "sender": 3,
+          "wire_hex": "010203000500000017000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7890
+        },
+        {
+          "event": 24,
+          "round": 6,
+          "sender": 0,
+          "wire_hex": "0103000006000000180000001d000e000500030006000300010600030006000300060003000600030006000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7965
+        },
+        {
+          "event": 25,
+          "round": 6,
+          "sender": 1,
+          "wire_hex": "0103010006000000190000001d000d000e0003000f000300010f0003000f0003000f0003000f0003000f000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7925
+        },
+        {
+          "event": 26,
+          "round": 6,
+          "sender": 2,
+          "wire_hex": "01030200060000001a0000001d000b00190003001a000300011a0003001a0003001a0003001a0003001a000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7885
+        },
+        {
+          "event": 27,
+          "round": 6,
+          "sender": 3,
+          "wire_hex": "01030300060000001b0000001d0007002d0003002e000300012e0003002e0003002e0003002e0003002e000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7845
+        },
+        {
+          "event": 28,
+          "round": 7,
+          "sender": 0,
+          "wire_hex": "01040000070000001c000000a1000e0020050003000006000200010600030000060004000107000300000400030000050002000105000400010d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7788
+        },
+        {
+          "event": 29,
+          "round": 7,
+          "sender": 1,
+          "wire_hex": "01040100070000001d000000a1000d0020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7748
+        },
+        {
+          "event": 30,
+          "round": 7,
+          "sender": 2,
+          "wire_hex": "01040200070000001e000000a1000b0020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7708
+        },
+        {
+          "event": 31,
+          "round": 7,
+          "sender": 3,
+          "wire_hex": "01040300070000001f000000a100070020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7668
+        }
+      ],
+      "summary": {
+        "spent": 1856,
+        "receiver_deliveries": 96
+      }
+    },
+    {
+      "condition": "normal",
+      "charge_mode": "success",
+      "events": 32,
+      "isolated": [
+        true,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "records": [
+        {
+          "event": 0,
+          "round": 0,
+          "sender": 0,
+          "wire_hex": "01010000000000000000000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 1,
+          "round": 0,
+          "sender": 1,
+          "wire_hex": "01010100000000000100000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 2,
+          "round": 0,
+          "sender": 2,
+          "wire_hex": "01010200000000000200000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 3,
+          "round": 0,
+          "sender": 3,
+          "wire_hex": "010103000000000003000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8172
+        },
+        {
+          "event": 4,
+          "round": 1,
+          "sender": 0,
+          "wire_hex": "01020000010000000400000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 5,
+          "round": 1,
+          "sender": 1,
+          "wire_hex": "01020100010000000500000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 6,
+          "round": 1,
+          "sender": 2,
+          "wire_hex": "01020200010000000600000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 7,
+          "round": 1,
+          "sender": 3,
+          "wire_hex": "010203000100000007000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8152
+        },
+        {
+          "event": 8,
+          "round": 2,
+          "sender": 0,
+          "wire_hex": "0103000002000000080000001d000e000500030006000300010600030006000300060003000600030006000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 9,
+          "round": 2,
+          "sender": 1,
+          "wire_hex": "0103010002000000090000001d000d000e0003000f000300010f0003000f0003000f0003000f0003000f000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 10,
+          "round": 2,
+          "sender": 2,
+          "wire_hex": "01030200020000000a0000001d000b00190003001a000300011a0003001a0003001a0003001a0003001a000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 11,
+          "round": 2,
+          "sender": 3,
+          "wire_hex": "01030300020000000b0000001d0007002d0003002e000300012e0003002e0003002e0003002e0003002e000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 8107
+        },
+        {
+          "event": 12,
+          "round": 3,
+          "sender": 0,
+          "wire_hex": "01040000030000000c00000029000e000805000300000600020001060003000006000400010700030000040003000005000200010500040001",
+          "spent": 57,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8050
+        },
+        {
+          "event": 13,
+          "round": 3,
+          "sender": 1,
+          "wire_hex": "01040100030000000d00000051000d0010040003000005000200010500030000050004000106000200010600030000060004000107000300000e000300000f000200010f000300000f0004000110000300000d000300000e000200010e00040001",
+          "spent": 97,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8010
+        },
+        {
+          "event": 14,
+          "round": 3,
+          "sender": 2,
+          "wire_hex": "01040200030000000e00000079000b0018040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000019000300001a000200011a000300001a000400011b00030000180003000019000200011900040001",
+          "spent": 137,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7970
+        },
+        {
+          "event": 15,
+          "round": 3,
+          "sender": 3,
+          "wire_hex": "01040300030000000f000000a100070020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002d000300002e000200012e000300002e000400012f000300002c000300002d000200012d00040001",
+          "spent": 177,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7930
+        },
+        {
+          "event": 16,
+          "round": 4,
+          "sender": 0,
+          "wire_hex": "01010000040000001000000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8030
+        },
+        {
+          "event": 17,
+          "round": 4,
+          "sender": 1,
+          "wire_hex": "01010100040000001100000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7990
+        },
+        {
+          "event": 18,
+          "round": 4,
+          "sender": 2,
+          "wire_hex": "01010200040000001200000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7950
+        },
+        {
+          "event": 19,
+          "round": 4,
+          "sender": 3,
+          "wire_hex": "010103000400000013000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7910
+        },
+        {
+          "event": 20,
+          "round": 5,
+          "sender": 0,
+          "wire_hex": "01020000050000001400000004000e0005000300",
+          "spent": 20,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 8010
+        },
+        {
+          "event": 21,
+          "round": 5,
+          "sender": 1,
+          "wire_hex": "01020100050000001500000004000d000e000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7970
+        },
+        {
+          "event": 22,
+          "round": 5,
+          "sender": 2,
+          "wire_hex": "01020200050000001600000004000b0019000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7930
+        },
+        {
+          "event": 23,
+          "round": 5,
+          "sender": 3,
+          "wire_hex": "010203000500000017000000040007002d000300",
+          "spent": 20,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7890
+        },
+        {
+          "event": 24,
+          "round": 6,
+          "sender": 0,
+          "wire_hex": "0103000006000000180000001d000e000500030006000300010600030006000300060003000600030006000300",
+          "spent": 45,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7965
+        },
+        {
+          "event": 25,
+          "round": 6,
+          "sender": 1,
+          "wire_hex": "0103010006000000190000001d000d000e0003000f000300010f0003000f0003000f0003000f0003000f000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7925
+        },
+        {
+          "event": 26,
+          "round": 6,
+          "sender": 2,
+          "wire_hex": "01030200060000001a0000001d000b00190003001a000300011a0003001a0003001a0003001a0003001a000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7885
+        },
+        {
+          "event": 27,
+          "round": 6,
+          "sender": 3,
+          "wire_hex": "01030300060000001b0000001d0007002d0003002e000300012e0003002e0003002e0003002e0003002e000300",
+          "spent": 45,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7845
+        },
+        {
+          "event": 28,
+          "round": 7,
+          "sender": 0,
+          "wire_hex": "01040000070000001c000000a1000e0020050003000006000200010600030000060004000107000300000400030000050002000105000400010d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            false,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7788
+        },
+        {
+          "event": 29,
+          "round": 7,
+          "sender": 1,
+          "wire_hex": "01040100070000001d000000a1000d0020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+          ],
+          "balance": 7748
+        },
+        {
+          "event": 30,
+          "round": 7,
+          "sender": 2,
+          "wire_hex": "01040200070000001e000000a1000b0020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            true,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          "balance": 7708
+        },
+        {
+          "event": 31,
+          "round": 7,
+          "sender": 3,
+          "wire_hex": "01040300070000001f000000a100070020040003000005000200010500030000050004000106000200010600030000060004000107000300000d000300000e000200010e000300000e000400010f000200010f000300000f00040001100003000018000300001900020001190003000019000400011a000200011a000300001a000400011b000300002c000300002d000200012d000300002d000400012e000200012e000300002e000400012f00030000",
+          "spent": 177,
+          "delivered": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "balance": 7668
+        }
+      ],
+      "summary": {
+        "spent": 1856,
+        "receiver_deliveries": 96
+      }
+    }
+  ],
+  "dropout_frequency_checks": [
+    {
+      "probability": 0.1,
+      "events": 4096,
+      "receivers": 4,
+      "observed_loss_rates": [
+        0.100341796875,
+        0.09765625,
+        0.09619140625,
+        0.09326171875
+      ],
+      "joint_allowed": [
+        {
+          "a": 1,
+          "b": 0,
+          "frequency": 0.812255859375
+        },
+        {
+          "a": 2,
+          "b": 0,
+          "frequency": 0.814453125
+        },
+        {
+          "a": 2,
+          "b": 1,
+          "frequency": 0.814697265625
+        },
+        {
+          "a": 3,
+          "b": 0,
+          "frequency": 0.814208984375
+        },
+        {
+          "a": 3,
+          "b": 1,
+          "frequency": 0.818115234375
+        },
+        {
+          "a": 3,
+          "b": 2,
+          "frequency": 0.818359375
+        }
+      ]
+    },
+    {
+      "probability": 0.3,
+      "events": 4096,
+      "receivers": 4,
+      "observed_loss_rates": [
+        0.3017578125,
+        0.298583984375,
+        0.295166015625,
+        0.28515625
+      ],
+      "joint_allowed": [
+        {
+          "a": 1,
+          "b": 0,
+          "frequency": 0.489990234375
+        },
+        {
+          "a": 2,
+          "b": 0,
+          "frequency": 0.49755859375
+        },
+        {
+          "a": 2,
+          "b": 1,
+          "frequency": 0.495849609375
+        },
+        {
+          "a": 3,
+          "b": 0,
+          "frequency": 0.496826171875
+        },
+        {
+          "a": 3,
+          "b": 1,
+          "frequency": 0.50634765625
+        },
+        {
+          "a": 3,
+          "b": 2,
+          "frequency": 0.50439453125
+        }
+      ]
+    },
+    {
+      "probability": 0.5,
+      "events": 4096,
+      "receivers": 4,
+      "observed_loss_rates": [
+        0.514404296875,
+        0.501953125,
+        0.49951171875,
+        0.492431640625
+      ],
+      "joint_allowed": [
+        {
+          "a": 1,
+          "b": 0,
+          "frequency": 0.2412109375
+        },
+        {
+          "a": 2,
+          "b": 0,
+          "frequency": 0.24853515625
+        },
+        {
+          "a": 2,
+          "b": 1,
+          "frequency": 0.25634765625
+        },
+        {
+          "a": 3,
+          "b": 0,
+          "frequency": 0.2451171875
+        },
+        {
+          "a": 3,
+          "b": 1,
+          "frequency": 0.250244140625
+        },
+        {
+          "a": 3,
+          "b": 2,
+          "frequency": 0.261962890625
+        }
+      ]
+    }
+  ],
+  "fix": "Pass valid_shape into the shared map receiver from real observation, imagined observation, and replay; ignore padding coordinates while charging all transmitted bytes.",
+  "notes": [
+    "Canonical tests deduplicated from final and regression runs; eight new tests occur in both.",
+    "Initial/foundation checks used the pre-fix installed wheel. Post-fix runs explicitly load workspace src.",
+    "Final communication run: 118 passed, 1 deselected (collector). Regression run: 36 passed, 30 deselected; 8 overlap final.",
+    "The keyword-only call cleanup before final has the same valid_shape semantics as the regression run.",
+    "The final source differs from the last test run only by explanatory docstring text.",
+    "Legacy Matplotlib/Pyparsing deprecation warnings appeared in the adjacent regression; no skips or failures."
+  ]
+}

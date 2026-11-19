@@ -1,10 +1,10 @@
-"""Run small, real computations to verify the training runtime."""
+"""Run small, real computations to verify the JAX and Flax runtime."""
 
 from collections.abc import Mapping
 from dataclasses import dataclass
 from importlib.metadata import version
 from time import perf_counter
-from typing import NamedTuple
+from typing import Literal, NamedTuple
 
 import flax.linen as nn
 import jax
@@ -33,10 +33,13 @@ class RuntimeReport:
     batch_size: int
     horizon: int
     scan_correct: bool
-    initial_loss: float
-    final_loss: float
+    initial_loss: float | None
+    final_loss: float | None
     compile_and_run_seconds: float
     warm_run_seconds: float
+    inference_correct: bool
+    optimizer_status: Literal["executed", "skipped_runtime_only"]
+    optimizer_updates: int
     purpose: str = "runtime_smoke_only"
 
 
@@ -71,8 +74,8 @@ def batched_scan(initial: jax.Array, increments: jax.Array) -> ScanResult:
     return jax.vmap(one)(initial, increments)
 
 
-def run_doctor() -> RuntimeReport:
-    """Verify compiled batching, temporal scan and a real gradient-based update."""
+def run_doctor(*, runtime_only: bool = False) -> RuntimeReport:
+    """Verify compiled scan and inference, with optional legacy optimizer updates."""
     batch_size, horizon = 32, 16
     initial = jnp.arange(batch_size, dtype=jnp.int32)
     increments = jnp.ones((batch_size, horizon), dtype=jnp.int32)
@@ -90,25 +93,36 @@ def run_doctor() -> RuntimeReport:
 
     model = Regressor()
     inputs = jnp.linspace(-1.0, 1.0, 32).reshape(-1, 1)
-    targets = 2.0 * inputs + 0.25
     params = model.init(jax.random.key(7), inputs)["params"]
-    state = TrainState.create(apply_fn=model.apply, params=params, tx=optax.adam(0.03))
-
-    @jax.jit
-    def update(current: TrainState) -> tuple[TrainState, jax.Array]:
-        def loss_fn(parameters: Mapping[str, Mapping[str, jax.Array]]) -> jax.Array:
-            predicted = current.apply_fn({"params": parameters}, inputs)
-            return jnp.mean(jnp.square(predicted - targets))
-
-        loss, gradient = jax.value_and_grad(loss_fn)(current.params)
-        return current.apply_gradients(grads=gradient), loss
-
-    initial_loss = float(jnp.mean(jnp.square(model.apply({"params": params}, inputs) - targets)))
-    for _ in range(40):
-        state, _loss = update(state)
-    final_loss = float(
-        jnp.mean(jnp.square(state.apply_fn({"params": state.params}, inputs) - targets)),
+    predicted = jax.block_until_ready(jax.jit(model.apply)({"params": params}, inputs))
+    inference_correct = bool(jnp.all(jnp.isfinite(predicted))) and bool(
+        jnp.allclose(predicted, model.apply({"params": params}, inputs)),
     )
+    if runtime_only:
+        initial_loss = final_loss = None
+        optimizer_updates = 0
+    else:
+        targets = 2.0 * inputs + 0.25
+        state = TrainState.create(apply_fn=model.apply, params=params, tx=optax.adam(0.03))
+
+        @jax.jit
+        def update(current: TrainState) -> tuple[TrainState, jax.Array]:
+            def loss_fn(parameters: Mapping[str, Mapping[str, jax.Array]]) -> jax.Array:
+                predicted = current.apply_fn({"params": parameters}, inputs)
+                return jnp.mean(jnp.square(predicted - targets))
+
+            loss, gradient = jax.value_and_grad(loss_fn)(current.params)
+            return current.apply_gradients(grads=gradient), loss
+
+        initial_loss = float(
+            jnp.mean(jnp.square(model.apply({"params": params}, inputs) - targets)),
+        )
+        optimizer_updates = 40
+        for _ in range(optimizer_updates):
+            state, _loss = update(state)
+        final_loss = float(
+            jnp.mean(jnp.square(state.apply_fn({"params": state.params}, inputs) - targets)),
+        )
     return RuntimeReport(
         jax_version=version("jax"),
         flax_version=version("flax"),
@@ -124,4 +138,7 @@ def run_doctor() -> RuntimeReport:
         final_loss=final_loss,
         compile_and_run_seconds=compile_seconds,
         warm_run_seconds=warm_seconds,
+        inference_correct=inference_correct,
+        optimizer_status="skipped_runtime_only" if runtime_only else "executed",
+        optimizer_updates=optimizer_updates,
     )

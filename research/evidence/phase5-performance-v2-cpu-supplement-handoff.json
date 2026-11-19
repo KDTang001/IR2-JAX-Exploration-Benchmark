@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-11-17T09:46:36.656879+08:00",
+  "state.json": {
+    "status": "executing",
+    "updated_utc": "2026-11-17T01:44:43.547065+00:00",
+    "case_id": "cpu-1024-n4-b16",
+    "deferred_preflights": 0
+  },
+  "current.json": {
+    "case_id": "cpu-1024-n4-b16",
+    "worker_pid": 916286,
+    "started_utc": "2026-11-17T01:44:44.735068+00:00"
+  },
+  "completion.json": null,
+  "controller_tail": "",
+  "worker_process": "    PID     ELAPSED STAT COMMAND\n 916286       01:52 Ssl  /home/user/anaconda3/envs/ex/bin/python /home/user/Tz/acceptance/phase5-20261114/performance_v2.py worker --config /home/user/Tz/acceptance/phase5-20261114/source/configs/benchmark.json --map /home/user/Tz/ir2-benchmark/DungeonMaps/train/difficult/img_2394.png --bucket 1024 --agents 4 --batch-size 16 --device cpu --steps 4 --warmups 3 --repeats 10 --seed 7 --policy-checkpoint /home/user/Tz/acceptance/phase4-20261114/reference/policy.npz --output /home/user/Tz/acceptance/phase5-20261114/performance-v2-supplement-20261117/cpu-1024-n4-b16\n"
+}

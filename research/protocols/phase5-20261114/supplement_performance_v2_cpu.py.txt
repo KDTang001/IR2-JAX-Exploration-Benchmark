@@ -1,0 +1,133 @@
+"""Supplement only the two unexecuted CPU cases; preserve the closed original window."""
+import copy
+import fcntl
+import hashlib
+import importlib.util
+import json
+import pathlib
+import shutil
+import sys
+import time
+from datetime import datetime, timezone
+
+ROOT = pathlib.Path('/home/user/Tz/acceptance/phase5-20261114')
+ORIGINAL = ROOT / 'performance-v2'
+OUT = ROOT / 'performance-v2-supplement-20261117'
+EXPECTED = {'cpu-1024-n4-b16', 'cpu-1024-n6-b16'}
+TRANSIENT = {
+    'CPU affinity mean utilization >10%; quiet preflight failed',
+    'GPU compute process present; quiet preflight failed',
+    'GPU utilization >5%; quiet preflight failed',
+}
+spec = importlib.util.spec_from_file_location('phase5_frozen_measurement', ROOT / 'performance_v2.py')
+module = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = module
+spec.loader.exec_module(module)
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def inventory():
+    paths = list((ORIGINAL / 'case-records').glob('*.json'))
+    paths += [ORIGINAL / name for name in ('requested-manifest.json', 'budget.json', 'progress.json', 'recovery-finished.json')]
+    return {str(path.relative_to(ROOT)): sha(path) for path in sorted(paths)}
+
+
+def status():
+    records = [json.loads(path.read_text()) for path in sorted((OUT / 'case-records').glob('*.json'))]
+    assert {row['case_id'] for row in records} <= EXPECTED
+    counts = {state: sum(row['status'] == state for row in records) for state in {row['status'] for row in records}}
+    value = dict(scope='supplement_only_two_previously_unexecuted_cpu_cases', updated_utc=module.stamp(),
+        requested=2, recorded=len(records), unrecorded=2-len(records), counts=counts,
+        all_requested_recorded=len(records)==2, all_requested_measured=counts.get('measured',0)==2,
+        cases=records)
+    module.save(OUT / 'progress.json', value)
+    return value
+
+
+with (ROOT / 'control/performance.lock').open('a') as lock:
+    fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    original_manifest = json.loads((ORIGINAL / 'requested-manifest.json').read_text())
+    assert sha(ROOT / 'performance_v2.py') == original_manifest['wrapper_sha256']
+    assert module.source_digest() == original_manifest['source_sha256']
+    assert json.loads((ORIGINAL / 'current.json').read_text()) is None
+    existing = {p.stem for p in (ORIGINAL / 'case-records').glob('*.json')}
+    all_ids = {case['case_id'] for case in original_manifest['cases']}
+    assert len(existing) == 52 and len(all_ids) == 54 and all_ids-existing == EXPECTED
+    assert not OUT.exists(), 'Do not replace an existing supplementary run'
+    OUT.mkdir()
+    before = inventory()
+    deadline = time.time() + 5400
+    manifest = copy.deepcopy(original_manifest)
+    manifest['cases'] = [case for case in manifest['cases'] if case['case_id'] in EXPECTED]
+    for case in manifest['cases']:
+        assert case['device']=='cpu' and case['bucket']==1024 and case['batch_size']==16
+        path = OUT / case['case_id']
+        case['output'] = str(path)
+        argv = case['argv']
+        argv[argv.index('--output')+1] = str(path)
+    manifest.update(protocol='phase5_v2_cpu_supplement_20261117',created_utc=module.stamp(),
+        requested=2,parent_requested=54,parent_manifest_sha256=sha(ORIGINAL/'requested-manifest.json'),
+        authorization='User continued the incomplete work on 2026-11-17; only the two previously unexecuted CPU cases are added.',
+        measurement_protocol_unchanged=True,original_window_remains_closed=True,
+        total_budget_seconds=5400,overall_deadline_utc=datetime.fromtimestamp(deadline,timezone.utc).isoformat(),
+        case_timeout_seconds=1800,scheduler_sha256=sha(pathlib.Path(__file__)),
+        original_files_sha256=before,
+        storage_changes='Only output paths and parent progress scope change. The original timed worker, config, map, checkpoint, seeds, CPU affinity, thresholds,4events,3warmups,10samples are unchanged.')
+    module.save(OUT/'requested-manifest.json',manifest)
+    module.OUT = OUT
+    module.status = status
+    status()
+    deferrals = 0
+    try:
+        for case in manifest['cases']:
+            while time.time() < deadline:
+                module.save(OUT/'state.json',dict(status='executing',updated_utc=module.stamp(),case_id=case['case_id'],deferred_preflights=deferrals))
+                try:
+                    module.run_case(case,manifest,deadline)
+                except AssertionError as error:
+                    if str(error) not in TRANSIENT:
+                        raise
+                    assert not (OUT/'case-records'/(case['case_id']+'.json')).exists()
+                    current=OUT/'current.json'
+                    assert not current.exists() or json.loads(current.read_text()) is None
+                    deferrals += 1
+                    source=OUT/'resource-snapshots'/(case['case_id']+'-before.json')
+                    saved=OUT/'deferrals'/(case['case_id']+'-'+str(deferrals)+'.json')
+                    saved.parent.mkdir(exist_ok=True)
+                    shutil.copyfile(source,saved)
+                    entry=dict(status='waiting_for_idle',utc=module.stamp(),case_id=case['case_id'],reason=str(error),snapshot=str(saved),snapshot_sha256=sha(saved))
+                    with (OUT/'deferrals.jsonl').open('a') as stream:
+                        stream.write(json.dumps(entry)+'\n')
+                    module.save(OUT/'state.json',entry)
+                    print(json.dumps(entry),flush=True)
+                    time.sleep(max(0,min(15,deadline-time.time())))
+                else:
+                    break
+            if time.time() >= deadline:
+                break
+        assert inventory() == before, 'Original52 records/window changed'
+        assert module.source_digest()==manifest['source_sha256'] and sha(ROOT/'performance_v2.py')==manifest['wrapper_sha256']
+        progress=status()
+        parent_records=[json.loads(p.read_text()) for p in sorted((ORIGINAL/'case-records').glob('*.json'))]
+        combined=parent_records+progress['cases']
+        assert len({r['case_id'] for r in combined})==len(combined)
+        counts={state:sum(r['status']==state for r in combined) for state in {r['status'] for r in combined}}
+        final=dict(status='all_supplement_cases_recorded' if progress['recorded']==2 else 'supplement_budget_exhausted',
+            finished_utc=module.stamp(),supplement_requested=2,supplement_recorded=progress['recorded'],
+            combined_requested=54,combined_recorded=len(combined),combined_outcomes=counts,
+            pending=sorted(all_ids-{r['case_id'] for r in combined}),
+            all_requested_recorded=len(combined)==54,all_requested_measured=counts.get('measured',0)==54,
+            original52_files_unchanged=True,original_window_remains_closed=True,
+            supplement_manifest_sha256=sha(OUT/'requested-manifest.json'),deferred_preflights=deferrals,
+            note='A timeout or allocation error is retained. Attempting all54 cases does not imply54 complete timings or formal paper completion.')
+        module.save(OUT/'completion.json',final)
+        module.save(OUT/'state.json',dict(status='stopped',finished_utc=final['finished_utc'],completion_status=final['status']))
+        (OUT/'SUMMARY.md').write_text('# CPU supplementary measurements\n\n'+json.dumps(final,indent=2)+'\n')
+        print(json.dumps(final),flush=True)
+    except Exception as error:
+        module.save(OUT/'completion.json',dict(status='blocked',finished_utc=module.stamp(),error_type=type(error).__name__,error=str(error)))
+        module.save(OUT/'state.json',dict(status='stopped_after_error',error=str(error)))
+        raise

@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-11-16T11:27:02.625342+08:00",
+  "state": {
+    "status": "executing",
+    "updated_utc": "2026-11-16T03:23:21.379451+00:00",
+    "case_id": "cpu-512-n4-b1",
+    "deferred_preflights": 0,
+    "declaration_sha256": "f422a8921e87d17543cd9942390fb80c88d7851593af8211232f835491abc8cd"
+  },
+  "current": {
+    "case_id": "cpu-512-n4-b1",
+    "worker_pid": 786239,
+    "started_utc": "2026-11-16T03:23:22.561526+00:00"
+  },
+  "finished": null,
+  "progress": {
+    "updated_utc": "2026-11-16T03:23:21.368997+00:00",
+    "requested": 54,
+    "recorded": 7,
+    "unrecorded": 47,
+    "counts": {
+      "measured": 6,
+      "timeout": 1
+    },
+    "all_requested_measured": false
+  },
+  "deferrals": [],
+  "controller_log_tail": "{\"case_id\": \"gpu-512-n4-b1\", \"status\": \"measured\", \"wall_seconds\": 159.23242933105212}\n"
+}

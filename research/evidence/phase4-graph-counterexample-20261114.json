@@ -1,0 +1,29 @@
+{
+  "status": "reproduced",
+  "first_failed_event": 12,
+  "agent": 0,
+  "position": [
+    6,
+    23
+  ],
+  "valid_nodes": 10,
+  "original_repair_edges_equal": true,
+  "repair_edge_mismatches": 0,
+  "original_rendezvous_success": false,
+  "peers": [
+    {
+      "peer": 1,
+      "position": [
+        20,
+        18
+      ],
+      "position_cell": 2,
+      "nearest_node": [
+        20,
+        18
+      ],
+      "reachable_original_repair": false,
+      "surplus": 258
+    }
+  ]
+}

@@ -19,6 +19,7 @@ from ir2_benchmark.evaluation.records import (
 )
 from ir2_benchmark.evaluation.scenarios import read_task_manifest
 from ir2_benchmark.maps.prepare import MapError
+from ir2_benchmark.types import GraphStateError
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -92,6 +93,8 @@ def _failed(task: EvaluationTask, outcome: EpisodeOutcome, error: str) -> Evalua
 def _error_result(task: EvaluationTask, error: ExecutionError) -> EvaluationResult:
     """Preserve the existing lane error categories at preprocessing and compute boundaries."""
     match error:
+        case GraphStateError():
+            outcome = EpisodeOutcome.ENVIRONMENT_ERROR
         case MapError():
             outcome = EpisodeOutcome.MAP_ERROR
         case ModelExecutionError():

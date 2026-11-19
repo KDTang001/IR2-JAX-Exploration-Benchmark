@@ -4,11 +4,69 @@
 
 The independent `ir2_benchmark` package runs alongside the original IR2 code. The original graph reference now uses deterministic coordinate ordering for equal-distance neighbors, set traversal and A* ties, as approved for paired comparison. The approved runtime is the existing Linux server conda environment `ex`, Python 3.11, JAX 0.4.35. Follow [server-running.md](server-running.md) for environment preparation; do not replace that environment with a workstation training installation.
 
+## Current fixed benchmark evaluation (Phase 4)
+
+Use `configs/benchmark.json`, `configs/evaluation/benchmark.json` and `configs/evaluation/benchmark-methods.json` for the eight fixed methods: nearest-frontier and original-weight IR2 adapted navigation, each with off/PLAN/MAP_DELTA/mixed communication. They require no new training. A/B training examples and `core.json` later in this document describe retained research code, not the current benchmark acceptance workload.
+
+All active communication schedules send every four own actions; mixed cycles PLAN/MAP_DELTA/MAP_DELTA/POSITION. Baseline configuration uses the IR2 signal model, attempt charging, 8 KiB per robot and receiver-owned graphs. Normal, random loss and burst outage are separate test conditions. Normal retains physical signal attenuation. `spent_bytes` measures paid budget; `emitted_bytes` measures actual wire traffic, including unpaid failed delivery under success charging.
+
+The main benchmark explicitly uses `rendezvous_mode=reachable_only`: after the original graph repairs, an unreachable received peer estimate contributes no rendezvous utility; other reachable peers still contribute. This handles partial-map communication without inventing a path or consulting hidden truth. `configs/benchmark_strict_ir2.json` changes only that field to `strict_ir2`, retaining the original abort-on-unreachable control. `HostConfig` and original parity tests keep the strict default. This switch is a declared benchmark extension, not full equivalence to the original IR2 communication MDP.
+
+For strict-control planning use `--config configs/benchmark_strict_ir2.json` with `--suite-config configs/evaluation/benchmark_strict_ir2.json`; its report uses the latter as `--core`. The same eight-method manifest is reused. Main and control suites differ only in their base configuration and keep separate task identities/completion counts. The full strict suite has not been executed in Phase 4; one known failure is retained as a negative control.
+
+Supply a separate upstream checkpoint from commit `1ef6d224ae18503f4763c3cec20e05a737f95783`, `model/stage2/checkpoint.pth`. Its SHA256 must be `cd72ac7dbf164b8be089394154794416fc969a47d79c1072c437f6f2aa363cf3`. The evaluator accepts that `.pth` directly, or an NPZ containing its 90 original float32 `policy_model` tensors:
+
+```bash
+conda activate ex
+# From the audit checkout root, with the verified checkpoint outside git:
+python - <<'PY'
+from pathlib import Path
+import hashlib
+import numpy as np
+import torch
+p = Path('/absolute/path/checkpoint.pth')
+assert hashlib.sha256(p.read_bytes()).hexdigest() == 'cd72ac7dbf164b8be089394154794416fc969a47d79c1072c437f6f2aa363cf3'
+w = torch.load(p, map_location='cpu', weights_only=True)['policy_model']
+arrays = {k: v.detach().cpu().numpy() for k, v in w.items()}
+assert len(arrays) == 90 and all(v.dtype == np.float32 for v in arrays.values())
+np.savez('/absolute/path/policy.npz', **arrays)
+PY
+```
+
+Keep weights and result directories outside git. This is an **external pretrained reference**; upstream training exposure to benchmark maps is not certified. Zero new benchmark training events does not mean the reference was never trained or is a data-fair retrained baseline.
+
+Freeze the full declared workload without executing it:
+
+```bash
+PYTHONPATH=src:. python -m ir2_benchmark.cli evaluate --suite formal \
+  --config configs/benchmark.json --suite-config configs/evaluation/benchmark.json \
+  --method-manifest configs/evaluation/benchmark-methods.json \
+  --reference-checkpoint /absolute/path/policy.npz \
+  --map-sources artifacts/maps/sources.json --plan-only --output /absolute/path/planned
+```
+
+The Phase 4 limited acceptance is reproducible separately; `--data-root` points to the existing immutable map pool, and all code imports come from this checkout:
+
+```bash
+export PYTHONPATH=src:.
+export JAX_PLATFORMS=cuda
+export XLA_PYTHON_CLIENT_PREALLOCATE=false
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1
+python scripts/phase4_acceptance.py --data-root /absolute/path/map-checkout \
+  --checkpoint /absolute/path/policy.npz --output /absolute/path/phase4 --workers 2
+python scripts/audit_baseline_evaluation.py --manifest /absolute/path/phase4/tasks.jsonl \
+  --results /absolute/path/phase4 --output /absolute/path/phase4/independent-replay.json --workers 8
+```
+
+This executes 312 explicitly limited tasks plus one isolated strict-rule counterexample, verifies original-weight Torch/JAX inference, invokes the public CLI/report, and checks exact resume and paired exogenous faults. Two spawned CUDA processes own disjoint static inference groups; each keeps the existing batch-size-2 runner, and the parent aggregates their counts. `--workers 1` runs the same task identities sequentially. It does not execute the 2,294,784-episode formal declaration. See the [Phase 4 report](../research/BASELINE_EVALUATION_REPORT.md) for native sizes, reduced acceptance horizons, independent-oracle boundaries and recorded failure history.
+
+Reports distinguish completion of the requested manifest from completion of the formal declaration. Result metadata, scores, checkpoint/configuration identities and trace checksums must match before resume or completion. Fixed-policy uncertainty is conditional on frozen weights and bootstraps maps; when any included family has only one independent map the interval stays absent. Scenario repeats cannot substitute for map replication.
+
 ## IR2 navigation and observation contract
 
-Use `configs/receiver_ir2_graph.json` with `configs/a/receiver_ir2_graph.json` for the IR2 graph baseline. `grid_path` and `ir2_one_hop` remain explicitly named legacy modes; neither is the faithful IR2 graph implementation. Existing legacy checkpoints cannot be resumed under the new configuration.
+The retained A-route training uses `configs/receiver_ir2_graph.json` with `configs/a/receiver_ir2_graph.json`; current fixed evaluation uses the Phase 4 files above. `grid_path` and `ir2_one_hop` remain explicitly named legacy modes; neither is the faithful IR2 graph implementation. Existing legacy checkpoints cannot be resumed under the new configuration.
 
-The active graph-policy training configuration uses learning rate `1e-5`, matching the scale in original `parameter.py`. An initial `3e-4` run exceeded the PPO KL target and subsequently saturated the pointer, so its checkpoint was discarded. Reusing another legacy method file requires setting its graph-policy learning rate explicitly; matching observation shapes alone does not validate its training settings.
+The retained graph-policy training configuration uses learning rate `1e-5`, matching the scale in original `parameter.py`. An initial `3e-4` run exceeded the PPO KL target and subsequently saturated the pointer, so its checkpoint was discarded. Reusing another legacy method file requires setting its graph-policy learning rate explicitly; matching observation shapes alone does not validate its training settings.
 
 In `ir2_graph`, actions select one outgoing graph edge and execute that complete edge. The actor receives the original full graph: six node features (normalized x/y, exploration utility, rendezvous utility, visit guidepost, occupancy), adjacency, current node, neighbor indices and padding masks. The six-layer graph attention encoder, decoder and pointer follow the original policy. Budget and received-message fields feed the separate communication extension; this baseline does not add their scores to the original navigation logits.
 

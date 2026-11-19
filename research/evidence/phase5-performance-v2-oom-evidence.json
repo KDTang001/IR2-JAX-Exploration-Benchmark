@@ -1,0 +1,153 @@
+{
+  "status": "verified",
+  "source": "existing frozen performance-v2 records and logs; no reruns",
+  "requested": 54,
+  "recorded": 44,
+  "outcomes": {
+    "measured": 37,
+    "nonzero": 6,
+    "timeout": 1
+  },
+  "derived_ooms": 6,
+  "raw_statuses_unchanged": true,
+  "failures": [
+    {
+      "case_id": "gpu-1024-n2-b16",
+      "recorded_status": "nonzero",
+      "classification": "oom",
+      "returncode": 1,
+      "failure_phase": {
+        "phase": "scripted_events",
+        "status": "running",
+        "started_utc": "2026-11-16T05:29:16.784966+00:00"
+      },
+      "completed_phases": [
+        "reset"
+      ],
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/gpu-1024-n2-b16.log",
+      "log_sha256": "8c9e4124fd316b9dfe21ebad784b175053d8e5db9dbc81e06d657e5c9a6a263b",
+      "log_bytes": 5080,
+      "evidence_lines": [
+        "2026-11-16 13:30:10.696936: W external/xla/xla/tsl/framework/bfc_allocator.cc:497] Allocator (GPU_0_bfc) ran out of memory trying to allocate 47.96GiB (rounded to 51496603392)requested by op ",
+        "E1116 13:30:10.697172  833959 pjrt_stream_executor_client.cc:3085] Execution of replica 0 failed: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 51496603384 bytes.",
+        "ValueError: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 51496603384 bytes."
+      ],
+      "sampled_gpu_process_peak_mib_lower_bound": 61368
+    },
+    {
+      "case_id": "gpu-1024-n4-b16",
+      "recorded_status": "nonzero",
+      "classification": "oom",
+      "returncode": 1,
+      "failure_phase": {
+        "phase": "scripted_events",
+        "status": "running",
+        "started_utc": "2026-11-16T05:33:34.261414+00:00"
+      },
+      "completed_phases": [
+        "reset"
+      ],
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/gpu-1024-n4-b16.log",
+      "log_sha256": "ea936c513f32214c37e99ca9e89efd1fc726128a50b9d9dc54faf664aba82e86",
+      "log_bytes": 5082,
+      "evidence_lines": [
+        "2026-11-16 13:34:27.653652: W external/xla/xla/tsl/framework/bfc_allocator.cc:497] Allocator (GPU_0_bfc) ran out of memory trying to allocate 47.96GiB (rounded to 51496603392)requested by op ",
+        "E1116 13:34:27.653966  834464 pjrt_stream_executor_client.cc:3085] Execution of replica 0 failed: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 51496603384 bytes.",
+        "ValueError: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 51496603384 bytes."
+      ],
+      "sampled_gpu_process_peak_mib_lower_bound": 61368
+    },
+    {
+      "case_id": "gpu-1024-n6-b16",
+      "recorded_status": "nonzero",
+      "classification": "oom",
+      "returncode": 1,
+      "failure_phase": {
+        "phase": "scripted_events",
+        "status": "running",
+        "started_utc": "2026-11-16T05:37:50.979964+00:00"
+      },
+      "completed_phases": [
+        "reset"
+      ],
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/gpu-1024-n6-b16.log",
+      "log_sha256": "81eda13ae598b31acff33000bae4cbd341deb81e5eacb7d394508eb90d44c9e7",
+      "log_bytes": 5077,
+      "evidence_lines": [
+        "2026-11-16 13:38:45.361461: W external/xla/xla/tsl/framework/bfc_allocator.cc:497] Allocator (GPU_0_bfc) ran out of memory trying to allocate 47.96GiB (rounded to 51496603392)requested by op ",
+        "E1116 13:38:45.361745  834977 pjrt_stream_executor_client.cc:3085] Execution of replica 0 failed: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 51496603384 bytes.",
+        "ValueError: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 51496603384 bytes."
+      ],
+      "sampled_gpu_process_peak_mib_lower_bound": 61368
+    },
+    {
+      "case_id": "gpu-768-n2-b16",
+      "recorded_status": "nonzero",
+      "classification": "oom",
+      "returncode": 1,
+      "failure_phase": {
+        "phase": "scripted_events",
+        "status": "running",
+        "started_utc": "2026-11-16T05:16:31.765035+00:00"
+      },
+      "completed_phases": [
+        "reset"
+      ],
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/gpu-768-n2-b16.log",
+      "log_sha256": "c4c08c81e6829f3b5991c455b384c5c4d94c81f8b32dc66baba905f5646e6016",
+      "log_bytes": 4869,
+      "evidence_lines": [
+        "2026-11-16 13:17:24.477102: W external/xla/xla/tsl/framework/bfc_allocator.cc:497] Allocator (GPU_0_bfc) ran out of memory trying to allocate 28.99GiB (rounded to 31127424512)requested by op ",
+        "E1116 13:17:24.477375  832419 pjrt_stream_executor_client.cc:3085] Execution of replica 0 failed: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 31127424504 bytes.",
+        "ValueError: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 31127424504 bytes."
+      ],
+      "sampled_gpu_process_peak_mib_lower_bound": 37484
+    },
+    {
+      "case_id": "gpu-768-n4-b16",
+      "recorded_status": "nonzero",
+      "classification": "oom",
+      "returncode": 1,
+      "failure_phase": {
+        "phase": "scripted_events",
+        "status": "running",
+        "started_utc": "2026-11-16T05:20:46.039698+00:00"
+      },
+      "completed_phases": [
+        "reset"
+      ],
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/gpu-768-n4-b16.log",
+      "log_sha256": "4ec6a96d5d2847d90f486af3343b7f605df4c05cb32504968ceda2ca652cf43b",
+      "log_bytes": 4868,
+      "evidence_lines": [
+        "2026-11-16 13:21:38.623739: W external/xla/xla/tsl/framework/bfc_allocator.cc:497] Allocator (GPU_0_bfc) ran out of memory trying to allocate 28.99GiB (rounded to 31127424512)requested by op ",
+        "E1116 13:21:38.624244  832940 pjrt_stream_executor_client.cc:3085] Execution of replica 0 failed: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 31127424504 bytes.",
+        "ValueError: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 31127424504 bytes."
+      ],
+      "sampled_gpu_process_peak_mib_lower_bound": 37484
+    },
+    {
+      "case_id": "gpu-768-n6-b16",
+      "recorded_status": "nonzero",
+      "classification": "oom",
+      "returncode": 1,
+      "failure_phase": {
+        "phase": "scripted_events",
+        "status": "running",
+        "started_utc": "2026-11-16T05:25:01.316985+00:00"
+      },
+      "completed_phases": [
+        "reset"
+      ],
+      "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/gpu-768-n6-b16.log",
+      "log_sha256": "043a1798c278fdc816844a88b4f3e3b51fc50b2d95f9f265cf6fddca124d9ffe",
+      "log_bytes": 4869,
+      "evidence_lines": [
+        "2026-11-16 13:25:53.841622: W external/xla/xla/tsl/framework/bfc_allocator.cc:497] Allocator (GPU_0_bfc) ran out of memory trying to allocate 28.99GiB (rounded to 31127424512)requested by op ",
+        "E1116 13:25:53.841915  833457 pjrt_stream_executor_client.cc:3085] Execution of replica 0 failed: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 31127424504 bytes.",
+        "ValueError: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 31127424504 bytes."
+      ],
+      "sampled_gpu_process_peak_mib_lower_bound": 37484
+    }
+  ]
+}

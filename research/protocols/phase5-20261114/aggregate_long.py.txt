@@ -1,0 +1,120 @@
+"""Compact read-only diagnostics for the fixed Phase 5 long-episode manifest."""
+import argparse
+import hashlib
+import json
+from collections import Counter
+from pathlib import Path
+import numpy as np
+
+
+def digest_file(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def aggregate(root, partial=False):
+    manifest = root / 'evidence/tasks.jsonl'
+    tasks = [json.loads(line) for line in manifest.read_text().splitlines()]
+    audited = {}
+    for name in ('original-audit-first-cells.json', 'original-audit-remaining-cells.json'):
+        path = root / 'evidence' / name
+        if path.exists():
+            data = json.loads(path.read_text())
+            assert data['status'] == 'passed'
+            for row in data['results']:
+                assert row['result_id'] not in audited
+                audited[row['result_id']] = row
+    rows = []
+    for task in tasks:
+        result_id = task['result_id']
+        result_path = root / 'long/results' / (result_id + '.json')
+        if not result_path.exists():
+            assert partial, result_id
+            continue
+        envelope = json.loads(result_path.read_text())
+        row = envelope['result']
+        assert hashlib.sha256(json.dumps(row, sort_keys=True, separators=(',', ':')).encode()).hexdigest() == envelope['checksum']
+        scene = task['scenario']
+        n = scene['n_agents']
+        item = dict(result_id=result_id, method=row['method_id'], bucket=scene['bucket'], n_agents=n,
+                    fault=scene['fault_mode'], budget=scene['budget'], fusion=scene['config']['global_graph_fusion'],
+                    outcome=row['outcome'], active_events=row['active_events'], emitted_bytes=row['emitted_bytes'],
+                    spent_bytes=row['spent_bytes'], record_bytes=result_path.stat().st_size,
+                    record_sha256=digest_file(result_path), error=row['error'])
+        if row['outcome'] in ('success', 'timeout'):
+            oracle = audited.get(result_id)
+            if oracle is None:
+                assert partial, ('not audited', result_id)
+                continue
+            path = Path(row['trace_file'])
+            assert digest_file(path) == row['trace_hash']
+            area = oracle['component_area']
+            with np.load(path, allow_pickle=False) as trace:
+                active = np.flatnonzero(trace['active'])
+                count = len(active)
+                assert count == row['active_events'] and np.array_equal(active, np.arange(count))
+                assert count > 0
+                covered = np.rint(trace['coverage'][active].astype(np.float64) * area).astype(np.int64)
+                previous_covered = np.r_[round(float(trace['initial_coverage']) * area), covered[:-1]]
+                balances = trace['balances'][active, :n]
+                previous_balances = np.vstack([np.full(n, scene['budget']), balances[:-1]])
+                positions = trace['positions'][active, :n]
+                agents = trace['agent_id'][active].astype(np.int64)
+                prior_positions = np.vstack([positions[:1], positions[:-1]])
+                moved = np.any(positions != prior_positions, axis=-1)[np.arange(count), agents]
+                low_before = previous_balances[np.arange(count), agents] < 20
+                received_low = trace['delivered'][active, :n] & (balances < 20)
+                # Post-terminal trace fields must repeat the actual final live state.
+                frozen = ~trace['active']
+                for name in ('positions', 'goals', 'balances'):
+                    assert np.all(trace[name][frozen] == trace[name][count - 1]), (result_id, name)
+                assert np.all(np.rint(trace['coverage'][frozen].astype(np.float64) * area) == covered[-1]), (result_id, 'frozen coverage')
+                assert np.all(trace['event'][frozen] == count), (result_id, 'frozen event')
+                for name in ('spent', 'emitted_length', 'delivered', 'reward', 'invalid_action'):
+                    assert not np.any(trace[name][frozen]), (result_id, name)
+                in_burst = (np.arange(count) // n >= scene['burst_start']) & (np.arange(count) // n < scene['burst_start'] + scene['burst_duration'])
+                after_burst = np.arange(count) // n >= scene['burst_start'] + scene['burst_duration']
+                item.update(trace_bytes=path.stat().st_size, trace_sha256=row['trace_hash'],
+                    final_coverage=row['metrics']['final_coverage'], success_round=row['metrics']['success_round'],
+                    frozen_events=int(frozen.sum()), frozen_fields_verified=True,
+                    low_budget_before_own_events=int(low_before.sum()),
+                    low_budget_movement_events=int(np.count_nonzero(low_before & moved)),
+                    low_budget_new_coverage_events=int(np.count_nonzero(low_before & (covered > previous_covered))),
+                    low_budget_receive_deliveries=int(received_low.sum()),
+                    burst_events=int(in_burst.sum()) if scene['fault_mode'] == 2 else 0,
+                    post_burst_events=int(after_burst.sum()) if scene['fault_mode'] == 2 else 0,
+                    post_burst_deliveries=int(trace['delivered'][active][after_burst].sum()) if scene['fault_mode'] == 2 else 0,
+                    component_area=area, final_covered_cells=oracle['final_covered_cells'],
+                    max_coverage_error_cells=oracle['max_coverage_error_cells'])
+            diagnostic_path = root / 'long/diagnostics' / (result_id + '.json')
+            if diagnostic_path.exists():
+                diagnostic = json.loads(diagnostic_path.read_text())
+                assert not any(diagnostic['overflow']) and not any(diagnostic['path_failed'])
+                item.update({key: diagnostic[key] for key in ('graph_nodes', 'global_nodes', 'history_count', 'balances', 'elapsed_seconds')})
+                for key in ('warm_full_seconds', 'warm_full_active_events', 'repeat_positions_equal'):
+                    if key in diagnostic:
+                        item[key] = diagnostic[key]
+                item['diagnostic_sha256'] = digest_file(diagnostic_path)
+        rows.append(item)
+    status = 'partial' if len(rows) != len(tasks) else 'complete'
+    summary = dict(status=status, scope='phase5_engineering_acceptance_v1', limited=True,
+        manifest_sha256=digest_file(manifest), source_commit='ade2b705a3caf9e39eeade7ce91df3d4f3945390',
+        requested=len(tasks), measured=len(rows), outcomes=dict(Counter(row['outcome'] for row in rows)),
+        active_events=sum(row['active_events'] for row in rows),
+        result_bytes=sum(row['record_bytes'] for row in rows), trace_bytes=sum(row.get('trace_bytes', 0) for row in rows),
+        low_budget_definition='balance before own decision <20 bytes; receipt balance <20 bytes, recorded separately',
+        first_movement_note='first live event excluded because trace lacks birth positions; movement count is a lower bound',
+        hardware_timing_note='full episode timings share the GPU; they are not isolated CPU/GPU speed ratios', results=rows)
+    output = root / 'evidence' / ('full-episode-summary-partial.json' if partial else 'full-episode-summary.json')
+    temporary = output.with_suffix('.tmp')
+    temporary.write_text(json.dumps(summary, indent=2) + '\n')
+    temporary.replace(output)
+    print(json.dumps({key:value for key,value in summary.items() if key != 'results'}), flush=True)
+    return summary
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--root', type=Path, required=True)
+    parser.add_argument('--partial', action='store_true')
+    args = parser.parse_args()
+    aggregate(args.root, args.partial)

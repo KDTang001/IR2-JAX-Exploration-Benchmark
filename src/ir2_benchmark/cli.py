@@ -35,6 +35,11 @@ def main() -> int:  # noqa: PLR0915
     commands = parser.add_subparsers(dest="command", required=True)
     doctor = commands.add_parser("doctor", help="Check JAX batching and Flax/Optax training")
     doctor.add_argument("--require-gpu", action="store_true")
+    doctor.add_argument(
+        "--runtime-only",
+        action="store_true",
+        help="Check scan and inference without optimizer updates",
+    )
     doctor.add_argument("--output", type=Path)
     run = commands.add_parser("rollout", help="Run the ordered-event exploration smoke scenario")
     run.add_argument("--config", type=Path, required=True)
@@ -98,14 +103,19 @@ def main() -> int:  # noqa: PLR0915
                 )
             )
         return 0
-    report = run_doctor()
+    report = run_doctor(runtime_only=args.runtime_only)
     rendered = json.dumps(asdict(report), indent=2)
     print(rendered)  # noqa: T201
     if args.output is not None:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(rendered + "\n", encoding="utf-8")
     gpu_ok = not args.require_gpu or any(device.platform == "gpu" for device in report.devices)
-    return 0 if report.scan_correct and report.final_loss < report.initial_loss and gpu_ok else 1
+    optimizer_ok = args.runtime_only or (
+        report.initial_loss is not None
+        and report.final_loss is not None
+        and report.final_loss < report.initial_loss
+    )
+    return 0 if report.scan_correct and report.inference_correct and optimizer_ok and gpu_ok else 1
 
 
 def rollout_handler(args: argparse.Namespace) -> int:

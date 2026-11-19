@@ -1,0 +1,7 @@
+{
+  "positive_episodes": 28,
+  "positive_exit_code": 0,
+  "known_invalid_result_id": "3282293197bd2d7d0af2018a47a5a9b5d8c0c1055175c874a043f7cca875919b",
+  "negative_exit_code": 1,
+  "negative_failed_at_invalid_action_check": true
+}

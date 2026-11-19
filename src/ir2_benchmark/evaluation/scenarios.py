@@ -79,7 +79,7 @@ class Method:
     """One trained repetition, including the actual checkpoint identity."""
 
     method_id: str
-    route: Literal["A", "B", "heuristic"]
+    route: Literal["A", "B", "heuristic", "baseline"]
     communication: str
     estimator: str
     training_seed: int

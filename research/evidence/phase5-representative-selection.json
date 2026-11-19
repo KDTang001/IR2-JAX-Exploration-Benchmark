@@ -1,0 +1,45 @@
+{
+  "rule": "minimum retained validation occupancy hash per bucket; selected before any simulation",
+  "baseline": "be8949f",
+  "maps": [
+    {
+      "path": "/home/user/Tz/ir2-benchmark/DungeonMaps/train/difficult/img_2896.png",
+      "map_hash": "00cef694011d5372e1064600799daca419d41d082c1f9e71a93806fad80c3c82",
+      "split": "validation",
+      "source": "ir2",
+      "family": "difficult",
+      "bucket": 512,
+      "scenario_hash": "06462d1de91e9734ee4b8a3d8ab8743249053eaae5e1fbe31d43aeae70c06703",
+      "valid_shape": [
+        500,
+        500
+      ]
+    },
+    {
+      "path": "/home/user/Tz/ir2-benchmark/DungeonMaps/train/difficult/img_5186.png",
+      "map_hash": "0001330be22ac7899bad26d8eceab3130269d7b183ecdc50fc40712d2d0c9ef1",
+      "split": "validation",
+      "source": "ir2",
+      "family": "difficult",
+      "bucket": 768,
+      "scenario_hash": "8e66ac41b5575563ef7115ce7eb3623fc309cb3fcc92d7d1b1f6468a07f32672",
+      "valid_shape": [
+        480,
+        640
+      ]
+    },
+    {
+      "path": "/home/user/Tz/ir2-benchmark/DungeonMaps/train/difficult/img_2394.png",
+      "map_hash": "0020b6f2df39d2f219e30bb77ddd08f587ad7ea0a2439f354d87be5065fa24b4",
+      "split": "validation",
+      "source": "ir2",
+      "family": "difficult",
+      "bucket": 1024,
+      "scenario_hash": "f0bcda062b63f4d1e9adc36fd7f7e939872fa727373a0f5d85c636db3e28737a",
+      "valid_shape": [
+        1000,
+        1000
+      ]
+    }
+  ]
+}

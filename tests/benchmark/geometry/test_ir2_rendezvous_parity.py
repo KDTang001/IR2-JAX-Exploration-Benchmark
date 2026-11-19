@@ -254,3 +254,48 @@ def test_batched_disabled_and_enabled_peers_preserve_original_results() -> None:
     )
     np.testing.assert_array_equal(result.unreachable[:, 0], [not value[1] for value in expected])
     np.testing.assert_array_equal(result.repaired, [value[2] for value in expected])
+
+
+def test_batched_reachable_only_continues_after_unreachable_peer() -> None:
+    # Given an unreachable peer before a reachable one, with both eligible.
+    nodes, edges, local = _fixture()
+    positions = nodes[[5, 2]]
+    enabled = np.array([True, True])
+    surplus = np.array([800, 1200], np.float32)
+    strict, success, repaired = _oracle(nodes, edges, positions, enabled, surplus, local, edges)
+    reachable, reachable_success, _ = _oracle(
+        nodes, edges, positions[1:], enabled[1:], surplus[1:], local, edges
+    )
+    assert not success
+    assert repaired
+    assert reachable_success
+    assert reachable[0] == 0
+    assert np.any(reachable > 0)
+    jax = pytest.importorskip("jax")
+    from ir2_benchmark.navigation.ir2_rendezvous import rendezvous_utility  # noqa: PLC0415
+
+    # When the abort gate is a dynamic scalar in a jitted, vmapped solve.
+    result = jax.jit(
+        jax.vmap(
+            lambda abort: rendezvous_utility(
+                nodes,
+                np.ones(len(nodes), bool),
+                edges,
+                np.int32(0),
+                positions,
+                enabled,
+                surplus,
+                local,
+                np.array(local.shape, np.int32),
+                edges,
+                abort_unreachable=abort,
+            )
+        )
+    )(np.array([True, False]))
+
+    # Then only reachable-only mode retains the later peer's utility, while
+    # still zeroing the receiver's own radius and reporting the failed peer.
+    np.testing.assert_allclose(result.utility, np.stack([strict, reachable]), atol=2e-7, rtol=1e-6)
+    np.testing.assert_array_equal(result.unreachable, [[True, False], [True, False]])
+    np.testing.assert_array_equal(result.repaired, [True, True])
+    assert result.utility[1, 0] == 0

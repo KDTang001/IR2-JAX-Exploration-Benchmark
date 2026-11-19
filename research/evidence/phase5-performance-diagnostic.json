@@ -1,0 +1,51 @@
+{
+  "protocol": "non-scoring phase diagnostic",
+  "steps": 4,
+  "warmups": 0,
+  "repeats": 1,
+  "case": "cpu-512-n2-b1",
+  "cpu_affinity": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "threads": 8,
+  "timeout_seconds": 120,
+  "exit_status": 124,
+  "wall_seconds_from_gnu_time": 120.13,
+  "max_rss_bytes_from_gnu_time": 2156232704,
+  "completed_phases": [
+    {
+      "phase": "reset",
+      "actual_units": 1,
+      "cold_seconds": 4.200460855965503,
+      "steady_one_sample_seconds": 1.4764113510027528
+    },
+    {
+      "phase": "scripted_events",
+      "actual_units": 4,
+      "cold_seconds": 36.973583418061025,
+      "steady_one_sample_seconds": 6.793418082990684
+    },
+    {
+      "phase": "nearest_frontier",
+      "actual_units": 4,
+      "cold_seconds": 50.929010944091715,
+      "steady_one_sample_seconds": 10.87559184199199
+    },
+    {
+      "phase": "ir2_inference",
+      "actual_units": 1,
+      "cold_seconds": 0.653742669033818,
+      "steady_one_sample_seconds": 0.030617427080869675
+    }
+  ],
+  "unfinished_phase": "ir2_rollout first call",
+  "conclusion": "Native-map CPU execution remains expensive after compilation. The 32-event v1 case cap is insufficient; do not infer v1 speedup or completeness from this diagnostic.",
+  "log": "/home/user/Tz/acceptance/phase5-20261114/performance-diagnostic/cpu-4events.log"
+}

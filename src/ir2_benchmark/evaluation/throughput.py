@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import platform
 import subprocess
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from functools import partial
 from shutil import which
 from typing import TYPE_CHECKING, NamedTuple
@@ -16,11 +16,13 @@ from ir2_benchmark.evaluation.errors import is_oom
 from ir2_benchmark.evaluation.timing import Timing, measure
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
     from pathlib import Path
 
     from jax import Array
 
     from ir2_benchmark.config import HostConfig
+    from ir2_benchmark.env.rollout import RolloutResult
     from ir2_benchmark.types import EnvState, MapInput
 
 
@@ -33,16 +35,37 @@ class ThroughputCase:
     batch_size: int
     device: str
     platform: str
-    precision: str
-    status: str
-    reset: Timing | None
-    scripted_events: Timing | None
-    policy_rollout: Timing | None
-    team_rounds_per_second: float | None
-    peak_device_bytes: int | None
-    memory_measurement: str
-    error: str | None
+    precision: str = "float32/int32"
+    status: str = "measured"
+    reset: Timing | None = None
+    scripted_events: Timing | None = None
+    policy_rollout: Timing | None = None
+    team_rounds_per_second: float | None = None
+    peak_device_bytes: int | None = None
+    memory_measurement: str = (
+        "whole-process peak across setup, compilation, reset, scripted, nearest-frontier and "
+        "optional IR2 phases; JAX peak_bytes_in_use and Linux peak RSS; no per-workload attribution"
+    )
+    error: str | None = None
     policy_rollout_events: int = 32
+    ir2_policy_inference: Timing | None = None
+    ir2_policy_rollout: Timing | None = None
+    peak_host_rss_bytes: int | None = None
+    policy_rollout_segment_length: int = 32
+
+
+def active_rollout_events(result: RolloutResult) -> int:
+    """Count every live event across lanes, excluding frozen scan padding."""
+    return int(np.asarray(result.trace.active).sum())
+
+
+def peak_host_rss_bytes() -> int | None:
+    """Return Linux process high-water RSS, including compilation and every timed phase."""
+    if platform.system() != "Linux":
+        return None
+    import resource  # noqa: PLC0415 - Server measurements use Linux ru_maxrss in KiB.
+
+    return int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024)
 
 
 class ScriptResult(NamedTuple):
@@ -100,6 +123,8 @@ def benchmark_environment(  # noqa: PLR0913
     steps: int = 32,
     warmups: int = 3,
     repeats: int = 10,
+    policy_measurement: Callable[[EnvState], tuple[Timing, Timing]] | None = None,
+    seed: int = 71,
 ) -> tuple[ThroughputCase, ...]:
     """Stop increasing a native geometry/N batch after OOM, keeping that failure in the results."""
     import jax  # noqa: PLC0415
@@ -110,8 +135,17 @@ def benchmark_environment(  # noqa: PLR0913
     device = jax.devices()[0]
     measurements = []
     for batch in batches:
-        keys = jax.random.split(jax.random.PRNGKey(71), batch)
+        keys = jax.random.split(jax.random.PRNGKey(seed), batch)
         reset_fn = jax.jit(jax.vmap(lambda key: reset(map_data, config, key)))
+        case = ThroughputCase(
+            map_data.occupancy.shape,
+            config.n_agents,
+            batch,
+            str(device),
+            device.platform,
+            policy_rollout_events=steps,
+            policy_rollout_segment_length=steps,
+        )
         try:
             reset_timing = measure(
                 partial(reset_fn, keys),
@@ -120,6 +154,7 @@ def benchmark_environment(  # noqa: PLR0913
                 repeats=repeats,
             )
             initial = reset_fn(keys)
+            jax.block_until_ready(initial)
             scripted = jax.jit(jax.vmap(lambda state: scripted_events(state, config, steps)))
             events = measure(
                 partial(scripted, initial),
@@ -130,52 +165,39 @@ def benchmark_environment(  # noqa: PLR0913
             policy = jax.jit(jax.vmap(lambda state: rollout(state, config, steps)))
             policy_timing = measure(
                 partial(policy, initial),
-                lambda output: int(np.any(np.asarray(output.trace.active), axis=-1).sum()),
+                active_rollout_events,
                 warmups=warmups,
                 repeats=repeats,
             )
+            inference_timing, ir2_timing = (
+                policy_measurement(initial) if policy_measurement is not None else (None, None)
+            )
             stats = device.memory_stats() or {}
             measurements.append(
-                ThroughputCase(
-                    map_data.occupancy.shape,
-                    config.n_agents,
-                    batch,
-                    str(device),
-                    device.platform,
-                    "float32/int32",
-                    "measured",
-                    reset_timing,
-                    events,
-                    policy_timing,
-                    events.units_per_second / config.n_agents
+                replace(
+                    case,
+                    reset=reset_timing,
+                    scripted_events=events,
+                    policy_rollout=policy_timing,
+                    team_rounds_per_second=events.units_per_second / config.n_agents
                     if events.units_per_second is not None
                     else None,
-                    stats.get("peak_bytes_in_use"),
-                    "jax.Device.memory_stats peak_bytes_in_use (process cumulative)",
-                    None,
-                    policy_rollout_events=steps,
+                    peak_device_bytes=stats.get("peak_bytes_in_use"),
+                    ir2_policy_inference=inference_timing,
+                    ir2_policy_rollout=ir2_timing,
+                    peak_host_rss_bytes=peak_host_rss_bytes(),
                 )
             )
         except (MemoryError, RuntimeError) as error:
             if not is_oom(error):
                 raise
             measurements.append(
-                ThroughputCase(
-                    map_data.occupancy.shape,
-                    config.n_agents,
-                    batch,
-                    str(device),
-                    device.platform,
-                    "float32/int32",
-                    "oom",
-                    None,
-                    None,
-                    None,
-                    None,
-                    None,
-                    "allocation failed; no invented peak",
-                    str(error),
-                    policy_rollout_events=steps,
+                replace(
+                    case,
+                    status="oom",
+                    memory_measurement="allocation failed; no invented device peak",
+                    error=str(error),
+                    peak_host_rss_bytes=peak_host_rss_bytes(),
                 )
             )
             break
@@ -243,7 +265,17 @@ def write_throughput(
         "remaining_native_cases": remaining,
         "skipped_after_oom": sorted(stopped),
         "throughput_denominator": "actual unfrozen agent events; team rounds = events/N",
-        "policy_throughput_unit": "active rollout segments; event length is recorded per case",
+        "policy_throughput_unit": "actual active agent events across all batch lanes",
+        "reset_throughput_unit": "environment resets",
+        "ir2_inference_throughput_unit": "single-current-agent graph forward passes",
+        "ir2_inference_scope": "real reset-state graphs; excludes checkpoint IO and observation "
+        "construction",
+        "ir2_policy": "original frozen weights with mixed communication every fourth own action",
+        "policy_rollout_events_semantics": "legacy schedule-length alias; actual counts are stored "
+        "in Timing.actual_units and segment length in policy_rollout_segment_length",
+        "timing_scope": "first_call_seconds includes tracing/compilation/first synchronized "
+        "execution; "
+        "samples_seconds are synchronized warm steady repetitions on the same initial states",
         "policy": "nearest_frontier_with_fixed_communication",
     }
     path.parent.mkdir(parents=True, exist_ok=True)

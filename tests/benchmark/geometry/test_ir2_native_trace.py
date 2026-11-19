@@ -20,7 +20,13 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[3]
 
 
-def test_native_original_ir2_trace_crosses_merge_step(monkeypatch, tmp_path):  # noqa: PLR0915
+@pytest.mark.parametrize("relative", [
+    "DungeonMaps/train/easy/img_9339.png",
+    "DungeonMaps/test/complex/1.png",
+    "DungeonMaps/test/corridor/1.png",
+    "DungeonMaps/test/hybrid/1.png",
+])
+def test_native_original_ir2_trace_crosses_merge_step(monkeypatch, tmp_path, relative):  # noqa: PLR0915
     jax = pytest.importorskip("jax")
     import jax.numpy as jnp
 
@@ -68,10 +74,9 @@ def test_native_original_ir2_trace_crosses_merge_step(monkeypatch, tmp_path):  #
         graph_merge_threshold=340,
         max_rounds=64,
     )
-    relative = "DungeonMaps/train/easy/img_9339.png"
     with Image.open(ROOT / relative) as image:
         pixels = np.asarray(image.convert("L"))
-    assert pixels.shape == (480, 640)
+    assert pixels.ndim == 2
     # Exactly Env.import_ground_truth: marker pixel number127 and threshold150.
     marker = np.argwhere(pixels == 208)
     position = marker[127, ::-1].astype(np.int32)
@@ -101,11 +106,12 @@ def test_native_original_ir2_trace_crosses_merge_step(monkeypatch, tmp_path):  #
     report_path = Path(
         os.environ.get("IR2_NATIVE_PARITY_OUTPUT", str(tmp_path / "native-parity.json"))
     )
+    report_path = report_path.with_name(f"{report_path.stem}-{Path(relative).parent.name}{report_path.suffix}")
     report = {
         "device": str(jax.devices()[0]),
         "map": relative,
         "shape": list(truth.shape),
-        "steps_requested": 16,
+        "steps_requested": 32,
         "status": "running",
         "step": 0,
         "check": "initialization",
@@ -218,7 +224,7 @@ def test_native_original_ir2_trace_crosses_merge_step(monkeypatch, tmp_path):  #
             lambda known, pose: initialize_graph(known, pose, jnp.array(truth.shape), config=config)
         )(local, jnp.asarray(position))
         check(memory, local, position, frontiers, 0)
-        for step in range(1, 17):
+        for step in range(1, 33):
             outgoing = list(reference.graph.edges[tuple(position)].values())
             candidates = []
             for slot, edge in enumerate(outgoing):
@@ -243,6 +249,8 @@ def test_native_original_ir2_trace_crosses_merge_step(monkeypatch, tmp_path):  #
             local = sense(local, jnp.asarray(position))
             old_frontiers = frontiers
             frontiers = helpers._frontiers(originals, np.asarray(local))  # noqa: SLF001
+            report["step"] = step
+            report["check"] = "reference_graph_update"
             result = reference.update_graph(
                 legacy_map,
                 frontiers,

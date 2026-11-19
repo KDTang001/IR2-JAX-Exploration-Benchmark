@@ -41,6 +41,8 @@ def allocate_budget(mode: BudgetMode, amount: int, agents: int, rounds: int) -> 
 
 def auxiliary_kind(method: Method) -> str:
     """Reuse actual policy metadata; zero is a view of the core budget endpoint."""
+    if method.route == "baseline":
+        return ""
     if method.route == "heuristic":
         return "heuristic"
     if method.estimator == "none":

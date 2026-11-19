@@ -1,0 +1,12 @@
+# Dataset identities must survive Windows checkouts and Git archive exports.
+artifacts/maps/**/*.jsonl text eol=lf
+artifacts/maps/**/*.json text eol=lf
+research/evidence/*.sha256 text eol=lf
+research/evidence/*.json text eol=lf
+research/evidence/*.xml text eol=lf
+research/evidence/*.csv text eol=lf
+research/evidence/*.txt text eol=lf
+research/evidence/*.md text eol=lf
+src/**/*.py text eol=lf
+# Preserve the exact externally executed helper bytes bound in audit evidence.
+research/protocols/phase5-20261114/*.py.txt -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

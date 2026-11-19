@@ -112,6 +112,7 @@ def frame_fields(config: HostConfig) -> FrameKernel:
                 state.inbox.lengths[agent],
                 state.inbox.present[agent],
                 config,
+                valid_shape=state.valid_shape,
             )
             return known.local_map, known.peer_positions, known.peer_position_event
 

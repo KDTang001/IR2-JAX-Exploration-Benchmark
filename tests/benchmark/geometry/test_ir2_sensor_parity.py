@@ -99,3 +99,51 @@ def test_batched_native_map_radius_80() -> None:
     assert len(free) > 0
     positions = free[np.linspace(0, len(free) - 1, 4, dtype=int)][:, ::-1].astype(np.int32)
     _check_batch(np.repeat(truth[None], 4, axis=0), positions, 80, np.tile(truth.shape, (4, 1)))
+
+
+@pytest.mark.parametrize("radius", [0.5, 1.5, 7.5, 80.0])
+def test_seeded_fractional_radius_and_padding_match_original(radius: float) -> None:
+    rng = np.random.default_rng(20261112)
+    truths = np.ones((12, 31, 37), dtype=np.uint8)
+    shapes = rng.integers([1, 1], [32, 38], size=(12, 2), dtype=np.int32)
+    shapes[0] = [1, 1]
+    positions = np.zeros((12, 2), dtype=np.int32)
+    for index, (world, (height, width)) in enumerate(zip(truths, shapes, strict=True)):
+        world[:height, :width] = (rng.random((height, width)) < 0.25).astype(np.uint8)
+        positions[index] = [rng.integers(width), rng.integers(height)]
+        x, y = positions[index]
+        world[y, x] = 0
+    _check_batch(truths, positions, radius, shapes)
+
+
+def test_ir2_reset_physical_coverage_matches_original_footprints() -> None:
+    jax = pytest.importorskip("jax")
+    import jax.numpy as jnp
+
+    from ir2_benchmark.config import HostConfig
+    from ir2_benchmark.env.reset import reset
+    from ir2_benchmark.types import MapInput
+
+    truth = np.ones((32, 40), dtype=np.uint8)
+    truth[1:31, 1:39] = 0
+    truth[1:25, 20] = 1
+    poses = np.array([[5, 5], [30, 20]], np.int32)
+    shape = np.array(truth.shape, np.int32)
+    unknown = np.full_like(truth, 2)
+    expected = np.stack([_oracle(truth, unknown, p, 8, shape)[2] for p in poses])
+    config = HostConfig(
+        n_agents=2,
+        agent_bucket=4,
+        navigation_mode="ir2_graph",
+        sensor_radius=8,
+        graph_nodes_per_axis=6,
+        graph_padding_size=80,
+        graph_capacity=80,
+    )
+    data = MapInput(
+        jnp.asarray(truth), jnp.asarray(truth == 0), jnp.asarray(shape), jnp.asarray(poses[0])
+    )
+    state = jax.jit(lambda: reset(data, config, jax.random.PRNGKey(0), jnp.asarray(poses)))()
+    np.testing.assert_array_equal(state.physical_seen[:2], expected)
+    assert not np.asarray(state.physical_seen[2:]).any()
+    np.testing.assert_array_equal(state.covered, np.any(expected, axis=0))

@@ -1,0 +1,482 @@
+{
+  "date": "2026-11-12",
+  "production_base_commit": "1431ad6a42eda555d4c34a5eacac06dbc61282ac",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python": "3.11.0",
+  "backend": "cpu",
+  "versions": {
+    "jax": "0.4.35",
+    "jaxlib": "0.4.34",
+    "numpy": "2.0.2",
+    "scipy": "1.13.1",
+    "scikit-learn": "1.6.1",
+    "scikit-image": "0.24.0",
+    "torch": "2.6.0",
+    "pytest": "8.4.2",
+    "flax": "0.10.2",
+    "optax": "0.2.4",
+    "Pillow": "13.0.0"
+  },
+  "pytest": {
+    "tests": "39",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "time": "82.569"
+  },
+  "warnings": {
+    "count": 14,
+    "origin": "matplotlib legacy Pyparsing API deprecations"
+  },
+  "test_groups": {
+    "tests.benchmark.geometry.test_ir2_sensor_parity": 12,
+    "tests.benchmark.geometry.test_ir2_graph_parity": 16,
+    "tests.benchmark.geometry.test_ir2_native_trace": 1,
+    "tests.benchmark.integration.test_event_step": 10
+  },
+  "test_cases": [
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_batched_empty_walls_corners_diagonals_and_borders[0]",
+      "seconds": 0.225,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_batched_empty_walls_corners_diagonals_and_borders[1]",
+      "seconds": 0.16,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_batched_empty_walls_corners_diagonals_and_borders[3]",
+      "seconds": 0.178,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_batched_empty_walls_corners_diagonals_and_borders[17]",
+      "seconds": 0.265,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_batched_empty_walls_corners_diagonals_and_borders[40]",
+      "seconds": 0.3,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_batched_dynamic_valid_shapes_stop_at_unpadded_borders",
+      "seconds": 0.266,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_batched_native_map_radius_80",
+      "seconds": 0.466,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_seeded_fractional_radius_and_padding_match_original[0.5]",
+      "seconds": 0.169,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_seeded_fractional_radius_and_padding_match_original[1.5]",
+      "seconds": 0.191,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_seeded_fractional_radius_and_padding_match_original[7.5]",
+      "seconds": 0.219,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_seeded_fractional_radius_and_padding_match_original[80.0]",
+      "seconds": 0.333,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_sensor_parity::test_ir2_reset_physical_coverage_matches_original_footprints",
+      "seconds": 1.45,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_sparse_visibility_matches_all_rays_across_multiple_blocks",
+      "seconds": 0.829,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_frontier_and_collision_match_original_endpoint_semantics",
+      "seconds": 8.516,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_initialization_and_multistep_updates_preserve_utility_and_guidepost",
+      "seconds": 2.115,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_merger_matches_original_when_only_one_unprotected_pair",
+      "seconds": 2.818,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_overflow_blocks_observation_instead_of_eviction",
+      "seconds": 2.343,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_full_original_worker_observation_current_nonzero_and_peer",
+      "seconds": 3.198,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_native_50_point_grid_k30_ties_match_reference",
+      "seconds": 1.137,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_duplicate_start_node_is_retained_like_original",
+      "seconds": 0.325,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_offshoots_and_own_global_graph_match_original[False-False]",
+      "seconds": 2.747,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_offshoots_and_own_global_graph_match_original[False-True]",
+      "seconds": 2.739,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_offshoots_and_own_global_graph_match_original[True-False]",
+      "seconds": 2.612,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_offshoots_and_own_global_graph_match_original[True-True]",
+      "seconds": 2.686,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_partial_windows_node_removal_peer_window_and_observation",
+      "seconds": 4.312,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_failed_merger_preserves_original_partial_dictionary_rollback",
+      "seconds": 0.882,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_batched_insert_matches_sequential_first_occurrence_and_overflow",
+      "seconds": 0.103,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_graph_parity::test_batched_graph_updates_match_independent_divergent_branches",
+      "seconds": 4.612,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.geometry.test_ir2_native_trace::test_native_original_ir2_trace_crosses_merge_step",
+      "seconds": 11.83,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_later_robot_uses_new_message_and_earlier_robot_waits_until_next_turn",
+      "seconds": 4.526,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_observe_is_pure_and_ignores_hidden_remote_truth",
+      "seconds": 0.962,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_ir2_graph_observation_ignores_unsent_peer_state_and_hidden_truth",
+      "seconds": 5.8,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_map_delta_is_locked_before_movement_and_new_sensing",
+      "seconds": 1.225,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_paid_map_overlay_does_not_increase_physical_coverage",
+      "seconds": 1.485,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_all_dropped_transmission_still_charges_actual_packet_bytes",
+      "seconds": 0.881,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_link_reachability_uses_post_move_positions",
+      "seconds": 1.788,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_time_limit_freezes_state_without_claiming_coverage_completion",
+      "seconds": 2.735,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_padded_robots_never_observe_move_or_receive_budget",
+      "seconds": 2.39,
+      "status": "passed"
+    },
+    {
+      "id": "tests.benchmark.integration.test_event_step::test_compiled_event_matches_eager_state",
+      "seconds": 1.944,
+      "status": "passed"
+    }
+  ],
+  "installed_wheel_matches_workspace_text_normalized_newlines": {
+    "src/ir2_benchmark/sensing/ir2_sensor.py": true,
+    "src/ir2_benchmark/navigation/ir2_graph.py": true,
+    "src/ir2_benchmark/navigation/ir2_rendezvous.py": true,
+    "src/ir2_benchmark/env/reset.py": true,
+    "src/ir2_benchmark/env/step.py": true,
+    "src/ir2_benchmark/env/observe.py": true,
+    "src/ir2_benchmark/env/ir2_observation.py": true,
+    "src/ir2_benchmark/types.py": true
+  },
+  "workspace_raw_sha256": {
+    "sensor.py": "0cee01dacfa6c53bb42b245c501bb711c07022584a8a7f59ce5471247df36683",
+    "env.py": "c4e9ad46ad85b185c513cbd56eeb2f9fdf122bbfc152db073b8fe3c09333225b",
+    "graph_generator.py": "9106931185f33fcf6838028d9f9e5649ea20a079a908e80ee385d5b043842f14",
+    "graph.py": "6c267d4d527251ea9685742bb904500f84a1bbb2c94c16cbaa3c472273a4bb5e",
+    "node.py": "905e86c74d81438125c37fd0838c507afa5e130d4e17fecff63c0c1c84d570b6",
+    "multi_robot_worker.py": "0baafdd412f7aaf20be5cc7debf3dcda46ac67b49518196e6a963b9fe9201a59",
+    "src/ir2_benchmark/sensing/ir2_sensor.py": "417f6f5bbb5681db53217dd4397d7cf294938fed359b3a95f9b2f8138bcfdcca",
+    "src/ir2_benchmark/navigation/ir2_graph.py": "dc759c2cb707616bb126c1126a1f64886ee6bad55d257c073762181448fff211",
+    "src/ir2_benchmark/navigation/ir2_rendezvous.py": "e001afdd63fcc3d04bf65d221c296713a01cf35dd2f826f103876586d44b16c4",
+    "src/ir2_benchmark/env/reset.py": "92b2d47cc4f4fbb63e981e0de03f45e6149250ead5417c820a64ffbec9fdc12b",
+    "src/ir2_benchmark/env/step.py": "f520bec270646564bd4350835528e381b2e2628d8f6f497768c1dcf1ac69e0ea",
+    "src/ir2_benchmark/env/observe.py": "85b0746af467d1b609940d614b9f433ab6097ea0604b2ae745d9fe26e5dc2cc7",
+    "src/ir2_benchmark/env/ir2_observation.py": "d39f48c6a57c471954d9d9562f704e4a7d90998736c581e833279f311a172b13",
+    "src/ir2_benchmark/types.py": "282de9048f8059dad68eeb405f24a88a5610c94caa46916510fab2c27f19d1fb",
+    "DungeonMaps/test/corridor/1.png": "a09727d474cd495a204e8e18b414959f1bb98fec1685fc3afb1e314b1cece40d",
+    "DungeonMaps/train/easy/img_9339.png": "80a5930331312957b51a0fb08cd16c98621eac1bd1d6bd0872dfe32f7f93214a"
+  },
+  "native_trace": {
+    "device": "TFRT_CPU_0",
+    "map": "DungeonMaps/train/easy/img_9339.png",
+    "shape": [
+      480,
+      640
+    ],
+    "steps_requested": 16,
+    "status": "passed",
+    "step": 16,
+    "check": "all_worker_observation_tensors",
+    "records": [
+      {
+        "step": 0,
+        "position": [
+          270,
+          41
+        ],
+        "known_cells": 6194,
+        "frontiers": 15,
+        "nodes": 37,
+        "global_nodes": 0,
+        "edges": 1110
+      },
+      {
+        "step": 1,
+        "position": [
+          209,
+          49
+        ],
+        "known_cells": 8897,
+        "frontiers": 15,
+        "nodes": 37,
+        "global_nodes": 3,
+        "edges": 1110
+      },
+      {
+        "step": 2,
+        "position": [
+          156,
+          39
+        ],
+        "known_cells": 11192,
+        "frontiers": 14,
+        "nodes": 39,
+        "global_nodes": 5,
+        "edges": 1170
+      },
+      {
+        "step": 3,
+        "position": [
+          91,
+          49
+        ],
+        "known_cells": 13967,
+        "frontiers": 15,
+        "nodes": 37,
+        "global_nodes": 7,
+        "edges": 1079
+      },
+      {
+        "step": 4,
+        "position": [
+          39,
+          68
+        ],
+        "known_cells": 16984,
+        "frontiers": 15,
+        "nodes": 42,
+        "global_nodes": 9,
+        "edges": 1099
+      },
+      {
+        "step": 5,
+        "position": [
+          39,
+          127
+        ],
+        "known_cells": 19544,
+        "frontiers": 14,
+        "nodes": 48,
+        "global_nodes": 11,
+        "edges": 1245
+      },
+      {
+        "step": 6,
+        "position": [
+          52,
+          196
+        ],
+        "known_cells": 22382,
+        "frontiers": 15,
+        "nodes": 42,
+        "global_nodes": 13,
+        "edges": 1108
+      },
+      {
+        "step": 7,
+        "position": [
+          39,
+          254
+        ],
+        "known_cells": 24130,
+        "frontiers": 18,
+        "nodes": 46,
+        "global_nodes": 16,
+        "edges": 1106
+      },
+      {
+        "step": 8,
+        "position": [
+          104,
+          244
+        ],
+        "known_cells": 27062,
+        "frontiers": 14,
+        "nodes": 67,
+        "global_nodes": 18,
+        "edges": 1764
+      },
+      {
+        "step": 9,
+        "position": [
+          156,
+          244
+        ],
+        "known_cells": 29363,
+        "frontiers": 14,
+        "nodes": 63,
+        "global_nodes": 21,
+        "edges": 1612
+      },
+      {
+        "step": 10,
+        "position": [
+          196,
+          225
+        ],
+        "known_cells": 31055,
+        "frontiers": 17,
+        "nodes": 59,
+        "global_nodes": 15,
+        "edges": 1593
+      },
+      {
+        "step": 11,
+        "position": [
+          235,
+          254
+        ],
+        "known_cells": 32835,
+        "frontiers": 18,
+        "nodes": 60,
+        "global_nodes": 17,
+        "edges": 1622
+      },
+      {
+        "step": 12,
+        "position": [
+          274,
+          235
+        ],
+        "known_cells": 34700,
+        "frontiers": 14,
+        "nodes": 63,
+        "global_nodes": 19,
+        "edges": 1701
+      },
+      {
+        "step": 13,
+        "position": [
+          313,
+          225
+        ],
+        "known_cells": 36311,
+        "frontiers": 17,
+        "nodes": 63,
+        "global_nodes": 21,
+        "edges": 1676
+      },
+      {
+        "step": 14,
+        "position": [
+          352,
+          235
+        ],
+        "known_cells": 38192,
+        "frontiers": 19,
+        "nodes": 66,
+        "global_nodes": 23,
+        "edges": 1745
+      },
+      {
+        "step": 15,
+        "position": [
+          391,
+          225
+        ],
+        "known_cells": 39946,
+        "frontiers": 23,
+        "nodes": 66,
+        "global_nodes": 26,
+        "edges": 1668
+      },
+      {
+        "step": 16,
+        "position": [
+          430,
+          235
+        ],
+        "known_cells": 43988,
+        "frontiers": 29,
+        "nodes": 88,
+        "global_nodes": 29,
+        "edges": 2153
+      }
+    ],
+    "elapsed_seconds": 11.75
+  },
+  "scope": "Sensor and graph differential checks plus event/information-isolation checks; not full Phase 1 certification, performance, GPU, or training evidence."
+}

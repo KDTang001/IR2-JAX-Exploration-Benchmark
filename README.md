@@ -9,25 +9,29 @@ Use a fresh Python 3.11 environment:
 ```bash
 python -m pip install -r requirement.txt
 python -m pip install --no-deps -e .
-ir2-benchmark doctor --output artifacts/setup/doctor.json
+ir2-benchmark doctor --runtime-only --output artifacts/setup/doctor.json
 ```
 
 `requirement.txt` includes the JAX benchmark, original PyTorch/Ray reference tools and development dependencies. It records observed runtime versions where available; a clean installation on every operating system has not been validated. For Linux with a compatible NVIDIA driver, additionally install the CUDA runtime requirements:
 
 ```bash
 python -m pip install -r requirements-server.txt
-ir2-benchmark doctor --require-gpu --output artifacts/setup/doctor-gpu.json
+ir2-benchmark doctor --runtime-only --require-gpu --output artifacts/setup/doctor-gpu.json
 ```
 
 The original instructions below describe the upstream environment, not the new JAX environment. Generated training outputs and caches are ignored. Raw IR2 maps are in `DungeonMaps`; map generation and audit commands are documented in `docs/benchmark-running.md`.
 
-The published snapshot also includes map manifests and 6,900 generated maps under `artifacts/maps/`. Their generation seeds and split records are included. Existing map pools must not be overwritten: run the generation script only when rebuilding absent pools. Validation scenario paths are project-relative; run commands from the repository root. No training checkpoints, run logs or recordings are included.
+The published snapshot also includes map manifests and 6,900 generated maps under `artifacts/maps/`. Their generation seeds and split records are included. Existing map pools must not be overwritten: run the generation script only when rebuilding absent pools. Validation scenario paths are project-relative; run commands from the repository root. No training checkpoints, training run logs or policy recordings are included; compact acceptance evidence is retained under `research/evidence`.
 
 The independent communication-limited benchmark is documented in [docs/benchmark-running.md](docs/benchmark-running.md). Its entry points are `doctor`, `maps`, `rollout`, `validation-manifest`, `train-a`, `train-b`, `evaluate`, `report` and `throughput`; development smoke results are separate from formal experiment completion.
 
+Current fixed baseline evaluation uses `configs/benchmark.json` and `configs/evaluation/benchmark.json`, separate from the retained A/B research configurations. Eight configurations combine two navigation methods, nearest-frontier or upstream pretrained IR2 adapted, with off/PLAN/MAP_DELTA/mixed communication. See the [Phase 4 acceptance report](research/BASELINE_EVALUATION_REPORT.md) for target-server evidence, reference-weight provenance and limits; this does not certify full formal benchmark experiments or a data-fair retrained IR2 model.
+
+Phase 5 has passed all 78 declared full-length validation episodes and clean Linux CPU/CUDA wheel installation, including real interruption/resume. The original CPU/H100 resource window retained 52 configurations; the authorized two-case CPU supplement ended on November 17. All 54 configurations now have execution records: 37 complete measurements, 6 GPU OOMs, and 11 CPU per-case/global deadline stops. The original 52 records and closed-window results are unchanged. Timings cover initial four-event segments. See the [full-episode report](research/FULL_EPISODE_VALIDATION_REPORT.md), [performance and reproduction report](research/PERFORMANCE_REPRODUCTION_REPORT.md), [pinned wheel reproduction](docs/phase5-reproduction.md), and [resource/scope proposals](research/EXPERIMENT_RESOURCE_PLAN.md). These are limited engineering results; all configurations having records does not imply all timings or release gates passed, and formal paper experiments remain pending.
+
 Reward, message exchange, accounting and signal choices are described in [environment presets and custom methods](docs/environment-presets.md).
 
-Current goals, implementation limits and proposed revisions are summarized in the [discussion document](spec/spec-design-benchmark-status-and-discussion.md). On 2026-11-10, all experiment checkpoints, recordings and run outputs were removed at the user's request. The bundled reference weight was also removed; original inference scripts require a separately supplied checkpoint. No training is running.
+Current accepted scope and remaining work are tracked in the [implementation roadmap](research/IMPLEMENTATION_ROADMAP.md). The earlier [method discussion](spec/spec-design-benchmark-status-and-discussion.md) is a historical design snapshot. On 2026-11-10, all experiment checkpoints, recordings and run outputs were removed at the user's request. The bundled reference weight was also removed; original inference scripts require a separately supplied checkpoint. The benchmark acceptance workflow has not resumed training.
 
 [IROS 2024] Public code and model for [IR2: Implicit Rendezvous for Robotic Exploration Teams under Sparse Intermittent Connectivity](https://arxiv.org/abs/2409.04730).
 

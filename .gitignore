@@ -132,11 +132,16 @@ celerybeat.pid
 .env
 .venv
 env/
-!src/ir2_benchmark/env/
 venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Keep the source package after all environment rules (including ENV/ on Windows).
+!src/ir2_benchmark/env/
+!src/ir2_benchmark/env/**
+src/ir2_benchmark/env/**/__pycache__/
+src/ir2_benchmark/env/**/*.py[cod]
 
 # Spyder project settings
 .spyderproject

@@ -31,6 +31,9 @@
 | charge_mode | attempt / success |
 | send_policy | action / none / always / periodic / 已注册自定义名称 |
 | message_codec | 0 保留方法动作；1 位置、2 目标、3 计划、4 地图增量 |
+| rendezvous_mode | strict_ir2（默认）/ reachable_only |
+
+**会合目标不可达**：`strict_ir2` 保留原版在图修复后仍不可达时中止的规则。`reachable_only` 让该队友暂不贡献会合效用，继续计算其余可达队友；不读取队友隐藏地图或补造路径。当前 `configs/benchmark.json` 显式选后者，以适应位置与稀疏地图分别通信；`configs/benchmark_strict_ir2.json` 仅切换为严格规则，供对照。自身历史、局部图生成、合法一跳约束与其他费用/故障规则不随此字段切换。
 
 **奖励**：`coverage_delta` 默认严格保持 `100 × 覆盖率增量 − 1/(机器人数量 × 512)`；可配置覆盖权重和 `reward_event_cost`。`coverage_distance` 默认使用覆盖增量和距离成本，事件成本默认 0。`sparse_success` 仅成功事件发放 `reward_success_bonus`（默认 40），超时无成功奖励，结束后的调用奖励为 0。
 
@@ -51,6 +54,8 @@ addressed 模式要求 `make_action(..., recipients=布尔数组)`，数组长�
 标准编码器位于 `ir2_benchmark.codecs.standard`，自定义内容使用 codec 128–255 和最多 240 个负载字节。更大内容需自行分包，每包都计费。转发使用现有 `forward_packet` 并再次显式发送；不会自动多跳扩散。
 
 自定义负载原样进入已送达收件箱，接收方法自行解码。仅标准 MAP_DELTA（包括显式转发的 MAP_DELTA）能够更新环境中的地图知识并参与图融合。特征或 PLAN 不会获得队友地图。学习特征必须序列化，不能通过环境外共享张量绕过字节预算。
+
+MAP_DELTA 的 wire 坐标按 uint16 校验；接收时仅合并 `0 <= x < valid_shape[1]`、`0 <= y < valid_shape[0]` 的条目，真实地图外的静态 padding 保持未知。越界条目仍占用发射字节，不退款。直接调用 `merge_local_messages` 的自定义 padded-map 方法须传入 `valid_shape=...`；省略时视整个数组为未 padding 地图。
 
 ## 自定义函数契约
 

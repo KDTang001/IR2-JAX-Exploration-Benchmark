@@ -1,0 +1,2504 @@
+{
+  "scope": "phase5_performance_original_window_plus_authorized_two_case_supplement",
+  "requested": 54,
+  "recorded": 54,
+  "pending": [],
+  "all_requested_recorded": true,
+  "all_requested_measured": false,
+  "formal_complete": false,
+  "completed_phase_measurements": 214,
+  "classifications": {
+    "complete": 37,
+    "per_case_timeout": 10,
+    "oom": 6,
+    "global_deadline_stop": 1
+  },
+  "raw_outcomes": {
+    "measured": 37,
+    "nonzero": 6,
+    "timeout": 11
+  },
+  "original_window_recorded": 52,
+  "supplement_recorded": 2,
+  "original_window_files_unchanged": 56,
+  "original_window_remains_closed": true,
+  "supplement_finished_utc": "2026-11-17T02:44:52.639655+00:00",
+  "measurement_processes_running": false,
+  "source_sha256": "5b496da6ed7f727146fc726c94ae07fba6e8988f1e347a57bb4a2416082d2c06",
+  "wrapper_sha256": "e6e717ae0b0368bc35107d1ce0d0cb65a664898f3debc1f8f4c84c0022e09cd7",
+  "evidence_hashes": {
+    "phase5-performance-v2-final-summary.json": "5ec1b94af14016e12f77f561660e1e18239adb45771b45a38faf452c180f3d3f",
+    "phase5-performance-v2-cpu-supplement-declaration.json": "e509d0d0d0e9cd03d288df0cc823d56cc7796cdd9224463c800db3caca0f64d7",
+    "phase5-performance-v2-cpu-supplement-completion.json": "eb17bfa1f8dd23929b69301b12d3820d10a79ed300872f0ba967e6ef14ee4ab3",
+    "phase5-performance-v2-cpu-supplement-results.json": "e226817dbcb36c114f33e8bb73619caf521b783385426a76daefd51480927224",
+    "phase5-performance-v2-cpu-supplement-integrity.json": "e902acc8a780f496e04908837d772c62744e743f38bdd327d0405a5738bd17ec"
+  },
+  "cases": [
+    {
+      "case_id": "cpu-512-n2-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 542.250938992016,
+      "record_sha256": "7fd43e69e616a2f1ec9c9bf8e32599fbd71f82eb282bdc2f0dccbf63628a4176",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 4.18424086808227,
+          "mean_seconds": 1.4963649075711145,
+          "units": 1,
+          "units_per_second": 0.6682861880416526,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 36.91974822094198,
+          "mean_seconds": 6.7311185307218695,
+          "units": 4,
+          "units_per_second": 0.5942548748389112,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 51.381617006030865,
+          "mean_seconds": 10.656424472283106,
+          "units": 4,
+          "units_per_second": 0.37536042322674223,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.6694902279414237,
+          "mean_seconds": 0.028930768428836018,
+          "units": 1,
+          "units_per_second": 34.56527615088423,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 53.33422950597014,
+          "mean_seconds": 10.770935559098143,
+          "units": 4,
+          "units_per_second": 0.37136978288030187,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-512-n2-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 158.79837749095168,
+      "record_sha256": "0810fd1b750539a9112b1ccb27f03ec4dd55df8cbc9eda89b69b582dd2049713",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 5.179816802032292,
+          "mean_seconds": 0.0038080008700489996,
+          "units": 1,
+          "units_per_second": 262.6049820170163,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 38.11265933304094,
+          "mean_seconds": 0.11013150920625776,
+          "units": 4,
+          "units_per_second": 36.32021415877153,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 45.46628425095696,
+          "mean_seconds": 0.17022517758887262,
+          "units": 4,
+          "units_per_second": 23.498286544078628,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.1086248030187562,
+          "mean_seconds": 0.0007518087048083543,
+          "units": 1,
+          "units_per_second": 1330.1255939234075,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 47.08539375301916,
+          "mean_seconds": 0.17403338691219689,
+          "units": 4,
+          "units_per_second": 22.98409558631457,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-512-n2-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 1302.886113442015,
+      "record_sha256": "50cd11e456100f6277fee2c6a0ad22d8a2aa78cac2dd24a1dbe62ae328621c89",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 7.930804201983847,
+          "mean_seconds": 4.252425186696928,
+          "units": 4,
+          "units_per_second": 0.9406397113142396,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 52.506326779024675,
+          "mean_seconds": 20.057802817306946,
+          "units": 16,
+          "units_per_second": 0.7976945503818764,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 72.84926202404313,
+          "mean_seconds": 29.11810226372909,
+          "units": 16,
+          "units_per_second": 0.5494863592099671,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.8094573330599815,
+          "mean_seconds": 0.09503104061586783,
+          "units": 4,
+          "units_per_second": 42.091510037953846,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 75.21533968404401,
+          "mean_seconds": 29.534598819282838,
+          "units": 16,
+          "units_per_second": 0.541737509214236,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-512-n2-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 168.81083952600602,
+      "record_sha256": "bdc58323d8640f3eb7f30522577f00cb79416e1cdec990a83a191036a7dc2f29",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 5.889700017985888,
+          "mean_seconds": 0.012206041894387454,
+          "units": 4,
+          "units_per_second": 327.7065599651324,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 40.837716312962584,
+          "mean_seconds": 0.15919166747480631,
+          "units": 16,
+          "units_per_second": 100.5077731378884,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 47.087726179976016,
+          "mean_seconds": 0.23658562306081876,
+          "units": 16,
+          "units_per_second": 67.62879245577362,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.0170351569540799,
+          "mean_seconds": 0.0012559400754980742,
+          "units": 4,
+          "units_per_second": 3184.8653276022746,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 48.84218526398763,
+          "mean_seconds": 0.24035988542018458,
+          "units": 16,
+          "units_per_second": 66.56684817447652,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-512-n2-b16",
+      "classification": "per_case_timeout",
+      "raw_status": "timeout",
+      "wall_seconds": 1800.81120874302,
+      "record_sha256": "526293628226be02d7c10922ab9a06a0166602037e24f6ff7509957befd9f80a",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 22.134046998922713,
+          "mean_seconds": 15.813712024013512,
+          "units": 16,
+          "units_per_second": 1.0117801548240923,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 96.35460039507598,
+          "mean_seconds": 63.88596828072332,
+          "units": 64,
+          "units_per_second": 1.001784925897587,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-512-n2-b16",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 176.48882592003793,
+      "record_sha256": "1dfbac1f4a60b670f0cbcaaff51be38224ebc87b02968d1c1cd56e8c8d8a2d75",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 7.433310366002843,
+          "mean_seconds": 0.04931907691061497,
+          "units": 16,
+          "units_per_second": 324.41807515980315,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 40.9653778540669,
+          "mean_seconds": 0.27870154692791405,
+          "units": 64,
+          "units_per_second": 229.63632855813879,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 46.654607658972964,
+          "mean_seconds": 0.3941584706888534,
+          "units": 64,
+          "units_per_second": 162.37124090762282,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.0225216379621997,
+          "mean_seconds": 0.003394776105415076,
+          "units": 16,
+          "units_per_second": 4713.123782884555,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 48.77101141808089,
+          "mean_seconds": 0.3997234896174632,
+          "units": 64,
+          "units_per_second": 160.11068066389652,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-512-n4-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 561.7118349960074,
+      "record_sha256": "d053862d955484ebb3acde3767f9426886a7b80d19d77a4f58f5008eee01a99e",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 4.169789237086661,
+          "mean_seconds": 1.4766505131032317,
+          "units": 1,
+          "units_per_second": 0.6772083110569377,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 36.811242355033755,
+          "mean_seconds": 6.66644781860523,
+          "units": 4,
+          "units_per_second": 0.600019696972126,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 52.095391749055125,
+          "mean_seconds": 11.714477761590388,
+          "units": 4,
+          "units_per_second": 0.34145781667837233,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.6707043700153008,
+          "mean_seconds": 0.02925440078834072,
+          "units": 1,
+          "units_per_second": 34.18289122498616,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 54.086136774974875,
+          "mean_seconds": 11.20206283167936,
+          "units": 4,
+          "units_per_second": 0.35707709018449946,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-512-n4-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 159.23242933105212,
+      "record_sha256": "f7d58a4bb22e4358d539e2f646f10b636057bf239589d192fc660d21a3c90d99",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 5.158882788964547,
+          "mean_seconds": 0.0037412620964460074,
+          "units": 1,
+          "units_per_second": 267.2894799190746,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 38.064692946034484,
+          "mean_seconds": 0.12079579101409763,
+          "units": 4,
+          "units_per_second": 33.113736550085385,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 45.45838142896537,
+          "mean_seconds": 0.18980627339333295,
+          "units": 4,
+          "units_per_second": 21.074119039842557,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.0979172199731693,
+          "mean_seconds": 0.000753397773951292,
+          "units": 1,
+          "units_per_second": 1327.3200885043377,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 46.96333883400075,
+          "mean_seconds": 0.19478255519643425,
+          "units": 4,
+          "units_per_second": 20.53571992607901,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-512-n4-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 1389.9880210059928,
+      "record_sha256": "a9131227d716c718f9a68baecd134117687e3704a859c7ac3946f1b90362bbbe",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 7.818279403960332,
+          "mean_seconds": 4.237930887192488,
+          "units": 4,
+          "units_per_second": 0.9438568269455403,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 52.73829298594501,
+          "mean_seconds": 20.10029922128888,
+          "units": 16,
+          "units_per_second": 0.796008050619161,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 76.31099766504485,
+          "mean_seconds": 32.22303152907407,
+          "units": 16,
+          "units_per_second": 0.4965392528497383,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.805881948908791,
+          "mean_seconds": 0.0969567252905108,
+          "units": 4,
+          "units_per_second": 41.255518768964464,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 78.91346958500799,
+          "mean_seconds": 32.511090950819195,
+          "units": 16,
+          "units_per_second": 0.49213974468601585,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-512-n4-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 168.55791534599848,
+      "record_sha256": "d01795d324a3babad5c8ae01c719c0c6d2e8246bb87fe6ab76f8cdb5fcd30cbd",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 5.864428163040429,
+          "mean_seconds": 0.01216196739114821,
+          "units": 4,
+          "units_per_second": 328.8941559661887,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 40.59422552201431,
+          "mean_seconds": 0.17301616850309073,
+          "units": 16,
+          "units_per_second": 92.47690628239856,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 46.81582581799012,
+          "mean_seconds": 0.2652989641996101,
+          "units": 16,
+          "units_per_second": 60.30931951909791,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.008932437049225,
+          "mean_seconds": 0.001265327213332057,
+          "units": 4,
+          "units_per_second": 3161.23762917149,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 48.47509555099532,
+          "mean_seconds": 0.2677337347296998,
+          "units": 16,
+          "units_per_second": 59.76086657945206,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-512-n4-b16",
+      "classification": "per_case_timeout",
+      "raw_status": "timeout",
+      "wall_seconds": 1801.6046062249225,
+      "record_sha256": "8a6d078c84444923390e4f169919b68ede393eebab9a8a61642d230b764f6924",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 22.641169679933228,
+          "mean_seconds": 16.474045246862808,
+          "units": 16,
+          "units_per_second": 0.9712247210834218,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 97.27022045198828,
+          "mean_seconds": 64.74295864593005,
+          "units": 64,
+          "units_per_second": 0.9885244872729221,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-512-n4-b16",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 179.86039569601417,
+      "record_sha256": "cfdf45a17f3e7f3ae55cc4877129ba37faba90d5a5b63d050fdda7d23b47eea6",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 7.507346248021349,
+          "mean_seconds": 0.049494968610815704,
+          "units": 16,
+          "units_per_second": 323.2651812714487,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 41.05876624502707,
+          "mean_seconds": 0.2837226647767238,
+          "units": 64,
+          "units_per_second": 225.5723914420617,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 46.60723784100264,
+          "mean_seconds": 0.42694802228361367,
+          "units": 64,
+          "units_per_second": 149.90115109957338,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.0232242370257154,
+          "mean_seconds": 0.0033943340997211633,
+          "units": 16,
+          "units_per_second": 4713.737519625532,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 50.95273229503073,
+          "mean_seconds": 0.4310084055061452,
+          "units": 64,
+          "units_per_second": 148.48898346853122,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-512-n6-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 550.6105417610379,
+      "record_sha256": "41dfef14d486e855abaa52a32af9ae2532eb8adb1a5810c7322b83c7f538fbdf",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 4.180924784974195,
+          "mean_seconds": 1.420398496557027,
+          "units": 1,
+          "units_per_second": 0.7040277798265406,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 36.9674298199825,
+          "mean_seconds": 6.455887975404039,
+          "units": 4,
+          "units_per_second": 0.619589437617164,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 52.22637687402312,
+          "mean_seconds": 11.136787998769432,
+          "units": 4,
+          "units_per_second": 0.35916998693357394,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.6850518489954993,
+          "mean_seconds": 0.027670652500819414,
+          "units": 1,
+          "units_per_second": 36.13937184785891,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 54.40788432001136,
+          "mean_seconds": 11.20411173949251,
+          "units": 4,
+          "units_per_second": 0.357011791117783,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-512-n6-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 160.66989743500017,
+      "record_sha256": "3b6c25bf3a8b2b333aa47e38b14e6ec7ef353e2148be359f9ff713733ff65956",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 5.202842125901952,
+          "mean_seconds": 0.0037587427999824286,
+          "units": 1,
+          "units_per_second": 266.0464025377514,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 38.53784467303194,
+          "mean_seconds": 0.11978461128892377,
+          "units": 4,
+          "units_per_second": 33.393271113531355,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 45.75104177603498,
+          "mean_seconds": 0.1900930374977179,
+          "units": 4,
+          "units_per_second": 21.042327760415848,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.1077948299935088,
+          "mean_seconds": 0.0007459871238097548,
+          "units": 1,
+          "units_per_second": 1340.5057112688512,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 47.50325603899546,
+          "mean_seconds": 0.1948285134974867,
+          "units": 4,
+          "units_per_second": 20.53087573370825,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-512-n6-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 1390.9949106589193,
+      "record_sha256": "cd28188ea7fdf27e1964226c3e038b65748a988626f20d838f90363521275ffb",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 7.920183874084614,
+          "mean_seconds": 4.229177920892835,
+          "units": 4,
+          "units_per_second": 0.9458102909880765,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 52.58961263101082,
+          "mean_seconds": 20.149264547007625,
+          "units": 16,
+          "units_per_second": 0.7940736478332737,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 76.25569800299127,
+          "mean_seconds": 32.16884966980433,
+          "units": 16,
+          "units_per_second": 0.49737557184143233,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.7762880600057542,
+          "mean_seconds": 0.09525406820466742,
+          "units": 4,
+          "units_per_second": 41.99295710294924,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 78.87347229605075,
+          "mean_seconds": 32.609856172383296,
+          "units": 16,
+          "units_per_second": 0.49064920481158436,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-512-n6-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 169.65686513797846,
+      "record_sha256": "026e10be29b36fdea4e29940c084de388b4ba855a9625c9ca90f7d7517f03fc8",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 5.85267491301056,
+          "mean_seconds": 0.012203348602633923,
+          "units": 4,
+          "units_per_second": 327.77888514441486,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 40.8304337579757,
+          "mean_seconds": 0.17343082522274927,
+          "units": 16,
+          "units_per_second": 92.25580273547155,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 47.091361379949376,
+          "mean_seconds": 0.2659533350961283,
+          "units": 16,
+          "units_per_second": 60.16093009029886,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.024915497051552,
+          "mean_seconds": 0.0012669163988903165,
+          "units": 4,
+          "units_per_second": 3157.272258456496,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 48.9410279400181,
+          "mean_seconds": 0.2684698570752516,
+          "units": 16,
+          "units_per_second": 59.597007181015584,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-512-n6-b16",
+      "classification": "per_case_timeout",
+      "raw_status": "timeout",
+      "wall_seconds": 1801.2546699850354,
+      "record_sha256": "d5e0951bae925d0e77f69560da2819720d6bf7e4c3194d04517b222514e5b723",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 22.707077863975428,
+          "mean_seconds": 16.37977655560244,
+          "units": 16,
+          "units_per_second": 0.976814301812161,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 96.8844421110116,
+          "mean_seconds": 64.53446137069258,
+          "units": 64,
+          "units_per_second": 0.9917182020374729,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-512-n6-b16",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 180.9312084610574,
+      "record_sha256": "01b62ae8a7cbec784ff3723bc4dc051cd5af015e0f0d9e255ba114c9e5185a37",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 7.451076792902313,
+          "mean_seconds": 0.04953389798756689,
+          "units": 16,
+          "units_per_second": 323.01112268644863,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 41.16513044096064,
+          "mean_seconds": 0.28281114811543373,
+          "units": 64,
+          "units_per_second": 226.29942428534468,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 47.01957496406976,
+          "mean_seconds": 0.427080430474598,
+          "units": 64,
+          "units_per_second": 149.85467708946362,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.0292966570705175,
+          "mean_seconds": 0.0034019351121969523,
+          "units": 16,
+          "units_per_second": 4703.205520480161,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 51.58409024402499,
+          "mean_seconds": 0.4315470183850266,
+          "units": 64,
+          "units_per_second": 148.30365469678475,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-768-n2-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 548.5761039709905,
+      "record_sha256": "d02d5e179f00506e6459a49980254ce9eeb7f8fdf16f131338cc0dc7df234f10",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 4.607826196006499,
+          "mean_seconds": 2.1203837091103197,
+          "units": 1,
+          "units_per_second": 0.4716127537216293,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 36.713484111009166,
+          "mean_seconds": 6.513157474994659,
+          "units": 4,
+          "units_per_second": 0.6141414537199225,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 50.97515791200567,
+          "mean_seconds": 10.389823284104931,
+          "units": 4,
+          "units_per_second": 0.384992111090039,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.6744298689300194,
+          "mean_seconds": 0.02757784443674609,
+          "units": 1,
+          "units_per_second": 36.260992126982565,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 53.550213379901834,
+          "mean_seconds": 11.20875375609612,
+          "units": 4,
+          "units_per_second": 0.35686393751174295,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-768-n2-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 160.76704429707024,
+      "record_sha256": "0f622564a75d192ee63c5611c34344d5afe48a6fe1544a5bc5f69e6ea2d40450",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 6.006640124018304,
+          "mean_seconds": 0.006200957484543324,
+          "units": 1,
+          "units_per_second": 161.2654178798399,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 38.72586350503843,
+          "mean_seconds": 0.10454799609724433,
+          "units": 4,
+          "units_per_second": 38.259939447136205,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 45.92058926692698,
+          "mean_seconds": 0.14906123511027544,
+          "units": 4,
+          "units_per_second": 26.834609260018553,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.1092081809183583,
+          "mean_seconds": 0.0007475835969671607,
+          "units": 1,
+          "units_per_second": 1337.6430462852,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 47.48401298990939,
+          "mean_seconds": 0.1517375611118041,
+          "units": 4,
+          "units_per_second": 26.36130415364129,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-768-n2-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 1503.059632577002,
+      "record_sha256": "8855dbbd68ec7517839825e9a51fa932f708a430070f4d59ef51997e914bef58",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 9.002984817954712,
+          "mean_seconds": 5.7656669260934,
+          "units": 4,
+          "units_per_second": 0.6937618928171855,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 54.12055999203585,
+          "mean_seconds": 21.699063814943656,
+          "units": 16,
+          "units_per_second": 0.7373590002063204,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 77.74967479798943,
+          "mean_seconds": 34.37858229260892,
+          "units": 16,
+          "units_per_second": 0.4654060444906669,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.7844655099324882,
+          "mean_seconds": 0.0982522331061773,
+          "units": 4,
+          "units_per_second": 40.7115428682151,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 81.80020208307542,
+          "mean_seconds": 35.061495270195884,
+          "units": 16,
+          "units_per_second": 0.4563410623733678,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-768-n2-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 170.77031941805035,
+      "record_sha256": "52ef0294ec7f22ce012c6b512d60d00450df05019798f3bae847a0dc48399271",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 6.757072727079503,
+          "mean_seconds": 0.01972749949200079,
+          "units": 4,
+          "units_per_second": 202.7626462047023,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 40.95488402596675,
+          "mean_seconds": 0.16166431339224802,
+          "units": 16,
+          "units_per_second": 98.97051281304745,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 47.51189244701527,
+          "mean_seconds": 0.22173720048740506,
+          "units": 16,
+          "units_per_second": 72.15749078111419,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.0087146229343489,
+          "mean_seconds": 0.0012635631021112204,
+          "units": 4,
+          "units_per_second": 3165.6511600541457,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 49.57195419003256,
+          "mean_seconds": 0.23982755071483552,
+          "units": 16,
+          "units_per_second": 66.71460369048523,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-768-n2-b16",
+      "classification": "per_case_timeout",
+      "raw_status": "timeout",
+      "wall_seconds": 1801.6520141550573,
+      "record_sha256": "1000bf60ff1bd087f3c2239289c3f31f716b087085e97c73107f52546bf259b6",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 27.738310698070563,
+          "mean_seconds": 23.915280035312755,
+          "units": 16,
+          "units_per_second": 0.6690283357073289,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 106.21931418799795,
+          "mean_seconds": 73.10258031809936,
+          "units": 64,
+          "units_per_second": 0.8754820927183379,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-768-n2-b16",
+      "classification": "oom",
+      "raw_status": "nonzero",
+      "wall_seconds": 64.18015401100274,
+      "record_sha256": "b254760a7a8518e24558b3adbc51c2ba09e4afdb8047fd1dd32ee484546c78f6",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 8.59460832492914,
+          "mean_seconds": 0.08427208280190826,
+          "units": 16,
+          "units_per_second": 189.86121462797993,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-768-n4-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 590.4255363940028,
+      "record_sha256": "dda6af0eb53267e7a229dd468ac445d011181b6b4cd3e8050286bc52317d923b",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 4.703367786016315,
+          "mean_seconds": 2.107301006396301,
+          "units": 1,
+          "units_per_second": 0.4745406550676411,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 37.12016442697495,
+          "mean_seconds": 6.860161044006236,
+          "units": 4,
+          "units_per_second": 0.5830766908154181,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 52.745821199030615,
+          "mean_seconds": 11.947240203828551,
+          "units": 4,
+          "units_per_second": 0.3348053551914174,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.6728118429891765,
+          "mean_seconds": 0.02897681181784719,
+          "units": 1,
+          "units_per_second": 34.510352839579376,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 54.868954727076925,
+          "mean_seconds": 12.208798176201526,
+          "units": 4,
+          "units_per_second": 0.3276325763003565,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-768-n4-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 160.20417749194894,
+      "record_sha256": "5370ed16121403b1de59bc05f9f381e45d96db426e7b51df3746f9b7b775a2d5",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 5.963950613047928,
+          "mean_seconds": 0.006280267180409282,
+          "units": 1,
+          "units_per_second": 159.22889445203992,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 38.329015354043804,
+          "mean_seconds": 0.11516366321593523,
+          "units": 4,
+          "units_per_second": 34.73317788181054,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 45.683940798044205,
+          "mean_seconds": 0.17009369308361783,
+          "units": 4,
+          "units_per_second": 23.516451006996512,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.0914020200725645,
+          "mean_seconds": 0.0007427098113112152,
+          "units": 1,
+          "units_per_second": 1346.420883055998,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 47.098362494958565,
+          "mean_seconds": 0.17367974118096755,
+          "units": 4,
+          "units_per_second": 23.030895675000778,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-768-n4-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 1591.115790460026,
+      "record_sha256": "c79f96a494c338ddb12c31e3716fa015c4ded9e7000d11a7b9f55d4ae7f6b834",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 9.102708705002442,
+          "mean_seconds": 6.2573139237123545,
+          "units": 4,
+          "units_per_second": 0.6392519296246001,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 53.95415068999864,
+          "mean_seconds": 21.780522895301694,
+          "units": 16,
+          "units_per_second": 0.7346012800937567,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 81.06334386696108,
+          "mean_seconds": 37.56276181869907,
+          "units": 16,
+          "units_per_second": 0.42595376977938454,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.7926570499548689,
+          "mean_seconds": 0.098201445187442,
+          "units": 4,
+          "units_per_second": 40.73259810346986,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 84.50616725103464,
+          "mean_seconds": 37.90623497040942,
+          "units": 16,
+          "units_per_second": 0.4220941492208342,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-768-n4-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 171.2327162529109,
+      "record_sha256": "a0004e934d45fdaaf0f10b5ba33fd71c5af825ede11e21465261b67b793114f2",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 6.758748875930905,
+          "mean_seconds": 0.019918148953001945,
+          "units": 4,
+          "units_per_second": 200.8218740324835,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 40.997176040080376,
+          "mean_seconds": 0.17292703490238637,
+          "units": 16,
+          "units_per_second": 92.52457262701381,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 47.43246975191869,
+          "mean_seconds": 0.2481052280170843,
+          "units": 16,
+          "units_per_second": 64.48876602833316,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.0047676099929959,
+          "mean_seconds": 0.0012593046063557266,
+          "units": 4,
+          "units_per_second": 3176.3562046957886,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 49.378811930073425,
+          "mean_seconds": 0.25746392260771245,
+          "units": 16,
+          "units_per_second": 62.14462918899346,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-768-n4-b16",
+      "classification": "per_case_timeout",
+      "raw_status": "timeout",
+      "wall_seconds": 1801.2027635249542,
+      "record_sha256": "f869379d9f98c1a84e3a1d177f1c37885c42bda01805304f7b4c24d0d2b9d389",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 26.797537005040795,
+          "mean_seconds": 21.94983449728461,
+          "units": 16,
+          "units_per_second": 0.7289348811253835,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 105.93407016899437,
+          "mean_seconds": 72.91459661489353,
+          "units": 64,
+          "units_per_second": 0.8777392040995996,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-768-n4-b16",
+      "classification": "oom",
+      "raw_status": "nonzero",
+      "wall_seconds": 63.98682737594936,
+      "record_sha256": "eb2485e17d6bfe30da5167fc5609048ed747cffda4a915f919fcbb82cd03aef8",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 8.53709604497999,
+          "mean_seconds": 0.08420258020050823,
+          "units": 16,
+          "units_per_second": 190.01793011449104,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-768-n6-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 576.4732178919949,
+      "record_sha256": "ce42f8d85e26dfc869155f68e387dca3fbaba63499432fd4eaf3ca5223dc305e",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 4.6780969760147855,
+          "mean_seconds": 2.1274015614180826,
+          "units": 1,
+          "units_per_second": 0.4700570019951571,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 37.19442505994812,
+          "mean_seconds": 6.5088905687909575,
+          "units": 4,
+          "units_per_second": 0.6145440544321534,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 52.52271959697828,
+          "mean_seconds": 11.342735288501718,
+          "units": 4,
+          "units_per_second": 0.3526486247153148,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.683867793995887,
+          "mean_seconds": 0.02628734118770808,
+          "units": 1,
+          "units_per_second": 38.04112378119087,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 55.01587042200845,
+          "mean_seconds": 12.151740280305967,
+          "units": 4,
+          "units_per_second": 0.32917095886938136,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-768-n6-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 160.0334877349669,
+      "record_sha256": "eaf5be2561f203834cd82ae92b1b6289a2bb2990007e393a42ecdec5464998a5",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 5.968126037972979,
+          "mean_seconds": 0.006239288602955639,
+          "units": 1,
+          "units_per_second": 160.27468252170382,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 38.21767651895061,
+          "mean_seconds": 0.11516019637929276,
+          "units": 4,
+          "units_per_second": 34.73422350571165,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 45.60611558496021,
+          "mean_seconds": 0.16971910920692607,
+          "units": 4,
+          "units_per_second": 23.56835372688112,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.095914277015254,
+          "mean_seconds": 0.0007442996953614056,
+          "units": 1,
+          "units_per_second": 1343.5448196904547,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 47.012758612982,
+          "mean_seconds": 0.17286518996115774,
+          "units": 4,
+          "units_per_second": 23.139418646974484,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-768-n6-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 1603.6537039109971,
+      "record_sha256": "a4b946465e5be9d338e4f2c88ae2d838baf40cc4718e351b7b980ca38f6a45c4",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 8.938615027931519,
+          "mean_seconds": 7.120552533492446,
+          "units": 4,
+          "units_per_second": 0.5617541589905389,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 54.34430744999554,
+          "mean_seconds": 21.747963740699923,
+          "units": 16,
+          "units_per_second": 0.735701061063341,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 80.77510779898148,
+          "mean_seconds": 37.54206392983906,
+          "units": 16,
+          "units_per_second": 0.4261886088602319,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.7700933340238407,
+          "mean_seconds": 0.09516673109028488,
+          "units": 4,
+          "units_per_second": 42.03149518927146,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 83.73499264696147,
+          "mean_seconds": 37.96467967107892,
+          "units": 16,
+          "units_per_second": 0.42144435666577285,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-768-n6-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 172.2781063299626,
+      "record_sha256": "20aed33c7c26524af3fa9b52424286bb83f439bed8ac260bb5bf83fb7a1fc5c2",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 6.755032412009314,
+          "mean_seconds": 0.019631111912894995,
+          "units": 4,
+          "units_per_second": 203.75819860578244,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 41.207634306978434,
+          "mean_seconds": 0.17306192490505054,
+          "units": 16,
+          "units_per_second": 92.45245601410194,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 47.71848578902427,
+          "mean_seconds": 0.24817623659037052,
+          "units": 16,
+          "units_per_second": 64.47031440165216,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.0179307520156726,
+          "mean_seconds": 0.0012844095705077051,
+          "units": 4,
+          "units_per_second": 3114.2714067591914,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 49.84846472798381,
+          "mean_seconds": 0.25748037520097566,
+          "units": 16,
+          "units_per_second": 62.14065824438557,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-768-n6-b16",
+      "classification": "per_case_timeout",
+      "raw_status": "timeout",
+      "wall_seconds": 1802.0927066110307,
+      "record_sha256": "c95664ae724c1b18b900602adb39ab1d167d2794ff2015a6fe6a1783ff912b22",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 27.5252180499956,
+          "mean_seconds": 27.19334040968679,
+          "units": 16,
+          "units_per_second": 0.5883793516702528,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 106.12690604606178,
+          "mean_seconds": 72.88702015409945,
+          "units": 64,
+          "units_per_second": 0.8780712925935193,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-768-n6-b16",
+      "classification": "oom",
+      "raw_status": "nonzero",
+      "wall_seconds": 63.993189452099614,
+      "record_sha256": "0bb8fd1e6b273823e0dc20d43285d9d9b0cd0c4ef1356ee07e1d7b20c7766129",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 8.54152842599433,
+          "mean_seconds": 0.08952225389657542,
+          "units": 16,
+          "units_per_second": 178.72650992997467,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-1024-n2-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 605.4011872810079,
+      "record_sha256": "49879890e39d06a61c7b0d3b08836daf1d4a219b8402d51a1a4e210026673934",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 5.214423549012281,
+          "mean_seconds": 2.477402607910335,
+          "units": 1,
+          "units_per_second": 0.4036485619281277,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 37.86918864597101,
+          "mean_seconds": 7.2879260167945175,
+          "units": 4,
+          "units_per_second": 0.5488529920284974,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 52.826736173941754,
+          "mean_seconds": 11.775603256910108,
+          "units": 4,
+          "units_per_second": 0.339685357321523,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.6858081769896671,
+          "mean_seconds": 0.026951197371818125,
+          "units": 1,
+          "units_per_second": 37.104102879141955,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 55.4963494829135,
+          "mean_seconds": 12.499738616100512,
+          "units": 4,
+          "units_per_second": 0.32000669156775235,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-1024-n2-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 160.8181600770913,
+      "record_sha256": "a19859ce80a11845883c739c2841860fe4bafdabc5c347de68bdaa84f574caa5",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 6.6278072440763935,
+          "mean_seconds": 0.00831327352207154,
+          "units": 1,
+          "units_per_second": 120.28955830035234,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 38.2817113220226,
+          "mean_seconds": 0.09776723538525403,
+          "units": 4,
+          "units_per_second": 40.91350219976977,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 45.86237517197151,
+          "mean_seconds": 0.14226562739349902,
+          "units": 4,
+          "units_per_second": 28.116419076662957,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.0945860310457647,
+          "mean_seconds": 0.000769601622596383,
+          "units": 1,
+          "units_per_second": 1299.373559824794,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 47.77031041204464,
+          "mean_seconds": 0.13891682329121977,
+          "units": 4,
+          "units_per_second": 28.794208687126087,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-1024-n2-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 1758.0643112040125,
+      "record_sha256": "a54a3785819f04d99bfeaee4a6abc7b8c5961aed825990aee20e8ffd5ee4e7c6",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 11.232704111956991,
+          "mean_seconds": 8.14760926112067,
+          "units": 4,
+          "units_per_second": 0.4909415598864662,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 59.202247170964256,
+          "mean_seconds": 26.279486248199827,
+          "units": 16,
+          "units_per_second": 0.6088399083941763,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 83.93361478799488,
+          "mean_seconds": 40.20533723360859,
+          "units": 16,
+          "units_per_second": 0.39795711467444733,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.8155615750001743,
+          "mean_seconds": 0.094003665226046,
+          "units": 4,
+          "units_per_second": 42.551532329951144,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 86.53266008698847,
+          "mean_seconds": 40.29611939310562,
+          "units": 16,
+          "units_per_second": 0.3970605666494399,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-1024-n2-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 170.89325537905097,
+      "record_sha256": "e76c3bcb7b96502a9f221be0d3c8ccbd95ca1c098d20b192a98b1d01601ad712",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 7.365623311023228,
+          "mean_seconds": 0.031921617896296085,
+          "units": 4,
+          "units_per_second": 125.30693190410398,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 40.774094387074,
+          "mean_seconds": 0.16630240700906143,
+          "units": 16,
+          "units_per_second": 96.21027312688383,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 46.94228895707056,
+          "mean_seconds": 0.25422329680295663,
+          "units": 16,
+          "units_per_second": 62.93679690733175,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.0164460249943659,
+          "mean_seconds": 0.0012542800046503543,
+          "units": 4,
+          "units_per_second": 3189.080576242661,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 48.942445542896166,
+          "mean_seconds": 0.24020769487833604,
+          "units": 16,
+          "units_per_second": 66.60902352900858,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-1024-n2-b16",
+      "classification": "global_deadline_stop",
+      "raw_status": "timeout",
+      "wall_seconds": 1697.7732266660314,
+      "record_sha256": "fe3db6f0a74421db7df68ea84a410fff9d7f3c8b9bfc1750be65639b3bb81b02",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 35.632150536053814,
+          "mean_seconds": 31.698569924291224,
+          "units": 16,
+          "units_per_second": 0.5047546320926892,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-1024-n2-b16",
+      "classification": "oom",
+      "raw_status": "nonzero",
+      "wall_seconds": 67.0601269879844,
+      "record_sha256": "a1532e89669ab340aaaf59c000d195c81dbb5b787557b69a68574d35586da493",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 9.479318715049885,
+          "mean_seconds": 0.13227256051031872,
+          "units": 16,
+          "units_per_second": 120.96235181560444,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-1024-n4-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 653.1106361170532,
+      "record_sha256": "ff1367427593b63de2db798b8d1ff373814bc12f2ee52a53e77bfa5748a5a18c",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 5.317527310922742,
+          "mean_seconds": 2.4960150856990366,
+          "units": 1,
+          "units_per_second": 0.40063860420136,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 38.04346605192404,
+          "mean_seconds": 7.6441236874787135,
+          "units": 4,
+          "units_per_second": 0.5232777704201871,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 54.496127482969314,
+          "mean_seconds": 13.638152179378086,
+          "units": 4,
+          "units_per_second": 0.29329486483134437,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.6818704889155924,
+          "mean_seconds": 0.02807563318638131,
+          "units": 1,
+          "units_per_second": 35.61807469706762,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 56.254261663067155,
+          "mean_seconds": 13.727108800888526,
+          "units": 4,
+          "units_per_second": 0.29139420820654444,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-1024-n4-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 160.00579841900617,
+      "record_sha256": "d7c6910cbb7587b31b548889f4056f7752684a3e941fc4105154a822d9f3a91e",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 6.599549534032121,
+          "mean_seconds": 0.008913071686401963,
+          "units": 1,
+          "units_per_second": 112.19476687544525,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 37.96206966601312,
+          "mean_seconds": 0.10838184879394248,
+          "units": 4,
+          "units_per_second": 36.90654887798483,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 45.351868244004436,
+          "mean_seconds": 0.16537024977151304,
+          "units": 4,
+          "units_per_second": 24.18814753879054,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.1037976590450853,
+          "mean_seconds": 0.0007472148048691451,
+          "units": 1,
+          "units_per_second": 1338.3032475850414,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 47.00909463502467,
+          "mean_seconds": 0.16708738029701636,
+          "units": 4,
+          "units_per_second": 23.939569780132743,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-1024-n4-b4",
+      "classification": "per_case_timeout",
+      "raw_status": "timeout",
+      "wall_seconds": 1801.0624840420205,
+      "record_sha256": "2da7f1ff3ab397075fcf3d0d77e1d6f1a0ae7c809a6b331648256c73c33f1603",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 11.16430597892031,
+          "mean_seconds": 8.030387322499882,
+          "units": 4,
+          "units_per_second": 0.4981079790251996,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 58.90800067293458,
+          "mean_seconds": 26.266981279768515,
+          "units": 16,
+          "units_per_second": 0.6091297598907416,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 86.46216908702627,
+          "mean_seconds": 44.02609687992371,
+          "units": 16,
+          "units_per_second": 0.3634208147871527,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.7946931089973077,
+          "mean_seconds": 0.09516912129474804,
+          "units": 4,
+          "units_per_second": 42.03043955414499,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-1024-n4-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 171.52562389604282,
+      "record_sha256": "76fe9ab1323fe0b9a2674bf530f6304a51b54311090881f2b5176e2034aac746",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 7.359600364929065,
+          "mean_seconds": 0.03186407170724124,
+          "units": 4,
+          "units_per_second": 125.53323494721435,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 40.688056241953745,
+          "mean_seconds": 0.17997863719938323,
+          "units": 16,
+          "units_per_second": 88.89943967224812,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 46.65046680904925,
+          "mean_seconds": 0.2883026642841287,
+          "units": 16,
+          "units_per_second": 55.49723253418027,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.0101153779542074,
+          "mean_seconds": 0.0012636292027309536,
+          "units": 4,
+          "units_per_second": 3165.4855644007002,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 48.82916820398532,
+          "mean_seconds": 0.28089137399801983,
+          "units": 16,
+          "units_per_second": 56.961521360612494,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-1024-n4-b16",
+      "window": "cpu_supplement_20261117",
+      "classification": "per_case_timeout",
+      "raw_status": "timeout",
+      "wall_seconds": 1803.6444261759752,
+      "record_sha256": "e088237b3cc242e3fe87ad6e208d300a7c43fa76b3fb70034c9142393f99d28a",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 36.45645475201309,
+          "mean_seconds": 43.01455125298817,
+          "units": 16,
+          "units_per_second": 0.37196714911418494,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ]
+    },
+    {
+      "case_id": "gpu-1024-n4-b16",
+      "classification": "oom",
+      "raw_status": "nonzero",
+      "wall_seconds": 66.56012508203276,
+      "record_sha256": "e9cf71b4f15289c90e796686430efc26aad746c93f1253ef3d96f7deae088f9e",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 9.424295548000373,
+          "mean_seconds": 0.1322930169175379,
+          "units": 16,
+          "units_per_second": 120.94364746382092,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-1024-n6-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 672.3336679340573,
+      "record_sha256": "e485f1db4d65a72374be3d09e5f396c0ffbe665ae601460431cfa0f991bc3da7",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 5.429829920991324,
+          "mean_seconds": 2.70250384118408,
+          "units": 1,
+          "units_per_second": 0.37002722614516553,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 38.10970058199018,
+          "mean_seconds": 7.713199237617664,
+          "units": 4,
+          "units_per_second": 0.5185915567293785,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 54.927816414041445,
+          "mean_seconds": 13.639990136085544,
+          "units": 4,
+          "units_per_second": 0.29325534403560316,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.7086945599876344,
+          "mean_seconds": 0.029188035591505467,
+          "units": 1,
+          "units_per_second": 34.2606132867341,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 57.757439424982294,
+          "mean_seconds": 14.681286596192512,
+          "units": 4,
+          "units_per_second": 0.272455685255635,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-1024-n6-b1",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 160.2829191100318,
+      "record_sha256": "24dff774ab8642aaf7970b10ccad9a2fee29111e610601895f704efee71da3e5",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 6.585201553069055,
+          "mean_seconds": 0.008957938710227608,
+          "units": 1,
+          "units_per_second": 111.6328245088642,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 38.07181457907427,
+          "mean_seconds": 0.10861019600415603,
+          "units": 4,
+          "units_per_second": 36.82895480500687,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 45.53120011102874,
+          "mean_seconds": 0.16546902703121305,
+          "units": 4,
+          "units_per_second": 24.173708347517298,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.1057623790111393,
+          "mean_seconds": 0.0007429820951074361,
+          "units": 1,
+          "units_per_second": 1345.9274544905402,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 47.10517452203203,
+          "mean_seconds": 0.1652324946364388,
+          "units": 4,
+          "units_per_second": 24.208313315133346,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-1024-n6-b4",
+      "classification": "per_case_timeout",
+      "raw_status": "timeout",
+      "wall_seconds": 1801.131120002945,
+      "record_sha256": "1e4918ecb6460699028725ca27fda7a8a5526d368cee2d3cbff28d39d09a4bfe",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 11.162107863929123,
+          "mean_seconds": 8.12784369349247,
+          "units": 4,
+          "units_per_second": 0.4921354483234695,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 59.21362072089687,
+          "mean_seconds": 26.511364985094406,
+          "units": 16,
+          "units_per_second": 0.6035147571238126,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 87.65742340893485,
+          "mean_seconds": 44.1584970561089,
+          "units": 16,
+          "units_per_second": 0.3623311721789353,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 0.89425258198753,
+          "mean_seconds": 0.09553898259764537,
+          "units": 4,
+          "units_per_second": 41.86772656817661,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "gpu-1024-n6-b4",
+      "classification": "complete",
+      "raw_status": "measured",
+      "wall_seconds": 171.2651889990084,
+      "record_sha256": "2c59b66cce940a5a34c936c9e6cc39ebe7f114e68d0da079c81b9d449e35de48",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 7.310375327942893,
+          "mean_seconds": 0.03207172203110531,
+          "units": 4,
+          "units_per_second": 124.72046234750137,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "scripted_events",
+          "first_call_seconds": 40.64453941001557,
+          "mean_seconds": 0.1797926590894349,
+          "units": 16,
+          "units_per_second": 88.99139754110352,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "policy_rollout",
+          "first_call_seconds": 46.358262974070385,
+          "mean_seconds": 0.29546443219296636,
+          "units": 16,
+          "units_per_second": 54.15203407478325,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_inference",
+          "first_call_seconds": 1.01506316405721,
+          "mean_seconds": 0.0012624764116480947,
+          "units": 4,
+          "units_per_second": 3168.3760291237572,
+          "warmups": 3,
+          "repeats": 10
+        },
+        {
+          "phase": "ir2_policy_rollout",
+          "first_call_seconds": 48.73706793889869,
+          "mean_seconds": 0.27820434761233626,
+          "units": 16,
+          "units_per_second": 57.511682104606045,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    },
+    {
+      "case_id": "cpu-1024-n6-b16",
+      "window": "cpu_supplement_20261117",
+      "classification": "per_case_timeout",
+      "raw_status": "timeout",
+      "wall_seconds": 1802.6476163540501,
+      "record_sha256": "e01cd4b52d0885fdc825b15703e5984a8c76df0eafb4bc7fde4539e1f5de7adf",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 35.70110777707305,
+          "mean_seconds": 31.30803717947565,
+          "units": 16,
+          "units_per_second": 0.5110508815445316,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ]
+    },
+    {
+      "case_id": "gpu-1024-n6-b16",
+      "classification": "oom",
+      "raw_status": "nonzero",
+      "wall_seconds": 67.47013366501778,
+      "record_sha256": "3b2553239e62eac710393676d5ff6484f4a5f897badbacd45f650873bbdbf498",
+      "completed_phases": [
+        {
+          "phase": "reset",
+          "first_call_seconds": 9.412030567997135,
+          "mean_seconds": 0.132087947614491,
+          "units": 16,
+          "units_per_second": 121.13141500765272,
+          "warmups": 3,
+          "repeats": 10
+        }
+      ],
+      "window": "closed_original_window"
+    }
+  ]
+}

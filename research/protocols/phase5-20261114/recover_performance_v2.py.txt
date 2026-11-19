@@ -1,0 +1,115 @@
+"""Continue the fixed measurement matrix, waiting on transient resource preflight failures."""
+import fcntl
+import hashlib
+import importlib.util
+import json
+import pathlib
+import shutil
+import sys
+import time
+from datetime import datetime
+
+ROOT = pathlib.Path('/home/user/Tz/acceptance/phase5-20261114')
+OUT = ROOT / 'performance-v2'
+DEADLINE = datetime.fromisoformat('2026-11-16T12:12:00+00:00').timestamp()
+RETRYABLE = {
+    'CPU affinity mean utilization >10%; quiet preflight failed',
+    'GPU compute process present; quiet preflight failed',
+    'GPU utilization >5%; quiet preflight failed',
+}
+spec = importlib.util.spec_from_file_location('phase5_v2_unchanged', ROOT / 'performance_v2.py')
+module = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = module
+spec.loader.exec_module(module)
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def priority(case):
+    # Capture matching single-lane hardware coverage and GPU scaling before costly CPU batches.
+    group = 0 if case['batch_size'] == 1 else 1 if case['device'] == 'gpu' else 2 if case['batch_size'] == 4 else 3
+    return group, case['bucket'], case['n_agents'], case['batch_size'], 0 if case['device'] == 'gpu' else 1
+
+
+with (ROOT / 'control/performance.lock').open('a') as lock:
+    fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    manifest_path = OUT / 'requested-manifest.json'
+    manifest = json.loads(manifest_path.read_text())
+    assert sha(ROOT / 'performance_v2.py') == manifest['wrapper_sha256']
+    assert module.source_digest() == manifest['source_sha256']
+    assert json.loads((ROOT / 'control/long-complete.json').read_text())['status'] == 'complete'
+    assert json.loads((ROOT / 'control/reproduction-complete.json').read_text())['functional_jobs_running'] is False
+    assert json.loads((OUT / 'current.json').read_text()) is None
+    before = {p.name: sha(p) for p in sorted((OUT / 'case-records').glob('*.json'))}
+    assert len(before) == 6 and len(manifest['cases']) == 54
+    assert len({case['case_id'] for case in manifest['cases']}) == 54
+    declaration = OUT / 'schedule-idle-recovery-v1.json'
+    assert not declaration.exists(), 'Do not replace a prior recovery declaration'
+    history = OUT / 'preflight-deferrals'
+    history.mkdir(exist_ok=True)
+    for name in ('resumption-finished.json', 'resumption-controller.log'):
+        shutil.copyfile(OUT / name, history / ('original-' + name))
+    failed_snapshot = OUT / 'resource-snapshots/cpu-512-n4-b1-before.json'
+    shutil.copyfile(failed_snapshot, history / 'original-cpu-512-n4-b1-before.json')
+    snapshot = json.loads(failed_snapshot.read_text())
+    assert snapshot['compute_processes'] == '' and int(snapshot['gpu'].split(',')[-3]) > 5
+    remaining = [case for case in sorted(manifest['cases'], key=priority)
+                 if not (OUT / 'case-records' / (case['case_id'] + '.json')).exists()]
+    module.save(declaration, dict(
+        protocol='phase5_v2_idle_recovery_schedule_v1', declared_utc=module.stamp(),
+        measurement_protocol_unchanged=True, requested=54, previously_recorded=6,
+        manifest_sha256=sha(manifest_path), source_sha256=manifest['source_sha256'],
+        wrapper_sha256=manifest['wrapper_sha256'], scheduler_sha256=sha(pathlib.Path(__file__)),
+        retained_records=before, remaining_execution_order=[c['case_id'] for c in remaining],
+        priority='B1 matched CPU/GPU across all buckets/N; remaining GPU B4/B16; CPU B4; CPU B16',
+        retry_policy='Only the three exact resource-preflight assertions are deferred by 15 seconds; thresholds remain unchanged. No measurement worker or case record may exist at a deferral. Other errors stop with evidence.',
+        deadline_utc='2026-11-16T12:12:00+00:00', deadline_epoch=DEADLINE,
+        case_timeout_seconds=1800, original_matrix_not_reduced=True,
+        original_interruption=dict(utc=snapshot['utc'], gpu=snapshot['gpu'],
+            compute_processes=snapshot['compute_processes'], snapshot_sha256=sha(failed_snapshot)),
+        historical_failure_replay=dict(retryable='GPU utilization >5%; quiet preflight failed' in RETRYABLE,
+            action='defer and resample; do not launch a worker on the non-idle snapshot'),
+    ))
+    deferred = 0
+    try:
+        for case in remaining:
+            while time.time() < DEADLINE:
+                module.save(OUT / 'recovery-state.json', dict(status='executing', updated_utc=module.stamp(),
+                    case_id=case['case_id'], deferred_preflights=deferred, declaration_sha256=sha(declaration)))
+                try:
+                    module.run_case(case, manifest, DEADLINE)
+                except AssertionError as error:
+                    if str(error) not in RETRYABLE:
+                        raise
+                    assert not (OUT / 'case-records' / (case['case_id'] + '.json')).exists()
+                    assert json.loads((OUT / 'current.json').read_text()) is None
+                    deferred += 1
+                    path = OUT / 'resource-snapshots' / (case['case_id'] + '-before.json')
+                    copy = history / (case['case_id'] + '-' + str(deferred) + '.json')
+                    assert not copy.exists()
+                    shutil.copyfile(path, copy)
+                    event = dict(status='waiting_for_idle', utc=module.stamp(), case_id=case['case_id'],
+                        reason=str(error), snapshot=str(copy), snapshot_sha256=sha(copy), attempt=deferred)
+                    with (OUT / 'preflight-deferrals.jsonl').open('a') as stream:
+                        stream.write(json.dumps(event) + '\n')
+                    module.save(OUT / 'recovery-state.json', event)
+                    print(json.dumps(event), flush=True)
+                    time.sleep(max(0, min(15, DEADLINE - time.time())))
+                else:
+                    break
+            if time.time() >= DEADLINE:
+                break
+        assert {name: sha(OUT / 'case-records' / name) for name in before} == before
+        progress = module.status()
+        module.save(OUT / 'recovery-finished.json', dict(
+            status='all_cases_recorded' if progress['recorded'] == 54 else 'budget_exhausted',
+            finished_utc=module.stamp(), requested=54, recorded=progress['recorded'],
+            unrecorded=progress['unrecorded'], outcomes=progress['counts'],
+            all_requested_measured=progress['all_requested_measured'], retained_record_bytes_unchanged=True,
+            declaration_sha256=sha(declaration), deferred_preflights=deferred))
+    except Exception as error:
+        module.save(OUT / 'recovery-finished.json', dict(status='blocked', finished_utc=module.stamp(),
+            error_type=type(error).__name__, error=str(error), declaration_sha256=sha(declaration)))
+        raise

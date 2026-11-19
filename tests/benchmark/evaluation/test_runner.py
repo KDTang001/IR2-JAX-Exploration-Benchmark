@@ -3,9 +3,11 @@
 import json
 from pathlib import Path
 
+import pytest
+
 from ir2_benchmark.config import HostConfig
 from ir2_benchmark.evaluation.records import completed_result
-from ir2_benchmark.evaluation.runner import run_manifest
+from ir2_benchmark.evaluation.runner import _error_result, run_manifest
 from ir2_benchmark.evaluation.scenarios import (
     EvaluationMap,
     Method,
@@ -13,6 +15,21 @@ from ir2_benchmark.evaluation.scenarios import (
     tasks,
     write_task_manifest,
 )
+from ir2_benchmark.types import GraphStateError
+
+
+@pytest.mark.parametrize("graph_failure", [False, True])
+def test_environment_graph_failure_is_distinct_from_invalid_model(*, graph_failure: bool) -> None:
+    """A valid-message graph failure must not be blamed on checkpoint conversion."""
+    scene = make_scenario(
+        EvaluationMap("map.png", "map", "test", "ir2", "rooms", 64, "anchor"), HostConfig(), 0
+    )
+    method = Method("A", "A", "fixed", "zoh", 0, "", "weights", 2000000)
+    task = next(tasks((scene,), (method,)))
+    error_type = GraphStateError if graph_failure else ValueError
+    result = _error_result(task, error_type("disconnected graph"))
+    assert result.outcome == ("environment_error" if graph_failure else "model_error")
+    assert result.metrics is None
 
 
 def test_resume_keeps_one_error_result_and_does_not_hide_failure_status(tmp_path: Path) -> None:

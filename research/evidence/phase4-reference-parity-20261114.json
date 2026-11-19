@@ -1,0 +1,102 @@
+[
+  {
+    "map": "/home/user/Tz/ir2-benchmark/DungeonMaps/test/complex/123.png",
+    "agent": 0,
+    "max_abs_error": 4.76837158203125e-05,
+    "fp32_probability_max_abs_error": 1.3336539268493652e-06,
+    "fp64_max_abs_error": 1.0080825063596421e-13,
+    "devices": [
+      "cuda:0"
+    ]
+  },
+  {
+    "map": "/home/user/Tz/ir2-benchmark/DungeonMaps/test/complex/123.png",
+    "agent": 1,
+    "max_abs_error": 6.29425048828125e-05,
+    "fp32_probability_max_abs_error": 1.710653305053711e-05,
+    "fp64_max_abs_error": 7.283063041541027e-14,
+    "devices": [
+      "cuda:0"
+    ]
+  },
+  {
+    "map": "/home/user/Tz/ir2-benchmark/DungeonMaps/test/corridor/332.png",
+    "agent": 0,
+    "max_abs_error": 8.702278137207031e-05,
+    "fp32_probability_max_abs_error": 5.908310413360596e-06,
+    "fp64_max_abs_error": 1.3322676295501878e-13,
+    "devices": [
+      "cuda:0"
+    ]
+  },
+  {
+    "map": "/home/user/Tz/ir2-benchmark/DungeonMaps/test/corridor/332.png",
+    "agent": 1,
+    "max_abs_error": 0.0001327991485595703,
+    "fp32_probability_max_abs_error": 5.3085386753082275e-06,
+    "fp64_max_abs_error": 1.176836406102666e-13,
+    "devices": [
+      "cuda:0"
+    ]
+  },
+  {
+    "map": "/home/user/Tz/ir2-benchmark/DungeonMaps/test/hybrid/106.png",
+    "agent": 0,
+    "max_abs_error": 2.09808349609375e-05,
+    "fp32_probability_max_abs_error": 2.384185791015625e-07,
+    "fp64_max_abs_error": 1.0480505352461478e-13,
+    "devices": [
+      "cuda:0"
+    ]
+  },
+  {
+    "map": "/home/user/Tz/ir2-benchmark/DungeonMaps/test/hybrid/106.png",
+    "agent": 1,
+    "max_abs_error": 2.6702880859375e-05,
+    "fp32_probability_max_abs_error": 6.480149750132114e-12,
+    "fp64_max_abs_error": 3.907985046680551e-14,
+    "devices": [
+      "cuda:0"
+    ]
+  },
+  {
+    "map": "/home/user/Tz/ir2-benchmark/artifacts/maps/procedural/test/test_rooms_00028.png",
+    "agent": 0,
+    "max_abs_error": 3.337860107421875e-05,
+    "fp32_probability_max_abs_error": 1.7285346984863281e-06,
+    "fp64_max_abs_error": 1.2256862191861728e-13,
+    "devices": [
+      "cuda:0"
+    ]
+  },
+  {
+    "map": "/home/user/Tz/ir2-benchmark/artifacts/maps/procedural/test/test_rooms_00028.png",
+    "agent": 1,
+    "max_abs_error": 0.00013399124145507812,
+    "fp32_probability_max_abs_error": 3.126263618469238e-05,
+    "fp64_max_abs_error": 3.0464519795714295e-13,
+    "devices": [
+      "cuda:0"
+    ]
+  },
+  {
+    "map": "/home/user/Tz/ir2-benchmark/artifacts/maps/procedural/ood/ood_hybrid_00087.png",
+    "agent": 0,
+    "max_abs_error": 8.344650268554688e-05,
+    "fp32_probability_max_abs_error": 1.0892748832702637e-05,
+    "fp64_max_abs_error": 1.7430501486614958e-13,
+    "devices": [
+      "cuda:0"
+    ]
+  },
+  {
+    "map": "/home/user/Tz/ir2-benchmark/artifacts/maps/procedural/ood/ood_hybrid_00087.png",
+    "agent": 1,
+    "max_abs_error": 7.617473602294922e-05,
+    "fp32_probability_max_abs_error": 1.0326504707336426e-05,
+    "fp64_max_abs_error": 1.2789769243681803e-13,
+    "devices": [
+      "cuda:0"
+    ]
+  }
+]

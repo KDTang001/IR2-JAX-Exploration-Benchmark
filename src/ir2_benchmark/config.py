@@ -4,7 +4,7 @@ import json
 import math
 from dataclasses import dataclass, fields
 from pathlib import Path
-from typing import Final
+from typing import Final, Literal
 
 from ir2_benchmark.presets import preset_names
 
@@ -39,6 +39,7 @@ class HostConfig:
     initial_budget: int = 8192
     max_candidates: int = 29
     navigation_mode: str = "ir2_one_hop"
+    rendezvous_mode: Literal["strict_ir2", "reachable_only"] = "strict_ir2"
     global_graph_fusion: bool = False
     graph_nodes_per_axis: int = 50
     graph_local_radius: int = 80
@@ -164,6 +165,9 @@ class HostConfig:
         if self.navigation_mode not in ("ir2_graph", "ir2_one_hop", "grid_path"):
             field = "navigation_mode"
             raise ConfigError(field, "expected ir2_graph, ir2_one_hop or legacy grid_path")
+        if self.rendezvous_mode not in ("strict_ir2", "reachable_only"):
+            field = "rendezvous_mode"
+            raise ConfigError(field, "expected strict_ir2 or reachable_only")
         if (
             self.graph_nodes_per_axis < 2  # noqa: PLR2004
             or self.graph_capacity < 1

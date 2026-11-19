@@ -1,0 +1,14 @@
+{
+  "upstream_commit": "1ef6d224ae18503f4763c3cec20e05a737f95783",
+  "source_path": "model/stage2/checkpoint.pth",
+  "source_bytes": 52176462,
+  "source_sha256": "cd72ac7dbf164b8be089394154794416fc969a47d79c1072c437f6f2aa363cf3",
+  "extracted": "policy_model",
+  "tensors": 90,
+  "tensor_digest": "06aae41095fefc4c651e8c9a4d8cf14df30bcd5de18085fcbcd4f75411754ea3",
+  "npz_sha256": "0a38ab8007bb64f36790d37549e70f7908cc1faba7d17a060ef0f99799193eb8",
+  "npz_bytes": 5377565,
+  "dtype": [
+    "float32"
+  ]
+}

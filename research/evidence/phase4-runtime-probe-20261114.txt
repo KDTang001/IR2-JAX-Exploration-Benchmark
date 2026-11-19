@@ -1,0 +1,9 @@
+import json,pathlib,sys
+import jax,jax.numpy as jnp
+from ir2_benchmark.env import reset
+BASE=pathlib.Path(__file__).resolve().parent
+
+def pytest_sessionstart(session):
+ assert pathlib.Path(reset.__file__).resolve().is_relative_to(BASE/'source'/'src')
+ a=jax.jit(lambda x:x+1)(jnp.arange(3));a.block_until_ready();assert all(d.platform=='gpu' for d in a.devices())
+ pathlib.Path(session.config.option.xmlpath).with_suffix('.runtime.json').write_text(json.dumps({'python':sys.executable,'backend':jax.default_backend(),'devices':[str(d) for d in a.devices()],'reset_import':reset.__file__},indent=2))

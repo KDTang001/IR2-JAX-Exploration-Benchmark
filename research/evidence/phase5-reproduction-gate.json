@@ -1,0 +1,48 @@
+{
+  "status": "complete",
+  "functional_jobs_running": false,
+  "revision": "ade2b705a3caf9e39eeade7ce91df3d4f3945390",
+  "wheel": "/home/user/Tz/acceptance/phase5-20261114/reproduction/final-wheels/ir2_benchmark-0.1.0-py3-none-any.whl",
+  "wheel_sha256": "077cad89fa8825a2aa4aa21fad2ced23de3bbec8a4f02c7f723eeffd60e06f7a",
+  "source_file_count": 112,
+  "all_source_files_match_git_and_live_snapshot": true,
+  "installed_module_file_count": 111,
+  "dependency_lock_sha256": {
+    "build.lock": "cdd5df9ab42696d6d0b89d3989e976377da518c8443786ab2f6be5c6b60e6b7e",
+    "cpu.lock": "e20b0aaaabadc9f5db169d07b2f7bda185f2497fff28b394c5554c78026d4e24",
+    "cuda.lock": "79a5537500df344f40fbfe4f217c9b09c9e217bb1f63342e5923d01de8072fe2"
+  },
+  "legacy_release_metadata_limitation": "Installed release writer has empty code_revision and hardcoded ex runtime_lock. This companion source/wheel/import/lock evidence identifies the actual clean environments.",
+  "performance_claim": false,
+  "training_events": 0,
+  "public_source_availability": "Fresh local fetch of public audit branch resolved ade2b705a3caf9e39eeade7ce91df3d4f3945390; target fetch outcome recorded separately.",
+  "cpu_doctor_passed": true,
+  "cuda_doctor_passed": true,
+  "installed_cuda_native_two_tasks_complete": true,
+  "installed_cpu_functional_two_tasks_complete": true,
+  "completed_utc": "2026-11-14T17:38:24.705063+00:00",
+  "target_public_fetch_exit": 124,
+  "fresh_public_source": {
+    "status": "passed",
+    "scope": "fresh_empty_local_bare_repository_public_fetch",
+    "revision": "ade2b705a3caf9e39eeade7ce91df3d4f3945390",
+    "git_tree": "0cdaec36780b374e2c7f741983164dc5fa65ab1b",
+    "utc": "2026-11-14T17:15:30.235113+00:00",
+    "fetch_exit": 0,
+    "repository": "https://github.com/KDTang001/IR2-JAX-Exploration-Benchmark.git",
+    "command": [
+      "git",
+      "fetch",
+      "--no-tags",
+      "--filter=blob:none",
+      "--depth=1",
+      "origin",
+      "ade2b705a3caf9e39eeade7ce91df3d4f3945390"
+    ],
+    "stderr": "From https://github.com/KDTang001/IR2-JAX-Exploration-Benchmark\n * branch            ade2b705a3caf9e39eeade7ce91df3d4f3945390 -> FETCH_HEAD\n",
+    "target_fetch_exit": 124,
+    "temporary_clone_removed": true
+  },
+  "evidence_path": "/home/user/Tz/acceptance/phase5-20261114/reproduction/reproduction-evidence.json",
+  "evidence_sha256": "78263861568722520ce6cbec4006049d2c81f48527e44d755d5dd086dc0fa09f"
+}

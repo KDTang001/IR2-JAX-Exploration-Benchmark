@@ -1,0 +1,139 @@
+{
+  "scope": "benchmark",
+  "base_config": "../benchmark.json",
+  "real_training_events": 0,
+  "training_seeds": [
+    -1
+  ],
+  "scenario_seeds": [
+    0,
+    1,
+    2
+  ],
+  "n_agents": [
+    2,
+    4,
+    6
+  ],
+  "budgets": [
+    0,
+    2048,
+    8192,
+    32768
+  ],
+  "conditions": [
+    [
+      0,
+      0.0,
+      64
+    ],
+    [
+      1,
+      0.1,
+      64
+    ],
+    [
+      1,
+      0.3,
+      64
+    ],
+    [
+      1,
+      0.5,
+      64
+    ],
+    [
+      2,
+      0.0,
+      64
+    ],
+    [
+      2,
+      0.0,
+      128
+    ]
+  ],
+  "methods": [
+    {
+      "method_id": "nf_off",
+      "route": "baseline",
+      "communication": "off",
+      "estimator": "none",
+      "decision_rule": "nearest_frontier"
+    },
+    {
+      "method_id": "nf_plan",
+      "route": "baseline",
+      "communication": "plan",
+      "estimator": "none",
+      "decision_rule": "nearest_frontier"
+    },
+    {
+      "method_id": "nf_map",
+      "route": "baseline",
+      "communication": "map",
+      "estimator": "none",
+      "decision_rule": "nearest_frontier"
+    },
+    {
+      "method_id": "nf_mixed",
+      "route": "baseline",
+      "communication": "mixed",
+      "estimator": "none",
+      "decision_rule": "nearest_frontier"
+    },
+    {
+      "method_id": "ir2_off",
+      "route": "baseline",
+      "communication": "off",
+      "estimator": "none",
+      "decision_rule": "ir2_adapted"
+    },
+    {
+      "method_id": "ir2_plan",
+      "route": "baseline",
+      "communication": "plan",
+      "estimator": "none",
+      "decision_rule": "ir2_adapted"
+    },
+    {
+      "method_id": "ir2_map",
+      "route": "baseline",
+      "communication": "map",
+      "estimator": "none",
+      "decision_rule": "ir2_adapted"
+    },
+    {
+      "method_id": "ir2_mixed",
+      "route": "baseline",
+      "communication": "mixed",
+      "estimator": "none",
+      "decision_rule": "ir2_adapted"
+    }
+  ],
+  "model_selection": "fixed_policies_no_test_tuning",
+  "map_weighting": "scenario_mean_then_equal_maps_within_family_then_equal_families",
+  "bootstrap": "maps_conditional_on_fixed_policy_weights",
+  "auxiliary": [],
+  "auxiliary_matrix": [],
+  "complete": false,
+  "reference_policy_provenance": {
+    "role": "external_pretrained_reference",
+    "upstream_commit": "1ef6d224ae18503f4763c3cec20e05a737f95783",
+    "path": "model/stage2/checkpoint.pth",
+    "sha256": "cd72ac7dbf164b8be089394154794416fc969a47d79c1072c437f6f2aa363cf3",
+    "training_exposure": "upstream training exposure not certified against benchmark split; not a data-fair retrained baseline",
+    "new_benchmark_training_events": 0
+  },
+  "communication_protocol": {
+    "period_own_actions": 4,
+    "mixed_codecs": [
+      "PLAN",
+      "MAP_DELTA",
+      "MAP_DELTA",
+      "POSITION"
+    ],
+    "budget_fee_mode": "attempt"
+  },
+  "outcome_rules": "errors remain errors; limited acceptance is never a completed formal matrix"
+}

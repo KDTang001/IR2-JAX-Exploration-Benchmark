@@ -25,6 +25,10 @@ def coordinate_distance_order(points, distances):
     Only tie/traversal ordering is standardized for the original/JAX comparison;
     graph construction, collision, utility, and offshoot rules are unchanged.
     """
+    # Filtering all global neighbors produces shape (0,), as in legacy code.
+    # Sorting an empty candidate list must remain a no-op like np.argsort.
+    if len(points) == 0:
+        return np.empty(0, dtype=np.intp)
     return np.lexsort((points[:, 1], points[:, 0], distances))
 
 

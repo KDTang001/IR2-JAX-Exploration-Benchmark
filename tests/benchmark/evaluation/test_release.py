@@ -20,7 +20,7 @@ from ir2_benchmark.evaluation.scenarios import (  # noqa: E402
     tasks,
     write_task_manifest,
 )
-from ir2_benchmark.evaluation.throughput import measure  # noqa: E402
+from ir2_benchmark.evaluation.throughput import benchmark_environment, measure  # noqa: E402
 from ir2_benchmark.maps.manifest import obstacle_hash, scenario_hash  # noqa: E402
 from ir2_benchmark.models.plan_predictor import PlanEstimate  # noqa: E402
 from ir2_benchmark.types import MapInput  # noqa: E402
@@ -114,3 +114,16 @@ def test_timing_counts_no_work_for_a_frozen_real_event() -> None:
     assert timing.units_per_second is None
     assert len(timing.samples_seconds) == 10  # noqa: PLR2004
     assert timing.warmup_count == 3  # noqa: PLR2004
+
+
+def test_policy_throughput_counts_live_events_across_segments_and_frozen_padding() -> None:
+    # Given: two independent lanes, each with two live events then three frozen scan slots.
+    config = HostConfig(sensor_radius=0, max_distance=1, max_rounds=1, coverage_target=1)
+    truth = jnp.zeros((5, 12), jnp.uint8)
+    map_data = MapInput(truth, truth == 0, jnp.array([5, 12]), jnp.array([1, 2]))
+    # When: timing the actual batched nearest-frontier rollout through the public benchmark.
+    case = benchmark_environment(map_data, config, batches=(2,), steps=5, warmups=0, repeats=1)[0]
+    # Then: the denominator is four live events, not two nonempty segments or ten scan slots.
+    assert case.policy_rollout is not None
+    assert case.policy_rollout.actual_units == 4  # noqa: PLR2004
+    assert case.policy_rollout_segment_length == 5  # noqa: PLR2004

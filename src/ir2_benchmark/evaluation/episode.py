@@ -10,6 +10,7 @@ import numpy as np
 from ir2_benchmark.config import FAULT_BURST, ConfigError
 from ir2_benchmark.evaluation.batching import (
     AModel,
+    BaselineModel,
     BModel,
     ParameterCache,
     PreparedTask,
@@ -109,6 +110,10 @@ def evaluation_kernel(prepared: PreparedTask) -> EvaluationKernel:
             from ir2_benchmark.training.evaluate_b import get_evaluation_kernel  # noqa: PLC0415
 
             return get_evaluation_kernel(prepared.group.config, settings)
+        case BaselineModel(spec=spec):
+            from ir2_benchmark.agents.baselines import get_baseline_kernel  # noqa: PLC0415
+
+            return get_baseline_kernel(prepared.group.config, spec)
         case None:
             return get_heuristic_kernel(prepared.group.config)
         case unreachable:
@@ -168,7 +173,7 @@ def execute_episode(task: EvaluationTask) -> EpisodeExecution:
 def summarize_execution(
     task: EvaluationTask, execution: EpisodeExecution, trace_path: Path
 ) -> EvaluationResult:
-    """Compute shared metrics from actual physical footprints and paid event traces."""
+    """Compute shared metrics from actual physical footprints, emissions and paid fees."""
     result, scenario, method = execution.rollout, task.scenario, task.method
     state, trace = result.final_state, result.trace
     from ir2_benchmark.types import validate_graph_state  # noqa: PLC0415
@@ -203,7 +208,14 @@ def summarize_execution(
         )
     spent = np.asarray(trace.spent)[mask]
     delivered = np.asarray(trace.delivered)[mask]
-    totals = communication_totals(spent, np.where(spent > 0, spent - 16, 0), delivered)
+    if trace.emitted_length is None:
+        if scenario.config.charge_mode != "attempt":
+            detail = "success-charge accounting requires actual emitted_length telemetry"
+            raise RuntimeError(detail)
+        emitted = spent
+    else:
+        emitted = np.asarray(trace.emitted_length)[mask]
+    totals = communication_totals(emitted, np.where(emitted > 0, emitted - 16, 0), delivered)
     birth = execution.initial_physical & np.asarray(state.component)[None]
     counts = np.zeros(scenario.n_agents, np.int64)
     assigned = np.zeros_like(birth[0])
@@ -229,7 +241,11 @@ def summarize_execution(
             rounds[min(len(rounds) - 1, recovery_start + 63)] - rounds[recovery_start - 1]
         )
     trace_path.parent.mkdir(parents=True, exist_ok=True)
-    arrays = {name: np.asarray(value) for name, value in zip(trace._fields, trace, strict=True)}
+    arrays = {
+        name: np.asarray(value)
+        for name, value in zip(trace._fields, trace, strict=True)
+        if value is not None
+    }
     arrays["initial_coverage"] = np.asarray(initial_coverage)
     if result.plan_diagnostics is not None:
         diagnostics = result.plan_diagnostics
@@ -277,5 +293,6 @@ def summarize_execution(
         decision_rule="heuristic" if method.route == "heuristic" else method.decision_rule,
         real_training_events=method.real_training_events,
         selected_at_events=method.selected_at_events,
+        spent_bytes=int(spent.sum()),
         **result_budget_fields(scenario, method),
     )

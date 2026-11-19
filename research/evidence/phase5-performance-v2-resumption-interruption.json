@@ -1,0 +1,7 @@
+{
+  "status": "blocked",
+  "finished_utc": "2026-11-15T16:28:44.721888+00:00",
+  "error_type": "AssertionError",
+  "error": "GPU utilization >5%; quiet preflight failed",
+  "amendment_sha256": "e1b5739979b3f9bbc1f590e975e48fb32e4f5693f76adb073b7a5efe6a527111"
+}

@@ -1,0 +1,325 @@
+{
+  "case_id": "cpu-512-n2-b1",
+  "status": "measured",
+  "started_utc": "2026-11-14T19:38:32.666760+00:00",
+  "finished_utc": "2026-11-14T19:47:34.918856+00:00",
+  "worker_pid": 744496,
+  "returncode": 0,
+  "wall_seconds": 542.250938992016,
+  "wall_scope": "parent monotonic from Popen until independent wait thread observes child exit; includes startup/load/compilation/phases/save/exit",
+  "sampled_kernel_host_high_water_bytes": 3110715392,
+  "sampled_gpu_process_peak_mib_lower_bound": 0,
+  "gpu_process_samples": [],
+  "completed_phase_evidence": {
+    "completed": [
+      {
+        "phase": "reset",
+        "status": "measured",
+        "finished_utc": "2026-11-14T19:38:56.956448+00:00",
+        "phase_wall_seconds": 23.77882783196401,
+        "timing": {
+          "first_call_seconds": 4.18424086808227,
+          "samples_seconds": [
+            1.4786845779744908,
+            1.4762053759768605,
+            1.4513559989864007,
+            1.5009535748977214,
+            1.6720103850821033,
+            1.4703317269450054,
+            1.4881415149429813,
+            1.4502113841008395,
+            1.5038533218903467,
+            1.4719012149143964
+          ],
+          "mean_seconds": 1.4963649075711145,
+          "actual_units": 1,
+          "units_per_second": 0.6682861880416526,
+          "warmup_count": 3
+        },
+        "kernel_host_high_water_rss_bytes": 1303085056,
+        "jax_device_allocation_high_water_bytes": null
+      },
+      {
+        "phase": "scripted_events",
+        "status": "measured",
+        "finished_utc": "2026-11-14T19:41:02.746212+00:00",
+        "phase_wall_seconds": 124.3650498429779,
+        "timing": {
+          "first_call_seconds": 36.91974822094198,
+          "samples_seconds": [
+            6.72878856305033,
+            6.672561511979438,
+            6.753819491015747,
+            6.7597083209548146,
+            6.82870025804732,
+            6.678398974006996,
+            6.76431619504001,
+            6.7306792380986735,
+            6.7267444470198825,
+            6.667468308005482
+          ],
+          "mean_seconds": 6.7311185307218695,
+          "actual_units": 4,
+          "units_per_second": 0.5942548748389112,
+          "warmup_count": 3
+        },
+        "kernel_host_high_water_rss_bytes": 1735262208,
+        "jax_device_allocation_high_water_bytes": null
+      },
+      {
+        "phase": "policy_rollout",
+        "status": "measured",
+        "finished_utc": "2026-11-14T19:44:12.619784+00:00",
+        "phase_wall_seconds": 189.87047290301416,
+        "timing": {
+          "first_call_seconds": 51.381617006030865,
+          "samples_seconds": [
+            10.69328152097296,
+            10.657507084892131,
+            10.458886798005551,
+            10.745184078929015,
+            10.678020393010229,
+            10.66552512801718,
+            10.563056587940082,
+            10.756513389991596,
+            10.718808167031966,
+            10.627461574040353
+          ],
+          "mean_seconds": 10.656424472283106,
+          "actual_units": 4,
+          "units_per_second": 0.37536042322674223,
+          "warmup_count": 3
+        },
+        "kernel_host_high_water_rss_bytes": 2281291776,
+        "jax_device_allocation_high_water_bytes": null
+      },
+      {
+        "phase": "ir2_policy_inference",
+        "status": "measured",
+        "finished_utc": "2026-11-14T19:44:19.457455+00:00",
+        "phase_wall_seconds": 1.0468414080096409,
+        "timing": {
+          "first_call_seconds": 0.6694902279414237,
+          "samples_seconds": [
+            0.0289923440432176,
+            0.029190592002123594,
+            0.02805173594970256,
+            0.028731573023833334,
+            0.028986784047447145,
+            0.0289628830505535,
+            0.029135260032489896,
+            0.029263464966788888,
+            0.02927001507487148,
+            0.02872303209733218
+          ],
+          "mean_seconds": 0.028930768428836018,
+          "actual_units": 1,
+          "units_per_second": 34.56527615088423,
+          "warmup_count": 3
+        },
+        "kernel_host_high_water_rss_bytes": 2281291776,
+        "jax_device_allocation_high_water_bytes": null
+      },
+      {
+        "phase": "ir2_policy_rollout",
+        "status": "measured",
+        "finished_utc": "2026-11-14T19:47:32.874153+00:00",
+        "phase_wall_seconds": 193.41507617593743,
+        "timing": {
+          "first_call_seconds": 53.33422950597014,
+          "samples_seconds": [
+            10.92145876691211,
+            10.694787698914297,
+            10.63174338801764,
+            10.854924974031746,
+            10.840019262046553,
+            10.762041411013342,
+            10.784386551007628,
+            10.72291634499561,
+            10.776318958029151,
+            10.720758236013353
+          ],
+          "mean_seconds": 10.770935559098143,
+          "actual_units": 4,
+          "units_per_second": 0.37136978288030187,
+          "warmup_count": 3
+        },
+        "kernel_host_high_water_rss_bytes": 3110715392,
+        "jax_device_allocation_high_water_bytes": null
+      }
+    ],
+    "current": null
+  },
+  "measurement": {
+    "scope": "micro",
+    "jax_version": "0.4.35",
+    "jaxlib_version": "0.4.34",
+    "python_version": "3.11.0",
+    "driver_device_memory_query": "550.163.01, NVIDIA H100, 81559 MiB",
+    "warmups": [
+      3
+    ],
+    "synchronized_repetitions": [
+      10
+    ],
+    "cases": [
+      {
+        "shape": [
+          512,
+          512
+        ],
+        "n_agents": 2,
+        "batch_size": 1,
+        "device": "TFRT_CPU_0",
+        "platform": "cpu",
+        "precision": "float32/int32",
+        "status": "measured",
+        "reset": {
+          "first_call_seconds": 4.18424086808227,
+          "samples_seconds": [
+            1.4786845779744908,
+            1.4762053759768605,
+            1.4513559989864007,
+            1.5009535748977214,
+            1.6720103850821033,
+            1.4703317269450054,
+            1.4881415149429813,
+            1.4502113841008395,
+            1.5038533218903467,
+            1.4719012149143964
+          ],
+          "mean_seconds": 1.4963649075711145,
+          "actual_units": 1,
+          "units_per_second": 0.6682861880416526,
+          "warmup_count": 3
+        },
+        "scripted_events": {
+          "first_call_seconds": 36.91974822094198,
+          "samples_seconds": [
+            6.72878856305033,
+            6.672561511979438,
+            6.753819491015747,
+            6.7597083209548146,
+            6.82870025804732,
+            6.678398974006996,
+            6.76431619504001,
+            6.7306792380986735,
+            6.7267444470198825,
+            6.667468308005482
+          ],
+          "mean_seconds": 6.7311185307218695,
+          "actual_units": 4,
+          "units_per_second": 0.5942548748389112,
+          "warmup_count": 3
+        },
+        "policy_rollout": {
+          "first_call_seconds": 51.381617006030865,
+          "samples_seconds": [
+            10.69328152097296,
+            10.657507084892131,
+            10.458886798005551,
+            10.745184078929015,
+            10.678020393010229,
+            10.66552512801718,
+            10.563056587940082,
+            10.756513389991596,
+            10.718808167031966,
+            10.627461574040353
+          ],
+          "mean_seconds": 10.656424472283106,
+          "actual_units": 4,
+          "units_per_second": 0.37536042322674223,
+          "warmup_count": 3
+        },
+        "team_rounds_per_second": 0.2971274374194556,
+        "peak_device_bytes": null,
+        "memory_measurement": "whole-process peak across setup, compilation, reset, scripted, nearest-frontier and optional IR2 phases; JAX peak_bytes_in_use and Linux peak RSS; no per-workload attribution",
+        "error": null,
+        "policy_rollout_events": 4,
+        "ir2_policy_inference": {
+          "first_call_seconds": 0.6694902279414237,
+          "samples_seconds": [
+            0.0289923440432176,
+            0.029190592002123594,
+            0.02805173594970256,
+            0.028731573023833334,
+            0.028986784047447145,
+            0.0289628830505535,
+            0.029135260032489896,
+            0.029263464966788888,
+            0.02927001507487148,
+            0.02872303209733218
+          ],
+          "mean_seconds": 0.028930768428836018,
+          "actual_units": 1,
+          "units_per_second": 34.56527615088423,
+          "warmup_count": 3
+        },
+        "ir2_policy_rollout": {
+          "first_call_seconds": 53.33422950597014,
+          "samples_seconds": [
+            10.92145876691211,
+            10.694787698914297,
+            10.63174338801764,
+            10.854924974031746,
+            10.840019262046553,
+            10.762041411013342,
+            10.784386551007628,
+            10.72291634499561,
+            10.776318958029151,
+            10.720758236013353
+          ],
+          "mean_seconds": 10.770935559098143,
+          "actual_units": 4,
+          "units_per_second": 0.37136978288030187,
+          "warmup_count": 3
+        },
+        "peak_host_rss_bytes": 3110715392,
+        "policy_rollout_segment_length": 4
+      }
+    ],
+    "world_model": {
+      "status": "unmeasured",
+      "reason": "no B checkpoint supplied"
+    },
+    "formal_matrix_complete": false,
+    "remaining_native_cases": [],
+    "skipped_after_oom": [],
+    "throughput_denominator": "actual unfrozen agent events; team rounds = events/N",
+    "policy_throughput_unit": "actual active agent events across all batch lanes",
+    "reset_throughput_unit": "environment resets",
+    "ir2_inference_throughput_unit": "single-current-agent graph forward passes",
+    "ir2_inference_scope": "real reset-state graphs; excludes checkpoint IO and observation construction",
+    "ir2_policy": "original frozen weights with mixed communication every fourth own action",
+    "policy_rollout_events_semantics": "legacy schedule-length alias; actual counts are stored in Timing.actual_units and segment length in policy_rollout_segment_length",
+    "timing_scope": "first_call_seconds includes tracing/compilation/first synchronized execution; samples_seconds are synchronized warm steady repetitions on the same initial states",
+    "policy": "nearest_frontier_with_fixed_communication",
+    "process_isolation": {
+      "mode": "one fresh child process for this map/N/B/device case",
+      "pid": 744496,
+      "requested_device": "cpu",
+      "jax_platforms": "cpu",
+      "device_preallocation": false,
+      "persistent_compilation_cache": false,
+      "memory_scope": "whole child process includes all workload phases and compilation",
+      "cpu_affinity": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "environment": {
+        "OMP_NUM_THREADS": "8",
+        "OPENBLAS_NUM_THREADS": "8",
+        "MKL_NUM_THREADS": "8",
+        "XLA_FLAGS": null,
+        "CUDA_VISIBLE_DEVICES": null
+      }
+    }
+  },
+  "log": "/home/user/Tz/acceptance/phase5-20261114/performance-v2/logs/cpu-512-n2-b1.log"
+}
