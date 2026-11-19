@@ -1,0 +1,57 @@
+{
+  "indexed_files_checked": 314,
+  "indices": [
+    "research\\evidence\\batch-cost-v1-recovery-run-20261118\\artifact-index.json",
+    "research\\evidence\\capacity-check-v1-c1024-20261118\\artifact-index.json",
+    "research\\evidence\\resource-pilot-v2-c1024-20261118\\artifact-index.json",
+    "research\\evidence\\burst-exposure-preflight-20261118\\artifact-index.json",
+    "research\\evidence\\burst8k-probe-20261119\\artifact-index.json"
+  ],
+  "missing_indexed_files": [],
+  "changed_indexed_files": [],
+  "PR2_modified_or_deleted_prior_raw_evidence": [],
+  "PR2_new_raw_paths": 376,
+  "asset_bindings": [
+    {
+      "path": "DungeonMaps\\train\\difficult\\img_5186.png",
+      "exists": true,
+      "matches_server_hash": true
+    },
+    {
+      "path": "DungeonMaps\\train\\easy\\img_4775.png",
+      "exists": true,
+      "matches_server_hash": true
+    },
+    {
+      "path": "artifacts\\maps\\ir2_manifest_enriched.jsonl",
+      "exists": true,
+      "matches_server_hash": true
+    },
+    {
+      "path": "artifacts\\maps\\procedural\\validation\\manifest.jsonl",
+      "exists": true,
+      "matches_server_hash": true
+    },
+    {
+      "path": "artifacts\\maps\\procedural\\validation\\validation_corridor_00045.png",
+      "exists": true,
+      "matches_server_hash": true
+    },
+    {
+      "path": "artifacts\\maps\\procedural\\validation\\validation_hybrid_00069.png",
+      "exists": true,
+      "matches_server_hash": true
+    },
+    {
+      "path": "artifacts\\maps\\procedural\\validation\\validation_rooms_00087.png",
+      "exists": true,
+      "matches_server_hash": true
+    },
+    {
+      "path": "artifacts\\maps\\sources.json",
+      "exists": true,
+      "matches_server_hash": true
+    }
+  ],
+  "license_unchanged_from_main": true
+}

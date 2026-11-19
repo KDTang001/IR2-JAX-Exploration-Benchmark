@@ -1,0 +1,7 @@
+{
+  "complete": false,
+  "reason": "bounded network installation stopped; retry same immutable CPU lock offline from existing wheel cache into a new isolated venv",
+  "production_source_changed": false,
+  "gpu_used": false,
+  "stopped_epoch": 1795057518.2794688
+}

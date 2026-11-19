@@ -1,0 +1,7 @@
+{
+  "reusable_candidate_acceptance": false,
+  "reason": "review archive omitted NOTICE; rebuild from exact Git export including NOTICE",
+  "production_source_changed": false,
+  "gpu_used": false,
+  "stopped_epoch": 1795057271.9433887
+}

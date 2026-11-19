@@ -1,0 +1,173 @@
+"""Rehearse the frozen candidate on Linux CPU; do not merge or train anything."""
+import hashlib
+import importlib.util
+import json
+import os
+import pathlib
+import shutil
+import subprocess
+import sys
+import time
+import zipfile
+
+root = pathlib.Path(sys.argv[1]).resolve()
+base_python = "/home/user/anaconda3/envs/ex/bin/python"
+old = pathlib.Path("/home/user/Tz/acceptance/phase5-20261114/reproduction")
+env = os.environ.copy()
+for key in ("PYTHONPATH", "PYTHONHOME", "VIRTUAL_ENV", "LD_LIBRARY_PATH", "LD_PRELOAD", "CUDA_HOME", "CUDA_PATH", "CONDA_DEFAULT_ENV", "CONDA_PREFIX", "UV_INDEX", "UV_EXTRA_INDEX_URL"):
+    env.pop(key, None)
+env.update(JAX_PLATFORMS="cpu", CUDA_VISIBLE_DEVICES="", PYTHONNOUSERSITE="1",
+           PYTHONDONTWRITEBYTECODE="1", OPENBLAS_NUM_THREADS="1", OMP_NUM_THREADS="1",
+           MKL_NUM_THREADS="1", MPLBACKEND="Agg", XLA_PYTHON_CLIENT_PREALLOCATE="false",
+           UV_PYTHON_DOWNLOADS="never", UV_CACHE_DIR="/home/user/Tz/acceptance/release-review-20261119-attempt2/uv-cache",
+           UV_INDEX_URL="https://pypi.org/simple", PATH="/usr/local/bin:/usr/bin:/bin")
+work = root / "work"
+work.mkdir(exist_ok=False)
+commands = []
+
+
+def run(name: str, argv: list[str], timeout: int = 300, extra_env: dict[str, str] | None = None) -> str:
+    """Retain the exact command, bounded CPU status and output before failing."""
+    started = time.time()
+    (root / "current.json").write_text(json.dumps({"phase": name, "started_epoch": started}))
+    current = env if extra_env is None else env | extra_env
+    result = subprocess.run(argv, cwd=work, env=current, stdin=subprocess.DEVNULL,
+                            capture_output=True, text=True, timeout=timeout, check=False)
+    output = result.stdout + result.stderr
+    (root / (name + ".log")).write_text(output, encoding="utf-8")
+    commands.append({"phase": name, "argv": argv, "exit_code": result.returncode, "seconds": time.time() - started})
+    (root / "commands.json").write_text(json.dumps(commands, indent=2) + "\n")
+    print(json.dumps(commands[-1]), flush=True)
+    if result.returncode:
+        (root / "cpu-result.json").write_text(json.dumps({"complete": False, "failed_phase": name, "exit_code": result.returncode}))
+        raise SystemExit(result.returncode)
+    return output
+
+
+inputs = json.loads((root / "release-inputs.json").read_text())
+for name, wanted in inputs["source_hashes"].items():
+    assert hashlib.sha256((root / "source/src/ir2_benchmark" / name).read_bytes()).hexdigest() == wanted
+for name, wanted in {"build.lock": "cdd5df9ab42696d6d0b89d3989e976377da518c8443786ab2f6be5c6b60e6b7e", "cpu.lock": "e20b0aaaabadc9f5db169d07b2f7bda185f2497fff28b394c5554c78026d4e24"}.items():
+    data = (old / name).read_bytes()
+    assert hashlib.sha256(data).hexdigest() == wanted
+    (root / name).write_bytes(data)
+uv_candidates = [pathlib.Path("/home/user/.local/bin/uv")]
+uv_candidates += list(old.parent.glob("*/uv")) + list(old.parent.glob("*/*/uv")) + list(old.parent.glob("*/*/*/uv"))
+found = shutil.which("uv")
+if found:
+    uv_candidates.insert(0, pathlib.Path(found))
+uv = None
+for path in uv_candidates:
+    if path.is_file() and os.access(path, os.X_OK):
+        probe = subprocess.run([str(path), "--version"], capture_output=True, text=True, timeout=10, check=False)
+        if probe.returncode == 0 and probe.stdout.startswith("uv 0.9.9"):
+            uv = str(path)
+            break
+if uv is None:
+    run("bootstrap-uv", [base_python, "-m", "pip", "install", "--no-deps", "--target", str(root / "uv-tool"), "--index-url", "https://pypi.org/simple", "uv==0.9.9"], 600)
+    uv = next(str(path) for path in (root / "uv-tool").rglob("uv") if path.is_file() and os.access(path, os.X_OK))
+version = run("uv-version", [uv, "--version"])
+assert "0.9.9" in version, version
+run("wheel-build", [uv, "--no-config", "build", "--wheel", "--no-sources", "--python", base_python,
+                    "--build-constraint", str(root / "build.lock"), "--out-dir", str(root / "wheels"), str(root / "source")], 600)
+wheels = list((root / "wheels").glob("*.whl"))
+assert len(wheels) == 1
+wheel = wheels[0]
+wheel_hash = hashlib.sha256(wheel.read_bytes()).hexdigest()
+with zipfile.ZipFile(wheel) as archive:
+    sources = {name.removeprefix("ir2_benchmark/"): hashlib.sha256(archive.read(name)).hexdigest()
+               for name in archive.namelist() if name.startswith("ir2_benchmark/") and name.endswith(".py")}
+    assert sources == inputs["source_hashes"]
+    notices = [name for name in archive.namelist() if name.endswith("/NOTICE")]
+    assert notices and all(hashlib.sha256(archive.read(name)).hexdigest() == inputs["notice_sha256"] for name in notices)
+    licenses = [name for name in archive.namelist() if name.endswith("LICENSE.txt")]
+    assert licenses and all(hashlib.sha256(archive.read(name)).hexdigest() == inputs["license_sha256"] for name in licenses)
+(root / "wheel-inspection.json").write_text(json.dumps({"wheel": str(wheel), "sha256": wheel_hash, "source_files": len(sources), "source_hashes": sources, "license_entries": licenses, "notice_entries": notices}, indent=2) + "\n")
+cpu = root / "cpu"
+python = str(cpu / "bin/python")
+run("venv-create", [uv, "venv", "--python", base_python, str(cpu)])
+run("cpu-dependencies", [uv, "--no-config", "pip", "sync", "--python", python, "--require-hashes", "--only-binary=:all:", str(root / "cpu.lock")], 1200)
+run("wheel-install", [uv, "--no-config", "pip", "install", "--python", python, "--no-deps", str(wheel)])
+run("pip-check", [uv, "pip", "check", "--python", python])
+run("cpu-freeze", [uv, "pip", "freeze", "--python", python])
+
+origin_code = '''
+import hashlib,importlib,importlib.metadata,json,pathlib,site,sys
+r=pathlib.Path(sys.argv[1]);prefix=pathlib.Path(sys.prefix).resolve();assert sys.prefix!=sys.base_prefix and not site.ENABLE_USER_SITE
+origins={}
+for name in ('ir2_benchmark','jax','jaxlib','flax','optax','numpy','PIL','matplotlib'):
+ p=pathlib.Path(importlib.import_module(name).__file__).resolve();assert p.is_relative_to(prefix),(name,str(p));origins[name]=str(p)
+package=pathlib.Path(origins['ir2_benchmark']).parent
+actual={p.relative_to(package).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in package.rglob('*.py')}
+assert actual==json.loads((r/'release-inputs.json').read_text())['source_hashes']
+d=importlib.metadata.distribution('ir2-benchmark');url=json.loads(d.read_text('direct_url.json'));assert not url.get('dir_info',{}).get('editable',False)
+assert not any(n.lower().startswith(('nvidia-','jax-cuda','torch')) for n in [x.metadata.get('Name','') for x in importlib.metadata.distributions()])
+(r/'installed-origins.json').write_text(json.dumps({'executable':sys.executable,'prefix':sys.prefix,'base_prefix':sys.base_prefix,'origins':origins,'direct_url':url,'source_files':len(actual),'pyvenv_cfg':(prefix/'pyvenv.cfg').read_text()},indent=2))
+'''
+run("installed-origins", [python, "-I", "-c", origin_code, str(root)])
+run("cli-help", [str(cpu / "bin/ir2-benchmark"), "--help"])
+run("doctor", [python, "-I", "-m", "ir2_benchmark.cli", "doctor", "--runtime-only", "--output", str(root / "doctor.json")], 180)
+doctor = json.loads((root / "doctor.json").read_text())
+assert doctor["scan_correct"] and doctor["inference_correct"] and doctor["optimizer_updates"] == 0
+assert doctor["optimizer_status"] == "skipped_runtime_only" and all(d["platform"] == "cpu" for d in doctor["devices"])
+assert doctor["initial_loss"] is None and doctor["final_loss"] is None
+run("unrelated-git-init", ["git", "init", str(work)])
+run("unrelated-git-commit", ["git", "-c", "user.name=Provenance fixture", "-c", "user.email=fixture@example.invalid", "commit", "--allow-empty", "-m", "Unrelated installation provenance fixture"])
+
+fixture_code = '''
+import json,pathlib,sys
+from dataclasses import asdict
+import numpy as np
+from PIL import Image
+from ir2_benchmark.agents.baselines import make_baseline_method
+from ir2_benchmark.config import HostConfig,load_config
+from ir2_benchmark.evaluation.scenarios import EvaluationMap,make_scenario,tasks,write_task_manifest
+from ir2_benchmark.maps.manifest import obstacle_hash,scenario_hash
+from ir2_benchmark.maps.prepare import load_ir2_map
+r=pathlib.Path(sys.argv[1]);out=r/'fixture';out.mkdir()
+configs={n:asdict(load_config(r/'source/configs'/n)) for n in ['benchmark.json','benchmark_capacity1024.json']}
+different=[k for k in configs['benchmark.json'] if configs['benchmark.json'][k]!=configs['benchmark_capacity1024.json'][k]]
+assert set(different)=={'graph_capacity','graph_padding_size'},different
+(r/'presets.json').write_text(json.dumps({'different_fields':different,'C400':configs['benchmark.json']['graph_capacity'],'C1024':configs['benchmark_capacity1024.json']['graph_capacity']},indent=2))
+c=HostConfig(n_agents=2,agent_bucket=2,sensor_radius=5,max_distance=4,max_rounds=4,navigation_mode='ir2_graph',rendezvous_mode='reachable_only',graph_nodes_per_axis=6,graph_capacity=64,graph_padding_size=64,graph_merge_enabled=False)
+p=np.full((24,24),255,np.uint8);p[[0,-1],:]=0;p[:,[0,-1]]=0;p[10:20,10]=0;p[3,3]=208
+path=out/'micro.png';Image.fromarray(p).save(path);d=load_ir2_map(path)
+m=EvaluationMap(str(path),obstacle_hash(d.occupancy),'validation','procedural','installation-fixture',32,scenario_hash(d.occupancy,d.anchor))
+methods=tuple(make_baseline_method('nearest_frontier',mode) for mode in ('off','mixed'))
+planned=tuple(tasks((make_scenario(m,c,0,limited=True),),methods));write_task_manifest(out/'tasks.jsonl',planned);write_task_manifest(out/'prefix.jsonl',planned[:1])
+(out/'core.json').write_text(json.dumps({'scope':'cpu_release_installation_fixture','limited':True,'training_seeds':[-1],'real_training_events':0,'methods':[asdict(v) for v in methods]},indent=2))
+'''
+run("micro-fixture", [python, "-I", "-c", fixture_code, str(root)])
+output = root / "evaluated"
+run("evaluate-prefix", [python, "-I", "-m", "ir2_benchmark.cli", "evaluate", "--task-manifest", str(root / "fixture/prefix.jsonl"), "--output", str(output)], 240)
+first = next((output / "results").glob("*.json"))
+first_hash = hashlib.sha256(first.read_bytes()).hexdigest()
+run("evaluate-resume", [python, "-I", "-m", "ir2_benchmark.cli", "evaluate", "--task-manifest", str(root / "fixture/tasks.jsonl"), "--output", str(output)], 240)
+resumed = json.loads((output / "runner_summary.json").read_text())
+assert resumed == {"requested": 2, "executed": 1, "resumed": 1, "failures": 0} and hashlib.sha256(first.read_bytes()).hexdigest() == first_hash
+run("evaluate-second-resume", [python, "-I", "-m", "ir2_benchmark.cli", "evaluate", "--task-manifest", str(root / "fixture/tasks.jsonl"), "--output", str(output)], 120)
+assert json.loads((output / "runner_summary.json").read_text()) == {"requested": 2, "executed": 0, "resumed": 2, "failures": 0}
+run("report", [python, "-I", "-m", "ir2_benchmark.cli", "report", "--results", str(output), "--output", str(root / "reported"), "--task-manifest", str(root / "fixture/tasks.jsonl"), "--core", str(root / "fixture/core.json"), "--bootstrap-repetitions", "5"], 180)
+report = json.loads((root / "reported/report.json").read_text())
+release = json.loads((root / "reported/release_manifest.json").read_text())
+assert report["requested_manifest_complete"] and report["limited"] and not report["formal_complete"]
+assert release["code_revision"] is None and release["runtime_lock"] is None
+assert release["provenance"]["kind"] == "installed_distribution" and release["provenance"]["revision_status"] == "unavailable"
+assert release["provenance"]["distribution"]["import_path_match"] and release["provenance"]["distribution"]["wheel_status"] == "verified_archive_hash"
+assert release["provenance"]["distribution"]["wheel_sha256"] == wheel_hash
+assert release["source_hashes"] == inputs["source_hashes"] and not release["formal_release_complete"]
+assert release["code_hash"] == hashlib.sha256(json.dumps(inputs["source_hashes"], sort_keys=True).encode()).hexdigest()
+test_origin = "import pathlib,ir2_benchmark,pytest,sys; assert pathlib.Path(ir2_benchmark.__file__).resolve().parent == pathlib.Path(sys.argv[1]).resolve(); sys.exit(pytest.main(sys.argv[2:]))"
+run("source-tests", [base_python, "-c", test_origin, str(root / "source/src/ir2_benchmark"), "-q", str(root / "source/tests/benchmark/evaluation/test_release_metadata.py"),
+                     str(root / "source/tests/benchmark/evaluation/test_batch_runner.py"), str(root / "source/tests/benchmark/evaluation/test_release.py"),
+                     str(root / "source/tests/benchmark/test_runtime.py::test_runtime_only_cli_runs_inference_without_optimizer"),
+                     "--junitxml=" + str(root / "source-tests.xml")], 300, {"PYTHONPATH": str(root / "source/src")})
+result = {"complete": True, "frozen_candidate": inputs["candidate_commit"], "merge_content_tree": inputs["candidate_tree"],
+          "wheel_sha256": wheel_hash, "source_files_verified": len(sources), "source_tests": "source-tests.xml",
+          "doctor_runtime_only": True, "optimizer_updates": 0, "clean_cpu_installation": True,
+          "wheel_origin_verified": True, "installed_revision_honestly_unavailable": True,
+          "actual_git_merge_executed": False, "gpu_initialized": False, "training_started": False,
+          "micro_tasks": 2, "micro_round_limit": 4, "prefix_resume": resumed,
+          "formal_release_claimed": False, "uv_executable": uv, "uv_executable_sha256": hashlib.sha256(pathlib.Path(uv).read_bytes()).hexdigest()}
+(root / "cpu-result.json").write_text(json.dumps(result, indent=2) + "\n")
+print(json.dumps(result), flush=True)

@@ -1,0 +1,20 @@
+{
+  "frozen_candidate": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+  "pr1": {
+    "number": 1,
+    "head": "d3d6c5fdec831de3076b7ede70e25b72108e59bf",
+    "base": "ca663f725c335351ed5c8bec45960aa1478d5e36",
+    "draft": true,
+    "merged": false
+  },
+  "pr2": {
+    "number": 2,
+    "head": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+    "base": "d3d6c5fdec831de3076b7ede70e25b72108e59bf",
+    "draft": true,
+    "merged": false
+  },
+  "reviews": [],
+  "review_threads": [],
+  "snapshot_kind": "read-only GitHub API snapshot before rehearsal; no PR state changed"
+}

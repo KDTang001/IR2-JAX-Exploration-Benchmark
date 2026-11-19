@@ -1,0 +1,8 @@
+Building wheel...
+  × Failed to build
+  │ `/home/user/Tz/acceptance/release-review-20261119-offline/source`
+  ├─▶ Failed to install requirements from `build-system.requires`
+  ├─▶ Failed to download `hatchling==1.25.0`
+  ╰─▶ Network connectivity is disabled, but the
+      requested data wasn't found in the cache for:
+      `https://files.pythonhosted.org/packages/0c/8b/90e80904fdc24ce33f6fc6f35ebd2232fe731a8528a22008458cf197bc4d/hatchling-1.25.0-py3-none-any.whl`

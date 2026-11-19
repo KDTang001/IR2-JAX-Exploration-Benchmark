@@ -1,0 +1,86 @@
+{
+  "candidate": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+  "tree": "4c4c7cd43b0ff017cc84b2e0d97d906226dd7a53",
+  "overall": "NO-GO",
+  "manual_qa": "INCOMPLETE",
+  "checks": [
+    {
+      "id": "Q1",
+      "scenario": "frozen PR refs and open Draft status",
+      "verdict": "PASS",
+      "evidence": "end-refs-and-ci.json"
+    },
+    {
+      "id": "Q2",
+      "scenario": "ancestry-preserving ordered content merge rehearsal",
+      "verdict": "PASS",
+      "evidence": "merge-rehearsal.json"
+    },
+    {
+      "id": "Q3",
+      "scenario": "111 source files and historical indexed evidence integrity",
+      "verdict": "PASS",
+      "evidence": "history-integrity.json"
+    },
+    {
+      "id": "Q4",
+      "scenario": "complete wheel source, LICENSE and NOTICE membership",
+      "verdict": "PASS",
+      "evidence": "cpu-final/wheel-inspection.json"
+    },
+    {
+      "id": "Q5",
+      "scenario": "independent CPU dependency installation under unchanged hash lock",
+      "verdict": "INCOMPLETE",
+      "evidence": "cpu-final/controller.log",
+      "blocker": "R1"
+    },
+    {
+      "id": "Q6",
+      "scenario": "installed-wheel import origins, inference-only doctor, unrelated-CWD provenance",
+      "verdict": "NOT_RUN",
+      "reason": "blocked by Q5",
+      "evidence": "cpu-final/clean-install-status.json"
+    },
+    {
+      "id": "Q7",
+      "scenario": "installed-wheel evaluate, resume and report CLI",
+      "verdict": "NOT_RUN",
+      "reason": "blocked by Q5",
+      "evidence": "cpu-final/clean-install-status.json"
+    },
+    {
+      "id": "Q8",
+      "scenario": "affected regressions on target Linux CPU against frozen source",
+      "verdict": "PASS",
+      "tests": 32,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "evidence": "cpu-final/source-tests.xml"
+    },
+    {
+      "id": "Q9",
+      "scenario": "owned processes closed, package source unchanged",
+      "verdict": "PASS",
+      "evidence": "cpu-final/postrun-verification.json"
+    }
+  ],
+  "blockers": [
+    {
+      "id": "R1",
+      "kind": "release_acceptance_incomplete",
+      "finding": "Standalone CPU dependency installation did not complete within bounded runs. New installed-wheel CLI/origin/resume checks therefore have no current evidence. No production source bug inferred from installer timeouts.",
+      "evidence": [
+        "uv-install/continuation-controller.log",
+        "cpu-final/controller.log",
+        "cpu-final/clean-install-status.json"
+      ]
+    }
+  ],
+  "gate_reviewer": {
+    "verdict": "NOT_RUN",
+    "reason": "Manual QA remains incomplete; no pass or reviewer approval claimed."
+  },
+  "historical_gpu_evidence": "reused only where source identities match; no GPU work executed in this review"
+}

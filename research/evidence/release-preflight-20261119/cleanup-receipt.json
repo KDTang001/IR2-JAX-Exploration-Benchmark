@@ -1,0 +1,32 @@
+{
+  "removed": [
+    "/home/user/Tz/acceptance/release-review-20261119/source",
+    "/home/user/Tz/acceptance/release-review-20261119/work",
+    "/home/user/Tz/acceptance/release-review-20261119/uv-cache",
+    "/home/user/Tz/acceptance/release-review-20261119-attempt2/source",
+    "/home/user/Tz/acceptance/release-review-20261119-attempt2/cpu",
+    "/home/user/Tz/acceptance/release-review-20261119-attempt2/work",
+    "/home/user/Tz/acceptance/release-review-20261119-attempt2/uv-cache",
+    "/home/user/Tz/acceptance/release-review-20261119-attempt3/source",
+    "/home/user/Tz/acceptance/release-review-20261119-attempt3/cpu",
+    "/home/user/Tz/acceptance/release-review-20261119-attempt3/work",
+    "/home/user/Tz/acceptance/release-review-20261119-offline/source",
+    "/home/user/Tz/acceptance/release-review-20261119-offline/work",
+    "/home/user/Tz/acceptance/release-review-20261119-cpu-final/source",
+    "/home/user/Tz/acceptance/release-review-20261119-cpu-final/cpu",
+    "/home/user/Tz/acceptance/release-review-20261119-cpu-final/work",
+    "/home/user/Tz/acceptance/release-review-20261119-pip/source",
+    "/home/user/Tz/acceptance/release-review-20261119-pip/cpu",
+    "/home/user/Tz/acceptance/release-review-20261119-pip/work",
+    "/home/user/Tz/acceptance/release-review-20261119-pip/pip-cache"
+  ],
+  "preserved": [
+    "all raw logs/locks/protocols",
+    "wheel archives",
+    "source archives",
+    "review evidence archive",
+    "original phase5 cache/environment/results"
+  ],
+  "scope": "only newly created release-review directories; no project source or historical evidence deletion",
+  "recorded_epoch": 1795059643.6155546
+}

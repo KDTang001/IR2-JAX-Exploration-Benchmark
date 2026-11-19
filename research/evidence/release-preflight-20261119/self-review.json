@@ -1,0 +1,30 @@
+{
+  "candidate": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+  "source_tree": "4c4c7cd43b0ff017cc84b2e0d97d906226dd7a53",
+  "production_edits": false,
+  "actual_merge": false,
+  "new_gpu_work": false,
+  "training": false,
+  "prior_evidence": "historical accepted runs, rechecked file identities rather than replayed rollouts",
+  "review_focus": [
+    "package restoration and explicit ir2_graph environment API",
+    "ValueError RESOURCE_EXHAUSTED propagation across model/runner/throughput boundaries",
+    "honest unavailable Git revision in installed wheel; local archive hash; actual runtime inventory",
+    "_visible inactive row count=0 and false output preserving optimized graph semantics",
+    "C400/C1024 distinct identities; frozen validation-only pilot and independent fault cohorts",
+    "retained A/B and teammate intent modules without training or behavior edits"
+  ],
+  "context_mining": [
+    "PR1 descends main ca663f7; PR2 descends PR1 d3d6c5f; review head 298e625d contains accepted 111-file H100 inventory",
+    "Graph allocation optimization restricted to removal of batched outer cond; 22 historical paired checks; no new GPU acceptance claimed",
+    "C400 capacity failures retained; C1024 changes only graph_capacity and graph_padding_size",
+    "Five indexed later-run evidence groups intact; 314 SHA checks; PR2 adds raw evidence without modifying/deleting prior raw paths",
+    "README and release merge plan distinguish integration from formal completion; separate approval and final real-main wheel QA required"
+  ],
+  "target_source_tests": [
+    "tests/benchmark/evaluation/test_release_metadata.py",
+    "tests/benchmark/evaluation/test_batch_runner.py",
+    "tests/benchmark/evaluation/test_release.py",
+    "tests/benchmark/test_runtime.py::test_runtime_only_cli_runs_inference_without_optimizer"
+  ]
+}

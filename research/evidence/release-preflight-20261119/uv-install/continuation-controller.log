@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/user/Tz/acceptance/release-review-20261119-cpu-final/cpu_release_continue.py", line 14, in <module>
+    run('cpu-dependencies-online-mirror',[uv,'--no-config','pip','sync','--python',python,'--require-hashes','--only-binary=:all:',str(root/'cpu.lock')],600)
+  File "cpu_release_review.py:unchanged_run_helper", line 34, in run
+  File "/home/user/anaconda3/envs/ex/lib/python3.11/subprocess.py", line 548, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/anaconda3/envs/ex/lib/python3.11/subprocess.py", line 1205, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/anaconda3/envs/ex/lib/python3.11/subprocess.py", line 2058, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/home/user/anaconda3/envs/ex/lib/python3.11/subprocess.py", line 1249, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['/home/user/Tz/acceptance/phase5-20261114/reproduction/tools/bin/uv', '--no-config', 'pip', 'sync', '--python', '/home/user/Tz/acceptance/release-review-20261119-cpu-final/cpu/bin/python', '--require-hashes', '--only-binary=:all:', '/home/user/Tz/acceptance/release-review-20261119-cpu-final/cpu.lock']' timed out after 600 seconds

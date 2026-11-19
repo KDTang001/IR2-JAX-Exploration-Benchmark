@@ -1,0 +1,19 @@
+{
+  "candidate": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+  "tree": "4c4c7cd43b0ff017cc84b2e0d97d906226dd7a53",
+  "manualQa": {
+    "verdict": "INCOMPLETE",
+    "source": "qa-matrix.json",
+    "blocking": "R1"
+  },
+  "selfReview": {
+    "verdict": "NO_CONFIRMED_NEW_SOURCE_BLOCKER",
+    "source": "self-review.json",
+    "scope": "diff/config/evidence read-only review; not installed-wheel approval"
+  },
+  "gateReview": {
+    "verdict": "NOT_RUN",
+    "reason": "Manual QA remains incomplete; no pass or reviewer approval claimed."
+  },
+  "overall": "NO-GO"
+}

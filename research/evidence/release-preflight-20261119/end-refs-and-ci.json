@@ -1,0 +1,32 @@
+{
+  "prs": [
+    {
+      "number": 1,
+      "head": "audit/benchmark-foundation-2026-11-12",
+      "head_sha": "d3d6c5fdec831de3076b7ede70e25b72108e59bf",
+      "base": "main",
+      "base_sha": "ca663f725c335351ed5c8bec45960aa1478d5e36",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergeable": true
+    },
+    {
+      "number": 2,
+      "head": "codex/phase6-prep",
+      "head_sha": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+      "base": "audit/benchmark-foundation-2026-11-12",
+      "base_sha": "d3d6c5fdec831de3076b7ede70e25b72108e59bf",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergeable": true
+    }
+  ],
+  "commit_statuses": [],
+  "pr_triggered_workflow_runs": [],
+  "ci_scope": "The commit-status endpoint and first-page PR-triggered workflow endpoint returned empty arrays for both frozen heads; this is not a CI pass.",
+  "observation_date": "2026-11-19",
+  "record_written_utc": "2026-11-19T03:43:00.895362+00:00",
+  "snapshot_stage": "after target CPU QA, before documentation-only report commit"
+}

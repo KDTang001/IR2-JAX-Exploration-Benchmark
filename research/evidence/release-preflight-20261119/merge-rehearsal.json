@@ -1,0 +1,24 @@
+{
+  "PR1": {
+    "left": "ca663f725c335351ed5c8bec45960aa1478d5e36",
+    "right": "d3d6c5fdec831de3076b7ede70e25b72108e59bf",
+    "exit_code": 0,
+    "tree": "817d465163b5a4fb4e7060345cfa9c2bba74cd02",
+    "expected_right_tree": "817d465163b5a4fb4e7060345cfa9c2bba74cd02",
+    "content_identical_to_right": true
+  },
+  "PR2_after_PR1": {
+    "left": "d3d6c5fdec831de3076b7ede70e25b72108e59bf",
+    "right": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+    "exit_code": 0,
+    "tree": "4c4c7cd43b0ff017cc84b2e0d97d906226dd7a53",
+    "expected_right_tree": "4c4c7cd43b0ff017cc84b2e0d97d906226dd7a53",
+    "content_identical_to_right": true
+  },
+  "scope": {
+    "git_merge_executed": false,
+    "branch_refs_changed": false,
+    "source_files_match_prior_h100_inventory": 111,
+    "assumption": "PR1 integrated preserving audit ancestry; PR2 then retargeted onto its resulting main. Both source commits are ancestors, so these merge-tree results model the content without new merge commits."
+  }
+}

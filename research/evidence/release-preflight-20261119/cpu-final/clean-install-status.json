@@ -1,0 +1,13 @@
+{
+  "complete": false,
+  "candidate": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+  "failed_phase": "cpu-dependencies",
+  "timeout_seconds": 600,
+  "cli_and_resume_executed": false,
+  "gpu_visible": false,
+  "training_started": false,
+  "stop_observed_epoch": 1795059219.349524,
+  "owned_remaining_processes_signaled": [
+    995257
+  ]
+}

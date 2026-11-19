@@ -1,0 +1,31 @@
+[
+  {
+    "phase": "uv-version",
+    "argv": [
+      "/home/user/Tz/acceptance/phase5-20261114/reproduction/tools/bin/uv",
+      "--version"
+    ],
+    "exit_code": 0,
+    "seconds": 0.00592494010925293
+  },
+  {
+    "phase": "wheel-build",
+    "argv": [
+      "/home/user/Tz/acceptance/phase5-20261114/reproduction/tools/bin/uv",
+      "--no-config",
+      "--offline",
+      "build",
+      "--wheel",
+      "--no-sources",
+      "--python",
+      "/home/user/anaconda3/envs/ex/bin/python",
+      "--build-constraint",
+      "/home/user/Tz/acceptance/release-review-20261119-offline/build.lock",
+      "--out-dir",
+      "/home/user/Tz/acceptance/release-review-20261119-offline/wheels",
+      "/home/user/Tz/acceptance/release-review-20261119-offline/source"
+    ],
+    "exit_code": 2,
+    "seconds": 0.014372110366821289
+  }
+]

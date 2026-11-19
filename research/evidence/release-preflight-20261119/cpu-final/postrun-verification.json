@@ -1,0 +1,17 @@
+{
+  "candidate": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+  "source_files_verified": 111,
+  "source_tests": {
+    "tests": 32,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "clean_installation_complete": false,
+  "clean_install_failure": "dependency installer timeout; UV and pip each bounded at 600s",
+  "installed_cli_acceptance_complete": false,
+  "active_owned_processes": [],
+  "gpu_work_launched": false,
+  "production_source_changed": false,
+  "observed_epoch": 1795059373.6463642
+}

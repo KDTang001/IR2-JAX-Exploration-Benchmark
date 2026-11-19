@@ -1,0 +1,20 @@
+{"phase": "uv-version", "argv": ["/home/user/Tz/acceptance/phase5-20261114/reproduction/tools/bin/uv", "--version"], "exit_code": 0, "seconds": 0.00596308708190918}
+{"phase": "wheel-build", "argv": ["/home/user/Tz/acceptance/phase5-20261114/reproduction/tools/bin/uv", "--no-config", "--offline", "build", "--wheel", "--no-sources", "--python", "/home/user/anaconda3/envs/ex/bin/python", "--build-constraint", "/home/user/Tz/acceptance/release-review-20261119-pip/build.lock", "--out-dir", "/home/user/Tz/acceptance/release-review-20261119-pip/wheels", "/home/user/Tz/acceptance/release-review-20261119-pip/source"], "exit_code": 0, "seconds": 0.25202345848083496}
+{"phase": "venv-create", "argv": ["/home/user/Tz/acceptance/phase5-20261114/reproduction/tools/bin/uv", "venv", "--python", "/home/user/anaconda3/envs/ex/bin/python", "/home/user/Tz/acceptance/release-review-20261119-pip/cpu"], "exit_code": 0, "seconds": 0.008248090744018555}
+Traceback (most recent call last):
+  File "/home/user/Tz/acceptance/release-review-20261119-pip/cpu_release_review.py", line 89, in <module>
+    run("cpu-dependencies", [base_python, "-m", "pip", "--python", python, "install", "--no-deps", "--require-hashes", "--only-binary=:all:", "--index-url", "https://mirrors.aliyun.com/pypi/simple", "--timeout", "20", "--retries", "1", "--cache-dir", str(root / "pip-cache"), "-r", str(root / "cpu.lock")], 600)
+  File "/home/user/Tz/acceptance/release-review-20261119-pip/cpu_release_review.py", line 34, in run
+    result = subprocess.run(argv, cwd=work, env=current, stdin=subprocess.DEVNULL,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/anaconda3/envs/ex/lib/python3.11/subprocess.py", line 548, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/anaconda3/envs/ex/lib/python3.11/subprocess.py", line 1205, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/anaconda3/envs/ex/lib/python3.11/subprocess.py", line 2058, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/home/user/anaconda3/envs/ex/lib/python3.11/subprocess.py", line 1249, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['/home/user/anaconda3/envs/ex/bin/python', '-m', 'pip', '--python', '/home/user/Tz/acceptance/release-review-20261119-pip/cpu/bin/python', 'install', '--no-deps', '--require-hashes', '--only-binary=:all:', '--index-url', 'https://mirrors.aliyun.com/pypi/simple', '--timeout', '20', '--retries', '1', '--cache-dir', '/home/user/Tz/acceptance/release-review-20261119-pip/pip-cache', '-r', '/home/user/Tz/acceptance/release-review-20261119-pip/cpu.lock']' timed out after 600 seconds

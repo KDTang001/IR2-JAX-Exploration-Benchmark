@@ -1,0 +1,9 @@
+"""Run the affected source regressions on CPU, separately from clean-install status."""
+import pathlib,sys,json,hashlib
+root=pathlib.Path(sys.argv[1]).resolve();text=(root/'cpu_release_review.py').read_text()
+prefix=text[:text.index('inputs = json.loads')].replace('work.mkdir(exist_ok=False)','work.mkdir(exist_ok=True)').replace('commands = []','commands = json.loads((root / "commands.json").read_text())')
+exec(compile(prefix,'cpu_release_review.py:unchanged_run_helper','exec'),globals())
+inputs=json.loads((root/'release-inputs.json').read_text())
+for n,h in inputs['source_hashes'].items():assert hashlib.sha256((root/'source/src/ir2_benchmark'/n).read_bytes()).hexdigest()==h
+exec(compile(text[text.index('test_origin ='):text.index('result = {"complete": True')],'cpu_release_review.py:unchanged_directed_tests','exec'),globals())
+(root/'source-only-qa.json').write_text(json.dumps({'complete':True,'candidate':inputs['candidate_commit'],'source_files':len(inputs['source_hashes']),'clean_installation_claimed':False,'gpu_visible':False,'training_started':False,'xml':'source-tests.xml'},indent=2))

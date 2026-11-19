@@ -1,0 +1,18 @@
+"""Continue a frozen wheel review after an incomplete offline dependency cache."""
+import hashlib,json,pathlib,sys
+root=pathlib.Path(sys.argv[1]).resolve()
+text=(root/'cpu_release_review.py').read_text()
+prefix=text[:text.index('inputs = json.loads')].replace('work.mkdir(exist_ok=False)','work.mkdir(exist_ok=True)').replace('commands = []','commands = json.loads((root / "commands.json").read_text())')
+exec(compile(prefix,'cpu_release_review.py:unchanged_run_helper','exec'),globals())
+prior=root/'cpu-result.json'
+if prior.exists():
+ (root/'cpu-result-offline-failure.json').write_bytes(prior.read_bytes())
+inputs=json.loads((root/'release-inputs.json').read_text());inspection=json.loads((root/'wheel-inspection.json').read_text())
+wheel=pathlib.Path(inspection['wheel']);wheel_hash=hashlib.sha256(wheel.read_bytes()).hexdigest();assert wheel_hash==inspection['sha256']
+sources=inspection['source_hashes'];assert sources==inputs['source_hashes']
+uv=str(old/'tools/bin/uv');cpu=root/'cpu';python=str(cpu/'bin/python')
+run('cpu-dependencies-online-mirror',[uv,'--no-config','pip','sync','--python',python,'--require-hashes','--only-binary=:all:',str(root/'cpu.lock')],600)
+run('wheel-install',[uv,'--no-config','pip','install','--python',python,'--no-deps',str(wheel)])
+run('pip-check',[uv,'pip','check','--python',python])
+run('cpu-freeze',[uv,'pip','freeze','--python',python])
+exec(compile(text[text.index("origin_code ="):],'cpu_release_review.py:unchanged_acceptance','exec'),globals())
