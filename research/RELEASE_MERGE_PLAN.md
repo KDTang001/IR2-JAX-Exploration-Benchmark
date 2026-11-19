@@ -1,6 +1,13 @@
 # Release merge preparation
 
-Status on 2026-11-18: **plan only; neither PR nor main was merged**.
+Integration was completed on 2026-11-19. PR #1 merged first as `e7f94821`.
+PR #2 was retargeted to `main`, its reviewed diff was confirmed, and it merged
+as `98aa3206`. The rebuilt wheel passed installation, provenance and CLI
+checks on the target Linux CPU. See the [v1 release record](RELEASE_RECORD_V1.md)
+for the commit and wheel identities and the server evidence.
+
+The plan below is the 2026-11-18 pre-merge record. Its branch and Draft states
+refer to that date.
 
 ## Verified dependency
 

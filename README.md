@@ -4,6 +4,8 @@
 
 This is an in-development derivative benchmark, not an official IR2 release or a validated trained model. Original upstream attribution appears below. Experiment weights and recordings are not included.
 
+The integrated benchmark baseline is commit [`98aa3206`](https://github.com/KDTang001/IR2-JAX-Exploration-Benchmark/commit/98aa3206dd28af091e245ff9963759f8279f0221) on `main`. The [v1 release record](research/RELEASE_RECORD_V1.md) documents the wheel rebuilt from that commit and its CPU installation and CLI checks on the target Linux server.
+
 Use a fresh Python 3.11 environment:
 
 ```bash
@@ -33,7 +35,7 @@ Phase 5 has passed all 78 declared full-length validation episodes and clean Lin
 
 Reward, message exchange, accounting and signal choices are described in [environment presets and custom methods](docs/environment-presets.md).
 
-The [v2 C1024 resource pilot](research/RESOURCE_PILOT_V2_C1024.md) freezes 240 validation tasks. Its separately authorized 30-task H100 probe passed scoped execution acceptance (12 coverage successes, 18 normal timeouts; 52,567 active events). Burst had zero in-window transmitted bytes under 2KiB/mixed, so this is not evidence of robustness to exposed message loss. The paper and train-only SAC specifications use C1024 as a candidate pending broader validation. The original C400 protocol remains available; [release integration](research/RELEASE_MERGE_PLAN.md) is prepared without merging the open draft PRs.
+The [v2 C1024 resource pilot](research/RESOURCE_PILOT_V2_C1024.md) freezes 240 validation tasks. Its separately authorized 30-task H100 probe passed scoped execution acceptance (12 coverage successes, 18 normal timeouts; 52,567 active events). Burst had zero in-window transmitted bytes under 2KiB/mixed, so this is not evidence of robustness to exposed message loss. The paper and train-only SAC specifications use C1024 as a candidate pending broader validation. The original C400 protocol remains available.
 
 Current accepted scope and remaining work are tracked in the [implementation roadmap](research/IMPLEMENTATION_ROADMAP.md). The earlier [method discussion](spec/spec-design-benchmark-status-and-discussion.md) is a historical design snapshot. On 2026-11-10, all experiment checkpoints, recordings and run outputs were removed at the user's request. The bundled reference weight was also removed; original inference scripts require a separately supplied checkpoint. The benchmark acceptance workflow has not resumed training.
 

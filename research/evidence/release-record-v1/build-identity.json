@@ -1,0 +1,14 @@
+{
+  "source": "GitHub main (verified Git archive)",
+  "main_commit": "98aa3206dd28af091e245ff9963759f8279f0221",
+  "tree": "4c4c7cd43b0ff017cc84b2e0d97d906226dd7a53",
+  "archive_sha256": "4005518219c9379e981d32ed31eaedf385ccde9db1a7957cfc25b88fa2c2fbfe",
+  "wheel": "/home/user/Tz/acceptance/release-main-cpu-98aa3206-20261119/verified-build/wheels/ir2_benchmark-0.1.0-py3-none-any.whl",
+  "wheel_sha256": "0c2d8e348b391ab769aa707f9deaf4f1cfba29637696391dccd3a73c28d0aff4",
+  "source_files": 111,
+  "locks": {
+    "build.lock": "cdd5df9ab42696d6d0b89d3989e976377da518c8443786ab2f6be5c6b60e6b7e",
+    "cpu.lock": "e20b0aaaabadc9f5db169d07b2f7bda185f2497fff28b394c5554c78026d4e24"
+  },
+  "build_wheelhouse": "/home/user/Tz/acceptance/release-main-cpu-98aa3206-20261119/verified-build/build-wheelhouse"
+}

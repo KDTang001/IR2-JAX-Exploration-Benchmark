@@ -1,0 +1,26 @@
+{
+  "executable": "/home/user/Tz/acceptance/release-main-cpu-98aa3206-20261119/verified-build/cpu/bin/python",
+  "prefix": "/home/user/Tz/acceptance/release-main-cpu-98aa3206-20261119/verified-build/cpu",
+  "base_prefix": "/home/user/anaconda3/envs/ex",
+  "origins": {
+    "ir2_benchmark": "/home/user/Tz/acceptance/release-main-cpu-98aa3206-20261119/verified-build/cpu/lib/python3.11/site-packages/ir2_benchmark/__init__.py",
+    "jax": "/home/user/Tz/acceptance/release-main-cpu-98aa3206-20261119/verified-build/cpu/lib/python3.11/site-packages/jax/__init__.py",
+    "jaxlib": "/home/user/Tz/acceptance/release-main-cpu-98aa3206-20261119/verified-build/cpu/lib/python3.11/site-packages/jaxlib/__init__.py",
+    "flax": "/home/user/Tz/acceptance/release-main-cpu-98aa3206-20261119/verified-build/cpu/lib/python3.11/site-packages/flax/__init__.py",
+    "optax": "/home/user/Tz/acceptance/release-main-cpu-98aa3206-20261119/verified-build/cpu/lib/python3.11/site-packages/optax/__init__.py",
+    "numpy": "/home/user/Tz/acceptance/release-main-cpu-98aa3206-20261119/verified-build/cpu/lib/python3.11/site-packages/numpy/__init__.py",
+    "PIL": "/home/user/Tz/acceptance/release-main-cpu-98aa3206-20261119/verified-build/cpu/lib/python3.11/site-packages/PIL/__init__.py",
+    "matplotlib": "/home/user/Tz/acceptance/release-main-cpu-98aa3206-20261119/verified-build/cpu/lib/python3.11/site-packages/matplotlib/__init__.py"
+  },
+  "direct_url": {
+    "archive_info": {
+      "hash": "sha256=0c2d8e348b391ab769aa707f9deaf4f1cfba29637696391dccd3a73c28d0aff4",
+      "hashes": {
+        "sha256": "0c2d8e348b391ab769aa707f9deaf4f1cfba29637696391dccd3a73c28d0aff4"
+      }
+    },
+    "url": "file:///home/user/Tz/acceptance/release-main-cpu-98aa3206-20261119/verified-build/wheels/ir2_benchmark-0.1.0-py3-none-any.whl"
+  },
+  "source_files": 111,
+  "pyvenv_cfg": "home = /home/user/anaconda3/envs/ex/bin\nimplementation = CPython\nuv = 0.9.9\nversion_info = 3.11.0\ninclude-system-site-packages = false\n"
+}

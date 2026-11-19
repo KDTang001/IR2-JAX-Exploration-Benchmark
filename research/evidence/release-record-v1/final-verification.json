@@ -1,0 +1,43 @@
+{
+  "verified": true,
+  "main_commit": "98aa3206dd28af091e245ff9963759f8279f0221",
+  "tree": "4c4c7cd43b0ff017cc84b2e0d97d906226dd7a53",
+  "source_archive_sha256": "4005518219c9379e981d32ed31eaedf385ccde9db1a7957cfc25b88fa2c2fbfe",
+  "wheel_sha256": "0c2d8e348b391ab769aa707f9deaf4f1cfba29637696391dccd3a73c28d0aff4",
+  "wheel_status": "verified_archive_hash",
+  "same_sha_as_frozen_candidate": true,
+  "source_files": 111,
+  "runtime_pins": 37,
+  "doctor_devices": [
+    {
+      "platform": "cpu",
+      "kind": "cpu",
+      "identifier": 0
+    }
+  ],
+  "optimizer_updates": 0,
+  "micro_outcomes": [
+    "timeout",
+    "timeout"
+  ],
+  "verified_traces": 2,
+  "commands": {
+    "build-dependencies": 2.603,
+    "wheel-build": 0.402,
+    "venv-create": 0.202,
+    "cpu-dependencies": 9.807,
+    "wheel-install": 0.602,
+    "pip-check": 0.202,
+    "cpu-freeze": 0.202,
+    "installed-origins": 0.603,
+    "cli-help": 0.602,
+    "doctor": 1.603,
+    "unrelated-git-init": 0.202,
+    "unrelated-git-commit": 0.202,
+    "micro-fixture": 0.402,
+    "evaluate-prefix": 39.025,
+    "evaluate-resume": 43.023,
+    "evaluate-second-resume": 0.602,
+    "report": 1.202
+  }
+}
