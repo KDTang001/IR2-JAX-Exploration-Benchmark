@@ -1,0 +1,25 @@
+{
+  "phase": "report",
+  "argv": [
+    "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/cpu/bin/python",
+    "-I",
+    "-m",
+    "ir2_benchmark.cli",
+    "report",
+    "--results",
+    "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/evaluated",
+    "--output",
+    "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/reported",
+    "--task-manifest",
+    "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/fixture/tasks.jsonl",
+    "--core",
+    "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/fixture/core.json",
+    "--bootstrap-repetitions",
+    "5"
+  ],
+  "status": "passed",
+  "started_epoch": 1795063278.3525383,
+  "pid": 1016312,
+  "exit_code": 0,
+  "seconds": 1.6020197209436446
+}

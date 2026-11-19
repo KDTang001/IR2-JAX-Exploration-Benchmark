@@ -1,0 +1,18 @@
+{
+  "candidate": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+  "manualQa": {
+    "verdict": "PASS",
+    "artifact": "manual-qa.json"
+  },
+  "gateReview": {
+    "verdict": "APPROVE",
+    "artifact": "gate-review.md"
+  },
+  "release_gate": "GO_FOR_EXPLICIT_MERGE_APPROVAL",
+  "actual_merge": false,
+  "paper_or_training_complete": false,
+  "housekeeping": {
+    "temporary_helpers_absent": true,
+    "worktree_archive": "awaiting external App switch or user preference; not a release-code approval"
+  }
+}

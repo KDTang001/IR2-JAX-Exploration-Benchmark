@@ -1,0 +1,32 @@
+{
+  "complete": false,
+  "error_type": "AssertionError",
+  "error": "",
+  "current": {
+    "phase": "report",
+    "argv": [
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/cpu/bin/python",
+      "-I",
+      "-m",
+      "ir2_benchmark.cli",
+      "report",
+      "--results",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/evaluated",
+      "--output",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/reported",
+      "--task-manifest",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/fixture/tasks.jsonl",
+      "--core",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/fixture/core.json",
+      "--bootstrap-repetitions",
+      "5"
+    ],
+    "status": "passed",
+    "started_epoch": 1795062936.4594488,
+    "pid": 1004723,
+    "exit_code": 0,
+    "seconds": 1.0017647149506956
+  },
+  "gpu": false,
+  "training": false
+}

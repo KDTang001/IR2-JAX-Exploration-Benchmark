@@ -1,0 +1,38 @@
+[
+  {
+    "name": "absl-py",
+    "host": "official",
+    "url": "https://files.pythonhosted.org/packages/b3/7d/01e62f59e4166af1be6238d9f2b7f3453630c51b8044b412d05b5606532a/absl_py-2.5.1-py3-none-any.whl",
+    "headers_seconds": 0.3578726809937507,
+    "http_status": 206,
+    "bytes_read": 137673,
+    "seconds": 0.9940133639611304
+  },
+  {
+    "name": "absl-py",
+    "host": "aliyun",
+    "url": "https://mirrors.aliyun.com/pypi/packages/b3/7d/01e62f59e4166af1be6238d9f2b7f3453630c51b8044b412d05b5606532a/absl_py-2.5.1-py3-none-any.whl",
+    "headers_seconds": 0.23015576601028442,
+    "http_status": 206,
+    "bytes_read": 137673,
+    "seconds": 1.0322587660048157
+  },
+  {
+    "name": "jaxlib",
+    "host": "official",
+    "url": "https://files.pythonhosted.org/packages/c7/d0/6bc81c0b1d507f403e6085ce76a429e6d7f94749d742199252e299dd1424/jaxlib-0.4.34-cp311-cp311-manylinux2014_x86_64.whl",
+    "headers_seconds": 0.33224227698519826,
+    "http_status": 206,
+    "bytes_read": 262144,
+    "seconds": 1.5451449698302895
+  },
+  {
+    "name": "jaxlib",
+    "host": "aliyun",
+    "url": "https://mirrors.aliyun.com/pypi/packages/c7/d0/6bc81c0b1d507f403e6085ce76a429e6d7f94749d742199252e299dd1424/jaxlib-0.4.34-cp311-cp311-manylinux2014_x86_64.whl",
+    "headers_seconds": 0.4907879161182791,
+    "http_status": 206,
+    "bytes_read": 262144,
+    "seconds": 1.033873112173751
+  }
+]

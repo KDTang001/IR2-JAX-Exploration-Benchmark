@@ -1,0 +1,20 @@
+usage: ir2-benchmark [-h]
+                     {doctor,rollout,maps,train-a,train-b,evaluate,report,throughput,validation-manifest}
+                     ...
+
+positional arguments:
+  {doctor,rollout,maps,train-a,train-b,evaluate,report,throughput,validation-manifest}
+    doctor              Check JAX batching and Flax/Optax training
+    rollout             Run the ordered-event exploration smoke scenario
+    maps                Audit IR2 sources or generate new maps
+    train-a             Run route A on real exploration events
+    train-b             Run route B on real exploration events
+    evaluate            Run paired checkpoint scenarios in the real
+                        environment
+    report              Report actual results and missing matrix conditions
+    throughput          Measure synchronized whole-environment throughput
+    validation-manifest
+                        Freeze a validation-only model-selection workload
+
+options:
+  -h, --help            show this help message and exit

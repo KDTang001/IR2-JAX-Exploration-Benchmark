@@ -31,3 +31,6 @@ research/protocols/phase6-20261119/*.py.txt -text
 
 # Preserve frozen release-review transcripts and hash-locked evidence.
 research/evidence/release-preflight-20261119/** -text -whitespace
+
+# Preserve the independently executed CPU installation recovery evidence.
+research/evidence/release-install-recovery-20261119/** -text -whitespace

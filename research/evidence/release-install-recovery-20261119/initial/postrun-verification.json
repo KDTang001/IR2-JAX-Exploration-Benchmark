@@ -1,0 +1,21 @@
+{
+  "complete": true,
+  "candidate": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+  "source_files_verified": 111,
+  "code_hash": "402942e2eefc04ad33aa65fe8d8e83e68b2411e05e932264548f8cff3d0a7fbd",
+  "runtime_pins_verified": 37,
+  "runtime_distribution_count": 38,
+  "wheel_status": "verified_archive_hash",
+  "gpu_devices_initialized": false,
+  "optimizer_updates": 0,
+  "micro_tasks": 2,
+  "micro_outcomes": [
+    "timeout",
+    "timeout"
+  ],
+  "trace_checksums_verified": 2,
+  "requested_manifest_complete": true,
+  "formal_complete": false,
+  "active_owned_processes": [],
+  "observed_epoch": 1795063672.992065
+}

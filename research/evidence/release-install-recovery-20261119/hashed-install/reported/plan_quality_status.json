@@ -1,0 +1,10 @@
+{
+  "group_rows": 0,
+  "missing_result_ids": [],
+  "prediction_target": "event_before_latest_generated_intention",
+  "ade_fde_units": "map_cells",
+  "nll_units": "normalized_coordinates",
+  "zoh_uncertainty": "unavailable",
+  "future_actual_positions": "not_used_as_intention_labels",
+  "aggregation": "age/phase/cold-start per result; map and training_seed retained"
+}

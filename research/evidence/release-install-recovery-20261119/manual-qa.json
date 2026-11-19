@@ -1,0 +1,85 @@
+{
+  "candidate": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+  "scope": "release preflight R1 closure; no GPU, training, merge or paper experiments",
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "installation",
+      "verdict": "PASS",
+      "artifacts": [
+        "hashed-install/cpu-dependencies.log",
+        "hashed-install/pip-check.log",
+        "hashed-install/identity.json"
+      ]
+    },
+    {
+      "id": "origin",
+      "verdict": "PASS",
+      "source_files": 111,
+      "artifacts": [
+        "hashed-install/installed-origins.json"
+      ]
+    },
+    {
+      "id": "doctor",
+      "verdict": "PASS",
+      "optimizer_updates": 0,
+      "artifacts": [
+        "hashed-install/doctor.json"
+      ]
+    },
+    {
+      "id": "evaluate-resume",
+      "verdict": "PASS",
+      "micro_tasks": 2,
+      "max_rounds": 4,
+      "artifacts": [
+        "hashed-install/evaluate-prefix.log",
+        "hashed-install/evaluate-resume.log",
+        "hashed-install/evaluate-second-resume.log"
+      ]
+    },
+    {
+      "id": "report-identity",
+      "verdict": "PASS",
+      "artifacts": [
+        "hashed-install/reported/report.json",
+        "hashed-install/reported/release_manifest.json"
+      ]
+    },
+    {
+      "id": "independent-postrun",
+      "verdict": "PASS",
+      "runtime_pins": 37,
+      "trace_checksums": 2,
+      "artifacts": [
+        "initial/postrun-verification.json"
+      ]
+    },
+    {
+      "id": "controller-timeout",
+      "verdict": "PASS",
+      "expected_timeout": true,
+      "artifacts": [
+        "initial/controller-probe.json",
+        "initial/controller-timeout-probe.log"
+      ]
+    },
+    {
+      "id": "source-regressions",
+      "verdict": "PASS_REUSED_EXACT_SOURCE",
+      "tests": 32,
+      "artifact": "../release-preflight-20261119/cpu-final/source-tests.xml"
+    }
+  ],
+  "housekeeping": {
+    "temporary_helpers_absent": true,
+    "worktree_archive": "awaiting external App switch or user preference; not a release-code approval"
+  },
+  "production_source_changed": false,
+  "record_written_utc": "2026-11-19T04:55:05.280620+00:00",
+  "gate_review": {
+    "verdict": "APPROVE",
+    "artifact": "gate-review.md"
+  }
+}

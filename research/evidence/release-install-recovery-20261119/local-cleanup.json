@@ -1,0 +1,9 @@
+{
+  "helpers": {
+    "ir2_release_ssh.py": true,
+    "ir2_release_deploy.py": true,
+    "ir2_release_collect.py": true
+  },
+  "helper_bytecode_remaining": [],
+  "worktree": "current App primary checkout; pending user switch/retention response; no manual removal attempted"
+}

@@ -1,0 +1,10 @@
+{
+  "candidate": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+  "source_files": 111,
+  "source_archive_sha256": "5746e913fd4df4369223c2063febb27686807580c1573ab3b6cfed546a2b598b",
+  "wheel_sha256": "0c2d8e348b391ab769aa707f9deaf4f1cfba29637696391dccd3a73c28d0aff4",
+  "driver_sha256": "37e8b98a10ca3ac49151e4ea154ac9324950e3d3484b93123bcbbf0016a882a8",
+  "inherited_inputs_sha256": "809839c828d004c290e62611d562134fa620a3c7032741df9378b5917645051c",
+  "gpu": false,
+  "training": false
+}

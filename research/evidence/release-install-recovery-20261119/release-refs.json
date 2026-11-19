@@ -1,0 +1,26 @@
+{
+  "observation_date": "2026-11-19",
+  "candidate": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+  "prs": [
+    {
+      "number": 1,
+      "head": "audit/benchmark-foundation-2026-11-12",
+      "head_sha": "d3d6c5fdec831de3076b7ede70e25b72108e59bf",
+      "base": "main",
+      "base_sha": "ca663f725c335351ed5c8bec45960aa1478d5e36",
+      "draft": true,
+      "merged": false
+    },
+    {
+      "number": 2,
+      "head": "codex/phase6-prep",
+      "head_sha": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+      "base": "audit/benchmark-foundation-2026-11-12",
+      "base_sha": "d3d6c5fdec831de3076b7ede70e25b72108e59bf",
+      "draft": true,
+      "merged": false
+    }
+  ],
+  "actual_merge": false,
+  "retarget": false
+}

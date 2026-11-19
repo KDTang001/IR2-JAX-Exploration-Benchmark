@@ -1,0 +1,5 @@
+Using Python 3.11.0 environment at: /home/user/Tz/acceptance/release-install-recovery-20261119/cpu
+Resolved 1 package in 1ms
+Prepared 1 package in 4ms
+Installed 1 package in 3ms
+ + ir2-benchmark==0.1.0 (from file:///home/user/Tz/acceptance/release-install-recovery-20261119/wheels/ir2_benchmark-0.1.0-py3-none-any.whl)

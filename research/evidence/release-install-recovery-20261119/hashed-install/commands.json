@@ -1,0 +1,275 @@
+[
+  {
+    "phase": "venv-create",
+    "argv": [
+      "/home/user/Tz/acceptance/phase5-20261114/reproduction/tools/bin/uv",
+      "--no-config",
+      "venv",
+      "--python",
+      "/home/user/anaconda3/envs/ex/bin/python",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/cpu"
+    ],
+    "status": "passed",
+    "started_epoch": 1795063186.8606331,
+    "pid": 1006106,
+    "exit_code": 0,
+    "seconds": 0.20117425499483943
+  },
+  {
+    "phase": "cpu-dependencies",
+    "argv": [
+      "/home/user/anaconda3/envs/ex/bin/python",
+      "-m",
+      "pip",
+      "--isolated",
+      "--python",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/cpu/bin/python",
+      "--disable-pip-version-check",
+      "install",
+      "--no-index",
+      "--find-links",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/wheelhouse",
+      "--require-hashes",
+      "--only-binary=:all:",
+      "--no-deps",
+      "--no-cache-dir",
+      "-r",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/cpu.lock"
+    ],
+    "status": "passed",
+    "started_epoch": 1795063187.062635,
+    "pid": 1006109,
+    "exit_code": 0,
+    "seconds": 9.806456038029864
+  },
+  {
+    "phase": "wheel-install",
+    "argv": [
+      "/home/user/anaconda3/envs/ex/bin/python",
+      "-m",
+      "pip",
+      "--isolated",
+      "--python",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/cpu/bin/python",
+      "--disable-pip-version-check",
+      "install",
+      "--no-index",
+      "--no-deps",
+      "--no-cache-dir",
+      "--require-hashes",
+      "-r",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/benchmark-wheel.lock"
+    ],
+    "status": "passed",
+    "started_epoch": 1795063196.8698096,
+    "pid": 1006156,
+    "exit_code": 0,
+    "seconds": 0.6021845799405128
+  },
+  {
+    "phase": "pip-check",
+    "argv": [
+      "/home/user/Tz/acceptance/phase5-20261114/reproduction/tools/bin/uv",
+      "--no-config",
+      "pip",
+      "check",
+      "--python",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/cpu/bin/python"
+    ],
+    "status": "passed",
+    "started_epoch": 1795063197.4725392,
+    "pid": 1006161,
+    "exit_code": 0,
+    "seconds": 0.2017238528933376
+  },
+  {
+    "phase": "cpu-freeze",
+    "argv": [
+      "/home/user/Tz/acceptance/phase5-20261114/reproduction/tools/bin/uv",
+      "--no-config",
+      "pip",
+      "freeze",
+      "--python",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/cpu/bin/python"
+    ],
+    "status": "passed",
+    "started_epoch": 1795063197.6752613,
+    "pid": 1006164,
+    "exit_code": 0,
+    "seconds": 0.2019276439677924
+  },
+  {
+    "phase": "installed-origins",
+    "argv": [
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/cpu/bin/python",
+      "-I",
+      "-c",
+      "\nimport hashlib,importlib,importlib.metadata,json,pathlib,site,sys\nr=pathlib.Path(sys.argv[1]);prefix=pathlib.Path(sys.prefix).resolve();assert sys.prefix!=sys.base_prefix and not site.ENABLE_USER_SITE\norigins={}\nfor name in ('ir2_benchmark','jax','jaxlib','flax','optax','numpy','PIL','matplotlib'):\n p=pathlib.Path(importlib.import_module(name).__file__).resolve();assert p.is_relative_to(prefix),(name,str(p));origins[name]=str(p)\npackage=pathlib.Path(origins['ir2_benchmark']).parent\nactual={p.relative_to(package).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in package.rglob('*.py')}\nassert actual==json.loads((r/'release-inputs.json').read_text())['source_hashes']\nd=importlib.metadata.distribution('ir2-benchmark');url=json.loads(d.read_text('direct_url.json'));assert not url.get('dir_info',{}).get('editable',False)\nassert not any(n.lower().startswith(('nvidia-','jax-cuda','torch')) for n in [x.metadata.get('Name','') for x in importlib.metadata.distributions()])\n(r/'installed-origins.json').write_text(json.dumps({'executable':sys.executable,'prefix':sys.prefix,'base_prefix':sys.base_prefix,'origins':origins,'direct_url':url,'source_files':len(actual),'pyvenv_cfg':(prefix/'pyvenv.cfg').read_text()},indent=2))\n",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install"
+    ],
+    "status": "passed",
+    "started_epoch": 1795063197.8793697,
+    "pid": 1006167,
+    "exit_code": 0,
+    "seconds": 0.6019676269497722
+  },
+  {
+    "phase": "cli-help",
+    "argv": [
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/cpu/bin/ir2-benchmark",
+      "--help"
+    ],
+    "status": "passed",
+    "started_epoch": 1795063198.4823258,
+    "pid": 1006171,
+    "exit_code": 0,
+    "seconds": 0.6016061489935964
+  },
+  {
+    "phase": "doctor",
+    "argv": [
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/cpu/bin/python",
+      "-I",
+      "-m",
+      "ir2_benchmark.cli",
+      "doctor",
+      "--runtime-only",
+      "--output",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/doctor.json"
+    ],
+    "status": "passed",
+    "started_epoch": 1795063199.0849435,
+    "pid": 1006172,
+    "exit_code": 0,
+    "seconds": 1.2023889529518783
+  },
+  {
+    "phase": "unrelated-git-init",
+    "argv": [
+      "git",
+      "init",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/work"
+    ],
+    "status": "passed",
+    "started_epoch": 1795063200.2883275,
+    "pid": 1006190,
+    "exit_code": 0,
+    "seconds": 0.20173042104579508
+  },
+  {
+    "phase": "unrelated-git-commit",
+    "argv": [
+      "git",
+      "-c",
+      "user.name=Provenance fixture",
+      "-c",
+      "user.email=fixture@example.invalid",
+      "commit",
+      "--allow-empty",
+      "-m",
+      "Unrelated installation provenance fixture"
+    ],
+    "status": "passed",
+    "started_epoch": 1795063200.4911814,
+    "pid": 1006191,
+    "exit_code": 0,
+    "seconds": 0.2017737610731274
+  },
+  {
+    "phase": "micro-fixture",
+    "argv": [
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/cpu/bin/python",
+      "-I",
+      "-c",
+      "\nimport json,pathlib,sys\nfrom dataclasses import asdict\nimport numpy as np\nfrom PIL import Image\nfrom ir2_benchmark.agents.baselines import make_baseline_method\nfrom ir2_benchmark.config import HostConfig,load_config\nfrom ir2_benchmark.evaluation.scenarios import EvaluationMap,make_scenario,tasks,write_task_manifest\nfrom ir2_benchmark.maps.manifest import obstacle_hash,scenario_hash\nfrom ir2_benchmark.maps.prepare import load_ir2_map\nr=pathlib.Path(sys.argv[1]);out=r/'fixture';out.mkdir()\nconfigs={n:asdict(load_config(r/'source/configs'/n)) for n in ['benchmark.json','benchmark_capacity1024.json']}\ndifferent=[k for k in configs['benchmark.json'] if configs['benchmark.json'][k]!=configs['benchmark_capacity1024.json'][k]]\nassert set(different)=={'graph_capacity','graph_padding_size'},different\n(r/'presets.json').write_text(json.dumps({'different_fields':different,'C400':configs['benchmark.json']['graph_capacity'],'C1024':configs['benchmark_capacity1024.json']['graph_capacity']},indent=2))\nc=HostConfig(n_agents=2,agent_bucket=2,sensor_radius=5,max_distance=4,max_rounds=4,navigation_mode='ir2_graph',rendezvous_mode='reachable_only',graph_nodes_per_axis=6,graph_capacity=64,graph_padding_size=64,graph_merge_enabled=False)\np=np.full((24,24),255,np.uint8);p[[0,-1],:]=0;p[:,[0,-1]]=0;p[10:20,10]=0;p[3,3]=208\npath=out/'micro.png';Image.fromarray(p).save(path);d=load_ir2_map(path)\nm=EvaluationMap(str(path),obstacle_hash(d.occupancy),'validation','procedural','installation-fixture',32,scenario_hash(d.occupancy,d.anchor))\nmethods=tuple(make_baseline_method('nearest_frontier',mode) for mode in ('off','mixed'))\nplanned=tuple(tasks((make_scenario(m,c,0,limited=True),),methods));write_task_manifest(out/'tasks.jsonl',planned);write_task_manifest(out/'prefix.jsonl',planned[:1])\n(out/'core.json').write_text(json.dumps({'scope':'cpu_release_installation_fixture','limited':True,'training_seeds':[-1],'real_training_events':0,'methods':[asdict(v) for v in methods]},indent=2))\n",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install"
+    ],
+    "status": "passed",
+    "started_epoch": 1795063200.6935394,
+    "pid": 1006193,
+    "exit_code": 0,
+    "seconds": 0.401688588084653
+  },
+  {
+    "phase": "evaluate-prefix",
+    "argv": [
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/cpu/bin/python",
+      "-I",
+      "-m",
+      "ir2_benchmark.cli",
+      "evaluate",
+      "--task-manifest",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/fixture/prefix.jsonl",
+      "--output",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/evaluated"
+    ],
+    "status": "passed",
+    "started_epoch": 1795063201.0963755,
+    "pid": 1006194,
+    "exit_code": 0,
+    "seconds": 37.02322133211419
+  },
+  {
+    "phase": "evaluate-resume",
+    "argv": [
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/cpu/bin/python",
+      "-I",
+      "-m",
+      "ir2_benchmark.cli",
+      "evaluate",
+      "--task-manifest",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/fixture/tasks.jsonl",
+      "--output",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/evaluated"
+    ],
+    "status": "passed",
+    "started_epoch": 1795063238.121122,
+    "pid": 1006375,
+    "exit_code": 0,
+    "seconds": 39.627341411076486
+  },
+  {
+    "phase": "evaluate-second-resume",
+    "argv": [
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/cpu/bin/python",
+      "-I",
+      "-m",
+      "ir2_benchmark.cli",
+      "evaluate",
+      "--task-manifest",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/fixture/tasks.jsonl",
+      "--output",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/evaluated"
+    ],
+    "status": "passed",
+    "started_epoch": 1795063277.7495458,
+    "pid": 1016311,
+    "exit_code": 0,
+    "seconds": 0.6019569570198655
+  },
+  {
+    "phase": "report",
+    "argv": [
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/cpu/bin/python",
+      "-I",
+      "-m",
+      "ir2_benchmark.cli",
+      "report",
+      "--results",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/evaluated",
+      "--output",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/reported",
+      "--task-manifest",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/fixture/tasks.jsonl",
+      "--core",
+      "/home/user/Tz/acceptance/release-install-recovery-20261119/hashed-install/fixture/core.json",
+      "--bootstrap-repetitions",
+      "5"
+    ],
+    "status": "passed",
+    "started_epoch": 1795063278.3525383,
+    "pid": 1016312,
+    "exit_code": 0,
+    "seconds": 1.6020197209436446
+  }
+]

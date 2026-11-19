@@ -1,0 +1,18 @@
+{
+  "complete": true,
+  "candidate": "298e625d21deb205a095ba78643a5a3d6dd4976c",
+  "wheel_sha256": "0c2d8e348b391ab769aa707f9deaf4f1cfba29637696391dccd3a73c28d0aff4",
+  "source_files": 111,
+  "independent_cpu_install": true,
+  "installed_origin_cli_doctor_resume_report": true,
+  "optimizer_updates": 0,
+  "micro_tasks": 2,
+  "micro_round_limit": 4,
+  "gpu": false,
+  "training": false,
+  "formal_experiments": false,
+  "source_regressions": {
+    "reused_tests": 32,
+    "reference": "release-review-20261119-pip/source-only-qa.json"
+  }
+}

@@ -1,0 +1,31 @@
+import pathlib,sys,hashlib,json,shutil,traceback,os
+r=pathlib.Path(sys.argv[1]).resolve();prior=r.parent
+controller=(prior/'recovery.py').read_text()
+exec(compile(controller[:controller.index('def main():')],'reused-streaming-controller','exec'),globals())
+def execute():
+ global inputs,sources,wheel,wheel_hash,cpu,python
+ raw=(prior/'release-inputs.json').read_bytes();inputs=json.loads(raw);(root/'release-inputs.json').write_bytes(raw)
+ shutil.copytree(prior/'source',root/'source')
+ for n in ['cpu.lock','build.lock']:(root/n).write_bytes((prior/n).read_bytes())
+ inventory=json.loads((prior/'wheelhouse.json').read_text());assert inventory['complete'] and len(inventory['files'])==37
+ for item in inventory['files']:
+  p=prior/'wheelhouse'/item['filename'];assert hashlib.sha256(p.read_bytes()).hexdigest()==item['sha256']
+ save('reused-wheelhouse.json',{'source':str(prior/'wheelhouse'),'sha256':hashlib.sha256((prior/'wheelhouse.json').read_bytes()).hexdigest(),'verified_artifacts':37})
+ (root/'wheels').mkdir();src=next((prior/'wheels').glob('*.whl'));wheel=root/'wheels'/src.name;shutil.copyfile(src,wheel)
+ wheel_hash=hashlib.sha256(wheel.read_bytes()).hexdigest();assert wheel_hash=='0c2d8e348b391ab769aa707f9deaf4f1cfba29637696391dccd3a73c28d0aff4'
+ sources=inputs['source_hashes'];cpu=root/'cpu';python=str(cpu/'bin/python')
+ save('identity.json',{'candidate':inputs['candidate_commit'],'driver_sha256':hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest(),'wheel_sha256':wheel_hash,'cpu_lock_sha256':hashlib.sha256((root/'cpu.lock').read_bytes()).hexdigest(),'source_files':111})
+ run('venv-create',[uv,'--no-config','venv','--python',base_python,str(cpu)])
+ run('cpu-dependencies',[base_python,'-m','pip','--isolated','--python',python,'--disable-pip-version-check','install','--no-index','--find-links',str(prior/'wheelhouse'),'--require-hashes','--only-binary=:all:','--no-deps','--no-cache-dir','-r',str(root/'cpu.lock')],240)
+ spec=root/'benchmark-wheel.lock';spec.write_text(wheel.as_uri()+' --hash=sha256:'+wheel_hash+'\n')
+ run('wheel-install',[base_python,'-m','pip','--isolated','--python',python,'--disable-pip-version-check','install','--no-index','--no-deps','--no-cache-dir','--require-hashes','-r',str(spec)])
+ run('pip-check',[uv,'--no-config','pip','check','--python',python]);run('cpu-freeze',[uv,'--no-config','pip','freeze','--python',python])
+ original=(prior/'prior-protocol.py.txt').read_text()
+ exec(compile(original[original.index('origin_code ='):original.index('test_origin =')],'unchanged-installed-acceptance','exec'),globals())
+ save('result.json',{'complete':True,'candidate':inputs['candidate_commit'],'wheel_sha256':wheel_hash,'source_files':111,'independent_cpu_install':True,'installed_origin_cli_doctor_resume_report':True,'optimizer_updates':0,'micro_tasks':2,'micro_round_limit':4,'gpu':False,'training':False,'formal_experiments':False,'source_regressions':{'reused_tests':32,'reference':'release-review-20261119-pip/source-only-qa.json'}})
+if __name__=='__main__':
+ try:execute()
+ except BaseException as error:
+  if active is not None and active.poll() is None:stop(active)
+  save('result.json',{'complete':False,'error_type':type(error).__name__,'error':str(error),'current':json.loads((root/'current.json').read_text()) if (root/'current.json').exists() else None,'gpu':False,'training':False})
+  traceback.print_exc();raise

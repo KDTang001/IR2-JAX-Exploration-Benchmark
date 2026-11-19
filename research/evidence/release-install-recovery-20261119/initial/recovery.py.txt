@@ -1,0 +1,130 @@
+import concurrent.futures,hashlib,json,os,pathlib,re,shutil,signal,subprocess,sys,tarfile,threading,time,traceback,zipfile
+root=pathlib.Path(sys.argv[1]).resolve();old=pathlib.Path('/home/user/Tz/acceptance/release-review-20261119-pip')
+base_python='/home/user/anaconda3/envs/ex/bin/python'
+uv='/home/user/Tz/acceptance/phase5-20261114/reproduction/tools/bin/uv'
+for key in list(os.environ):
+ if key.startswith(('PIP_','UV_')) or key in ('PYTHONPATH','PYTHONHOME','VIRTUAL_ENV','LD_LIBRARY_PATH','LD_PRELOAD','CUDA_HOME','CUDA_PATH','CONDA_PREFIX','CONDA_DEFAULT_ENV','HTTP_PROXY','HTTPS_PROXY','ALL_PROXY','NO_PROXY'):
+  os.environ.pop(key,None)
+os.environ.update(JAX_PLATFORMS='cpu',CUDA_VISIBLE_DEVICES='',PYTHONNOUSERSITE='1',PYTHONDONTWRITEBYTECODE='1',OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',MPLBACKEND='Agg',XLA_PYTHON_CLIENT_PREALLOCATE='false',UV_PYTHON_DOWNLOADS='never',UV_CACHE_DIR=str(root/'uv-cache'),PIP_CONFIG_FILE='/dev/null',PIP_DISABLE_PIP_VERSION_CHECK='1',PATH='/usr/local/bin:/usr/bin:/bin')
+env=os.environ.copy();work=root/'work';work.mkdir(exist_ok=False);commands=[];active=None
+def save(name,value):
+ (root/name).write_text(json.dumps(value,indent=2)+'\n')
+def emit(value):
+ print(json.dumps(value),flush=True)
+def stop(process):
+ try:os.killpg(process.pid,signal.SIGTERM)
+ except ProcessLookupError:pass
+ try:process.wait(timeout=3)
+ except subprocess.TimeoutExpired:
+  try:os.killpg(process.pid,signal.SIGKILL)
+  except ProcessLookupError:pass
+  process.wait(timeout=3)
+def run(name,argv,timeout=300,extra_env=None):
+ global active
+ start=time.monotonic();row={'phase':name,'argv':argv,'status':'running','started_epoch':time.time()}
+ save('current.json',row);emit(row);timed=False
+ try:
+  with (root/(name+'.log')).open('w') as log:
+   active=subprocess.Popen(argv,cwd=work,env=env if extra_env is None else env|extra_env,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+   row['pid']=active.pid;deadline=start+timeout
+   while active.poll() is None:
+    if time.monotonic()>=deadline:
+     timed=True;stop(active);break
+    time.sleep(.2)
+   row.update(exit_code=active.returncode,status='timed_out' if timed else 'passed' if active.returncode==0 else 'failed',seconds=time.monotonic()-start)
+ except BaseException:
+  if active is not None and active.poll() is None:stop(active)
+  row.update(status='interrupted',seconds=time.monotonic()-start);raise
+ finally:
+  commands.append(row);save('commands.json',commands);save('current.json',row);emit(row);active=None
+ if timed:raise TimeoutError(name)
+ if row['exit_code']:raise RuntimeError(name+' exited '+str(row['exit_code']))
+ return (root/(name+'.log')).read_text()
+def terminate(signum,frame):raise TimeoutError('outer controller stop')
+signal.signal(signal.SIGTERM,terminate)
+def download_all():
+ import urllib.request,urllib.error
+ scan=json.loads((root/'metadata-scan.json').read_text());assert scan['available']==scan['pins']==37
+ house=root/'wheelhouse';house.mkdir(exist_ok=False);started=time.monotonic();deadline=started+1500;lock=threading.Lock();progress={};last=[started];cancel=threading.Event()
+ def one(item):
+  name=item['filename'];assert pathlib.Path(name).name==name
+  path=house/name;part=house/(name+'.part');last_error=None
+  urls=[item['url'],item['url'].replace('https://files.pythonhosted.org/','https://mirrors.aliyun.com/pypi/')]
+  for attempt,url in enumerate(urls,1):
+   try:
+    offset=part.stat().st_size if part.exists() else 0
+    req=urllib.request.Request(url,headers={'Range':'bytes='+str(offset)+'-'} if offset else {})
+    with urllib.request.urlopen(req,timeout=20) as response:
+     if offset and response.status!=206:offset=0
+     if offset:assert response.headers.get('Content-Range','').startswith('bytes '+str(offset)+'-')
+     with part.open('ab' if offset else 'wb') as out:
+      while True:
+       if cancel.is_set() or time.monotonic()>deadline:raise TimeoutError('download deadline')
+       chunk=response.read(262144)
+       if not chunk:break
+       out.write(chunk);offset+=len(chunk)
+       with lock:
+        progress[name]=offset
+        if time.monotonic()-last[0]>=10:
+         emit({'phase':'wheel-download','bytes':sum(progress.values()),'total':sum(x['bytes'] for x in scan['artifacts']),'seconds':time.monotonic()-started});last[0]=time.monotonic()
+    assert part.stat().st_size==item['bytes'],name
+    digest=hashlib.sha256(part.read_bytes()).hexdigest();assert digest==item['sha256'],name
+    part.replace(path)
+    record={'filename':name,'sha256':digest,'bytes':item['bytes'],'attempt':attempt,'url':url}
+    with lock:emit({'downloaded':name,'bytes':item['bytes']})
+    return record
+   except (OSError,ValueError,AssertionError) as error:
+    last_error=repr(error)
+    with lock:emit({'download_error':name,'attempt':attempt,'error':last_error})
+  cancel.set();raise RuntimeError(name+':'+str(last_error))
+ with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+  records=list(pool.map(one,scan['artifacts']))
+ save('wheelhouse.json',{'complete':True,'seconds':time.monotonic()-started,'files':records,'total_bytes':sum(x['bytes'] for x in records)})
+def main():
+ global inputs,sources,wheel,wheel_hash,cpu,python
+ prior_bytes=(old/'cpu_release_review.py').read_bytes();original=prior_bytes.decode();raw=(old/'release-inputs.json').read_bytes();inputs=json.loads(raw)
+ assert hashlib.sha256(prior_bytes).hexdigest()==inputs['protocol_sha256']
+ (root/'release-inputs.json').write_bytes(raw);(root/'prior-protocol.py.txt').write_bytes(prior_bytes)
+ for name,h in [('cpu.lock','e20b0aaaabadc9f5db169d07b2f7bda185f2497fff28b394c5554c78026d4e24'),('build.lock','cdd5df9ab42696d6d0b89d3989e976377da518c8443786ab2f6be5c6b60e6b7e')]:
+  data=(old/name).read_bytes();assert hashlib.sha256(data).hexdigest()==h;(root/name).write_bytes(data)
+ archive=old/'candidate-source.tar.gz';assert hashlib.sha256(archive.read_bytes()).hexdigest()==inputs['source_archive_sha256']
+ source=root/'source';source.mkdir(exist_ok=False)
+ with tarfile.open(archive) as tar:
+  for member in tar:
+   p=(source/member.name).resolve();assert p.is_relative_to(source)
+   if member.isdir():p.mkdir(parents=True,exist_ok=True)
+   else:
+    assert member.isfile();p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(tar.extractfile(member).read())
+ for name,h in inputs['source_hashes'].items():assert hashlib.sha256((source/'src/ir2_benchmark'/name).read_bytes()).hexdigest()==h
+ (root/'wheels').mkdir();prior=list((old/'wheels').glob('*.whl'));assert len(prior)==1
+ wheel=root/'wheels'/prior[0].name;shutil.copyfile(prior[0],wheel);wheel_hash=hashlib.sha256(wheel.read_bytes()).hexdigest()
+ assert wheel_hash=='0c2d8e348b391ab769aa707f9deaf4f1cfba29637696391dccd3a73c28d0aff4'
+ with zipfile.ZipFile(wheel) as z:
+  sources={n.removeprefix('ir2_benchmark/'):hashlib.sha256(z.read(n)).hexdigest() for n in z.namelist() if n.startswith('ir2_benchmark/') and n.endswith('.py')}
+  assert sources==inputs['source_hashes']
+ save('recovery-identity.json',{'candidate':inputs['candidate_commit'],'source_files':len(sources),'source_archive_sha256':inputs['source_archive_sha256'],'wheel_sha256':wheel_hash,'driver_sha256':hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest(),'inherited_inputs_sha256':hashlib.sha256(raw).hexdigest(),'gpu':False,'training':False})
+ try:run('controller-timeout-probe',[base_python,'-u','-c',"import subprocess,sys,time; p=subprocess.Popen([sys.executable,'-c','import time;time.sleep(30)']);print('observable-before-timeout descendant='+str(p.pid),flush=True);time.sleep(30)"],1)
+ except TimeoutError:
+  assert 'observable-before-timeout' in (root/'controller-timeout-probe.log').read_text()
+  probe=(root/'controller-timeout-probe.log').read_text();child=int(probe.split('descendant=')[-1].split()[0]);live=pathlib.Path('/proc')/str(child)/'cmdline'
+  for _ in range(10):
+   if not live.exists() or not live.read_bytes():break
+   time.sleep(.1)
+  assert not live.exists() or not live.read_bytes()
+  save('controller-probe.json',{'expected_timeout':True,'partial_log_retained':True,'terminal_status_retained':commands[-1]['status']=='timed_out','descendant_pid':child,'descendant_active':False})
+ else:raise AssertionError('probe did not time out')
+ run('uv-version',[uv,'--version']);run('base-pip-version',[base_python,'-m','pip','--version'])
+ save('current.json',{'phase':'wheel-download','status':'running'});download_all()
+ cpu=root/'cpu';python=str(cpu/'bin/python')
+ run('venv-create',[uv,'--no-config','venv','--python',base_python,str(cpu)])
+ run('cpu-dependencies',[base_python,'-m','pip','--isolated','--python',python,'--disable-pip-version-check','install','--no-index','--find-links',str(root/'wheelhouse'),'--require-hashes','--only-binary=:all:','--no-deps','--no-cache-dir','-r',str(root/'cpu.lock')],240)
+ run('wheel-install',[uv,'--no-config','--offline','pip','install','--python',python,'--no-deps','--no-index',str(wheel)])
+ run('pip-check',[uv,'--no-config','pip','check','--python',python]);run('cpu-freeze',[uv,'--no-config','pip','freeze','--python',python])
+ exec(compile(original[original.index('origin_code ='):original.index('test_origin =')],'unchanged-installed-acceptance','exec'),globals())
+ save('result.json',{'complete':True,'candidate':inputs['candidate_commit'],'wheel_sha256':wheel_hash,'source_files':len(sources),'independent_cpu_install':True,'installed_origin_cli_doctor_resume_report':True,'optimizer_updates':0,'micro_tasks':2,'micro_round_limit':4,'gpu':False,'training':False,'formal_experiments':False,'source_regressions':{'reused_tests':32,'reference':'release-review-20261119-pip/source-only-qa.json'}})
+if __name__=='__main__':
+ try:main()
+ except BaseException as error:
+  if active is not None and active.poll() is None:stop(active)
+  save('result.json',{'complete':False,'error_type':type(error).__name__,'error':str(error),'current':json.loads((root/'current.json').read_text()) if (root/'current.json').exists() else None,'gpu':False,'training':False})
+  traceback.print_exc();raise

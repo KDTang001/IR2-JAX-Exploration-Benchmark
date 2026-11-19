@@ -1,0 +1,7 @@
+{
+  "expected_timeout": true,
+  "partial_log_retained": true,
+  "terminal_status_retained": true,
+  "descendant_pid": 1002250,
+  "descendant_active": false
+}

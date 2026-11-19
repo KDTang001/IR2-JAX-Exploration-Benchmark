@@ -1,0 +1,20 @@
+{
+  "removed": [
+    "source",
+    "cpu",
+    "work",
+    "uv-cache",
+    "hashed-install/source",
+    "hashed-install/cpu",
+    "hashed-install/work",
+    "hashed-install/uv-cache"
+  ],
+  "retained": [
+    "hash-verified wheelhouse for final-main revalidation",
+    "raw protocols/logs/results/trace checksums",
+    "candidate wheel archives",
+    "compact evidence archive"
+  ],
+  "production_project_and_ex_modified": false,
+  "recorded_epoch": 1795064594.3783417
+}

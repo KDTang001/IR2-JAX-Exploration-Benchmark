@@ -1,0 +1,8 @@
+{
+  "different_fields": [
+    "graph_capacity",
+    "graph_padding_size"
+  ],
+  "C400": 400,
+  "C1024": 1024
+}

@@ -1,0 +1,34 @@
+{
+  "scope": "cpu_release_installation_fixture",
+  "limited": true,
+  "training_seeds": [
+    -1
+  ],
+  "real_training_events": 0,
+  "methods": [
+    {
+      "method_id": "nf_off",
+      "route": "baseline",
+      "communication": "off",
+      "estimator": "none",
+      "training_seed": -1,
+      "checkpoint": "",
+      "checkpoint_hash": "",
+      "real_training_events": 0,
+      "decision_rule": "nearest_frontier",
+      "selected_at_events": null
+    },
+    {
+      "method_id": "nf_mixed",
+      "route": "baseline",
+      "communication": "mixed",
+      "estimator": "none",
+      "training_seed": -1,
+      "checkpoint": "",
+      "checkpoint_hash": "",
+      "real_training_events": 0,
+      "decision_rule": "nearest_frontier",
+      "selected_at_events": null
+    }
+  ]
+}

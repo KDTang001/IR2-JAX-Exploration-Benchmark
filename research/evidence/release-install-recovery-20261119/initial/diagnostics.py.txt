@@ -1,0 +1,46 @@
+import concurrent.futures,hashlib,json,pathlib,re,sys,time,urllib.request,urllib.error
+from packaging.tags import sys_tags
+from packaging.utils import parse_wheel_filename
+from packaging.specifiers import SpecifierSet
+root=pathlib.Path(sys.argv[1]);old=pathlib.Path('/home/user/Tz/acceptance/release-review-20261119-pip')
+lock=(old/'cpu.lock').read_bytes();assert hashlib.sha256(lock).hexdigest()=='e20b0aaaabadc9f5db169d07b2f7bda185f2497fff28b394c5554c78026d4e24'
+(root/'cpu.lock').write_bytes(lock)
+lines=re.sub(r'\\\r?\n\s*',' ',lock.decode()).splitlines();pins=[]
+for line in lines:
+ m=re.match(r'^([A-Za-z0-9_.-]+)==([^\s]+)',line)
+ if m:pins.append((m[1],m[2],set(re.findall(r'--hash=sha256:([a-f0-9]{64})',line))))
+assert len(pins)==37 and all(h for _,_,h in pins)
+tags={t:i for i,t in enumerate(sys_tags())};py='.'.join(map(str,sys.version_info[:3]))
+def inspect(pin):
+ name,version,hashes=pin;url=f'https://pypi.org/pypi/{name}/{version}/json';start=time.monotonic()
+ try:
+  with urllib.request.urlopen(url,timeout=12) as response:data=response.read()
+  metadata=json.loads(data);candidates=[]
+  for f in metadata['urls']:
+   if f['packagetype']!='bdist_wheel' or f['digests']['sha256'] not in hashes:continue
+   if f.get('requires_python') and py not in SpecifierSet(f['requires_python']):continue
+   try:_,_,_,wheel_tags=parse_wheel_filename(f['filename'])
+   except ValueError:continue
+   rank=min((tags[t] for t in wheel_tags if t in tags),default=None)
+   if rank is not None:candidates.append((rank,f['filename'],f))
+  if not candidates:return {'name':name,'version':version,'status':'no_compatible_hash_locked_wheel','metadata_sha256':hashlib.sha256(data).hexdigest(),'seconds':time.monotonic()-start}
+  f=min(candidates,key=lambda x:(x[0],x[1]))[2]
+  return {'name':name,'version':version,'status':'available','filename':f['filename'],'url':f['url'],'sha256':f['digests']['sha256'],'bytes':f['size'],'metadata_sha256':hashlib.sha256(data).hexdigest(),'seconds':time.monotonic()-start}
+ except (urllib.error.URLError,OSError,ValueError) as error:return {'name':name,'version':version,'status':'error','error':str(error),'seconds':time.monotonic()-start}
+results=[]
+with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+ for result in pool.map(inspect,pins):results.append(result);print(json.dumps(result),flush=True)
+scan={'python':sys.version,'pins':len(pins),'available':sum(x['status']=='available' for x in results),'artifacts':results};(root/'metadata-scan.json').write_text(json.dumps(scan,indent=2))
+probes=[]
+for name in ('absl-py','jaxlib'):
+ selected=next((x for x in results if x['name']==name and x['status']=='available'),None)
+ if selected is None:continue
+ for host,url in [('official',selected['url']),('aliyun',selected['url'].replace('https://files.pythonhosted.org/','https://mirrors.aliyun.com/pypi/'))]:
+  t=time.monotonic();record={'name':name,'host':host,'url':url}
+  try:
+   req=urllib.request.Request(url,headers={'Range':'bytes=0-262143'})
+   with urllib.request.urlopen(req,timeout=12) as response:
+    record['headers_seconds']=time.monotonic()-t;record['http_status']=response.status;record['bytes_read']=len(response.read(262144));record['seconds']=time.monotonic()-t
+  except (urllib.error.URLError,OSError) as error:record.update(error=str(error),seconds=time.monotonic()-t)
+  probes.append(record);print(json.dumps(record),flush=True)
+(root/'transport-probes.json').write_text(json.dumps(probes,indent=2));print(json.dumps({'metadata_complete':True,'available':scan['available'],'pins':37}),flush=True)

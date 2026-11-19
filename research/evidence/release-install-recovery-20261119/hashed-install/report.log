@@ -1,0 +1,76 @@
+{
+  "requested_manifest_complete": true,
+  "formal_complete": false,
+  "core_complete": false,
+  "auxiliary_complete": false,
+  "workload_scope": {
+    "status": "unverified_scope",
+    "registry_path": null,
+    "registry_hash": null,
+    "declaration_hash": "b411def223fb875adffbf3c59685554162402a8a13ef4a86753581804755d99e",
+    "source_manifest_hashes": [],
+    "retained_maps": 0,
+    "retained_map_hash": null,
+    "scenario_seeds": [],
+    "base_config_hash": null,
+    "base_config_path": null,
+    "expected_core_blocks": null,
+    "expected_auxiliary_blocks": null,
+    "missing_core_blocks": null,
+    "missing_auxiliary_blocks": null,
+    "invalid_core_tasks": 0,
+    "invalid_auxiliary_tasks": 0,
+    "core_examples": [],
+    "auxiliary_examples": [],
+    "core_scope_complete": false,
+    "auxiliary_scope_complete": false
+  },
+  "requested": 2,
+  "requested_unique_tasks": 2,
+  "duplicate_requested_tasks": 0,
+  "unmatched_requested_results": 0,
+  "completed_results": 2,
+  "pending_results": 0,
+  "corrupt_records": [],
+  "limited": true,
+  "methods": [
+    {
+      "method_id": "nf_mixed",
+      "auc": 0.4820675030350685,
+      "ci_low": null,
+      "ci_high": null,
+      "success_rate": 0.0,
+      "training_seeds": [
+        -1
+      ],
+      "missing_training_seeds": [],
+      "episodes": 1,
+      "errors": 0
+    },
+    {
+      "method_id": "nf_off",
+      "auc": 0.4820675030350685,
+      "ci_low": null,
+      "ci_high": null,
+      "success_rate": 0.0,
+      "training_seeds": [
+        -1
+      ],
+      "missing_training_seeds": [],
+      "episodes": 1,
+      "errors": 0
+    }
+  ],
+  "missing_matrix_conditions": [],
+  "missing_plan_telemetry": [],
+  "missing_recovery_pairs": [],
+  "invalid_training_quotas": [],
+  "missing_auxiliary_conditions": [],
+  "invalid_auxiliary_training_quotas": [],
+  "auxiliary_results": 0,
+  "superseded_result_ids": [],
+  "overall_summary_role": "core_methods_only; primary curves by split/N/fault/p/duration",
+  "weighting": "scenario_mean_then_equal_maps_then_equal_families_then_training_seeds",
+  "uncertainty": "training_seed_and_map_hierarchical_bootstrap"
+}
+

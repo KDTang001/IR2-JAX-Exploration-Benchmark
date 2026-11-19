@@ -1,0 +1,3 @@
+split,n_agents,fault_mode,drop_probability,burst_duration,budget,budget_mode,auxiliary_kind,budget_axis_bytes,requested_team_bytes,unallocated_bytes,method_id,auc,ci_low,ci_high,success_rate,training_seeds,missing_training_seeds,episodes,errors
+validation,2,0,0,0,8192,per_robot,,8192,,0,nf_mixed,0.4820675030350685,,,0.0,"(-1,)",(),1,0
+validation,2,0,0,0,8192,per_robot,,8192,,0,nf_off,0.4820675030350685,,,0.0,"(-1,)",(),1,0
