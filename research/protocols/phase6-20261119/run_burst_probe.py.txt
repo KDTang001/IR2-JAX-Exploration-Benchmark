@@ -1,0 +1,21 @@
+"""Use the accepted non-renewable queue for only the ten authorized Burst tasks."""
+import json
+import os
+import pathlib
+import subprocess
+import sys
+
+root = pathlib.Path(sys.argv[1]).resolve()
+sys.path.insert(0, str(root / "scripts"))
+from phase6_batch_cost import supervise
+
+os.environ["IR2_COST_TIMING"] = "1"
+os.environ["IR2_GRAPH_DIAGNOSTICS"] = "1"
+supervise(root)
+with (root / "probe-audit.log").open("x") as stream:
+    result = subprocess.run([sys.executable, str(root / "audit_burst_probe.py"), str(root)],
+                            stdin=subprocess.DEVNULL, stdout=stream, stderr=subprocess.STDOUT,
+                            env={**os.environ, "JAX_PLATFORMS": "cpu"}, check=False, timeout=180)
+with (root / "probe-finished.json").open("x") as stream:
+    json.dump({"audit_exit_code": result.returncode, "complete": result.returncode == 0}, stream, indent=2)
+raise SystemExit(result.returncode)

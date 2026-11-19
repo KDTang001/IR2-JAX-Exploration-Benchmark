@@ -1,0 +1,9 @@
+{
+  "user_instruction": "Ten frozen 8KiB/mixed/Burst complete episodes; maximum four H100 hours including idle waiting and compilation; independent actual traffic/recovery/Normal audit; upload audit branch; no all240 or training",
+  "authorized_seconds": 14400,
+  "idle_gpu_required": true,
+  "authorized_executions": 10,
+  "all240_authorized": false,
+  "training_authorized": false,
+  "recorded_epoch": 1795052385.1635458
+}

@@ -1,0 +1,13 @@
+{
+  "status": "preparation_only_not_execution_acceptance",
+  "selected_tasks": 10,
+  "frozen_manifest_sha256": "6499107bab45f48063b2772f73277235998f42c24311dd31aada8593411e07db",
+  "normal_references": 10,
+  "pinned_inputs": 153,
+  "source_files_match_accepted_git_bytes": 111,
+  "wrapper_and_protocol_hashes_match": true,
+  "source_config_model_changes": false,
+  "prior_evidence_overwritten": false,
+  "old_resource_windows_reused": false,
+  "base_commit": "e3dbb4cf1cefbe152c53b6f4a468465f4c7fabd7"
+}

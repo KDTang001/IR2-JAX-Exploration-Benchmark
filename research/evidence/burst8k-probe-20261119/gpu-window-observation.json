@@ -1,0 +1,8 @@
+{
+  "started_epoch": 1795052486.0321426,
+  "deadline_epoch": 1795066886.0321426,
+  "started_utc": "2026-11-19T01:41:26.032150+00:00",
+  "authorized_seconds": 14400,
+  "includes_compilation_and_waiting": true,
+  "authorization": "User explicitly approved ten frozen 8KiB mixed Burst tasks, maximum four hours including waiting and compilation; GPU idle first; no all240 or training"
+}

@@ -1,0 +1,27 @@
+{
+  "name": "burst8k-probe-v1",
+  "cases": [
+    {
+      "case_id": "nf_mixed-b4",
+      "batch_size": 4,
+      "task_manifest": "/home/user/Tz/acceptance/burst8k-probe-20261119/nf_mixed.jsonl",
+      "task_manifest_sha256": "0b3bff397147f1e7b6eccd55781f31f7e874500e4137d636748fcebc8f9f618b",
+      "map": {
+        "path": "/home/user/Tz/ir2-benchmark/DungeonMaps/train/easy/img_4775.png"
+      },
+      "map_file_sha256": "53e6d113b45df199c5a911113f820323e9ed66f16d28a321cfb6e9b9fd50cc0e"
+    },
+    {
+      "case_id": "ir2_mixed-b4",
+      "batch_size": 4,
+      "task_manifest": "/home/user/Tz/acceptance/burst8k-probe-20261119/ir2_mixed.jsonl",
+      "task_manifest_sha256": "9b0ef4c7504a518cee3679873ee32760f7398a5636af124fc8a7434a5844c504",
+      "map": {
+        "path": "/home/user/Tz/ir2-benchmark/DungeonMaps/train/easy/img_4775.png"
+      },
+      "map_file_sha256": "53e6d113b45df199c5a911113f820323e9ed66f16d28a321cfb6e9b9fd50cc0e"
+    }
+  ],
+  "case_timeout_seconds": 1800,
+  "planned_executions": 10
+}
