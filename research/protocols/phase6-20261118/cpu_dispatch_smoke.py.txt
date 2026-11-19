@@ -1,0 +1,88 @@
+"""Exercise real parent/child dispatch on tiny CPU fixtures, never a GPU measurement."""
+import hashlib
+import json
+import os
+import pathlib
+import subprocess
+import sys
+import time
+
+stage, previous = map(pathlib.Path, sys.argv[1:3])
+sys.path[:0] = [str(stage / "scripts"), str(previous)]
+import phase6_profile_supervisor as supervisor
+from test_batch_runner_fixture import write_real_workload
+from ir2_benchmark.evaluation.scenarios import (
+    EvaluationMap, make_scenario, read_task_manifest, tasks, write_task_manifest,
+)
+
+root = stage / "cpu-dispatch-smoke"
+root.mkdir()
+(root / "source-final").symlink_to(previous / "source-final", target_is_directory=True)
+(root / "final-package-inventory.json").write_bytes(
+    (previous / "final-package-inventory.json").read_bytes()
+)
+base = list(read_task_manifest(write_real_workload(root / "fixtures")))
+scenes = []
+for index in range(5):
+    original = base[index % len(base)].scenario
+    item = EvaluationMap(original.map_path, original.map_hash, "validation", original.source,
+                         original.family, original.bucket, original.map_scenario_hash)
+    scenes.append(make_scenario(item, original.config, index))
+manifest = root / "tasks.jsonl"
+write_task_manifest(manifest, tasks(scenes, (base[0].method,)))
+image = pathlib.Path(base[0].scenario.map_path)
+cases = [{"case_id": f"cpu-b{batch}", "batch_size": batch,
+          "task_manifest": str(manifest),
+          "task_manifest_sha256": hashlib.sha256(manifest.read_bytes()).hexdigest(),
+          "map": {"path": str(image)},
+          "map_file_sha256": hashlib.sha256(image.read_bytes()).hexdigest()}
+         for batch in (1, 4)]
+supervisor.save(root / "profile-request.json", {"python": sys.executable, "cases": cases})
+supervisor.save(root / "mini-declaration.json", {"cases": cases, "case_timeout_seconds": 120})
+supervisor.save(root / "gpu-window.json", {"deadline_epoch": time.time() + 300,
+                "purpose": "CPU dispatch diagnostic only; not a GPU authorization"})
+ledger = (root / "gpu-window.json").read_bytes()
+real_popen = subprocess.Popen
+launches = []
+
+def cpu_child(argv, **options):
+    options["env"] = {**options["env"], "JAX_PLATFORMS": "cpu"}
+    launches.append({"argv": argv, "effective_jax_platforms": "cpu"})
+    return real_popen(argv, **options)
+
+supervisor.subprocess.Popen = cpu_child
+supervisor.query = lambda *_arguments: ""  # GPU telemetry is not simulated as a performance result.
+os.environ["IR2_COST_TIMING"] = "1"
+sys.argv = [str(stage / "scripts/phase6_profile_supervisor.py"), str(root), "mini"]
+try:
+    supervisor.main()
+finally:
+    supervisor.subprocess.Popen = real_popen
+assert len(launches) == 2
+assert ledger == (root / "gpu-window.json").read_bytes()
+import numpy as np
+for case, sizes in zip(cases, ([1, 1, 1, 1, 1], [4, 1]), strict=True):
+    prefix = root / "resource-cost-mini"
+    summary = json.loads((prefix / case["case_id"] / "runner_summary.json").read_text())
+    assert summary == {"requested": 5, "executed": 5, "resumed": 0, "failures": 0}, summary
+    timing = json.loads((prefix / (case["case_id"] + ".memory.timing.json")).read_text())
+    observed = [row["batch_size"] for row in timing["boundaries"] if row["phase"] == "execute_batch"]
+    assert observed == sizes, observed
+    memory = json.loads((prefix / (case["case_id"] + ".memory.json")).read_text())
+    assert memory["jax_device_memory"] is None  # CPU backend returns no GPU allocator statistics.
+    record = json.loads((prefix / (case["case_id"] + ".record.json")).read_text())
+    assert record["exit_code"] == 0 and not record["timeout"], record
+for path in sorted((root / "resource-cost-mini/cpu-b1/results").glob("*.json")):
+    left = json.loads(path.read_text())["result"]
+    right = json.loads((root / "resource-cost-mini/cpu-b4/results" / path.name).read_text())["result"]
+    with np.load(left["trace_file"]) as a, np.load(right["trace_file"]) as b:
+        assert a.files == b.files
+        for key in a.files:
+            np.testing.assert_array_equal(a[key], b[key], err_msg=key)
+result = {"passed": True, "backend": "cpu", "formal_gpu_cases": 0,
+          "fixture_tasks": 5, "fixture_executions": 10, "exact_trace_pairs": 5,
+          "actual_groups": {"B1": [1, 1, 1, 1, 1], "B4": [4, 1]},
+          "ledger_unchanged": True, "launches": launches,
+          "script_sha256": hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest()}
+supervisor.save(stage / "cpu-dispatch-smoke.json", result)
+print(json.dumps({key: value for key, value in result.items() if key != "launches"}))

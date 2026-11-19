@@ -1,0 +1,21 @@
+2026-11-18 15:52:19.540050: E external/xla/xla/service/slow_operation_alarm.cc:65] Constant folding an instruction is taking > 1s:
+
+  %reduce.1402 = pred[4,6,1024]{2,1,0} reduce(pred[4,6,1024,1024]{3,2,1,0} %broadcast.81, pred[] %constant.195), dimensions={3}, to_apply=%region_31.1398, metadata={op_name="jit(single)/jit(main)/reduce_or" source_file="/home/user/Tz/acceptance/resource-pilot-v2-c1024-20261118/source-final/src/ir2_benchmark/navigation/ir2_graph.py" source_line=315}
+
+This isn't necessarily a bug; constant-folding is inherently a trade-off between compilation time and speed at runtime. XLA has some guards that attempt to keep constant folding from taking too long, but fundamentally you'll always be able to come up with an input program that takes a long time.
+
+If you'd like to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+2026-11-18 15:52:21.508106: E external/xla/xla/service/slow_operation_alarm.cc:133] The operation took 2.968238566s
+Constant folding an instruction is taking > 1s:
+
+  %reduce.1402 = pred[4,6,1024]{2,1,0} reduce(pred[4,6,1024,1024]{3,2,1,0} %broadcast.81, pred[] %constant.195), dimensions={3}, to_apply=%region_31.1398, metadata={op_name="jit(single)/jit(main)/reduce_or" source_file="/home/user/Tz/acceptance/resource-pilot-v2-c1024-20261118/source-final/src/ir2_benchmark/navigation/ir2_graph.py" source_line=315}
+
+This isn't necessarily a bug; constant-folding is inherently a trade-off between compilation time and speed at runtime. XLA has some guards that attempt to keep constant folding from taking too long, but fundamentally you'll always be able to come up with an input program that takes a long time.
+
+If you'd like to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+{
+  "requested": 5,
+  "executed": 5,
+  "resumed": 0,
+  "failures": 0
+}

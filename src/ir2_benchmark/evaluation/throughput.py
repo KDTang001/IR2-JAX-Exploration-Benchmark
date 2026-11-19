@@ -188,7 +188,7 @@ def benchmark_environment(  # noqa: PLR0913
                     peak_host_rss_bytes=peak_host_rss_bytes(),
                 )
             )
-        except (MemoryError, RuntimeError) as error:
+        except (MemoryError, RuntimeError, ValueError) as error:
             if not is_oom(error):
                 raise
             measurements.append(

@@ -1,0 +1,95 @@
+{
+  "reviewed_utc": "2026-11-18T09:17:15.022847+00:00",
+  "self_review": true,
+  "verdict": "PASS_WITH_DECLARED_SCOPE_AND_ZERO_EXPOSURE_LIMIT",
+  "validated_code_commit": "5b758edc4906896dd84d18e03033ff9c904e47e7",
+  "postprocessing_protocol_sha256": "b065a0c76ad189aea01a18744fe59807da0d76bedc6607c9434f599dbb0ef6d7",
+  "qa_matrix": [
+    {
+      "scenario": "versioned validation-only freeze and C400 task-byte regression",
+      "verdict": "PASS",
+      "artifacts": [
+        "freeze.json",
+        "tasks.jsonl.gz",
+        "tasks.selection.json",
+        "planning-tests.xml"
+      ]
+    },
+    {
+      "scenario": "real target Linux CPU graph diagnostic CLI, including tail batch",
+      "verdict": "PASS",
+      "artifacts": [
+        "cpu-graph-diagnostics.json",
+        "cpu-graph-diagnostics/results/runner_summary.json"
+      ]
+    },
+    {
+      "scenario": "30 full target-H100 episodes with six real 4+1 groups",
+      "verdict": "PASS",
+      "artifacts": [
+        "probe-audit.json",
+        "mini-finished.json",
+        "probe-finished.json"
+      ]
+    },
+    {
+      "scenario": "independent target-CPU replay of masks, delivery, budget and metrics",
+      "verdict": "PASS",
+      "artifacts": [
+        "probe-audit.json",
+        "probe-audit.log"
+      ]
+    },
+    {
+      "scenario": "zero Burst emission exposure retained and paired arrays checked",
+      "verdict": "PASS_WITH_EXPOSURE_LIMIT",
+      "artifacts": [
+        "probe-summary.json"
+      ]
+    },
+    {
+      "scenario": "input identity, unchanged core and process closure",
+      "verdict": "PASS",
+      "artifacts": [
+        "source-binding.json",
+        "postrun-verification.json",
+        "gpu-window-closed.json"
+      ]
+    },
+    {
+      "scenario": "raw archive transfer integrity and temporary bundle removal",
+      "verdict": "PASS",
+      "artifacts": [
+        "transfer-record.json"
+      ]
+    }
+  ],
+  "complete_probe_episodes": 30,
+  "coverage_successes": 12,
+  "normal_timeouts": 18,
+  "active_events": 52567,
+  "execution_errors": 0,
+  "ooms": 0,
+  "illegal_actions": 0,
+  "pinned_inputs_unchanged": 140,
+  "unchanged_core_source_files": 111,
+  "prior_evidence_overwritten": false,
+  "full240_started": false,
+  "training_started": false,
+  "merge_performed": false,
+  "timing_limit": "Only this cold-process B4/4+1 subset; not B1/B4 speedup or marginal memory",
+  "burst_limit": "0 emitted bytes in the 2331 active Burst-window events; not evidence of robustness",
+  "remaining_gates": [
+    "actual 8KiB fault exposure",
+    "zero budget",
+    "N2/N6",
+    "other map buckets and communication modes",
+    "full pilot cost and approval",
+    "train-only SAC implementation and training resource preflight"
+  ],
+  "artifact_analysis_runtime": {
+    "python": "3.13.5",
+    "numpy": "2.1.3",
+    "jax_initialized": false
+  }
+}

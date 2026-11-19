@@ -1,0 +1,84 @@
+"""Bound this continuation to the existing absolute deadline; never renew it."""
+import hashlib
+import json
+import os
+import pathlib
+import signal
+import subprocess
+import sys
+import time
+from datetime import datetime, timezone
+from phase6_profile_supervisor import query, save, main as run_cases
+
+root = pathlib.Path(sys.argv[1]).resolve()
+assert not (root / "gpu-window.json").exists()
+request = json.loads((root / "profile-request.json").read_text())
+authorization = json.loads((root / "authorization.json").read_text())
+deadline = authorization["absolute_deadline_epoch"]
+for name, expected in request["input_hashes"].items():
+    assert hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest() == expected, name
+assert time.time() < deadline - 10
+save(root / "gpu-window.json", {
+    "started_epoch": time.time(), "deadline_epoch": deadline,
+    "started_utc": datetime.now(timezone.utc).isoformat(),
+    "authorization": "User approved a separate expanded-capacity preset and continuing B1/B4 acceptance",
+    "parent_root": authorization["parent_root"], "renews_parent_deadline": False,
+    "includes_compilation_and_waiting": True,
+})
+exit_code = 1
+try:
+    quiet_since = None
+    with (root / "queue.jsonl").open("x") as log:
+        while time.time() < deadline - 10:
+            gpu = query("nvidia-smi", "--query-gpu=utilization.gpu,memory.used,memory.total",
+                        "--format=csv,noheader,nounits")
+            processes = query("nvidia-smi", "--query-compute-apps=pid,used_memory",
+                              "--format=csv,noheader,nounits")
+            quiet = not processes and int(gpu.split(",")[0]) < 10
+            quiet_since = (quiet_since or time.time()) if quiet else None
+            row = {"epoch": time.time(), "gpu": gpu, "processes": processes,
+                   "quiet_since": quiet_since}
+            log.write(json.dumps(row) + "\n")
+            log.flush()
+            save(root / "queue-current.json", row)
+            if quiet_since is not None and time.time() - quiet_since >= 60:
+                break
+            time.sleep(min(15, max(0, deadline - time.time() - 10)))
+        else:
+            raise TimeoutError("Deadline elapsed while waiting for an idle GPU")
+    env = os.environ.copy()
+    env.update(PYTHONPATH=str(root / "source-final/src"), JAX_PLATFORMS="cuda",
+               XLA_PYTHON_CLIENT_PREALLOCATE="false", JAX_ENABLE_COMPILATION_CACHE="false",
+               OMP_NUM_THREADS="8", OPENBLAS_NUM_THREADS="8", MKL_NUM_THREADS="8")
+    seconds = min(600, deadline - time.time() - 10)
+    assert seconds > 0
+    argv = ["timeout", "--signal=TERM", "--kill-after=5s", f"{seconds:.3f}s",
+            "taskset", "-c", "0-7", request["python"],
+            str(root / "compare_capacity_prefix.py"), str(root)]
+    started = time.time()
+    with (root / "prefix.log").open("x") as log:
+        result = subprocess.run(argv, stdin=subprocess.DEVNULL, stdout=log,
+                                stderr=subprocess.STDOUT, env=env, check=False)
+    save(root / "prefix-execution.json", {"argv": argv, "exit_code": result.returncode,
+                                         "wall_seconds": time.time() - started,
+                                         "finished_epoch": time.time()})
+    assert result.returncode == 0, "Capacity prefix comparison failed"
+    assert json.loads((root / "prefix-parity.json").read_text())["complete"]
+    os.environ["IR2_COST_TIMING"] = "1"
+    sys.argv = [str(root / "phase6_profile_supervisor.py"), str(root), "mini"]
+    run_cases()
+    with (root / "audit-collector.log").open("x") as log:
+        result = subprocess.run([request["python"], str(root / "analyze_batch_cost.py"), str(root)],
+                                stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT,
+                                check=False, timeout=60)
+    assert result.returncode == 0, "Full-cohort audit rejected the run"
+    audit = json.loads((root / "batch-cost-audit.json").read_text())
+    assert audit["complete"] and audit["timing_comparable"]
+    exit_code = 0
+finally:
+    save(root / "gpu-window-closed.json", {
+        "utc": datetime.now(timezone.utc).isoformat(), "epoch": time.time(),
+        "deadline_epoch": deadline, "exit_code": exit_code,
+        "finished_exists": (root / "mini-finished.json").exists(),
+    })
+raise SystemExit(exit_code)

@@ -1,0 +1,27 @@
+{
+  "reviewed_utc": "2026-11-18T06:03:43.226779+00:00",
+  "self_review": true,
+  "target_linux_cpu_checks": 6,
+  "h100_prefix_pairs": 10,
+  "complete_executions": 20,
+  "active_events": 36016,
+  "exact_b1_b4_pairs": 10,
+  "complete_c400_controls": 3,
+  "successes": 8,
+  "normal_timeouts": 12,
+  "errors": 0,
+  "ooms": 0,
+  "illegal_actions": 0,
+  "clean_gpu_process_records": 4,
+  "pinned_inputs_unchanged": 147,
+  "core_source_changes": [],
+  "old_evidence_overwritten": false,
+  "training_started": false,
+  "full_pilot_started": false,
+  "maximum_parallelism_claimed": false,
+  "artifact_analysis_runtime": {
+    "python": "3.13.5",
+    "numpy": "2.1.3",
+    "jax_initialized": false
+  }
+}

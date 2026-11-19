@@ -185,7 +185,9 @@ def _visible(
 
             return lax.fori_loop(0, (count + 31) // 32, trace, jnp.zeros_like(enabled))
 
-        return lax.cond(active, visible, lambda: jnp.zeros_like(enabled))
+        # Inactive rows have count=0 and return the unchanged all-false buffer.
+        # A batched cond broadcasts the complete map once per node into its operands.
+        return visible()
 
     return jax.vmap(row)(nodes, valid)
 

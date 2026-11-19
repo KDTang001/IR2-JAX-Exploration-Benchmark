@@ -1,0 +1,78 @@
+"""Audit the failed Nov18 cohort and its valid traces without initializing JAX."""
+import gzip
+import hashlib
+import json
+import pathlib
+import sys
+import numpy as np
+
+base = pathlib.Path(sys.argv[1])
+run = base / "run"
+case = run / "resource-cost-mini/nf_mixed-b1"
+tasks = {row["result_id"]: row for row in
+         map(json.loads, gzip.open(sys.argv[2], "rt")) if row["method"]["method_id"] == "nf_mixed"}
+timings = json.loads((run / "resource-cost-mini/nf_mixed-b1.memory.timing.json").read_text())
+areas = {row["result_id"]: row["component_area"] for row in timings["boundaries"]
+         if row["phase"] == "load_lane"}
+records = []
+for path in sorted((case / "results").glob("*.json")):
+    envelope = json.loads(path.read_text())
+    row = envelope["result"]
+    canonical = json.dumps(row, sort_keys=True, separators=(",", ":")).encode()
+    assert hashlib.sha256(canonical).hexdigest() == envelope["checksum"]
+    task = tasks[row["result_id"]]
+    for actual, expected in [("configuration_hash", "config_hash"), ("map_hash", "map_hash"),
+                             ("map_scenario_hash", "map_scenario_hash")]:
+        assert row[actual] == task["scenario"][expected]
+    assert row["split"] == "validation" and row["real_training_events"] == 0
+    assert row["checkpoint_hash"] == task["method"]["checkpoint_hash"]
+    item = {key: row[key] for key in ["result_id", "family", "outcome", "error"]}
+    if row["outcome"] == "environment_error":
+        assert row["metrics"] is None and not row["trace_file"] and row["active_events"] == 0
+        item["active_events"] = None  # The error placeholder is not measured zero work.
+    else:
+        trace = case / "events" / (row["result_id"] + ".npz")
+        assert hashlib.sha256(trace.read_bytes()).hexdigest() == row["trace_hash"]
+        with np.load(trace, allow_pickle=False) as archive:
+            arrays = {key: archive[key] for key in archive.files}
+        active = arrays["active"].astype(bool)
+        assert int(active.sum()) == row["active_events"]
+        assert not arrays["invalid_action"][active].any()
+        coverage = arrays["coverage"][active].astype(np.float64)
+        counts = np.rint(coverage * areas[row["result_id"]]).astype(np.int64)
+        assert not (np.diff(counts) < 0).any()
+        emitted = arrays["emitted_length"][active].astype(np.int64)
+        spent = arrays["spent"][active].astype(np.int64)
+        delivered = arrays["delivered"][active].sum(axis=-1, dtype=np.int64)
+        assert np.array_equal(emitted, spent)
+        assert int(emitted.sum()) == row["emitted_bytes"] == row["spent_bytes"]
+        assert int((np.maximum(emitted - 16, 0) * delivered).sum()) == row["delivered_payload_bytes"]
+        for agent in range(4):
+            paid = spent[arrays["agent_id"][active] == agent].sum()
+            assert int(arrays["balances"][-1][agent] + paid) == 8192
+        rounds = list(coverage[3::4])
+        if len(coverage) % 4:
+            rounds.append(coverage[-1])
+        auc = (sum(rounds) + (512 - len(rounds)) * rounds[-1]) / 512
+        assert abs(auc - row["metrics"]["auc"]) < 1e-12
+        assert coverage[-1] == row["metrics"]["final_coverage"]
+        assert bool(arrays["terminated"][-1]) == row["metrics"]["success"]
+        assert bool(arrays["truncated"][-1]) == row["metrics"]["timeout"]
+        item.update(active_events=int(active.sum()), metrics=row["metrics"],
+                    trace_sha256=row["trace_hash"], accounting_and_metrics_pass=True)
+    records.append(item)
+assert len(records) == 5
+assert sum(row["outcome"] == "success" for row in records) == 2
+assert sum(row["outcome"] == "environment_error" for row in records) == 3
+binding = json.loads((base / "diagnostic/budget-link.json").read_text())
+execution = json.loads((base / "diagnostic/execution.json").read_text())
+assert execution["exit_code"] == 0
+assert execution["finished_epoch"] < binding["diagnostic_deadline_epoch"] <= binding["parent_deadline_epoch"]
+assert hashlib.sha256((base / "diagnostic/capacity_diagnostic.py").read_bytes()).hexdigest() == binding["script_sha256"]
+summary = {"complete": False, "cohort_accepted": False, "attempted_executions": 5,
+           "planned_executions": 20, "paired_trajectories": 0, "valid_traces_audited": 2,
+           "records": records, "diagnostic_within_parent_deadline": True}
+with (base / "partial-audit.json").open("x", encoding="utf-8") as output:
+    json.dump(summary, output, indent=2)
+    output.write("\n")
+print(json.dumps(summary, indent=2))

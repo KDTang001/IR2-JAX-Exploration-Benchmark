@@ -1,0 +1,20 @@
+{
+  "status": "FAILED_BEFORE_GPU_WORKER_LAUNCH",
+  "started_cst": "2026-11-17T19:45:02.319505+08:00",
+  "closed_cst": "2026-11-17T20:32:27.390625+08:00",
+  "original_deadline_cst": "2026-11-17T23:45:02.319505+08:00",
+  "elapsed_window_seconds": 2845.0711205005646,
+  "gpu_cases": 0,
+  "paired_tasks": 0,
+  "worker_launch_record_exists": false,
+  "case_records": 0,
+  "failure": "KeyError: 'bucket' while eagerly constructing profiler argv before mini argv",
+  "old_frozen_inputs_verified": 124,
+  "closed_window_guard_passed": true,
+  "original_queue_sha256": "77169130cfaaec8bf2007c8fa9740d9ba0fb584dfa5c830a1f92ac02b5811a77",
+  "public_queue_jsonl_sha256": "40f46c9f0d0fc7cf3f731a587d5c6d05274d35b7dd3c5c5dc63b652495825ea5",
+  "queue_samples": 190,
+  "old_supervisor_sha256": "9167e19f8a5dccf7f1a27959827b6d9dcc542c796768504aedd094e09067d8fb",
+  "fixed_supervisor_sha256": "82dbfb8135b8a68787937f32ebe8fc258f3f0b3610579e36abef013c65a677d0",
+  "backend_of_fix_acceptance": "target-server CPU only; no new H100 authorization"
+}

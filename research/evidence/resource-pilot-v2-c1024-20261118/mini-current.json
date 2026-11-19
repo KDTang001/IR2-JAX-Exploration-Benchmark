@@ -1,0 +1,25 @@
+{
+  "case_id": "burst64-ir2_mixed-b4",
+  "pid": 970022,
+  "started_epoch": 1794990596.7381651,
+  "argv": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "1800.000s",
+    "taskset",
+    "-c",
+    "0-7",
+    "/home/user/anaconda3/envs/ex/bin/python",
+    "/home/user/Tz/acceptance/resource-pilot-v2-c1024-20261118/scripts/phase6_profile_supervisor.py",
+    "--cost-worker",
+    "/home/user/Tz/acceptance/resource-pilot-v2-c1024-20261118/resource-cost-mini/burst64-ir2_mixed-b4.memory.json",
+    "evaluate",
+    "--task-manifest",
+    "/home/user/Tz/acceptance/resource-pilot-v2-c1024-20261118/burst64-ir2_mixed-b4.jsonl",
+    "--output",
+    "/home/user/Tz/acceptance/resource-pilot-v2-c1024-20261118/resource-cost-mini/burst64-ir2_mixed-b4",
+    "--batch-size",
+    "4"
+  ]
+}

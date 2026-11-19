@@ -101,6 +101,8 @@ def _error_result(task: EvaluationTask, error: ExecutionError) -> EvaluationResu
             outcome = EpisodeOutcome.MODEL_ERROR
         case MemoryError() | RuntimeError():
             outcome = EpisodeOutcome.OOM if is_oom(error) else EpisodeOutcome.ENVIRONMENT_ERROR
+        case ValueError() if is_oom(error):
+            outcome = EpisodeOutcome.OOM
         case OSError() | ValueError() | KeyError() | TypeError():
             outcome = EpisodeOutcome.MODEL_ERROR
         case unreachable:

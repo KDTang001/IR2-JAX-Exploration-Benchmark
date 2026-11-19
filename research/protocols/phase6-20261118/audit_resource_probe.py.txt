@@ -1,0 +1,143 @@
+"""Independently audit the 30-task C1024 probe; replay faults on CPU only."""
+import hashlib
+import json
+import os
+import pathlib
+import sys
+os.environ["JAX_PLATFORMS"] = "cpu"
+import jax
+import jax.numpy as jnp
+import numpy as np
+
+root = pathlib.Path(sys.argv[1]).resolve()
+request = json.loads((root / "profile-request.json").read_text())
+for name, expected in request["input_hashes"].items():
+    assert hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest() == expected, name
+assert jax.devices()[0].platform == "cpu"
+
+@jax.jit
+def dropout_mask(seed, events, senders):
+    base = jax.random.PRNGKey(seed)
+    def event_mask(event, sender):
+        def receiver_mask(receiver):
+            key = base
+            for counter in (2, 0, event, sender, receiver):
+                key = jax.random.fold_in(key, jnp.asarray(counter, jnp.uint32))
+            return jax.random.uniform(key) >= .3
+        return jax.vmap(receiver_mask)(jnp.arange(6))
+    return jax.vmap(event_mask)(events, senders)
+
+cases, all_rows = [], []
+for case in request["cases"]:
+    name = case["case_id"]
+    directory = root / "resource-cost-mini" / name
+    record = json.loads((root / "resource-cost-mini" / (name + ".record.json")).read_text())
+    assert record["exit_code"] == 0 and not record["timeout"], name
+    assert json.loads((directory / "runner_summary.json").read_text()) == {
+        "requested": 5, "executed": 5, "resumed": 0, "failures": 0}
+    timing = json.loads((root / "resource-cost-mini" / (name + ".memory.timing.json")).read_text())
+    batches = [row for row in timing["boundaries"] if row["phase"] == "execute_batch"]
+    assert [row["batch_size"] for row in batches] == [4, 1]
+    tasks = [json.loads(line) for line in pathlib.Path(case["task_manifest"]).read_text().splitlines()]
+    assert [key for row in batches for key in row["result_ids"]] == [t["result_id"] for t in tasks]
+    areas = {row["result_id"]: row["component_area"] for row in timing["boundaries"]
+             if row["phase"] == "load_lane"}
+    graphs = {row["result_id"]: row for batch in batches for row in batch["graph_terminal"]}
+    for task in tasks:
+        key, scene, method = task["result_id"], task["scenario"], task["method"]
+        envelope = json.loads((directory / "results" / (key + ".json")).read_text())
+        result = envelope["result"]
+        canonical = json.dumps(result, sort_keys=True, separators=(",", ":")).encode()
+        assert hashlib.sha256(canonical).hexdigest() == envelope["checksum"]
+        assert result["result_id"] == key and result["outcome"] in ("success", "timeout")
+        assert result["scenario_id"] == scene["scenario_id"] and result["method_id"] == method["method_id"]
+        assert result["fault_mode"] == scene["fault_mode"] and result["drop_probability"] == scene["drop_probability"]
+        assert scene["n_agents"] == 4 and scene["config"]["agent_bucket"] == 6
+        assert scene["split"] == result["split"] == "validation"
+        assert scene["config"]["graph_capacity"] == scene["config"]["graph_padding_size"] == 1024
+        assert scene["budget"] == result["budget"] == 2048
+        assert method["communication"] == "mixed" and result["real_training_events"] == 0
+        assert result["configuration_hash"] == scene["config_hash"]
+        assert result["checkpoint_hash"] == method["checkpoint_hash"]
+        assert result["map_hash"] == scene["map_hash"]
+        assert result["map_scenario_hash"] == scene["map_scenario_hash"]
+        trace = pathlib.Path(result["trace_file"])
+        assert hashlib.sha256(trace.read_bytes()).hexdigest() == result["trace_hash"]
+        with np.load(trace, allow_pickle=False) as archive:
+            arrays = {name: archive[name] for name in archive.files}
+        active = arrays["active"].astype(bool)
+        events, senders = arrays["event"], arrays["agent_id"]
+        count = int(active.sum())
+        assert count == result["active_events"] and np.array_equal(events[active], np.arange(count))
+        assert np.array_equal(senders[active], np.arange(count) % 4)
+        assert not arrays["invalid_action"][active].any()
+        coverage = arrays["coverage"][active].astype(float)
+        assert not (np.diff(np.rint(coverage * areas[key])) < 0).any()
+        rounds = list(coverage[3::4])
+        if len(coverage) % 4:
+            rounds.append(coverage[-1])
+        final = float(coverage[-1]) if count else float(arrays["initial_coverage"])
+        auc = (sum(rounds) + (512 - len(rounds)) * final) / 512
+        assert abs(auc - result["metrics"]["auc"]) < 1e-12
+        assert final == result["metrics"]["final_coverage"]
+        assert bool(arrays["terminated"][-1]) == result["metrics"]["success"]
+        assert bool(arrays["truncated"][-1]) == result["metrics"]["timeout"]
+        emitted = arrays["emitted_length"][active].astype(np.int64)
+        spent = arrays["spent"][active].astype(np.int64)
+        delivered = arrays["delivered"][active]
+        assert np.array_equal(emitted, spent)
+        assert int(spent.sum()) == result["spent_bytes"] == result["emitted_bytes"]
+        assert int((np.maximum(emitted - 16, 0) * delivered.sum(-1)).sum()) == result["delivered_payload_bytes"]
+        for agent in range(4):
+            assert int(arrays["balances"][-1][agent] + spent[senders[active] == agent].sum()) == 2048
+        allowed = (np.arange(6)[None] < 4) & (np.arange(6)[None] != senders[:, None])
+        burst = (events // 4 >= 128) & (events // 4 < 192)
+        if scene["fault_mode"] == 1:
+            assert scene["drop_probability"] == .3
+            allowed &= np.asarray(dropout_mask(scene["fault_seed"], events, senders))
+        elif scene["fault_mode"] == 2:
+            assert scene["drop_probability"] == 0 and scene["burst_start"] == 128
+            assert scene["burst_duration"] == 64 and len(scene["isolation_ids"]) == 2
+            isolated = np.isin(np.arange(6), scene["isolation_ids"])
+            allowed &= ~(burst[:, None] & (isolated[senders, None] | isolated[None]))
+        else:
+            assert scene["fault_mode"] == 0 and scene["drop_probability"] == 0
+        assert np.array_equal(allowed[active], arrays["external_links"][active])
+        expected_delivery = (emitted[:, None] > 0) & arrays["physical_links"][active] & allowed[active]
+        assert np.array_equal(expected_delivery, delivered)
+        graph = graphs[key]
+        assert graph["event_final"] == count and len(graph["local_nodes"]) == 4
+        assert max(graph["local_nodes"]) < 1024 and max(graph["global_nodes"]) <= 1024
+        assert max(graph["history_counts"]) <= 513 and max(graph["max_outgoing_degrees"]) <= 30
+        assert not any(graph["overflow"]) and not any(graph["path_failed"])
+        row = {name: result[name] for name in ["result_id", "method_id", "family", "fault_mode",
+                                               "outcome", "active_events", "metrics", "spent_bytes"]}
+        row.update(graph_terminal=graph, trace_sha256=result["trace_hash"],
+                   burst_window_active_events=int((burst & active).sum()) if scene["fault_mode"] == 2 else None,
+                   burst_window_emitted_bytes=int(arrays["emitted_length"][burst & active].sum()) if scene["fault_mode"] == 2 else None,
+                   last_emission_event=int(events[active][emitted > 0][-1]) if np.any(emitted) else None)
+        all_rows.append(row)
+    memory = json.loads((root / "resource-cost-mini" / (name + ".memory.json")).read_text())
+    own = {record["supervised_pid"], memory["pid"]}
+    foreign, failures = set(), 0
+    for sample in record["gpu_samples"]:
+        failures += sample["processes"].startswith("query_failed:")
+        for line in sample["processes"].splitlines():
+            pid = line.split(",")[0].strip()
+            if pid.isdigit() and int(pid) not in own:
+                foreign.add(int(pid))
+    cases.append({"case_id": name, "wall_seconds": record["wall_seconds"],
+                  "foreign_gpu_pids": sorted(foreign), "telemetry_failures": failures,
+                  "memory": memory, "batches": batches})
+assert len(all_rows) == 30 and len(cases) == 6
+assert len({row["result_id"] for row in all_rows}) == 30
+assert all(sum(row["fault_mode"] == mode for row in all_rows) == 10 for mode in (0, 1, 2))
+summary = {"complete": True, "task_count": 30, "case_count": 6,
+           "timing_comparable": all(not row["foreign_gpu_pids"] and not row["telemetry_failures"] for row in cases),
+           "active_events": sum(row["active_events"] for row in all_rows),
+           "pinned_inputs_verified": len(request["input_hashes"]),
+           "fault_replay_backend": "cpu", "cases": cases, "episodes": all_rows}
+with (root / "probe-audit.json").open("x") as output:
+    json.dump(summary, output, indent=2)
+    output.write("\n")
+print(json.dumps({key: value for key, value in summary.items() if key not in ("cases", "episodes")}))

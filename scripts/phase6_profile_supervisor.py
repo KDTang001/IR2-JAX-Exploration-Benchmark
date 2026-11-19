@@ -1,0 +1,318 @@
+#!/usr/bin/env python3
+"""Run six isolated profiles inside a persisted, non-renewable four-hour GPU window.
+
+Usage: python phase6_profile_supervisor.py NEW_PHASE6_ROOT [compare|mini]
+Requires source-baseline, phase6_profile.py and profile-request.json in that root.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import signal
+import subprocess
+import sys
+import time
+from datetime import UTC, datetime
+from pathlib import Path
+from shutil import which
+from typing import TypeAlias
+
+JsonValue: TypeAlias = str | int | float | bool | list["JsonValue"] | dict[str, "JsonValue"] | None
+
+
+def save(path: Path, value: JsonValue) -> None:
+    """Replace the ledger only after its complete JSON payload is written."""
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(value, indent=2) + "\n")
+    temporary.replace(path)
+
+
+def query(*argv: str) -> str:
+    """Read GPU state using the harness's fixed argument vectors without a shell."""
+    result = subprocess.run(  # noqa: S603 - Fixed nvidia-smi argument vectors.
+        argv,
+        capture_output=True,
+        text=True,
+        check=False,
+        timeout=10,
+    )
+    if result.returncode:
+        raise OSError(result.stderr.strip())
+    return result.stdout.strip()
+
+
+def cost_worker() -> None:
+    """Run one complete CLI task and record its own independent process memory peak."""
+    import resource  # noqa: PLC0415 - Linux-only measurement worker.
+
+    import jax  # noqa: PLC0415 - Initialize only inside the isolated GPU worker.
+
+    from ir2_benchmark.cli import main as evaluate  # noqa: PLC0415
+
+    output = Path(sys.argv[2])
+    if os.environ.get("IR2_COST_TIMING") == "1":
+        from phase6_batch_cost import instrument_worker  # noqa: PLC0415
+
+        instrument_worker(output.with_suffix(".timing.json"))
+    sys.argv = ["ir2-benchmark", *sys.argv[3:]]
+    status = evaluate()
+    save(
+        output,
+        {
+            "pid": os.getpid(),
+            "host_peak_rss_bytes": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024,
+            "jax_device_memory": jax.devices()[0].memory_stats(),
+        },
+    )
+    raise SystemExit(status)
+
+
+def main() -> None:  # noqa: C901, PLR0912, PLR0915 - One bounded child lifecycle for all workloads.
+    """Supervise the frozen request without extending its persisted GPU deadline."""
+    root = Path(sys.argv[1]).resolve()
+    if (root / "gpu-window-closed.json").exists():
+        raise RuntimeError("This measurement window is closed; use a new authorized run")  # noqa: EM101, TRY003
+    comparing = sys.argv[2:] == ["compare"]
+    mini = sys.argv[2:] == ["mini"]
+    label = "mini" if mini else "comparison" if comparing else "profile"
+    request = json.loads((root / "profile-request.json").read_text())
+    source = root / ("source-final" if comparing or mini else "source-baseline")
+    out = root / (
+        "resource-cost-mini" if mini else "optimization-pairs" if comparing else "profiles-baseline"
+    )
+    out.mkdir(exist_ok=True)
+    records = []
+    ledger = root / "gpu-window.json"
+    if ledger.exists() and not (comparing or mini):
+        raise RuntimeError("GPU window already exists; refusing to reset the authorized deadline")  # noqa: EM101, TRY003
+    if (comparing or mini) and not ledger.is_file():
+        raise RuntimeError("Comparison requires the existing authorized GPU window")  # noqa: EM101, TRY003
+    cases = request["cases"]
+    case_timeout = 1800
+    if comparing or mini:
+        expected = json.loads((root / "final-package-inventory.json").read_text())
+        actual = {
+            str(path.relative_to(source / "src/ir2_benchmark")): hashlib.sha256(
+                path.read_bytes()
+            ).hexdigest()
+            for path in (source / "src/ir2_benchmark").rglob("*.py")
+        }
+        if actual != expected:
+            raise RuntimeError("Frozen package identity changed")  # noqa: EM101, TRY003
+    if mini:
+        if which("timeout") is None:
+            raise RuntimeError("The independent GNU timeout guard is unavailable")  # noqa: EM101, TRY003
+        declaration = json.loads((root / "mini-declaration.json").read_text())
+        cases, case_timeout = declaration["cases"], declaration["case_timeout_seconds"]
+    for case in cases:
+        before = {
+            "utc": datetime.now(UTC).isoformat(),
+            "gpu": query(
+                "nvidia-smi",
+                "--query-gpu=name,uuid,utilization.gpu,memory.used,memory.total",
+                "--format=csv,noheader,nounits",
+            ),
+            "processes": query(
+                "nvidia-smi",
+                "--query-compute-apps=pid,process_name,used_memory",
+                "--format=csv,noheader,nounits",
+            ),
+        }
+        if before["processes"] and not request.get("allow_shared_gpu", False):
+            save(
+                root / f"{label}-stopped.json",
+                {"reason": "shared GPU occupied", "snapshot": before},
+            )
+            break
+        if not ledger.exists():
+            now = time.time()
+            save(
+                ledger,
+                {
+                    "started_epoch": now,
+                    "deadline_epoch": now + 14400,
+                    "started_utc": datetime.now(UTC).isoformat(),
+                    "authorized_seconds": 14400,
+                    "includes_compilation": True,
+                },
+            )
+        deadline = json.loads(ledger.read_text())["deadline_epoch"]
+        if time.time() >= deadline:
+            break
+        case_out = out / case["case_id"]
+        log = out / (case["case_id"] + ".log")
+        env = os.environ.copy()
+        env.update(
+            PYTHONPATH=str(source / "src"),
+            JAX_PLATFORMS="cuda",
+            XLA_PYTHON_CLIENT_PREALLOCATE="false",
+            JAX_ENABLE_COMPILATION_CACHE="false",
+            OMP_NUM_THREADS="8",
+            OPENBLAS_NUM_THREADS="8",
+            MKL_NUM_THREADS="8",
+            LD_LIBRARY_PATH="/home/user/anaconda3/envs/ex/lib/python3.11/site-packages/nvidia/cuda_cupti/lib:"
+            + env.get("LD_LIBRARY_PATH", ""),
+            XLA_FLAGS=f"--xla_dump_to={case_out}/xla --xla_dump_hlo_as_text",
+        )
+        # phase6_profile creates its output exclusively, so XLA must not initialize before it.
+        # Full-episode manifests do not contain profiler-only bucket/n_agents fields.
+        argv = [] if comparing or mini else [
+            "taskset",
+            "-c",
+            "0-7",
+            request["python"],
+            str(root / "phase6_profile.py"),
+            "--source",
+            str(source),
+            "--output",
+            str(case_out),
+            "--",
+            "--config",
+            str(source / "configs/benchmark.json"),
+            "--map",
+            case["map"]["path"],
+            "--bucket",
+            str(case["bucket"]),
+            "--agents",
+            str(case["n_agents"]),
+            "--batch-size",
+            str(case["batch_size"]),
+            "--device",
+            "gpu",
+            "--steps",
+            "4",
+            "--warmups",
+            "2",
+            "--repeats",
+            "5",
+            "--seed",
+            "7",
+            "--policy-checkpoint",
+            request["checkpoint"],
+            "--output",
+            str(case_out),
+        ]
+        if comparing:
+            env.pop("XLA_FLAGS", None)
+            argv = [
+                "taskset",
+                "-c",
+                "0-7",
+                request["python"],
+                str(root / "phase6_compare.py"),
+                str(root),
+                case["case_id"],
+            ]
+        if mini:
+            env.pop("XLA_FLAGS", None)
+            if (
+                hashlib.sha256(Path(case["task_manifest"]).read_bytes()).hexdigest()
+                != case["task_manifest_sha256"]
+            ):
+                raise RuntimeError("Frozen mini task identity changed")  # noqa: EM101, TRY003
+            argv = [
+                "taskset",
+                "-c",
+                "0-7",
+                request["python"],
+                str(Path(__file__).resolve()),
+                "--cost-worker",
+                str(out / (case["case_id"] + ".memory.json")),
+                "evaluate",
+                "--task-manifest",
+                case["task_manifest"],
+                "--output",
+                str(case_out),
+                "--batch-size",
+                str(case.get("batch_size", 1)),
+            ]
+        assert (  # noqa: S101
+            hashlib.sha256(Path(case["map"]["path"]).read_bytes()).hexdigest()
+            == case["map_file_sha256"]
+        )
+        started = time.time()
+        if mini:
+            # The guard survives supervisor failure; reserve ten seconds inside the window.
+            seconds = min(case_timeout, deadline - started - 10)
+            if seconds <= 0:
+                break
+            argv = ["timeout", "--signal=TERM", "--kill-after=5s", f"{seconds:.3f}s", *argv]
+        with log.open("x") as stream:
+            # The frozen request supplies an argv vector, never shell command text.
+            child = subprocess.Popen(  # noqa: S603
+                argv,
+                cwd=source,
+                env=env,
+                stdin=subprocess.DEVNULL,
+                stdout=stream,
+                stderr=subprocess.STDOUT,
+                start_new_session=True,
+            )
+            save(
+                root / f"{label}-current.json",
+                {
+                    "case_id": case["case_id"],
+                    "pid": child.pid,
+                    "started_epoch": started,
+                    "argv": argv,
+                },
+            )
+            limit = min(deadline, started + case_timeout)
+            samples = []
+            while child.poll() is None and time.time() < limit:
+                try:
+                    processes = query(
+                        "nvidia-smi",
+                        "--query-compute-apps=pid,used_memory",
+                        "--format=csv,noheader,nounits",
+                    )
+                except (OSError, subprocess.TimeoutExpired) as error:
+                    processes = f"query_failed:{type(error).__name__}:{error}"
+                samples.append(
+                    {
+                        "epoch": time.time(),
+                        "processes": processes,
+                    }
+                )
+                time.sleep(2)
+            needs_termination = child.poll() is None
+            if needs_termination:
+                os.killpg(child.pid, signal.SIGTERM)
+                try:
+                    child.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    os.killpg(child.pid, signal.SIGKILL)
+            code = child.wait()
+            timed_out = needs_termination or code == 124  # noqa: PLR2004 - GNU timeout deadline status.
+        row = {
+            "case_id": case["case_id"],
+            "supervised_pid": child.pid,
+            "exit_code": code,
+            "timeout": timed_out,
+            "wall_seconds": time.time() - started,
+            "resource_before": before,
+            "gpu_samples": samples,
+            "argv": argv,
+        }
+        records.append(row)
+        save(out / (case["case_id"] + ".record.json"), row)
+        save(
+            root / f"{label}-summary.json",
+            {"requested": len(cases), "recorded": len(records), "cases": records},
+        )
+        # A systemic profiler failure is actionable; don't repeat it six times.
+        if code != 0:
+            break
+    save(
+        root / f"{label}-finished.json",
+        {"utc": datetime.now(UTC).isoformat(), "recorded": len(records), "requested": len(cases)},
+    )
+
+
+if __name__ == "__main__":
+    if sys.argv[1:2] == ["--cost-worker"]:
+        cost_worker()
+    else:
+        main()

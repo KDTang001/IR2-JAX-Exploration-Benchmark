@@ -1,0 +1,152 @@
+{
+  "passed": true,
+  "backend": "cpu",
+  "fixture_tasks": 5,
+  "actual_groups": [
+    4,
+    1
+  ],
+  "terminal_records": [
+    {
+      "result_id": "799a811f41c9d5434b21d3d0ddd2857fb72489c0f1ef3278c8592d9be050b2ff",
+      "event_final": 8,
+      "local_nodes": [
+        7,
+        5
+      ],
+      "global_nodes": [
+        4,
+        4
+      ],
+      "history_counts": [
+        5,
+        5
+      ],
+      "max_outgoing_degrees": [
+        7,
+        5
+      ],
+      "overflow": [
+        false,
+        false
+      ],
+      "path_failed": [
+        false,
+        false
+      ]
+    },
+    {
+      "result_id": "31b09229c301179dbaa8d7699aef131330676f9797bd6e4e55ec10189aacf102",
+      "event_final": 8,
+      "local_nodes": [
+        5,
+        5
+      ],
+      "global_nodes": [
+        3,
+        4
+      ],
+      "history_counts": [
+        5,
+        5
+      ],
+      "max_outgoing_degrees": [
+        5,
+        5
+      ],
+      "overflow": [
+        false,
+        false
+      ],
+      "path_failed": [
+        false,
+        false
+      ]
+    },
+    {
+      "result_id": "374ed1f5bfd452dc631ada5d9bc5034f45c1f2f2d2596cb41db8dcd41d12efbc",
+      "event_final": 8,
+      "local_nodes": [
+        5,
+        5
+      ],
+      "global_nodes": [
+        4,
+        4
+      ],
+      "history_counts": [
+        5,
+        5
+      ],
+      "max_outgoing_degrees": [
+        5,
+        5
+      ],
+      "overflow": [
+        false,
+        false
+      ],
+      "path_failed": [
+        false,
+        false
+      ]
+    },
+    {
+      "result_id": "07a7764c54a6005eb465ee26a2a0d02ed983e866cffe3b39a43970e8f188958b",
+      "event_final": 8,
+      "local_nodes": [
+        5,
+        5
+      ],
+      "global_nodes": [
+        4,
+        3
+      ],
+      "history_counts": [
+        5,
+        5
+      ],
+      "max_outgoing_degrees": [
+        5,
+        5
+      ],
+      "overflow": [
+        false,
+        false
+      ],
+      "path_failed": [
+        false,
+        false
+      ]
+    },
+    {
+      "result_id": "85bf37cfbfe2e914c334a91be6642617a1d00dd48e4f2ccb05eec4eeab12be66",
+      "event_final": 8,
+      "local_nodes": [
+        6,
+        5
+      ],
+      "global_nodes": [
+        4,
+        4
+      ],
+      "history_counts": [
+        5,
+        5
+      ],
+      "max_outgoing_degrees": [
+        6,
+        5
+      ],
+      "overflow": [
+        false,
+        false
+      ],
+      "path_failed": [
+        false,
+        false
+      ]
+    }
+  ],
+  "formal_gpu_executions": 0
+}

@@ -1,0 +1,16 @@
+{
+  "pid": 960096,
+  "host_peak_rss_bytes": 1352859648,
+  "jax_device_memory": {
+    "num_allocs": 2355,
+    "bytes_in_use": 0,
+    "peak_bytes_in_use": 1472489216,
+    "largest_alloc_size": 1138883328,
+    "bytes_limit": 63696912384,
+    "bytes_reserved": 0,
+    "peak_bytes_reserved": 0,
+    "largest_free_block_bytes": 0,
+    "pool_bytes": 2690646016,
+    "peak_pool_bytes": 2690646016
+  }
+}

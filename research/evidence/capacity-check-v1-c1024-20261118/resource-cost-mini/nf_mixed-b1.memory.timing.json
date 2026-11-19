@@ -1,0 +1,170 @@
+{
+  "pid": 960096,
+  "boundaries": [
+    {
+      "phase": "load_lane",
+      "seconds": 0.5489899769891053,
+      "result_id": "e797eda433a9b37e3c9a0c4d08b1d68a31079d167cb9f5e0e1b2e383f12857ae",
+      "component_area": 128000
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 1,
+      "seconds": 0.003219071077182889
+    },
+    {
+      "phase": "lower_compile",
+      "batch_size": 1,
+      "seconds": 51.72484082309529
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 1,
+      "seconds": 170.5418640410062
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 223.0835742839845,
+      "batch_size": 1,
+      "result_ids": [
+        "e797eda433a9b37e3c9a0c4d08b1d68a31079d167cb9f5e0e1b2e383f12857ae"
+      ]
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.056209863047115505
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.0003528730012476444
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.12322069401852787,
+      "result_id": "44e90cd603ee7c5f6d7d64f56ed265bfd6ea69b2f99e3f7546862a44cb52a423",
+      "component_area": 128000
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 1,
+      "seconds": 9.372096974402666e-05
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 1,
+      "seconds": 143.5052998419851
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 143.53237281891052,
+      "batch_size": 1,
+      "result_ids": [
+        "44e90cd603ee7c5f6d7d64f56ed265bfd6ea69b2f99e3f7546862a44cb52a423"
+      ]
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.02567935304250568
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.0003816040698438883
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.3684699039440602,
+      "result_id": "ee57076c74e972c6ca41b354cd30fc90049aa0e2444c3cd5a943433e94ccddfe",
+      "component_area": 551540
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 1,
+      "seconds": 9.054096881300211e-05
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 1,
+      "seconds": 174.24466795905028
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 174.265199181973,
+      "batch_size": 1,
+      "result_ids": [
+        "ee57076c74e972c6ca41b354cd30fc90049aa0e2444c3cd5a943433e94ccddfe"
+      ]
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.02538535511121154
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.00033062289003282785
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.4158108999254182,
+      "result_id": "39600b6ea099f5132d9f3b35a8e77a21f84c1c658cfa4d5b03251766b9bd8a1a",
+      "component_area": 198968
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 1,
+      "seconds": 6.307102739810944e-05
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 1,
+      "seconds": 107.67563553992659
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 107.70508185995277,
+      "batch_size": 1,
+      "result_ids": [
+        "39600b6ea099f5132d9f3b35a8e77a21f84c1c658cfa4d5b03251766b9bd8a1a"
+      ]
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.025508278980851173
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.0003691141027957201
+    },
+    {
+      "phase": "load_lane",
+      "seconds": 0.28737748705316335,
+      "result_id": "1a5788f618f6c9797df4aa77af6a43bffc5500c61f5c4314dc2fe90f5e4775e3",
+      "component_area": 373504
+    },
+    {
+      "phase": "input_ready",
+      "batch_size": 1,
+      "seconds": 9.023107122629881e-05
+    },
+    {
+      "phase": "device_execute",
+      "batch_size": 1,
+      "seconds": 128.69904300104827
+    },
+    {
+      "phase": "execute_batch",
+      "seconds": 128.72454826207832,
+      "batch_size": 1,
+      "result_ids": [
+        "1a5788f618f6c9797df4aa77af6a43bffc5500c61f5c4314dc2fe90f5e4775e3"
+      ]
+    },
+    {
+      "phase": "summarize_trace_write",
+      "seconds": 0.024604670936241746
+    },
+    {
+      "phase": "result_write",
+      "seconds": 0.0003658339846879244
+    }
+  ]
+}

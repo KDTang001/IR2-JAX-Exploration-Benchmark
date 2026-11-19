@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "checks": [
+    "closed_window_rejected",
+    "changed_input_rejected",
+    "real_cpu_batch_two_and_tail_one_timed_without_failures"
+  ],
+  "counts": {
+    "load_lane": 3,
+    "input_ready": 2,
+    "lower_compile": 2,
+    "device_execute": 2,
+    "execute_batch": 2,
+    "summarize_trace_write": 3,
+    "result_write": 3
+  },
+  "fixture_only": true,
+  "formal_episodes": 0,
+  "gpu_initialized": false
+}

@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "600.000s",
+    "taskset",
+    "-c",
+    "0-7",
+    "/home/user/anaconda3/envs/ex/bin/python",
+    "/home/user/Tz/acceptance/batch-cost-c1024-v1-20261118/compare_capacity_prefix.py",
+    "/home/user/Tz/acceptance/batch-cost-c1024-v1-20261118"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 268.37532448768616,
+  "finished_epoch": 1794971804.455818
+}

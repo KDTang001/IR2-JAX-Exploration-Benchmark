@@ -203,6 +203,8 @@ def test_bad_map_lane_is_saved_without_discarding_other_real_episodes(tmp_path: 
     ("error", "outcome"),
     [
         (MemoryError("allocator failed"), "oom"),
+        (ValueError("RESOURCE_EXHAUSTED: allocation failed"), "oom"),
+        (ValueError("invalid configuration"), "model_error"),
         (RuntimeError("kernel failed"), "environment_error"),
         (TypeError("invalid model"), "model_error"),
     ],
@@ -210,7 +212,7 @@ def test_bad_map_lane_is_saved_without_discarding_other_real_episodes(tmp_path: 
 def test_compute_failure_records_the_whole_batch_without_serial_retry(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
-    error: MemoryError | RuntimeError | TypeError,
+    error: MemoryError | RuntimeError | TypeError | ValueError,
     outcome: str,
 ) -> None:
     # Given: genuine lane preprocessing, with an injected failure at the device-compute boundary.

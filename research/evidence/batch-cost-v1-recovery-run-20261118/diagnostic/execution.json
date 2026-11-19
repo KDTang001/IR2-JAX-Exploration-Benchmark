@@ -1,0 +1,19 @@
+{
+  "exit_code": 0,
+  "worker_wall_seconds": 158.42200636863708,
+  "finished_epoch": 1794969868.5165956,
+  "argv": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "529.7371189594269s",
+    "taskset",
+    "-c",
+    "0-7",
+    "/home/user/anaconda3/envs/ex/bin/python",
+    "/home/user/Tz/acceptance/batch-cost-capacity-diagnostic-20261118/capacity_diagnostic.py",
+    "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118",
+    "/home/user/Tz/acceptance/batch-cost-capacity-diagnostic-20261118/first-overflow",
+    "gpu"
+  ]
+}

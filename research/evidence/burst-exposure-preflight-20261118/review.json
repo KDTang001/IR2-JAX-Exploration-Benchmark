@@ -1,0 +1,113 @@
+{
+  "reviewed_utc": "2026-11-18T14:58:20.266988+00:00",
+  "self_review": true,
+  "verdict": "PASS_OFFLINE_EXPOSURE_OPPORTUNITY_ONLY",
+  "input_commit": "f9bb88e4e585f225bd335c5a535d69373b7dadea",
+  "input_files_match_worktree_and_committed_bytes": 44,
+  "protocol_sha256": "e7bf745fe1401da0427b8b9278de78756078b0b9d760eaaa67a082e206cb8991",
+  "scalar_crosscheck_method": "Explicit loop over active Normal events and each real non-self receiver; direct recorded boundary balances",
+  "scalar_rows": [
+    {
+      "normal_result_id": "e797eda433a9b37e3c9a0c4d08b1d68a31079d167cb9f5e0e1b2e383f12857ae",
+      "burst_result_id": "a579f1c7a01b7b98c9c54265378971b941fe74f9cc8e5314da3802922b005dad",
+      "scalar_wire_bytes": 9104,
+      "scalar_normal_copies": 191,
+      "scalar_targeted_window_copies": 159,
+      "scalar_affected_events": 64,
+      "scalar_post_recovery_targeted_normal_copies": 144
+    },
+    {
+      "normal_result_id": "0d2cd8c468931c3aaee698bdf440c23123aac5d1a2d483ee1e72ef9ded5d5956",
+      "burst_result_id": "2ebb7c8d1ac0b765c6fba60f2e7db4eb398c8c49c686b877a9a3e66003cb0cf7",
+      "scalar_wire_bytes": 9104,
+      "scalar_normal_copies": 35,
+      "scalar_targeted_window_copies": 35,
+      "scalar_affected_events": 34,
+      "scalar_post_recovery_targeted_normal_copies": 72
+    },
+    {
+      "normal_result_id": "44e90cd603ee7c5f6d7d64f56ed265bfd6ea69b2f99e3f7546862a44cb52a423",
+      "burst_result_id": "98b6a8a947729aaccee0eae92f6e60c9200c7d670b09f764656bd88768bc670f",
+      "scalar_wire_bytes": 9104,
+      "scalar_normal_copies": 72,
+      "scalar_targeted_window_copies": 70,
+      "scalar_affected_events": 64,
+      "scalar_post_recovery_targeted_normal_copies": 60
+    },
+    {
+      "normal_result_id": "eaffde81424daab0e19cf2b7bac4905dd9db691e18acb8a6870e2c43aab7e3cf",
+      "burst_result_id": "459855b6ec17ce96e39ce1cb559eabdfc4e9c1d6d02bfa36f6623e6accde6352",
+      "scalar_wire_bytes": 7008,
+      "scalar_normal_copies": 100,
+      "scalar_targeted_window_copies": 79,
+      "scalar_affected_events": 42,
+      "scalar_post_recovery_targeted_normal_copies": 0
+    },
+    {
+      "normal_result_id": "ee57076c74e972c6ca41b354cd30fc90049aa0e2444c3cd5a943433e94ccddfe",
+      "burst_result_id": "9675a0400eaea7978602c4eed044fd527755e49a8f7abca6c355e22e6f955793",
+      "scalar_wire_bytes": 9104,
+      "scalar_normal_copies": 162,
+      "scalar_targeted_window_copies": 130,
+      "scalar_affected_events": 59,
+      "scalar_post_recovery_targeted_normal_copies": 60
+    },
+    {
+      "normal_result_id": "6de53b45ec6452cb9b14fd250634be5d87e4001f62168866af6ce722fef302a6",
+      "burst_result_id": "8f855116ad1778694e8e1a54c69055dbcc592abc19956c285d1b5521a8ebe6a8",
+      "scalar_wire_bytes": 9104,
+      "scalar_normal_copies": 6,
+      "scalar_targeted_window_copies": 2,
+      "scalar_affected_events": 2,
+      "scalar_post_recovery_targeted_normal_copies": 16
+    },
+    {
+      "normal_result_id": "39600b6ea099f5132d9f3b35a8e77a21f84c1c658cfa4d5b03251766b9bd8a1a",
+      "burst_result_id": "13c718996bae05cb7ccdeff981511c4e70f6daaa7f3e32206a0e64bf9d03e9e9",
+      "scalar_wire_bytes": 9104,
+      "scalar_normal_copies": 189,
+      "scalar_targeted_window_copies": 157,
+      "scalar_affected_events": 63,
+      "scalar_post_recovery_targeted_normal_copies": 144
+    },
+    {
+      "normal_result_id": "6b4203739217ef3acc59102c293d1bafcf38d6e0f4a97c25a3c36e3399e3a16c",
+      "burst_result_id": "aa39b7e7d11a6d91b70145c498613af5640c30601688cef900d70e4a5d0dca10",
+      "scalar_wire_bytes": 9104,
+      "scalar_normal_copies": 14,
+      "scalar_targeted_window_copies": 13,
+      "scalar_affected_events": 13,
+      "scalar_post_recovery_targeted_normal_copies": 13
+    },
+    {
+      "normal_result_id": "1a5788f618f6c9797df4aa77af6a43bffc5500c61f5c4314dc2fe90f5e4775e3",
+      "burst_result_id": "47461565afe308d1d08239b21acdc9046662d124057eceae910176bb59b7d5fb",
+      "scalar_wire_bytes": 9104,
+      "scalar_normal_copies": 183,
+      "scalar_targeted_window_copies": 151,
+      "scalar_affected_events": 63,
+      "scalar_post_recovery_targeted_normal_copies": 150
+    },
+    {
+      "normal_result_id": "6b27f55a59d08e86fec0262214717df0b7a74e85eae15140257b23893e3abb5b",
+      "burst_result_id": "9be09b10f505de2f3671b292a9840ab4e07a15568f15c2add8ccbb24d811a4da",
+      "scalar_wire_bytes": 9104,
+      "scalar_normal_copies": 26,
+      "scalar_targeted_window_copies": 21,
+      "scalar_affected_events": 20,
+      "scalar_post_recovery_targeted_normal_copies": 10
+    }
+  ],
+  "scalar_crosscheck_seconds": 5.455374099983601,
+  "old_evidence_modified": false,
+  "production_source_config_scripts_changed": false,
+  "environment_run": false,
+  "gpu_initialized": false,
+  "new_gpu_window_authorized_or_started": false,
+  "training_started": false,
+  "actual_burst_loss_claimed": false,
+  "weak_exposure_task_retained": true,
+  "unique_future_task_count": 10,
+  "paper_protocol_frozen": false,
+  "merge_performed": false
+}

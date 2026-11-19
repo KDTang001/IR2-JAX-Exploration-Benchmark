@@ -1,0 +1,62 @@
+"""Exercise actual CLI batching and terminal graph telemetry on tiny CPU fixtures."""
+import json
+import os
+import pathlib
+import subprocess
+import sys
+import numpy as np
+from PIL import Image
+from ir2_benchmark.agents.baselines import make_baseline_method
+from ir2_benchmark.config import HostConfig
+from ir2_benchmark.evaluation.scenarios import EvaluationMap, make_scenario, tasks, write_task_manifest
+from ir2_benchmark.maps.manifest import obstacle_hash, scenario_hash
+from ir2_benchmark.maps.prepare import load_ir2_map
+
+root = pathlib.Path(sys.argv[1])
+out = root / "cpu-graph-diagnostics"
+out.mkdir(exist_ok=False)
+config = HostConfig(n_agents=2, agent_bucket=2, sensor_radius=5, max_distance=4,
+                    max_rounds=4, navigation_mode="ir2_graph", rendezvous_mode="reachable_only",
+                    graph_nodes_per_axis=6, graph_capacity=64, graph_padding_size=64,
+                    graph_merge_enabled=False)
+scenes = []
+for index in range(5):
+    pixels = np.full((24, 24), 255, np.uint8)
+    pixels[[0, -1], :] = 0
+    pixels[:, [0, -1]] = 0
+    pixels[10:20, 10 + index] = 0
+    pixels[3, 3] = 208
+    path = out / f"fixture-{index}.png"
+    Image.fromarray(pixels).save(path)
+    data = load_ir2_map(path)
+    item = EvaluationMap(str(path), obstacle_hash(data.occupancy), "validation", "procedural",
+                         "rooms", 32, scenario_hash(data.occupancy, data.anchor))
+    scenes.append(make_scenario(item, config, index, limited=True))
+manifest = out / "tasks.jsonl"
+write_task_manifest(manifest, tasks(scenes, (make_baseline_method("nearest_frontier", "mixed"),)))
+env = os.environ.copy()
+env.update(JAX_PLATFORMS="cpu", IR2_COST_TIMING="1", IR2_GRAPH_DIAGNOSTICS="1")
+argv = [sys.executable, str(root / "scripts/phase6_profile_supervisor.py"), "--cost-worker",
+        str(out / "memory.json"), "evaluate", "--task-manifest", str(manifest),
+        "--output", str(out / "results"), "--batch-size", "4"]
+with (out / "worker.log").open("x") as stream:
+    result = subprocess.run(argv, env=env, stdout=stream, stderr=subprocess.STDOUT,
+                            stdin=subprocess.DEVNULL, timeout=180, check=False)
+assert result.returncode == 0, (out / "worker.log").read_text()
+summary = json.loads((out / "results/runner_summary.json").read_text())
+assert summary == {"requested": 5, "executed": 5, "resumed": 0, "failures": 0}
+timing = json.loads((out / "memory.timing.json").read_text())
+batches = [row for row in timing["boundaries"] if row["phase"] == "execute_batch"]
+assert [row["batch_size"] for row in batches] == [4, 1]
+diagnostics = [item for row in batches for item in row["graph_terminal"]]
+assert len(diagnostics) == 5
+for item in diagnostics:
+    assert len(item["local_nodes"]) == 2 and max(item["local_nodes"]) < 64
+    assert not any(item["overflow"]) and not any(item["path_failed"])
+    assert max(item["max_outgoing_degrees"]) <= 30
+assert json.loads((out / "memory.json").read_text())["jax_device_memory"] is None
+with (root / "cpu-graph-diagnostics.json").open("x") as stream:
+    json.dump({"passed": True, "backend": "cpu", "fixture_tasks": 5,
+               "actual_groups": [4, 1], "terminal_records": diagnostics,
+               "formal_gpu_executions": 0}, stream, indent=2)
+print(json.dumps({"passed": True, "backend": "cpu", "fixture_tasks": 5, "groups": [4, 1]}))

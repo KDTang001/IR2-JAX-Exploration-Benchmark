@@ -1,0 +1,212 @@
+{
+  "complete": true,
+  "timing_comparable": true,
+  "cases": [
+    {
+      "case_id": "nf_mixed-b1",
+      "active_events": 10093,
+      "wall_seconds": 782.2891850471497,
+      "compile_seconds": 51.72484082309529,
+      "device_seconds": 724.6665103830164,
+      "end_to_end_events_per_second": 12.901878477831291,
+      "device_events_per_second": 13.927785892389906,
+      "batch_sizes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "batch_timings": [
+        {
+          "batch_size": 1,
+          "active_events": 1971,
+          "compile_seconds": 51.72484082309529,
+          "device_seconds": 170.5418640410062,
+          "batch_boundary_seconds": 223.0835742839845
+        },
+        {
+          "batch_size": 1,
+          "active_events": 1978,
+          "compile_seconds": 0,
+          "device_seconds": 143.5052998419851,
+          "batch_boundary_seconds": 143.53237281891052
+        },
+        {
+          "batch_size": 1,
+          "active_events": 2048,
+          "compile_seconds": 0,
+          "device_seconds": 174.24466795905028,
+          "batch_boundary_seconds": 174.265199181973
+        },
+        {
+          "batch_size": 1,
+          "active_events": 2048,
+          "compile_seconds": 0,
+          "device_seconds": 107.67563553992659,
+          "batch_boundary_seconds": 107.70508185995277
+        },
+        {
+          "batch_size": 1,
+          "active_events": 2048,
+          "compile_seconds": 0,
+          "device_seconds": 128.69904300104827,
+          "batch_boundary_seconds": 128.72454826207832
+        }
+      ],
+      "host_peak_rss_bytes": 1352859648,
+      "jax_peak_bytes": 1472489216,
+      "nvml_sampled_peak_mib_lower_bound": 3152
+    },
+    {
+      "case_id": "nf_mixed-b4",
+      "active_events": 10093,
+      "wall_seconds": 642.8570330142975,
+      "compile_seconds": 105.8576677790843,
+      "device_seconds": 531.0013187349541,
+      "end_to_end_events_per_second": 15.70022490486703,
+      "device_events_per_second": 19.00748575172156,
+      "batch_sizes": [
+        4,
+        1
+      ],
+      "batch_timings": [
+        {
+          "batch_size": 4,
+          "active_events": 8045,
+          "compile_seconds": 54.47900528705213,
+          "device_seconds": 402.268117347965,
+          "batch_boundary_seconds": 458.3068371709669
+        },
+        {
+          "batch_size": 1,
+          "active_events": 2048,
+          "compile_seconds": 51.37866249203216,
+          "device_seconds": 128.7332013869891,
+          "batch_boundary_seconds": 180.54523180890828
+        }
+      ],
+      "host_peak_rss_bytes": 2148532224,
+      "jax_peak_bytes": 8924364800,
+      "nvml_sampled_peak_mib_lower_bound": 10854
+    },
+    {
+      "case_id": "ir2_mixed-b4",
+      "active_events": 7915,
+      "wall_seconds": 699.4866089820862,
+      "compile_seconds": 108.99309499596711,
+      "device_seconds": 584.2343702280195,
+      "end_to_end_events_per_second": 11.315441780248152,
+      "device_events_per_second": 13.547645265907365,
+      "batch_sizes": [
+        4,
+        1
+      ],
+      "batch_timings": [
+        {
+          "batch_size": 4,
+          "active_events": 6854,
+          "compile_seconds": 56.122517797979526,
+          "device_seconds": 436.35638393997215,
+          "batch_boundary_seconds": 494.3883126209257
+        },
+        {
+          "batch_size": 1,
+          "active_events": 1061,
+          "compile_seconds": 52.870577197987586,
+          "device_seconds": 147.8779862880474,
+          "batch_boundary_seconds": 201.17433654901106
+        }
+      ],
+      "host_peak_rss_bytes": 2456592384,
+      "jax_peak_bytes": 8961939712,
+      "nvml_sampled_peak_mib_lower_bound": 10966
+    },
+    {
+      "case_id": "ir2_mixed-b1",
+      "active_events": 7915,
+      "wall_seconds": 816.5111770629883,
+      "compile_seconds": 52.987381221028045,
+      "device_seconds": 758.1447876460152,
+      "end_to_end_events_per_second": 9.693682367546344,
+      "device_events_per_second": 10.439958341698166,
+      "batch_sizes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "batch_timings": [
+        {
+          "batch_size": 1,
+          "active_events": 2048,
+          "compile_seconds": 52.987381221028045,
+          "device_seconds": 110.71716325206216,
+          "batch_boundary_seconds": 164.56945392198395
+        },
+        {
+          "batch_size": 1,
+          "active_events": 710,
+          "compile_seconds": 0,
+          "device_seconds": 163.39918870001566,
+          "batch_boundary_seconds": 163.43305246299133
+        },
+        {
+          "batch_size": 1,
+          "active_events": 2048,
+          "compile_seconds": 0,
+          "device_seconds": 206.83036634197924,
+          "batch_boundary_seconds": 206.86042547796387
+        },
+        {
+          "batch_size": 1,
+          "active_events": 2048,
+          "compile_seconds": 0,
+          "device_seconds": 129.1843118170509,
+          "batch_boundary_seconds": 129.21690013993066
+        },
+        {
+          "batch_size": 1,
+          "active_events": 1061,
+          "compile_seconds": 0,
+          "device_seconds": 148.0137575349072,
+          "batch_boundary_seconds": 148.0418246460613
+        }
+      ],
+      "host_peak_rss_bytes": 1583038464,
+      "jax_peak_bytes": 1484410368,
+      "nvml_sampled_peak_mib_lower_bound": 3226
+    }
+  ],
+  "b1_b4_pairs": 10,
+  "complete_c400_controls": [
+    {
+      "parent_result_id": "645727f71c5f60103211e0bcb7a8e680cf15ad4c61387cb05d275e19f72c8d88",
+      "result_id": "44e90cd603ee7c5f6d7d64f56ed265bfd6ea69b2f99e3f7546862a44cb52a423",
+      "method_id": "nf_mixed",
+      "family": "difficult",
+      "passed": true,
+      "float_differences": []
+    },
+    {
+      "parent_result_id": "e3a020a2fef2414f3e612aa99bde49956fb6045b7f06d925f5dc642a4e9aad9a",
+      "result_id": "e797eda433a9b37e3c9a0c4d08b1d68a31079d167cb9f5e0e1b2e383f12857ae",
+      "method_id": "nf_mixed",
+      "family": "easy",
+      "passed": true,
+      "float_differences": []
+    },
+    {
+      "parent_result_id": "70ebf243ad67e3ee2653b3d746631d87658816e91bcf8f03b5a003628fcb8ad5",
+      "result_id": "0d2cd8c468931c3aaee698bdf440c23123aac5d1a2d483ee1e72ef9ded5d5956",
+      "method_id": "ir2_mixed",
+      "family": "easy",
+      "passed": true,
+      "float_differences": []
+    }
+  ],
+  "scope": "C1024, five validation maps, N4, 8192 bytes, Normal, mixed, 512 rounds",
+  "paper_results": false,
+  "maximal_parallelism_certified": false
+}

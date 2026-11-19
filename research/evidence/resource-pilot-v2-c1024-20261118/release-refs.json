@@ -1,0 +1,10 @@
+{
+  "observed_utc": "2026-11-18T07:35:34.394767+00:00",
+  "source": "git ls-remote public with HTTPS certificate verification and OpenSSL",
+  "main": "ca663f725c335351ed5c8bec45960aa1478d5e36",
+  "audit_head": "d3d6c5fdec831de3076b7ede70e25b72108e59bf",
+  "pr1_head": "d3d6c5fdec831de3076b7ede70e25b72108e59bf",
+  "pr2_head": "7b36a288b0f9d190da9105920803254657cd616c",
+  "local_merge_base": "d3d6c5fdec831de3076b7ede70e25b72108e59bf",
+  "merge_performed": false
+}

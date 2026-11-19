@@ -1,0 +1,12 @@
+{
+  "package_source_git_commit": "736ca08659d5753c7a3b9c6aab471004fb0fea82",
+  "base_commit": "d3d6c5fdec831de3076b7ede70e25b72108e59bf",
+  "verification": "git show package files compared bytewise by SHA256 against the111 frozen server files",
+  "package_python_files": 111,
+  "package_code_hash": "402942e2eefc04ad33aa65fe8d8e83e68b2411e05e932264548f8cff3d0a7fbd",
+  "package_implementation_hash": "6c453207df98d1090c1d601324daedf73772ce0dcfb44345dea9fa7d7f32030f",
+  "package_inventory_sha256": "fcc789cb46401ece6aa75197035d4c18fe14911be5a2d3f73db6e1306a96e0c2",
+  "wheel_sha256": "40bac2b46f8615aeb7ca384d2afbea7d43684faaa2ff6bbb4cad9425a6db4cad",
+  "pilot_task_manifest_sha256": "714c7454e0789d7447b058a835c77449d356010731a1c8a8a883cb5d0dce478e",
+  "installed_wheel_revision_remains_null": true
+}

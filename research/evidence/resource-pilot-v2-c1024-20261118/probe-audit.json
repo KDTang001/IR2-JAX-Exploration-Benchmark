@@ -1,0 +1,3397 @@
+{
+  "complete": true,
+  "task_count": 30,
+  "case_count": 6,
+  "timing_comparable": true,
+  "active_events": 52567,
+  "pinned_inputs_verified": 140,
+  "fault_replay_backend": "cpu",
+  "cases": [
+    {
+      "case_id": "normal-nf_mixed-b4",
+      "wall_seconds": 901.5742716789246,
+      "foreign_gpu_pids": [],
+      "telemetry_failures": 0,
+      "memory": {
+        "pid": 966345,
+        "host_peak_rss_bytes": 2150236160,
+        "jax_device_memory": {
+          "num_allocs": 2209,
+          "bytes_in_use": 0,
+          "peak_bytes_in_use": 8924364800,
+          "largest_alloc_size": 7675657216,
+          "bytes_limit": 63696912384,
+          "bytes_reserved": 0,
+          "peak_bytes_reserved": 0,
+          "largest_free_block_bytes": 0,
+          "pool_bytes": 10752098304,
+          "peak_pool_bytes": 10752098304
+        }
+      },
+      "batches": [
+        {
+          "phase": "execute_batch",
+          "seconds": 640.2160661789821,
+          "batch_size": 4,
+          "result_ids": [
+            "6e8cc15710d1674b4081e9e8d08edd76fa88b61034c7c7e07f4e13bbf55b2fc5",
+            "c5d5efbc534d41930e53420255c279a7e90a320fcb6d53ed5db024c732ea432a",
+            "07c9b4ec2bf644c5fd2be780c05583673db7c2f0fd2c6604d5b6ba1cdba25a8f",
+            "c85faf1001382043a9ad541c52e96ea7781d174345df4f09e3288e6103b0cad0"
+          ],
+          "graph_terminal": [
+            {
+              "result_id": "6e8cc15710d1674b4081e9e8d08edd76fa88b61034c7c7e07f4e13bbf55b2fc5",
+              "event_final": 1997,
+              "local_nodes": [
+                195,
+                189,
+                200,
+                201
+              ],
+              "global_nodes": [
+                134,
+                147,
+                153,
+                154
+              ],
+              "history_counts": [
+                501,
+                500,
+                500,
+                500
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                30,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "c5d5efbc534d41930e53420255c279a7e90a320fcb6d53ed5db024c732ea432a",
+              "event_final": 1994,
+              "local_nodes": [
+                144,
+                243,
+                264,
+                149
+              ],
+              "global_nodes": [
+                100,
+                212,
+                211,
+                104
+              ],
+              "history_counts": [
+                500,
+                500,
+                499,
+                499
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                30,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "07c9b4ec2bf644c5fd2be780c05583673db7c2f0fd2c6604d5b6ba1cdba25a8f",
+              "event_final": 2048,
+              "local_nodes": [
+                543,
+                585,
+                613,
+                614
+              ],
+              "global_nodes": [
+                506,
+                543,
+                574,
+                575
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                23,
+                28,
+                29,
+                29
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "c85faf1001382043a9ad541c52e96ea7781d174345df4f09e3288e6103b0cad0",
+              "event_final": 2048,
+              "local_nodes": [
+                499,
+                498,
+                497,
+                498
+              ],
+              "global_nodes": [
+                494,
+                493,
+                493,
+                493
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                30,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            }
+          ],
+          "graph_diagnostics_seconds": 0.1677986029535532
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 257.54150529694743,
+          "batch_size": 1,
+          "result_ids": [
+            "cd67a62c6486741e8f5d60be74d82bcede9a1e8a462e2737bc3b4fc13b29a0f8"
+          ],
+          "graph_terminal": [
+            {
+              "result_id": "cd67a62c6486741e8f5d60be74d82bcede9a1e8a462e2737bc3b4fc13b29a0f8",
+              "event_final": 2048,
+              "local_nodes": [
+                361,
+                361,
+                367,
+                359
+              ],
+              "global_nodes": [
+                333,
+                333,
+                329,
+                334
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                28,
+                28,
+                28,
+                29
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            }
+          ],
+          "graph_diagnostics_seconds": 0.001985986949875951
+        }
+      ]
+    },
+    {
+      "case_id": "normal-ir2_mixed-b4",
+      "wall_seconds": 731.761147737503,
+      "foreign_gpu_pids": [],
+      "telemetry_failures": 0,
+      "memory": {
+        "pid": 967194,
+        "host_peak_rss_bytes": 2454839296,
+        "jax_device_memory": {
+          "num_allocs": 2855,
+          "bytes_in_use": 0,
+          "peak_bytes_in_use": 8961939712,
+          "largest_alloc_size": 7675663616,
+          "bytes_limit": 63696912384,
+          "bytes_reserved": 0,
+          "peak_bytes_reserved": 0,
+          "largest_free_block_bytes": 0,
+          "pool_bytes": 10802429952,
+          "peak_pool_bytes": 10802429952
+        }
+      },
+      "batches": [
+        {
+          "phase": "execute_batch",
+          "seconds": 533.9125162999844,
+          "batch_size": 4,
+          "result_ids": [
+            "781f759441511135db66ce0ae6f9b311f0447759c59a638aff3c51dc29ed0708",
+            "e37271573fc87e3afaa2e61a98631f1e81a41bd96abd0b8b224f774dc6e141b5",
+            "e105d00180f944d2b27c46447a052229a43ee3fa805b0896c5bc723dc677a7b0",
+            "83bbe78d2b28163a50ab2b228e1cc62f5fa6d7ea3e3983a4855b011dd68c8ba2"
+          ],
+          "graph_terminal": [
+            {
+              "result_id": "781f759441511135db66ce0ae6f9b311f0447759c59a638aff3c51dc29ed0708",
+              "event_final": 2048,
+              "local_nodes": [
+                138,
+                107,
+                138,
+                111
+              ],
+              "global_nodes": [
+                83,
+                91,
+                102,
+                66
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                30,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "e37271573fc87e3afaa2e61a98631f1e81a41bd96abd0b8b224f774dc6e141b5",
+              "event_final": 539,
+              "local_nodes": [
+                158,
+                110,
+                133,
+                124
+              ],
+              "global_nodes": [
+                97,
+                69,
+                80,
+                78
+              ],
+              "history_counts": [
+                136,
+                136,
+                136,
+                135
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                30,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "e105d00180f944d2b27c46447a052229a43ee3fa805b0896c5bc723dc677a7b0",
+              "event_final": 2048,
+              "local_nodes": [
+                460,
+                638,
+                611,
+                555
+              ],
+              "global_nodes": [
+                382,
+                574,
+                540,
+                477
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                22,
+                23,
+                22,
+                21
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "83bbe78d2b28163a50ab2b228e1cc62f5fa6d7ea3e3983a4855b011dd68c8ba2",
+              "event_final": 2048,
+              "local_nodes": [
+                416,
+                389,
+                407,
+                387
+              ],
+              "global_nodes": [
+                408,
+                385,
+                390,
+                378
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                27,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            }
+          ],
+          "graph_diagnostics_seconds": 0.17576707189437002
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 192.62310104095377,
+          "batch_size": 1,
+          "result_ids": [
+            "df436824863e41cddebb3764d02b31b37cf5c76fa9b62ddb56d6a942dab9049f"
+          ],
+          "graph_terminal": [
+            {
+              "result_id": "df436824863e41cddebb3764d02b31b37cf5c76fa9b62ddb56d6a942dab9049f",
+              "event_final": 785,
+              "local_nodes": [
+                324,
+                276,
+                257,
+                253
+              ],
+              "global_nodes": [
+                247,
+                209,
+                212,
+                208
+              ],
+              "history_counts": [
+                198,
+                197,
+                197,
+                197
+              ],
+              "max_outgoing_degrees": [
+                30,
+                28,
+                23,
+                29
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            }
+          ],
+          "graph_diagnostics_seconds": 0.0021023410372436047
+        }
+      ]
+    },
+    {
+      "case_id": "drop03-nf_mixed-b4",
+      "wall_seconds": 738.015912771225,
+      "foreign_gpu_pids": [],
+      "telemetry_failures": 0,
+      "memory": {
+        "pid": 967814,
+        "host_peak_rss_bytes": 2194464768,
+        "jax_device_memory": {
+          "num_allocs": 2209,
+          "bytes_in_use": 0,
+          "peak_bytes_in_use": 8924364544,
+          "largest_alloc_size": 7675656960,
+          "bytes_limit": 63696912384,
+          "bytes_reserved": 0,
+          "peak_bytes_reserved": 0,
+          "largest_free_block_bytes": 0,
+          "pool_bytes": 10752098304,
+          "peak_pool_bytes": 10752098304
+        }
+      },
+      "batches": [
+        {
+          "phase": "execute_batch",
+          "seconds": 470.42532953596674,
+          "batch_size": 4,
+          "result_ids": [
+            "86ca2bd60ae3023af56990f8887cbb822a706a9073ef55ad3bf23b0d61ae7e7e",
+            "0ebef273404386e0443b33956bb4038bd255cc680ac26c6fbbdcdab27b13f64f",
+            "573d53b0426d1fa32f064813c8f2ba85da129c503a2ce11def178998ce73373c",
+            "96b1ef3b2e15f388e064bf7b27edb4aacd8060b81e8f8c8d3dff77e9a6fc9195"
+          ],
+          "graph_terminal": [
+            {
+              "result_id": "86ca2bd60ae3023af56990f8887cbb822a706a9073ef55ad3bf23b0d61ae7e7e",
+              "event_final": 1972,
+              "local_nodes": [
+                210,
+                190,
+                188,
+                221
+              ],
+              "global_nodes": [
+                161,
+                149,
+                143,
+                164
+              ],
+              "history_counts": [
+                494,
+                494,
+                494,
+                494
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                30,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "0ebef273404386e0443b33956bb4038bd255cc680ac26c6fbbdcdab27b13f64f",
+              "event_final": 1942,
+              "local_nodes": [
+                140,
+                252,
+                258,
+                150
+              ],
+              "global_nodes": [
+                98,
+                216,
+                207,
+                106
+              ],
+              "history_counts": [
+                487,
+                487,
+                486,
+                486
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                30,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "573d53b0426d1fa32f064813c8f2ba85da129c503a2ce11def178998ce73373c",
+              "event_final": 2048,
+              "local_nodes": [
+                576,
+                582,
+                582,
+                559
+              ],
+              "global_nodes": [
+                540,
+                540,
+                541,
+                512
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                25,
+                25,
+                25,
+                23
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "96b1ef3b2e15f388e064bf7b27edb4aacd8060b81e8f8c8d3dff77e9a6fc9195",
+              "event_final": 2048,
+              "local_nodes": [
+                498,
+                499,
+                499,
+                2
+              ],
+              "global_nodes": [
+                493,
+                493,
+                493,
+                1
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                30,
+                2
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            }
+          ],
+          "graph_diagnostics_seconds": 0.1770095049869269
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 261.8996662639547,
+          "batch_size": 1,
+          "result_ids": [
+            "c2976a9a629800f4c5849bef3ebed574ade395c075b56b07391a91861722a82a"
+          ],
+          "graph_terminal": [
+            {
+              "result_id": "c2976a9a629800f4c5849bef3ebed574ade395c075b56b07391a91861722a82a",
+              "event_final": 2048,
+              "local_nodes": [
+                363,
+                369,
+                364,
+                363
+              ],
+              "global_nodes": [
+                336,
+                340,
+                331,
+                335
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                28,
+                29,
+                28,
+                29
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            }
+          ],
+          "graph_diagnostics_seconds": 0.0019220280228182673
+        }
+      ]
+    },
+    {
+      "case_id": "drop03-ir2_mixed-b4",
+      "wall_seconds": 632.9399502277374,
+      "foreign_gpu_pids": [],
+      "telemetry_failures": 0,
+      "memory": {
+        "pid": 968423,
+        "host_peak_rss_bytes": 2504421376,
+        "jax_device_memory": {
+          "num_allocs": 2855,
+          "bytes_in_use": 0,
+          "peak_bytes_in_use": 8961939456,
+          "largest_alloc_size": 7675663360,
+          "bytes_limit": 63696912384,
+          "bytes_reserved": 0,
+          "peak_bytes_reserved": 0,
+          "largest_free_block_bytes": 0,
+          "pool_bytes": 10802429952,
+          "peak_pool_bytes": 10802429952
+        }
+      },
+      "batches": [
+        {
+          "phase": "execute_batch",
+          "seconds": 446.0032140871044,
+          "batch_size": 4,
+          "result_ids": [
+            "5d7af00d11bd5045cd1a816c906db51bdb9c87d2e3fc70e8bb660c8531dbe3f6",
+            "b72ec717d899d8f3d35a8cc5eb90d294cc9dcd67d7c2a02fcd090c8d28fa11ed",
+            "aa2e8142693a24b9c55a125936af649080282819498aeff465fe68844342addf",
+            "fdad7eb1d24bcc6fc1948a89bff70f5d1246d6197abb09dd66ce15c651e30934"
+          ],
+          "graph_terminal": [
+            {
+              "result_id": "5d7af00d11bd5045cd1a816c906db51bdb9c87d2e3fc70e8bb660c8531dbe3f6",
+              "event_final": 2048,
+              "local_nodes": [
+                124,
+                123,
+                151,
+                167
+              ],
+              "global_nodes": [
+                87,
+                81,
+                117,
+                105
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                30,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "b72ec717d899d8f3d35a8cc5eb90d294cc9dcd67d7c2a02fcd090c8d28fa11ed",
+              "event_final": 395,
+              "local_nodes": [
+                146,
+                138,
+                120,
+                98
+              ],
+              "global_nodes": [
+                76,
+                67,
+                75,
+                60
+              ],
+              "history_counts": [
+                100,
+                100,
+                100,
+                99
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                30,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "aa2e8142693a24b9c55a125936af649080282819498aeff465fe68844342addf",
+              "event_final": 2048,
+              "local_nodes": [
+                537,
+                501,
+                525,
+                528
+              ],
+              "global_nodes": [
+                464,
+                407,
+                445,
+                441
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                21,
+                23,
+                22,
+                25
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "fdad7eb1d24bcc6fc1948a89bff70f5d1246d6197abb09dd66ce15c651e30934",
+              "event_final": 2048,
+              "local_nodes": [
+                422,
+                408,
+                393,
+                362
+              ],
+              "global_nodes": [
+                401,
+                400,
+                389,
+                360
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                26,
+                29,
+                26,
+                27
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            }
+          ],
+          "graph_diagnostics_seconds": 0.17075009597465396
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 180.86023972393014,
+          "batch_size": 1,
+          "result_ids": [
+            "bdb48b7c45fe4ba02dae24f7b2afdc09aebb6209c0e2b2150807504f7da0b09e"
+          ],
+          "graph_terminal": [
+            {
+              "result_id": "bdb48b7c45fe4ba02dae24f7b2afdc09aebb6209c0e2b2150807504f7da0b09e",
+              "event_final": 764,
+              "local_nodes": [
+                296,
+                278,
+                276,
+                301
+              ],
+              "global_nodes": [
+                204,
+                205,
+                219,
+                251
+              ],
+              "history_counts": [
+                192,
+                192,
+                192,
+                192
+              ],
+              "max_outgoing_degrees": [
+                30,
+                29,
+                30,
+                27
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            }
+          ],
+          "graph_diagnostics_seconds": 0.0022300630807876587
+        }
+      ]
+    },
+    {
+      "case_id": "burst64-nf_mixed-b4",
+      "wall_seconds": 905.7747733592987,
+      "foreign_gpu_pids": [],
+      "telemetry_failures": 0,
+      "memory": {
+        "pid": 968983,
+        "host_peak_rss_bytes": 2160205824,
+        "jax_device_memory": {
+          "num_allocs": 2259,
+          "bytes_in_use": 0,
+          "peak_bytes_in_use": 8924364800,
+          "largest_alloc_size": 7675657216,
+          "bytes_limit": 63696912384,
+          "bytes_reserved": 0,
+          "peak_bytes_reserved": 0,
+          "largest_free_block_bytes": 0,
+          "pool_bytes": 10752098304,
+          "peak_pool_bytes": 10752098304
+        }
+      },
+      "batches": [
+        {
+          "phase": "execute_batch",
+          "seconds": 643.970938803046,
+          "batch_size": 4,
+          "result_ids": [
+            "6db85e05ac5575a5674b5874e6c180e620cb662a4cb47c1b5618f3f8b133607e",
+            "3b874867c197b73994d78a5f2a3312717c6208308cf12dfba5f667c5b02386c6",
+            "46829bfcbd3709565f39fa4dfccd452cdd72f7360927fc0f381215dd581c711c",
+            "d1fe26c9365f0d2f0bcb2b0fd3e7cabfb5922799cf8adb6ad83a0946d56086fe"
+          ],
+          "graph_terminal": [
+            {
+              "result_id": "6db85e05ac5575a5674b5874e6c180e620cb662a4cb47c1b5618f3f8b133607e",
+              "event_final": 1997,
+              "local_nodes": [
+                195,
+                189,
+                200,
+                201
+              ],
+              "global_nodes": [
+                134,
+                147,
+                153,
+                154
+              ],
+              "history_counts": [
+                501,
+                500,
+                500,
+                500
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                30,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "3b874867c197b73994d78a5f2a3312717c6208308cf12dfba5f667c5b02386c6",
+              "event_final": 1994,
+              "local_nodes": [
+                144,
+                243,
+                264,
+                149
+              ],
+              "global_nodes": [
+                100,
+                212,
+                211,
+                104
+              ],
+              "history_counts": [
+                500,
+                500,
+                499,
+                499
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                30,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "46829bfcbd3709565f39fa4dfccd452cdd72f7360927fc0f381215dd581c711c",
+              "event_final": 2048,
+              "local_nodes": [
+                543,
+                585,
+                613,
+                614
+              ],
+              "global_nodes": [
+                506,
+                543,
+                574,
+                575
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                23,
+                28,
+                29,
+                29
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "d1fe26c9365f0d2f0bcb2b0fd3e7cabfb5922799cf8adb6ad83a0946d56086fe",
+              "event_final": 2048,
+              "local_nodes": [
+                499,
+                498,
+                497,
+                498
+              ],
+              "global_nodes": [
+                494,
+                493,
+                493,
+                493
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                30,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            }
+          ],
+          "graph_diagnostics_seconds": 0.1683749289950356
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 257.8110371659277,
+          "batch_size": 1,
+          "result_ids": [
+            "295a807d42ff1e224294fc47628e6d2738499ee3a77c1de27b8a2daf412d774b"
+          ],
+          "graph_terminal": [
+            {
+              "result_id": "295a807d42ff1e224294fc47628e6d2738499ee3a77c1de27b8a2daf412d774b",
+              "event_final": 2048,
+              "local_nodes": [
+                361,
+                361,
+                367,
+                359
+              ],
+              "global_nodes": [
+                333,
+                333,
+                329,
+                334
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                28,
+                28,
+                28,
+                29
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            }
+          ],
+          "graph_diagnostics_seconds": 0.0020425040274858475
+        }
+      ]
+    },
+    {
+      "case_id": "burst64-ir2_mixed-b4",
+      "wall_seconds": 729.958925485611,
+      "foreign_gpu_pids": [],
+      "telemetry_failures": 0,
+      "memory": {
+        "pid": 970023,
+        "host_peak_rss_bytes": 2464890880,
+        "jax_device_memory": {
+          "num_allocs": 2905,
+          "bytes_in_use": 0,
+          "peak_bytes_in_use": 8961939712,
+          "largest_alloc_size": 7675663616,
+          "bytes_limit": 63696912384,
+          "bytes_reserved": 0,
+          "peak_bytes_reserved": 0,
+          "largest_free_block_bytes": 0,
+          "pool_bytes": 10802429952,
+          "peak_pool_bytes": 10802429952
+        }
+      },
+      "batches": [
+        {
+          "phase": "execute_batch",
+          "seconds": 531.508875265019,
+          "batch_size": 4,
+          "result_ids": [
+            "7e24de47e38067d71bfd26e1dc37f5cd424c3661537080d4779e9813106f57fe",
+            "a3938c46a828ad951d2e793abdcb6f3fe3c7ed3fa390387370d2f799f57c2cbd",
+            "2dd7b5e7589c927b4083461488b9ad1708d3d90b38213ccdf3df05cbf6bba478",
+            "764d256300a0cfe45d7c1a5c49c2cb87af291aa6cbee948152c16de412ec1e3d"
+          ],
+          "graph_terminal": [
+            {
+              "result_id": "7e24de47e38067d71bfd26e1dc37f5cd424c3661537080d4779e9813106f57fe",
+              "event_final": 2048,
+              "local_nodes": [
+                138,
+                107,
+                138,
+                111
+              ],
+              "global_nodes": [
+                83,
+                91,
+                102,
+                66
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                30,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "a3938c46a828ad951d2e793abdcb6f3fe3c7ed3fa390387370d2f799f57c2cbd",
+              "event_final": 539,
+              "local_nodes": [
+                158,
+                110,
+                133,
+                124
+              ],
+              "global_nodes": [
+                97,
+                69,
+                80,
+                78
+              ],
+              "history_counts": [
+                136,
+                136,
+                136,
+                135
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                30,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "2dd7b5e7589c927b4083461488b9ad1708d3d90b38213ccdf3df05cbf6bba478",
+              "event_final": 2048,
+              "local_nodes": [
+                460,
+                638,
+                611,
+                555
+              ],
+              "global_nodes": [
+                382,
+                574,
+                540,
+                477
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                22,
+                23,
+                22,
+                21
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "result_id": "764d256300a0cfe45d7c1a5c49c2cb87af291aa6cbee948152c16de412ec1e3d",
+              "event_final": 2048,
+              "local_nodes": [
+                416,
+                389,
+                407,
+                387
+              ],
+              "global_nodes": [
+                408,
+                385,
+                390,
+                378
+              ],
+              "history_counts": [
+                513,
+                513,
+                513,
+                513
+              ],
+              "max_outgoing_degrees": [
+                30,
+                30,
+                27,
+                30
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            }
+          ],
+          "graph_diagnostics_seconds": 0.1668852489674464
+        },
+        {
+          "phase": "execute_batch",
+          "seconds": 192.4488237670157,
+          "batch_size": 1,
+          "result_ids": [
+            "b2b387d848759c684b3d2bca642b80f985e15003a891203409c52e2201e15d76"
+          ],
+          "graph_terminal": [
+            {
+              "result_id": "b2b387d848759c684b3d2bca642b80f985e15003a891203409c52e2201e15d76",
+              "event_final": 785,
+              "local_nodes": [
+                324,
+                276,
+                257,
+                253
+              ],
+              "global_nodes": [
+                247,
+                209,
+                212,
+                208
+              ],
+              "history_counts": [
+                198,
+                197,
+                197,
+                197
+              ],
+              "max_outgoing_degrees": [
+                30,
+                28,
+                23,
+                29
+              ],
+              "overflow": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "path_failed": [
+                false,
+                false,
+                false,
+                false
+              ]
+            }
+          ],
+          "graph_diagnostics_seconds": 0.0021065030014142394
+        }
+      ]
+    }
+  ],
+  "episodes": [
+    {
+      "result_id": "6e8cc15710d1674b4081e9e8d08edd76fa88b61034c7c7e07f4e13bbf55b2fc5",
+      "method_id": "nf_mixed",
+      "family": "easy",
+      "fault_mode": 0,
+      "outcome": "success",
+      "active_events": 1997,
+      "metrics": {
+        "auc": 0.540646171753906,
+        "final_coverage": 0.9972500205039978,
+        "observed_rounds": 500,
+        "outcome": "success",
+        "success": true,
+        "success_event_offset": 0,
+        "success_round": 500,
+        "timeout": false
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "6e8cc15710d1674b4081e9e8d08edd76fa88b61034c7c7e07f4e13bbf55b2fc5",
+        "event_final": 1997,
+        "local_nodes": [
+          195,
+          189,
+          200,
+          201
+        ],
+        "global_nodes": [
+          134,
+          147,
+          153,
+          154
+        ],
+        "history_counts": [
+          501,
+          500,
+          500,
+          500
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          30,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "62c58c2a0feaacc0b36131f7cb996dccd8ea8f033f8c9f7b5b12ea6f2e77a56d",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "c5d5efbc534d41930e53420255c279a7e90a320fcb6d53ed5db024c732ea432a",
+      "method_id": "nf_mixed",
+      "family": "difficult",
+      "fault_mode": 0,
+      "outcome": "success",
+      "active_events": 1994,
+      "metrics": {
+        "auc": 0.5319969728370779,
+        "final_coverage": 0.9916563034057617,
+        "observed_rounds": 499,
+        "outcome": "success",
+        "success": true,
+        "success_event_offset": 1,
+        "success_round": 499,
+        "timeout": false
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "c5d5efbc534d41930e53420255c279a7e90a320fcb6d53ed5db024c732ea432a",
+        "event_final": 1994,
+        "local_nodes": [
+          144,
+          243,
+          264,
+          149
+        ],
+        "global_nodes": [
+          100,
+          212,
+          211,
+          104
+        ],
+        "history_counts": [
+          500,
+          500,
+          499,
+          499
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          30,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "8e363a32fa190d763e9ca36a4fc5216ea969d6005cae441bdd6bc1ebe6876020",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "07c9b4ec2bf644c5fd2be780c05583673db7c2f0fd2c6604d5b6ba1cdba25a8f",
+      "method_id": "nf_mixed",
+      "family": "rooms",
+      "fault_mode": 0,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.35060347697708494,
+        "final_coverage": 0.615193784236908,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "07c9b4ec2bf644c5fd2be780c05583673db7c2f0fd2c6604d5b6ba1cdba25a8f",
+        "event_final": 2048,
+        "local_nodes": [
+          543,
+          585,
+          613,
+          614
+        ],
+        "global_nodes": [
+          506,
+          543,
+          574,
+          575
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          23,
+          28,
+          29,
+          29
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "ea9f88e92e47758007631323690976903bbd60a7632b27b2a2756cb9f433dd71",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "c85faf1001382043a9ad541c52e96ea7781d174345df4f09e3288e6103b0cad0",
+      "method_id": "nf_mixed",
+      "family": "corridor",
+      "fault_mode": 0,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.28531432871022844,
+        "final_coverage": 0.5222297310829163,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "c85faf1001382043a9ad541c52e96ea7781d174345df4f09e3288e6103b0cad0",
+        "event_final": 2048,
+        "local_nodes": [
+          499,
+          498,
+          497,
+          498
+        ],
+        "global_nodes": [
+          494,
+          493,
+          493,
+          493
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          30,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "0dae062846705cfe8e672792115c0823702a486fdc5363955a61b13cfb35fc3d",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "cd67a62c6486741e8f5d60be74d82bcede9a1e8a462e2737bc3b4fc13b29a0f8",
+      "method_id": "nf_mixed",
+      "family": "hybrid",
+      "fault_mode": 0,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.44002083403029246,
+        "final_coverage": 0.8716265559196472,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "cd67a62c6486741e8f5d60be74d82bcede9a1e8a462e2737bc3b4fc13b29a0f8",
+        "event_final": 2048,
+        "local_nodes": [
+          361,
+          361,
+          367,
+          359
+        ],
+        "global_nodes": [
+          333,
+          333,
+          329,
+          334
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          28,
+          28,
+          28,
+          29
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "f1c077d7db5f1e80c6f28f091992c8127ffe4ce76d6bc378f4a0eb00b71fa3ab",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "781f759441511135db66ce0ae6f9b311f0447759c59a638aff3c51dc29ed0708",
+      "method_id": "ir2_mixed",
+      "family": "easy",
+      "fault_mode": 0,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.3921446205495158,
+        "final_coverage": 0.4090156555175781,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "781f759441511135db66ce0ae6f9b311f0447759c59a638aff3c51dc29ed0708",
+        "event_final": 2048,
+        "local_nodes": [
+          138,
+          107,
+          138,
+          111
+        ],
+        "global_nodes": [
+          83,
+          91,
+          102,
+          66
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          30,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "ecdf13d76cab5c70e6eaf1e290bccb24a9bd92e70ce738c44691c6f51b01cca8",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "e37271573fc87e3afaa2e61a98631f1e81a41bd96abd0b8b224f774dc6e141b5",
+      "method_id": "ir2_mixed",
+      "family": "difficult",
+      "fault_mode": 0,
+      "outcome": "success",
+      "active_events": 539,
+      "metrics": {
+        "auc": 0.9301359190285439,
+        "final_coverage": 1.0,
+        "observed_rounds": 135,
+        "outcome": "success",
+        "success": true,
+        "success_event_offset": 2,
+        "success_round": 135,
+        "timeout": false
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "e37271573fc87e3afaa2e61a98631f1e81a41bd96abd0b8b224f774dc6e141b5",
+        "event_final": 539,
+        "local_nodes": [
+          158,
+          110,
+          133,
+          124
+        ],
+        "global_nodes": [
+          97,
+          69,
+          80,
+          78
+        ],
+        "history_counts": [
+          136,
+          136,
+          136,
+          135
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          30,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "647441bc42ddc2ef3adf9b7c738e831406857efa3bcdbdc87887fae3c25ccb65",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "e105d00180f944d2b27c46447a052229a43ee3fa805b0896c5bc723dc677a7b0",
+      "method_id": "ir2_mixed",
+      "family": "rooms",
+      "fault_mode": 0,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.6698476219426084,
+        "final_coverage": 0.9500380754470825,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "e105d00180f944d2b27c46447a052229a43ee3fa805b0896c5bc723dc677a7b0",
+        "event_final": 2048,
+        "local_nodes": [
+          460,
+          638,
+          611,
+          555
+        ],
+        "global_nodes": [
+          382,
+          574,
+          540,
+          477
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          22,
+          23,
+          22,
+          21
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "08c6d0a4e4aaf7cccdc274fe79f6da58f47f911a6b67ed9303cd1af955561e87",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "83bbe78d2b28163a50ab2b228e1cc62f5fa6d7ea3e3983a4855b011dd68c8ba2",
+      "method_id": "ir2_mixed",
+      "family": "corridor",
+      "fault_mode": 0,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.4776624823407474,
+        "final_coverage": 0.5867978930473328,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "83bbe78d2b28163a50ab2b228e1cc62f5fa6d7ea3e3983a4855b011dd68c8ba2",
+        "event_final": 2048,
+        "local_nodes": [
+          416,
+          389,
+          407,
+          387
+        ],
+        "global_nodes": [
+          408,
+          385,
+          390,
+          378
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          27,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "df0d0ce5e7b07ca581bc82d520ba563e2f36250f5c56210e31492c95a8bb33c0",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "df436824863e41cddebb3764d02b31b37cf5c76fa9b62ddb56d6a942dab9049f",
+      "method_id": "ir2_mixed",
+      "family": "hybrid",
+      "fault_mode": 0,
+      "outcome": "success",
+      "active_events": 785,
+      "metrics": {
+        "auc": 0.8764018943729752,
+        "final_coverage": 0.9968594908714294,
+        "observed_rounds": 197,
+        "outcome": "success",
+        "success": true,
+        "success_event_offset": 0,
+        "success_round": 197,
+        "timeout": false
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "df436824863e41cddebb3764d02b31b37cf5c76fa9b62ddb56d6a942dab9049f",
+        "event_final": 785,
+        "local_nodes": [
+          324,
+          276,
+          257,
+          253
+        ],
+        "global_nodes": [
+          247,
+          209,
+          212,
+          208
+        ],
+        "history_counts": [
+          198,
+          197,
+          197,
+          197
+        ],
+        "max_outgoing_degrees": [
+          30,
+          28,
+          23,
+          29
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "e8ff69443a06e4693620c936b6f311502062074cccaf42ed4dea2f3ab899d99e",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "86ca2bd60ae3023af56990f8887cbb822a706a9073ef55ad3bf23b0d61ae7e7e",
+      "method_id": "nf_mixed",
+      "family": "easy",
+      "fault_mode": 1,
+      "outcome": "success",
+      "active_events": 1972,
+      "metrics": {
+        "auc": 0.545372261407465,
+        "final_coverage": 0.9972500205039978,
+        "observed_rounds": 493,
+        "outcome": "success",
+        "success": true,
+        "success_event_offset": 3,
+        "success_round": 493,
+        "timeout": false
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "86ca2bd60ae3023af56990f8887cbb822a706a9073ef55ad3bf23b0d61ae7e7e",
+        "event_final": 1972,
+        "local_nodes": [
+          210,
+          190,
+          188,
+          221
+        ],
+        "global_nodes": [
+          161,
+          149,
+          143,
+          164
+        ],
+        "history_counts": [
+          494,
+          494,
+          494,
+          494
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          30,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "a0d0882ae6a9128b41761ffd0e4e4f37de4347597a2d7545e04474d73d9d9b2d",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "0ebef273404386e0443b33956bb4038bd255cc680ac26c6fbbdcdab27b13f64f",
+      "method_id": "nf_mixed",
+      "family": "difficult",
+      "fault_mode": 1,
+      "outcome": "success",
+      "active_events": 1942,
+      "metrics": {
+        "auc": 0.5468987532149185,
+        "final_coverage": 0.9916563034057617,
+        "observed_rounds": 486,
+        "outcome": "success",
+        "success": true,
+        "success_event_offset": 1,
+        "success_round": 486,
+        "timeout": false
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "0ebef273404386e0443b33956bb4038bd255cc680ac26c6fbbdcdab27b13f64f",
+        "event_final": 1942,
+        "local_nodes": [
+          140,
+          252,
+          258,
+          150
+        ],
+        "global_nodes": [
+          98,
+          216,
+          207,
+          106
+        ],
+        "history_counts": [
+          487,
+          487,
+          486,
+          486
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          30,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "77e0c62cbf51c4a8d9cb474183e87ae5b47caa94dc8df4f71d7a181b683b5724",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "573d53b0426d1fa32f064813c8f2ba85da129c503a2ce11def178998ce73373c",
+      "method_id": "nf_mixed",
+      "family": "rooms",
+      "fault_mode": 1,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.31916259542049374,
+        "final_coverage": 0.5591561794281006,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "573d53b0426d1fa32f064813c8f2ba85da129c503a2ce11def178998ce73373c",
+        "event_final": 2048,
+        "local_nodes": [
+          576,
+          582,
+          582,
+          559
+        ],
+        "global_nodes": [
+          540,
+          540,
+          541,
+          512
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          25,
+          25,
+          25,
+          23
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "2afd6256f6f1b8bb486c588e8ec8563f699985c887813d2c748bd8df16a56ad7",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "96b1ef3b2e15f388e064bf7b27edb4aacd8060b81e8f8c8d3dff77e9a6fc9195",
+      "method_id": "nf_mixed",
+      "family": "corridor",
+      "fault_mode": 1,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.2853141519917699,
+        "final_coverage": 0.5222297310829163,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "96b1ef3b2e15f388e064bf7b27edb4aacd8060b81e8f8c8d3dff77e9a6fc9195",
+        "event_final": 2048,
+        "local_nodes": [
+          498,
+          499,
+          499,
+          2
+        ],
+        "global_nodes": [
+          493,
+          493,
+          493,
+          1
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          30,
+          2
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "52b47f62aad05ad4d1dc6490082d7951039f4517e3e87f164d9ce5f4b71b1ac2",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "c2976a9a629800f4c5849bef3ebed574ade395c075b56b07391a91861722a82a",
+      "method_id": "nf_mixed",
+      "family": "hybrid",
+      "fault_mode": 1,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.4416904635145329,
+        "final_coverage": 0.8716265559196472,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "c2976a9a629800f4c5849bef3ebed574ade395c075b56b07391a91861722a82a",
+        "event_final": 2048,
+        "local_nodes": [
+          363,
+          369,
+          364,
+          363
+        ],
+        "global_nodes": [
+          336,
+          340,
+          331,
+          335
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          28,
+          29,
+          28,
+          29
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "58010f6c645f455b97b34683d9fcf3619453e3b82e716acdd34d4a3986d11055",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "5d7af00d11bd5045cd1a816c906db51bdb9c87d2e3fc70e8bb660c8531dbe3f6",
+      "method_id": "ir2_mixed",
+      "family": "easy",
+      "fault_mode": 1,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.3978475920521305,
+        "final_coverage": 0.6748437881469727,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "5d7af00d11bd5045cd1a816c906db51bdb9c87d2e3fc70e8bb660c8531dbe3f6",
+        "event_final": 2048,
+        "local_nodes": [
+          124,
+          123,
+          151,
+          167
+        ],
+        "global_nodes": [
+          87,
+          81,
+          117,
+          105
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          30,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "20d16ae757ecf7240388d157507c956cb58577e94a17e416653c13a77b62e969",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "b72ec717d899d8f3d35a8cc5eb90d294cc9dcd67d7c2a02fcd090c8d28fa11ed",
+      "method_id": "ir2_mixed",
+      "family": "difficult",
+      "fault_mode": 1,
+      "outcome": "success",
+      "active_events": 395,
+      "metrics": {
+        "auc": 0.9153154365340015,
+        "final_coverage": 0.9928750395774841,
+        "observed_rounds": 99,
+        "outcome": "success",
+        "success": true,
+        "success_event_offset": 2,
+        "success_round": 99,
+        "timeout": false
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "b72ec717d899d8f3d35a8cc5eb90d294cc9dcd67d7c2a02fcd090c8d28fa11ed",
+        "event_final": 395,
+        "local_nodes": [
+          146,
+          138,
+          120,
+          98
+        ],
+        "global_nodes": [
+          76,
+          67,
+          75,
+          60
+        ],
+        "history_counts": [
+          100,
+          100,
+          100,
+          99
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          30,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "fd844e2cc22ee791dfe1121b950aecf017968af3ae984acdfe55f5d9125b679f",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "aa2e8142693a24b9c55a125936af649080282819498aeff465fe68844342addf",
+      "method_id": "ir2_mixed",
+      "family": "rooms",
+      "fault_mode": 1,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.7562374370590987,
+        "final_coverage": 0.9327011704444885,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "aa2e8142693a24b9c55a125936af649080282819498aeff465fe68844342addf",
+        "event_final": 2048,
+        "local_nodes": [
+          537,
+          501,
+          525,
+          528
+        ],
+        "global_nodes": [
+          464,
+          407,
+          445,
+          441
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          21,
+          23,
+          22,
+          25
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "3dde31a7bde72f1b6ff4e80a2a2170cc97bad8b873770999c4d18d35bf8dfcbe",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "fdad7eb1d24bcc6fc1948a89bff70f5d1246d6197abb09dd66ce15c651e30934",
+      "method_id": "ir2_mixed",
+      "family": "corridor",
+      "fault_mode": 1,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.4862265453029977,
+        "final_coverage": 0.5951007604598999,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "fdad7eb1d24bcc6fc1948a89bff70f5d1246d6197abb09dd66ce15c651e30934",
+        "event_final": 2048,
+        "local_nodes": [
+          422,
+          408,
+          393,
+          362
+        ],
+        "global_nodes": [
+          401,
+          400,
+          389,
+          360
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          26,
+          29,
+          26,
+          27
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "d028d13bc5864eb9698ec4868716e75376f8bf5a7418f7d0897f7058e4e78b5c",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "bdb48b7c45fe4ba02dae24f7b2afdc09aebb6209c0e2b2150807504f7da0b09e",
+      "method_id": "ir2_mixed",
+      "family": "hybrid",
+      "fault_mode": 1,
+      "outcome": "success",
+      "active_events": 764,
+      "metrics": {
+        "auc": 0.8707411404102459,
+        "final_coverage": 0.9905864596366882,
+        "observed_rounds": 191,
+        "outcome": "success",
+        "success": true,
+        "success_event_offset": 3,
+        "success_round": 191,
+        "timeout": false
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "bdb48b7c45fe4ba02dae24f7b2afdc09aebb6209c0e2b2150807504f7da0b09e",
+        "event_final": 764,
+        "local_nodes": [
+          296,
+          278,
+          276,
+          301
+        ],
+        "global_nodes": [
+          204,
+          205,
+          219,
+          251
+        ],
+        "history_counts": [
+          192,
+          192,
+          192,
+          192
+        ],
+        "max_outgoing_degrees": [
+          30,
+          29,
+          30,
+          27
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "238083fc575d5a4d482a3fad71e15ca35553cbb5c3f8d74eaac869863b898333",
+      "burst_window_active_events": null,
+      "burst_window_emitted_bytes": null,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "6db85e05ac5575a5674b5874e6c180e620cb662a4cb47c1b5618f3f8b133607e",
+      "method_id": "nf_mixed",
+      "family": "easy",
+      "fault_mode": 2,
+      "outcome": "success",
+      "active_events": 1997,
+      "metrics": {
+        "auc": 0.540646171753906,
+        "final_coverage": 0.9972500205039978,
+        "observed_rounds": 500,
+        "outcome": "success",
+        "success": true,
+        "success_event_offset": 0,
+        "success_round": 500,
+        "timeout": false
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "6db85e05ac5575a5674b5874e6c180e620cb662a4cb47c1b5618f3f8b133607e",
+        "event_final": 1997,
+        "local_nodes": [
+          195,
+          189,
+          200,
+          201
+        ],
+        "global_nodes": [
+          134,
+          147,
+          153,
+          154
+        ],
+        "history_counts": [
+          501,
+          500,
+          500,
+          500
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          30,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "d6707f692a319c1e40c4e9cd1cd1839f02a75d0f616294be5455b750466f07e1",
+      "burst_window_active_events": 256,
+      "burst_window_emitted_bytes": 0,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "3b874867c197b73994d78a5f2a3312717c6208308cf12dfba5f667c5b02386c6",
+      "method_id": "nf_mixed",
+      "family": "difficult",
+      "fault_mode": 2,
+      "outcome": "success",
+      "active_events": 1994,
+      "metrics": {
+        "auc": 0.5319969728370779,
+        "final_coverage": 0.9916563034057617,
+        "observed_rounds": 499,
+        "outcome": "success",
+        "success": true,
+        "success_event_offset": 1,
+        "success_round": 499,
+        "timeout": false
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "3b874867c197b73994d78a5f2a3312717c6208308cf12dfba5f667c5b02386c6",
+        "event_final": 1994,
+        "local_nodes": [
+          144,
+          243,
+          264,
+          149
+        ],
+        "global_nodes": [
+          100,
+          212,
+          211,
+          104
+        ],
+        "history_counts": [
+          500,
+          500,
+          499,
+          499
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          30,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "5a8a4b78814cd00f454701e26750277758514454cf20e8b1359f65f37599eed2",
+      "burst_window_active_events": 256,
+      "burst_window_emitted_bytes": 0,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "46829bfcbd3709565f39fa4dfccd452cdd72f7360927fc0f381215dd581c711c",
+      "method_id": "nf_mixed",
+      "family": "rooms",
+      "fault_mode": 2,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.35060347697708494,
+        "final_coverage": 0.615193784236908,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "46829bfcbd3709565f39fa4dfccd452cdd72f7360927fc0f381215dd581c711c",
+        "event_final": 2048,
+        "local_nodes": [
+          543,
+          585,
+          613,
+          614
+        ],
+        "global_nodes": [
+          506,
+          543,
+          574,
+          575
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          23,
+          28,
+          29,
+          29
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "aada2bb1a4eeb20dcb35edb08836b10702db384d364ff9c7dd203c399dd6e42c",
+      "burst_window_active_events": 256,
+      "burst_window_emitted_bytes": 0,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "d1fe26c9365f0d2f0bcb2b0fd3e7cabfb5922799cf8adb6ad83a0946d56086fe",
+      "method_id": "nf_mixed",
+      "family": "corridor",
+      "fault_mode": 2,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.28531432871022844,
+        "final_coverage": 0.5222297310829163,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "d1fe26c9365f0d2f0bcb2b0fd3e7cabfb5922799cf8adb6ad83a0946d56086fe",
+        "event_final": 2048,
+        "local_nodes": [
+          499,
+          498,
+          497,
+          498
+        ],
+        "global_nodes": [
+          494,
+          493,
+          493,
+          493
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          30,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "c3d76d17e95b56a0789b7594c16648374402379b1bd80d0d5fc0f3fd36dfae69",
+      "burst_window_active_events": 256,
+      "burst_window_emitted_bytes": 0,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "295a807d42ff1e224294fc47628e6d2738499ee3a77c1de27b8a2daf412d774b",
+      "method_id": "nf_mixed",
+      "family": "hybrid",
+      "fault_mode": 2,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.44002083403029246,
+        "final_coverage": 0.8716265559196472,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "295a807d42ff1e224294fc47628e6d2738499ee3a77c1de27b8a2daf412d774b",
+        "event_final": 2048,
+        "local_nodes": [
+          361,
+          361,
+          367,
+          359
+        ],
+        "global_nodes": [
+          333,
+          333,
+          329,
+          334
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          28,
+          28,
+          28,
+          29
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "99a6ba314a76afecba3216bc974ac867947dc8416fe78cf3818f0a8681b178e4",
+      "burst_window_active_events": 256,
+      "burst_window_emitted_bytes": 0,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "7e24de47e38067d71bfd26e1dc37f5cd424c3661537080d4779e9813106f57fe",
+      "method_id": "ir2_mixed",
+      "family": "easy",
+      "fault_mode": 2,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.3921446205495158,
+        "final_coverage": 0.4090156555175781,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "7e24de47e38067d71bfd26e1dc37f5cd424c3661537080d4779e9813106f57fe",
+        "event_final": 2048,
+        "local_nodes": [
+          138,
+          107,
+          138,
+          111
+        ],
+        "global_nodes": [
+          83,
+          91,
+          102,
+          66
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          30,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "9603a37968e54899f44546835e5b85503b328b91934d318bf0bea3e684afaf26",
+      "burst_window_active_events": 256,
+      "burst_window_emitted_bytes": 0,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "a3938c46a828ad951d2e793abdcb6f3fe3c7ed3fa390387370d2f799f57c2cbd",
+      "method_id": "ir2_mixed",
+      "family": "difficult",
+      "fault_mode": 2,
+      "outcome": "success",
+      "active_events": 539,
+      "metrics": {
+        "auc": 0.9301359190285439,
+        "final_coverage": 1.0,
+        "observed_rounds": 135,
+        "outcome": "success",
+        "success": true,
+        "success_event_offset": 2,
+        "success_round": 135,
+        "timeout": false
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "a3938c46a828ad951d2e793abdcb6f3fe3c7ed3fa390387370d2f799f57c2cbd",
+        "event_final": 539,
+        "local_nodes": [
+          158,
+          110,
+          133,
+          124
+        ],
+        "global_nodes": [
+          97,
+          69,
+          80,
+          78
+        ],
+        "history_counts": [
+          136,
+          136,
+          136,
+          135
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          30,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "9d069b9fbc8edf8826f01733a48e30c09409bb81fa3ef8d346f6b28359861ac4",
+      "burst_window_active_events": 27,
+      "burst_window_emitted_bytes": 0,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "2dd7b5e7589c927b4083461488b9ad1708d3d90b38213ccdf3df05cbf6bba478",
+      "method_id": "ir2_mixed",
+      "family": "rooms",
+      "fault_mode": 2,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.6698476219426084,
+        "final_coverage": 0.9500380754470825,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "2dd7b5e7589c927b4083461488b9ad1708d3d90b38213ccdf3df05cbf6bba478",
+        "event_final": 2048,
+        "local_nodes": [
+          460,
+          638,
+          611,
+          555
+        ],
+        "global_nodes": [
+          382,
+          574,
+          540,
+          477
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          22,
+          23,
+          22,
+          21
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "d27a71a8018a00043db1637c460d02d9bb80a2df8163264811d6aca0951553b6",
+      "burst_window_active_events": 256,
+      "burst_window_emitted_bytes": 0,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "764d256300a0cfe45d7c1a5c49c2cb87af291aa6cbee948152c16de412ec1e3d",
+      "method_id": "ir2_mixed",
+      "family": "corridor",
+      "fault_mode": 2,
+      "outcome": "timeout",
+      "active_events": 2048,
+      "metrics": {
+        "auc": 0.4776624823407474,
+        "final_coverage": 0.5867978930473328,
+        "observed_rounds": 512,
+        "outcome": "timeout",
+        "success": false,
+        "success_event_offset": null,
+        "success_round": null,
+        "timeout": true
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "764d256300a0cfe45d7c1a5c49c2cb87af291aa6cbee948152c16de412ec1e3d",
+        "event_final": 2048,
+        "local_nodes": [
+          416,
+          389,
+          407,
+          387
+        ],
+        "global_nodes": [
+          408,
+          385,
+          390,
+          378
+        ],
+        "history_counts": [
+          513,
+          513,
+          513,
+          513
+        ],
+        "max_outgoing_degrees": [
+          30,
+          30,
+          27,
+          30
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "5b367cd1da8f24fe906aec020a366d1dcfcda3d1f6b16fc2ce13f0a9605924a9",
+      "burst_window_active_events": 256,
+      "burst_window_emitted_bytes": 0,
+      "last_emission_event": 307
+    },
+    {
+      "result_id": "b2b387d848759c684b3d2bca642b80f985e15003a891203409c52e2201e15d76",
+      "method_id": "ir2_mixed",
+      "family": "hybrid",
+      "fault_mode": 2,
+      "outcome": "success",
+      "active_events": 785,
+      "metrics": {
+        "auc": 0.8764018943729752,
+        "final_coverage": 0.9968594908714294,
+        "observed_rounds": 197,
+        "outcome": "success",
+        "success": true,
+        "success_event_offset": 0,
+        "success_round": 197,
+        "timeout": false
+      },
+      "spent_bytes": 8176,
+      "graph_terminal": {
+        "result_id": "b2b387d848759c684b3d2bca642b80f985e15003a891203409c52e2201e15d76",
+        "event_final": 785,
+        "local_nodes": [
+          324,
+          276,
+          257,
+          253
+        ],
+        "global_nodes": [
+          247,
+          209,
+          212,
+          208
+        ],
+        "history_counts": [
+          198,
+          197,
+          197,
+          197
+        ],
+        "max_outgoing_degrees": [
+          30,
+          28,
+          23,
+          29
+        ],
+        "overflow": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "path_failed": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "trace_sha256": "794623f0ba6f407e6b0bfb4c90bcbb4a49fcfe08b8316ca9aa63fa47960bb2e2",
+      "burst_window_active_events": 256,
+      "burst_window_emitted_bytes": 0,
+      "last_emission_event": 307
+    }
+  ]
+}

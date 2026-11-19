@@ -1,0 +1,102 @@
+"""Summarize archived probe evidence with NumPy only; never launch evaluation."""
+import hashlib
+import json
+import pathlib
+import sys
+
+import numpy as np
+
+root = pathlib.Path(sys.argv[1]).resolve()
+audit = json.loads((root / "probe-audit.json").read_text())
+assert audit["complete"] and audit["task_count"] == 30
+tasks = [json.loads(line) for line in (root / "probe-tasks.jsonl").read_text().splitlines()]
+task_by_id = {task["result_id"]: task for task in tasks}
+assert len(task_by_id) == 30
+groups, pairs = [], {}
+for case in audit["cases"]:
+    name = case["case_id"]
+    ids = [key for batch in case["batches"] for key in batch["result_ids"]]
+    episodes = [row for row in audit["episodes"] if row["result_id"] in ids]
+    assert len(episodes) == 5
+    timing = json.loads((root / "resource-cost-mini" / (name + ".memory.timing.json")).read_text())
+    record = json.loads((root / "resource-cost-mini" / (name + ".record.json")).read_text())
+    own = {record["supervised_pid"], case["memory"]["pid"]}
+    samples = []
+    for sample in record["gpu_samples"]:
+        for line in sample["processes"].splitlines():
+            fields = line.split(",")
+            if len(fields) == 2 and fields[0].strip().isdigit() and int(fields[0]) in own:
+                samples.append(int(fields[1]))
+    phases = {}
+    for boundary in timing["boundaries"]:
+        phases[boundary["phase"]] = phases.get(boundary["phase"], 0) + boundary["seconds"]
+    groups.append({
+        "case_id": name, "episodes": 5, "wall_seconds": case["wall_seconds"],
+        "active_events": sum(row["active_events"] for row in episodes),
+        "successes": sum(row["outcome"] == "success" for row in episodes),
+        "normal_timeouts": sum(row["outcome"] == "timeout" for row in episodes),
+        "phase_seconds": phases,
+        "graph_diagnostics_seconds": sum(row["graph_diagnostics_seconds"] for row in case["batches"]),
+        "host_peak_rss_bytes": case["memory"]["host_peak_rss_bytes"],
+        "jax_peak_bytes_in_use": case["memory"]["jax_device_memory"]["peak_bytes_in_use"],
+        "nvml_sampled_peak_mib": max(samples),
+    })
+    for row in episodes:
+        task = task_by_id[row["result_id"]]
+        scene = task["scenario"]
+        envelope = json.loads((root / "resource-cost-mini" / name / "results" / (row["result_id"] + ".json")).read_text())
+        result = envelope["result"]
+        trace = root / "resource-cost-mini" / name / "events" / pathlib.Path(result["trace_file"]).name
+        assert hashlib.sha256(trace.read_bytes()).hexdigest() == result["trace_hash"]
+        with np.load(trace, allow_pickle=False) as archive:
+            arrays = {key: archive[key] for key in archive.files}
+        row["final_balances_real_agents"] = arrays["balances"][-1, :4].tolist()
+        row["last_emission_round_zero_based"] = None if row["last_emission_event"] is None else row["last_emission_event"] // 4
+        row["burst_post_recovery_active_events"] = int((arrays["active"] & (arrays["event"] // 4 >= 192)).sum()) if scene["fault_mode"] == 2 else None
+        pair = pairs.setdefault((scene["map_hash"], task["method"]["method_id"]), {})
+        pair[scene["fault_mode"]] = (scene, row, arrays)
+
+comparisons = []
+for (map_hash, method), modes in sorted(pairs.items()):
+    assert set(modes) == {0, 1, 2}
+    normal_scene, normal, normal_arrays = modes[0]
+    burst_scene, burst, burst_arrays = modes[2]
+    for field in ("map_hash", "spawn_seed", "fault_seed", "budget"):
+        assert normal_scene[field] == burst_scene[field]
+    normal_config, burst_config = dict(normal_scene["config"]), dict(burst_scene["config"])
+    assert normal_config.pop("fault_mode") == 0 and burst_config.pop("fault_mode") == 2
+    assert normal_config == burst_config
+    assert normal_arrays.keys() == burst_arrays.keys()
+    different = [name for name in normal_arrays if not np.array_equal(normal_arrays[name], burst_arrays[name])]
+    zero_exposure = burst["burst_window_emitted_bytes"] == 0
+    if zero_exposure:
+        assert different == ["external_links"], (normal["result_id"], different)
+    comparisons.append({
+        "map_hash": map_hash, "method_id": method,
+        "normal_id": normal["result_id"], "burst_id": burst["result_id"],
+        "zero_emission_exposure": zero_exposure, "different_trace_arrays": different,
+        "identical_except_external_links": set(different) <= {"external_links"},
+    })
+
+window = json.loads((root / "gpu-window.json").read_text())
+closed = json.loads((root / "gpu-window-closed.json").read_text())
+assert closed["epoch"] < window["deadline_epoch"]
+summary = {
+    "protocol": "resource-pilot-v2-C1024", "executed_probe_tasks": 30,
+    "full_240_executed": False, "training_started": False,
+    "window_wall_seconds": closed["epoch"] - window["started_epoch"],
+    "cases_wall_seconds": sum(row["wall_seconds"] for row in groups),
+    "active_events": audit["active_events"],
+    "successes": sum(row["successes"] for row in groups),
+    "normal_timeouts": sum(row["normal_timeouts"] for row in groups),
+    "timing_comparable": audit["timing_comparable"],
+    "max_terminal_local_nodes": max(max(row["graph_terminal"]["local_nodes"]) for row in audit["episodes"]),
+    "max_terminal_global_nodes": max(max(row["graph_terminal"]["global_nodes"]) for row in audit["episodes"]),
+    "max_terminal_history_count": max(max(row["graph_terminal"]["history_counts"]) for row in audit["episodes"]),
+    "groups": groups, "normal_burst_comparisons": comparisons,
+    "episodes": audit["episodes"],
+}
+with (root / "probe-summary.json").open("x") as output:
+    json.dump(summary, output, indent=2)
+    output.write("\n")
+print(json.dumps({key: value for key, value in summary.items() if key not in ("groups", "episodes", "normal_burst_comparisons")}))

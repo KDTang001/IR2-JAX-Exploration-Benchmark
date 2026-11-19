@@ -1,0 +1,19 @@
+{
+  "observed_epoch": 1794981256.22766,
+  "pinned_inputs": 147,
+  "changed_inputs": [],
+  "post_run_runtime": {
+    "python": "3.11.0 (main, Mar  1 2023, 18:26:19) [GCC 11.2.0]",
+    "executable": "/home/user/anaconda3/envs/ex/bin/python",
+    "packages": {
+      "jax": "0.4.35",
+      "jaxlib": "0.4.34",
+      "flax": "0.10.2",
+      "numpy": "2.0.2",
+      "pillow": "13.0.0",
+      "optax": "0.2.4"
+    }
+  },
+  "gpu": "NVIDIA H100, GPU-41900dda-0437-2258-687e-25529af3f61c, 550.163.01, 0, 24, 81559",
+  "compute_pids": []
+}

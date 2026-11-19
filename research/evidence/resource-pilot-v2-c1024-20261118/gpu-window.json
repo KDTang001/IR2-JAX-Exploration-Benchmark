@@ -1,0 +1,8 @@
+{
+  "started_epoch": 1794986626.014134,
+  "deadline_epoch": 1795001026.014134,
+  "started_utc": "2026-11-18T07:23:46.014141+00:00",
+  "authorized_seconds": 14400,
+  "includes_compilation_and_waiting": true,
+  "authorization": "User approved maximum four hours for the frozen 30 validation 2KiB mixed tasks, Normal/Dropout0.3/Burst64; excludes training and all240"
+}

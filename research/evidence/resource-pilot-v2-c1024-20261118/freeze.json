@@ -1,0 +1,15 @@
+{
+  "name": "resource-pilot-v2-C1024",
+  "frozen_tasks": 240,
+  "planned_probe_tasks": 30,
+  "executed_gpu_tasks": 0,
+  "v1_manifest_unchanged": true,
+  "v1_regenerated_bytes_equal": true,
+  "all_task_ids_changed_from_c400": true,
+  "map_and_seed_selection_unchanged": true,
+  "prior_c1024_identity_overlap": 10,
+  "task_manifest_sha256": "58b0a928d1e0f2af7bf5d549e12c00e8ed44b599b8d8a97628461a90c6c9e524",
+  "probe_manifest_sha256": "d0b7d1aecd8ed79bfb2fc98f86b28cc5d8b01186dcdb2ef9086f5cfe0ffd1d79",
+  "source_commit": "6dd2a816",
+  "code_package_sha256": "402942e2eefc04ad33aa65fe8d8e83e68b2411e05e932264548f8cff3d0a7fbd"
+}

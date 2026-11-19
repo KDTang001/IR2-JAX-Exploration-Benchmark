@@ -1,0 +1,25 @@
+{
+  "case_id": "nf_mixed-b1",
+  "pid": 957911,
+  "started_epoch": 1794967865.8390872,
+  "argv": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "3600.000s",
+    "taskset",
+    "-c",
+    "0-7",
+    "/home/user/anaconda3/envs/ex/bin/python",
+    "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118/phase6_profile_supervisor.py",
+    "--cost-worker",
+    "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118/resource-cost-mini/nf_mixed-b1.memory.json",
+    "evaluate",
+    "--task-manifest",
+    "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118/nf_mixed.jsonl",
+    "--output",
+    "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118/resource-cost-mini/nf_mixed-b1",
+    "--batch-size",
+    "1"
+  ]
+}

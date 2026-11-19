@@ -1,0 +1,62 @@
+{
+  "case_id": "cpu-b4",
+  "supervised_pid": 957366,
+  "exit_code": 0,
+  "timeout": false,
+  "wall_seconds": 14.005077838897705,
+  "resource_before": {
+    "utc": "2026-11-18T02:00:08.405017+00:00",
+    "gpu": "",
+    "processes": ""
+  },
+  "gpu_samples": [
+    {
+      "epoch": 1794967208.4067252,
+      "processes": ""
+    },
+    {
+      "epoch": 1794967210.4068391,
+      "processes": ""
+    },
+    {
+      "epoch": 1794967212.4069452,
+      "processes": ""
+    },
+    {
+      "epoch": 1794967214.4099064,
+      "processes": ""
+    },
+    {
+      "epoch": 1794967216.4099941,
+      "processes": ""
+    },
+    {
+      "epoch": 1794967218.4101183,
+      "processes": ""
+    },
+    {
+      "epoch": 1794967220.4102533,
+      "processes": ""
+    }
+  ],
+  "argv": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "120.000s",
+    "taskset",
+    "-c",
+    "0-7",
+    "/home/user/anaconda3/envs/ex/bin/python",
+    "/home/user/Tz/acceptance/batch-cost-dispatch-fix-20261118/scripts/phase6_profile_supervisor.py",
+    "--cost-worker",
+    "/home/user/Tz/acceptance/batch-cost-dispatch-fix-20261118/cpu-dispatch-smoke/resource-cost-mini/cpu-b4.memory.json",
+    "evaluate",
+    "--task-manifest",
+    "/home/user/Tz/acceptance/batch-cost-dispatch-fix-20261118/cpu-dispatch-smoke/tasks.jsonl",
+    "--output",
+    "/home/user/Tz/acceptance/batch-cost-dispatch-fix-20261118/cpu-dispatch-smoke/resource-cost-mini/cpu-b4",
+    "--batch-size",
+    "4"
+  ]
+}

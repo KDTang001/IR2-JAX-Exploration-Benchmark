@@ -1,0 +1,179 @@
+"""Audit actual Burst traffic and fixed Normal pairs with NumPy, without JAX."""
+import datetime
+import hashlib
+import json
+import pathlib
+import sys
+
+import numpy as np
+
+root = pathlib.Path(sys.argv[1]).resolve()
+request = json.loads((root / "profile-request.json").read_text())
+for name, wanted in request["input_hashes"].items():
+    assert hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest() == wanted, name
+references = json.loads((root / "normal-references.json").read_text())
+cases, rows = [], []
+
+for case in request["cases"]:
+    name = case["case_id"]
+    directory = root / "resource-cost-mini" / name
+    record = json.loads((root / "resource-cost-mini" / (name + ".record.json")).read_text())
+    assert record["exit_code"] == 0 and not record["timeout"], name
+    assert json.loads((directory / "runner_summary.json").read_text()) == {
+        "requested": 5, "executed": 5, "resumed": 0, "failures": 0}
+    timing = json.loads((root / "resource-cost-mini" / (name + ".memory.timing.json")).read_text())
+    batches = [row for row in timing["boundaries"] if row["phase"] == "execute_batch"]
+    assert [row["batch_size"] for row in batches] == [4, 1]
+    tasks = [json.loads(line) for line in pathlib.Path(case["task_manifest"]).read_text().splitlines()]
+    assert [key for row in batches for key in row["result_ids"]] == [t["result_id"] for t in tasks]
+    areas = {row["result_id"]: row["component_area"] for row in timing["boundaries"] if row["phase"] == "load_lane"}
+    graphs = {row["result_id"]: row for batch in batches for row in batch["graph_terminal"]}
+    for task in tasks:
+        key, scene, method = task["result_id"], task["scenario"], task["method"]
+        envelope = json.loads((directory / "results" / (key + ".json")).read_text())
+        result = envelope["result"]
+        assert hashlib.sha256(json.dumps(result, sort_keys=True, separators=(",", ":")).encode()).hexdigest() == envelope["checksum"]
+        assert result["result_id"] == key and result["outcome"] in ("success", "timeout")
+        assert result["scenario_id"] == scene["scenario_id"] and result["method_id"] == method["method_id"]
+        assert scene["fault_mode"] == result["fault_mode"] == 2 and scene["drop_probability"] == result["drop_probability"] == 0
+        assert scene["n_agents"] == 4 and scene["config"]["agent_bucket"] == 6 and scene["bucket"] == 768
+        assert scene["split"] == result["split"] == "validation"
+        assert scene["config"]["graph_capacity"] == scene["config"]["graph_padding_size"] == 1024
+        assert scene["budget"] == result["budget"] == 8192 and scene["burst_start"] == 128 and scene["burst_duration"] == 64
+        assert method["communication"] == "mixed" and result["real_training_events"] == 0
+        assert result["configuration_hash"] == scene["config_hash"] and result["checkpoint_hash"] == method["checkpoint_hash"]
+        assert result["map_hash"] == scene["map_hash"] and result["map_scenario_hash"] == scene["map_scenario_hash"]
+        trace = pathlib.Path(result["trace_file"])
+        assert hashlib.sha256(trace.read_bytes()).hexdigest() == result["trace_hash"]
+        with np.load(trace, allow_pickle=False) as archive:
+            arrays = {field: archive[field] for field in archive.files}
+        active = arrays["active"].astype(bool)
+        event, sender = arrays["event"][active], arrays["agent_id"][active]
+        count = int(active.sum())
+        assert count == result["active_events"] and np.array_equal(event, np.arange(count))
+        assert np.array_equal(sender, event % 4) and not arrays["invalid_action"][active].any()
+        coverage = arrays["coverage"][active].astype(float)
+        coverage_counts = np.rint(coverage * areas[key]).astype(np.int64)
+        assert not (np.diff(coverage_counts) < 0).any()
+        rounds = list(coverage[3::4])
+        if count % 4:
+            rounds.append(coverage[-1])
+        final = float(coverage[-1])
+        assert abs((sum(rounds) + (512 - len(rounds)) * final) / 512 - result["metrics"]["auc"]) < 1e-12
+        assert final == result["metrics"]["final_coverage"]
+        assert bool(arrays["terminated"][-1]) == result["metrics"]["success"]
+        assert bool(arrays["truncated"][-1]) == result["metrics"]["timeout"]
+        emitted = arrays["emitted_length"][active].astype(np.int64)
+        spent = arrays["spent"][active].astype(np.int64)
+        delivered = arrays["delivered"][active].astype(bool)
+        assert np.array_equal(emitted, spent) and int(spent.sum()) == result["spent_bytes"] == result["emitted_bytes"]
+        assert int((np.maximum(emitted - 16, 0) * delivered.sum(-1)).sum()) == result["delivered_payload_bytes"]
+        for agent in range(4):
+            expected = 8192 - np.cumsum(spent * (sender == agent))
+            assert np.array_equal(arrays["balances"][active, agent], expected) and expected.min() >= 0
+        base_links = (np.arange(6)[None] < 4) & (np.arange(6)[None] != sender[:, None])
+        before, during, after = event < 512, (event >= 512) & (event < 768), event >= 768
+        isolated = np.isin(np.arange(6), scene["isolation_ids"])
+        targeted = isolated[sender, None] | isolated[None]
+        allowed = base_links & ~(during[:, None] & targeted)
+        assert np.array_equal(allowed, arrays["external_links"][active])
+        potential = (emitted[:, None] > 0) & arrays["physical_links"][active] & base_links
+        assert np.array_equal(potential & allowed, delivered)
+        blocked = potential & ~allowed
+        assert not (blocked & delivered).any() and not blocked[~during].any()
+        graph = graphs[key]
+        assert graph["event_final"] == count and len(graph["local_nodes"]) == 4
+        assert max(graph["local_nodes"]) <= 1024 and max(graph["global_nodes"]) <= 1024
+        assert max(graph["history_counts"]) <= 513 and max(graph["max_outgoing_degrees"]) <= 30
+        assert not any(graph["overflow"]) and not any(graph["path_failed"])
+
+        reference = references[key]
+        normal_task = reference["task"]
+        ns = normal_task["scenario"]
+        assert normal_task["method"] == method
+        for field in ("map_hash", "map_scenario_hash", "spawn_seed", "fault_seed", "budget", "implementations"):
+            assert ns[field] == scene[field]
+        nc, bc = dict(ns["config"]), dict(scene["config"])
+        assert nc.pop("fault_mode") == 0 and bc.pop("fault_mode") == 2 and nc == bc
+        normal_envelope = json.loads(pathlib.Path(reference["result_file"]).read_text())
+        normal = normal_envelope["result"]
+        assert normal["result_id"] == normal_task["result_id"]
+        assert hashlib.sha256(json.dumps(normal, sort_keys=True, separators=(",", ":")).encode()).hexdigest() == normal_envelope["checksum"]
+        assert hashlib.sha256(pathlib.Path(reference["trace_file"]).read_bytes()).hexdigest() == normal["trace_hash"]
+        with np.load(reference["trace_file"], allow_pickle=False) as archive:
+            na = {field: archive[field] for field in archive.files}
+        assert arrays.keys() == na.keys()
+        assert np.array_equal(arrays["initial_coverage"], na["initial_coverage"])
+        assert count >= 512 and normal["active_events"] >= 512
+        prefix_differences = [field for field in arrays if arrays[field].ndim and field != "coverage"
+                              and not np.array_equal(arrays[field][:512], na[field][:512])]
+        assert not prefix_differences, (key, prefix_differences)
+        normal_counts = np.rint(na["coverage"].astype(float) * areas[key]).astype(np.int64)
+        assert np.array_equal(coverage_counts[:512], normal_counts[:512]), key
+        shared = min(count, normal["active_events"])
+        first_differences = {}
+        for field in ("positions", "goals", "delivered", "emitted_length", "packet_buffer"):
+            different = (arrays[field][:shared] != na[field][:shared]).reshape(shared, -1).any(-1)
+            indices = np.flatnonzero(different)
+            first_differences[field] = int(indices[0]) if len(indices) else None
+        indices = np.flatnonzero(coverage_counts[:shared] != normal_counts[:shared])
+        first_differences["coverage_integer_counts"] = int(indices[0]) if len(indices) else None
+        post_targeted = delivered & targeted & after[:, None]
+        row = {field: result[field] for field in ("result_id", "method_id", "source", "family", "outcome", "active_events", "metrics", "spent_bytes", "delivered_payload_bytes")}
+        row.update(
+            trace_sha256=result["trace_hash"], graph_terminal=graph,
+            entry_balances=arrays["balances"][active][511, :4].tolist(),
+            window_active_events=int(during.sum()), window_emission_events=int((during & (emitted > 0)).sum()),
+            window_emitted_bytes=int(emitted[during].sum()), window_delivered_copies=int(delivered[during].sum()),
+            window_potential_copies=int(potential[during].sum()), actual_blocked_copies=int(blocked.sum()),
+            actual_affected_emission_events=int(blocked.any(-1).sum()),
+            blocked_receiver_copy_wire_bytes=int((emitted * blocked.sum(-1)).sum()),
+            blocked_receiver_copy_payload_bytes=int((np.maximum(emitted - 16, 0) * blocked.sum(-1)).sum()),
+            end_observed_window_balances=arrays["balances"][active][np.flatnonzero(during)[-1], :4].tolist(),
+            post_recovery_active_events=int(after.sum()), post_recovery_emitted_bytes=int(emitted[after].sum()),
+            post_recovery_delivered_copies=int(delivered[after].sum()), post_recovery_targeted_delivered_copies=int(post_targeted.sum()),
+            normal_result_id=normal["result_id"], normal_outcome=normal["outcome"], normal_metrics=normal["metrics"],
+            normal_active_events=normal["active_events"], normal_spent_bytes=normal["spent_bytes"],
+            normal_delivered_payload_bytes=normal["delivered_payload_bytes"],
+            coverage_delta=float(final - normal["metrics"]["final_coverage"]),
+            auc_delta=float(result["metrics"]["auc"] - normal["metrics"]["auc"]),
+            pre_fault_prefix_events_verified=512, first_pair_differences=first_differences,
+            first_active_length_difference_event=shared if count != normal["active_events"] else None,
+        )
+        rows.append(row)
+    memory = json.loads((root / "resource-cost-mini" / (name + ".memory.json")).read_text())
+    own = {record["supervised_pid"], memory["pid"]}
+    foreign, failures = set(), 0
+    for sample in record["gpu_samples"]:
+        failures += sample["processes"].startswith("query_failed:")
+        for line in sample["processes"].splitlines():
+            pid = line.split(",")[0].strip()
+            if pid.isdigit() and int(pid) not in own:
+                foreign.add(int(pid))
+    cases.append({"case_id": name, "wall_seconds": record["wall_seconds"], "foreign_gpu_pids": sorted(foreign),
+                  "telemetry_failures": failures, "memory": memory, "batches": batches,
+                  "timing_boundaries": timing["boundaries"]})
+
+assert len(rows) == len({row["result_id"] for row in rows}) == 10 and len(cases) == 2
+assert "jax" not in sys.modules and "ir2_benchmark" not in sys.modules
+summary = {
+    "complete": True, "task_count": 10, "case_count": 2,
+    "audit_utc": datetime.datetime.now(datetime.UTC).isoformat(),
+    "fault_replay_backend": "target CPU NumPy; no environment execution",
+    "pinned_inputs_verified": len(request["input_hashes"]),
+    "timing_comparable_within_this_run": all(not c["foreign_gpu_pids"] and not c["telemetry_failures"] for c in cases),
+    "normal_timing_comparison_claimed": False,
+    "active_events": sum(row["active_events"] for row in rows),
+    "coverage_successes": sum(row["outcome"] == "success" for row in rows),
+    "normal_timeouts": sum(row["outcome"] == "timeout" for row in rows),
+    "actual_blocked_copies": sum(row["actual_blocked_copies"] for row in rows),
+    "window_emitted_bytes": sum(row["window_emitted_bytes"] for row in rows),
+    "tasks_with_actual_blocking": sum(row["actual_blocked_copies"] > 0 for row in rows),
+    "tasks_with_post_recovery_activity": sum(row["post_recovery_active_events"] > 0 for row in rows),
+    "tasks_with_targeted_recovery_delivery": sum(row["post_recovery_targeted_delivered_copies"] > 0 for row in rows),
+    "cases": cases, "episodes": rows,
+}
+with (root / "probe-audit.json").open("x") as stream:
+    json.dump(summary, stream, indent=2)
+    stream.write("\n")
+print(json.dumps({field: value for field, value in summary.items() if field not in ("cases", "episodes")}))

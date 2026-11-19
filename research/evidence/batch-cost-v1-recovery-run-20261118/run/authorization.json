@@ -1,0 +1,10 @@
+{
+  "user_answer": "Start a new maximum four-hour window",
+  "authorized_seconds": 14400,
+  "includes_waiting_and_compilation": true,
+  "idle_gpu_required": true,
+  "episode_executions": 20,
+  "training_authorized": false,
+  "recorded_utc": "2026-11-18T02:10:03.595008+00:00",
+  "dispatch_fix_commit": "490252a3aacf7b2af2f4d86ba8b8b4caed4617b1"
+}

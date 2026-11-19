@@ -1,0 +1,156 @@
+"""Read archived H100 Normal traces; never import or execute the environment."""
+import datetime
+import gzip
+import hashlib
+import json
+import pathlib
+import sys
+import time
+
+import numpy as np
+
+started = time.perf_counter()
+repo = pathlib.Path(sys.argv[1]).resolve()
+output = pathlib.Path(sys.argv[2]).resolve()
+assert not output.exists(), "Use a new output directory; preserve earlier evidence"
+prior = repo / "research/evidence/capacity-check-v1-c1024-20261118"
+pilot = repo / "research/evidence/resource-pilot-v2-c1024-20261118"
+inventory = json.loads((prior / "artifact-index.json").read_text(encoding="utf-8"))["files"]
+inputs = {}
+
+
+def read(path):
+    data = path.read_bytes()
+    digest = hashlib.sha256(data).hexdigest()
+    if path.is_relative_to(prior) and path != prior / "artifact-index.json":
+        assert digest == inventory[path.relative_to(prior).as_posix()]["sha256"], path
+    inputs[path.relative_to(repo).as_posix()] = digest
+    return data
+
+
+read(prior / "artifact-index.json")
+normal_tasks = {task["result_id"]: task for task in map(json.loads, read(prior / "capacity-tasks.jsonl").splitlines())}
+freeze = json.loads(read(pilot / "freeze.json"))
+raw = gzip.decompress(read(pilot / "tasks.jsonl.gz"))
+assert hashlib.sha256(raw).hexdigest() == freeze["task_manifest_sha256"]
+task_lines = [(line, json.loads(line)) for line in raw.splitlines()]
+assert len(task_lines) == 240
+selected = [(line, task) for line, task in task_lines if task["scenario"]["budget"] == 8192
+            and task["scenario"]["fault_mode"] == 2 and task["method"]["communication"] == "mixed"]
+assert len(selected) == 10 and len({task["result_id"] for _, task in selected}) == 10
+normal_v2 = {task["result_id"]: task for _, task in task_lines if task["result_id"] in normal_tasks}
+assert len(normal_tasks) == len(normal_v2) == 10 and normal_tasks == normal_v2
+rows = []
+for _, target in selected:
+    scene, method = target["scenario"], target["method"]
+    candidates = [task for task in normal_tasks.values() if task["scenario"]["map_hash"] == scene["map_hash"]
+                  and task["method"] == method]
+    assert len(candidates) == 1
+    reference = candidates[0]
+    normal = reference["scenario"]
+    for field in ("map_hash", "map_scenario_hash", "spawn_seed", "fault_seed", "budget", "bucket", "n_agents", "implementations"):
+        assert normal[field] == scene[field], field
+    assert normal["split"] == scene["split"] == "validation"
+    assert scene["budget"] == 8192 and scene["n_agents"] == 4 and scene["bucket"] == 768
+    assert scene["burst_start"] == 128 and scene["burst_duration"] == 64
+    assert scene["drop_probability"] == 0 and len(scene["isolation_ids"]) == 2
+    nc, bc = dict(normal["config"]), dict(scene["config"])
+    assert nc.pop("fault_mode") == 0 and bc.pop("fault_mode") == 2 and nc == bc
+    assert bc["graph_capacity"] == bc["graph_padding_size"] == 1024
+    key = reference["result_id"]
+    case_prefix = "nf_mixed" if method["method_id"] == "nf_mixed" else "ir2_mixed"
+    results, traces = [], []
+    for batch in (1, 4):
+        case = prior / "resource-cost-mini" / (case_prefix + "-b" + str(batch))
+        envelope = json.loads(read(case / "results" / (key + ".json")))
+        result = envelope["result"]
+        canonical = json.dumps(result, sort_keys=True, separators=(",", ":")).encode()
+        assert hashlib.sha256(canonical).hexdigest() == envelope["checksum"]
+        assert result["result_id"] == key and result["scenario_id"] == normal["scenario_id"]
+        assert result["configuration_hash"] == normal["config_hash"] and result["checkpoint_hash"] == method["checkpoint_hash"]
+        assert result["fault_mode"] == 0 and result["budget"] == 8192 and result["real_training_events"] == 0
+        trace = case / "events" / pathlib.PurePosixPath(result["trace_file"]).name
+        assert hashlib.sha256(read(trace)).hexdigest() == result["trace_hash"]
+        results.append({name: value for name, value in result.items() if name != "trace_file"})
+        traces.append(trace)
+    assert results[0] == results[1], key
+    with np.load(traces[1], allow_pickle=False) as archive:
+        arrays = {name: archive[name] for name in archive.files}
+    active = arrays["active"].astype(bool)
+    event = arrays["event"][active]
+    sender = arrays["agent_id"][active]
+    emitted = arrays["emitted_length"][active].astype(np.int64)
+    spent = arrays["spent"][active].astype(np.int64)
+    delivered = arrays["delivered"][active].astype(bool)
+    assert len(event) == results[1]["active_events"] and np.array_equal(event, np.arange(len(event)))
+    assert np.array_equal(sender, event % 4) and np.array_equal(emitted, spent)
+    assert int(spent.sum()) == results[1]["spent_bytes"]
+    assert not arrays["invalid_action"][active].any()
+    normal_links = (np.arange(6)[None] < 4) & (np.arange(6)[None] != sender[:, None])
+    assert np.array_equal(arrays["external_links"][active], normal_links)
+    assert np.array_equal(delivered, (emitted[:, None] > 0) & arrays["physical_links"][active] & normal_links)
+    begin, end = 4 * scene["burst_start"], 4 * (scene["burst_start"] + scene["burst_duration"])
+    before, during, after = event < begin, (event >= begin) & (event < end), event >= end
+    isolated = np.isin(np.arange(6), scene["isolation_ids"])
+    targeted_edges = isolated[sender, None] | isolated[None]
+    blocked_copies = delivered & targeted_edges & during[:, None]
+    post_targeted_copies = delivered & targeted_edges & after[:, None]
+    entry = [8192 - int(spent[before & (sender == agent)].sum()) for agent in range(4)]
+    end_observed = [entry[agent] - int(spent[during & (sender == agent)].sum()) for agent in range(4)]
+    prior_indices = np.flatnonzero(before)
+    if len(prior_indices):
+        assert entry == arrays["balances"][active][prior_indices[-1], :4].tolist()
+    for agent in range(4):
+        assert int(arrays["balances"][-1, agent] + spent[sender == agent].sum()) == 8192
+    copies_per_event = blocked_copies.sum(-1)
+    row = {
+        "burst_result_id": target["result_id"], "normal_result_id": key,
+        "method_id": method["method_id"], "source": scene["source"], "family": scene["family"],
+        "map_hash": scene["map_hash"], "isolation_ids": scene["isolation_ids"],
+        "normal_trace_sha256": results[1]["trace_hash"], "normal_b1_b4_exact": True,
+        "normal_active_events": len(event), "normal_outcome": results[1]["outcome"],
+        "entry_balances_per_agent": entry,
+        "end_of_observed_window_balances_per_agent": end_observed,
+        "window_active_events": int(during.sum()),
+        "window_emission_events": int((during & (emitted > 0)).sum()),
+        "window_emitted_wire_bytes": int(emitted[during].sum()),
+        "window_actual_normal_receiver_deliveries": int(delivered[during].sum()),
+        "window_static_blocked_receiver_deliveries": int(blocked_copies.sum()),
+        "window_static_affected_emission_events": int((copies_per_event > 0).sum()),
+        "window_static_blocked_receiver_copy_wire_bytes": int((emitted * copies_per_event).sum()),
+        "window_static_blocked_receiver_copy_payload_bytes": int((np.maximum(emitted - 16, 0) * copies_per_event).sum()),
+        "post_recovery_normal_active_events": int(after.sum()),
+        "post_recovery_normal_emitted_wire_bytes": int(emitted[after].sum()),
+        "post_recovery_normal_targeted_receiver_deliveries": int(post_targeted_copies.sum()),
+        "last_normal_emission_event": int(event[emitted > 0][-1]),
+        "exposure_supported_on_normal_trace": bool(emitted[during].sum() > 0 and blocked_copies.any()),
+        "post_recovery_support_on_normal_trace": bool(after.any() and post_targeted_copies.any()),
+    }
+    rows.append(row)
+
+assert "jax" not in sys.modules and "ir2_benchmark" not in sys.modules and "torch" not in sys.modules
+selection = b"\n".join(line for line, _ in selected) + b"\n"
+summary = {
+    "observed_utc": datetime.datetime.now(datetime.UTC).isoformat(),
+    "analysis_kind": "offline_normal_trace_static_burst_exposure_preflight",
+    "environment_executed": False, "gpu_initialized": False, "training_started": False,
+    "new_h100_window_authorized": False, "new_h100_window_started": False,
+    "frozen_burst_tasks": 10, "unique_existing_normal_tasks": 10, "existing_execution_traces_verified": 20,
+    "normal_b1_b4_pairs_verified": 10,
+    "input_hashes": inputs, "selected_manifest_sha256": hashlib.sha256(selection).hexdigest(),
+    "exposure_supported_tasks": sum(row["exposure_supported_on_normal_trace"] for row in rows),
+    "post_recovery_supported_tasks": sum(row["post_recovery_support_on_normal_trace"] for row in rows),
+    "window_emitted_wire_bytes": sum(row["window_emitted_wire_bytes"] for row in rows),
+    "static_blocked_receiver_deliveries": sum(row["window_static_blocked_receiver_deliveries"] for row in rows),
+    "interpretation": "Static mask overlay on observed Normal emissions/deliveries; not a simulated Burst trajectory or a prediction of its coverage, routes or message schedule.",
+    "rows": rows, "runtime": {"python": sys.version.split()[0], "numpy": np.__version__},
+    "protocol_sha256": hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest(),
+    "wall_seconds": time.perf_counter() - started,
+}
+output.mkdir(parents=True)
+with (output / "preflight.json").open("x", encoding="utf-8") as stream:
+    json.dump(summary, stream, indent=2)
+    stream.write("\n")
+with (output / "selected-burst-tasks.jsonl").open("xb") as stream:
+    stream.write(selection)
+print(json.dumps({name: value for name, value in summary.items() if name not in ("rows", "input_hashes")}))

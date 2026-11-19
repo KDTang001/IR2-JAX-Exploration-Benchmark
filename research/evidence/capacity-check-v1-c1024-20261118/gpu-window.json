@@ -1,0 +1,9 @@
+{
+  "started_epoch": 1794971475.8114731,
+  "deadline_epoch": 1794982205.5080109,
+  "started_utc": "2026-11-18T03:11:15.811475+00:00",
+  "authorization": "User approved a separate expanded-capacity preset and continuing B1/B4 acceptance",
+  "parent_root": "/home/user/Tz/acceptance/batch-cost-v1-recovery-20261118",
+  "renews_parent_deadline": false,
+  "includes_compilation_and_waiting": true
+}

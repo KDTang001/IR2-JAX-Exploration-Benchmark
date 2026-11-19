@@ -1,0 +1,21 @@
+{
+  "scope": "two cost-only full validation episodes; result envelopes reconstructed by identical serialization and SHA256-matched to remote bytes",
+  "artifacts": [
+    {
+      "case_id": "nf_mixed",
+      "result": "phase6-mini-nf_mixed-result.json",
+      "result_sha256": "fb3e0691a4d3114a0ef3e97586b344a869cc2424c34173a6eaf85c91e09705f0",
+      "trace": "phase6-mini-nf_mixed-trace.npz",
+      "trace_sha256": "0d3d3419cdc342ac72228c0c44e7a36fe237618bed9607f25dc02aa7dce8de94",
+      "result_id": "e3a020a2fef2414f3e612aa99bde49956fb6045b7f06d925f5dc642a4e9aad9a"
+    },
+    {
+      "case_id": "ir2_mixed",
+      "result": "phase6-mini-ir2_mixed-result.json",
+      "result_sha256": "05cd76b02116af57fa2238eeb31a8373c950731bb21596721fd82183aa1018df",
+      "trace": "phase6-mini-ir2_mixed-trace.npz",
+      "trace_sha256": "85f74de03e7af63b0e2261b6e14756a64358124d2c5dfb251a2acc65fac5d16a",
+      "result_id": "70ebf243ad67e3ee2653b3d746631d87658816e91bcf8f03b5a003628fcb8ad5"
+    }
+  ]
+}
