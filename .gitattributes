@@ -28,3 +28,4 @@ research/evidence/resource-pilot-v2-c1024-20261118/** -text -whitespace
 research/evidence/burst-exposure-preflight-20261118/** -text -whitespace
 research/evidence/burst8k-probe-20261119/** -text -whitespace
 research/protocols/phase6-20261119/*.py.txt -text
+research/evidence/release-record-v1/** -text -whitespace

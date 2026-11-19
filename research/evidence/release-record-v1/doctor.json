@@ -1,0 +1,23 @@
+{
+  "jax_version": "0.4.35",
+  "flax_version": "0.10.2",
+  "optax_version": "0.2.4",
+  "devices": [
+    {
+      "platform": "cpu",
+      "kind": "cpu",
+      "identifier": 0
+    }
+  ],
+  "batch_size": 32,
+  "horizon": 16,
+  "scan_correct": true,
+  "initial_loss": null,
+  "final_loss": null,
+  "compile_and_run_seconds": 0.03239218890666962,
+  "warm_run_seconds": 2.504093572497368e-05,
+  "inference_correct": true,
+  "optimizer_status": "skipped_runtime_only",
+  "optimizer_updates": 0,
+  "purpose": "runtime_smoke_only"
+}
