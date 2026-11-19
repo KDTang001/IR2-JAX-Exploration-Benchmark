@@ -1,0 +1,25 @@
+{
+  "case_id": "ir2_mixed-b4",
+  "pid": 984779,
+  "started_epoch": 1795053304.0985174,
+  "argv": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "1800.000s",
+    "taskset",
+    "-c",
+    "0-7",
+    "/home/user/anaconda3/envs/ex/bin/python",
+    "/home/user/Tz/acceptance/burst8k-probe-20261119/scripts/phase6_profile_supervisor.py",
+    "--cost-worker",
+    "/home/user/Tz/acceptance/burst8k-probe-20261119/resource-cost-mini/ir2_mixed-b4.memory.json",
+    "evaluate",
+    "--task-manifest",
+    "/home/user/Tz/acceptance/burst8k-probe-20261119/ir2_mixed.jsonl",
+    "--output",
+    "/home/user/Tz/acceptance/burst8k-probe-20261119/resource-cost-mini/ir2_mixed-b4",
+    "--batch-size",
+    "4"
+  ]
+}

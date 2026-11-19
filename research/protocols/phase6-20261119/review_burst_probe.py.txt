@@ -1,0 +1,105 @@
+"""Verify archived Burst counters by scalar replay; produce a paired summary."""
+import datetime
+import hashlib
+import json
+import pathlib
+import sys
+
+import numpy as np
+
+repo = pathlib.Path(sys.argv[1]).resolve()
+root = repo / "research/evidence/burst8k-probe-20261119"
+prior = repo / "research/evidence/capacity-check-v1-c1024-20261118"
+audit = json.loads((root / "probe-audit.json").read_text())
+post = json.loads((root / "postrun-verification.json").read_text())
+assert audit["complete"] and audit["task_count"] == 10
+assert post["pinned_inputs_verified"] == 153 and post["core_source_files_verified"] == 111
+assert not post["input_mismatches"] and not post["worker_gpu_processes_remaining"]
+window = json.loads((root / "gpu-window.json").read_text())
+closed = json.loads((root / "gpu-window-closed.json").read_text())
+assert closed["epoch"] <= window["deadline_epoch"]
+assert json.loads((root / "transfer-record.json").read_text())["temporary_remote_bundle_removed"]
+refs = json.loads((root / "normal-references.json").read_text())
+areas = {row["result_id"]: row["component_area"] for case in audit["cases"]
+         for row in case["timing_boundaries"] if row["phase"] == "load_lane"}
+pairs = []
+for case in audit["cases"]:
+    for row in [ep for ep in audit["episodes"] if ep["method_id"] + "-b4" == case["case_id"]]:
+        key = row["result_id"]
+        reference = refs[key]
+        isolated = reference["task"]["scenario"]["isolation_ids"]
+        assert isolated == []
+        tasks = [json.loads(line) for line in (root / (row["method_id"] + ".jsonl")).read_bytes().splitlines()]
+        target = next(t for t in tasks if t["result_id"] == key)
+        isolated = target["scenario"]["isolation_ids"]
+        trace = root / "resource-cost-mini" / case["case_id"] / "events" / (key + ".npz")
+        assert hashlib.sha256(trace.read_bytes()).hexdigest() == row["trace_sha256"]
+        old_trace = prior / "resource-cost-mini" / case["case_id"] / "events" / (row["normal_result_id"] + ".npz")
+        old_result = json.loads((prior / "resource-cost-mini" / case["case_id"] / "results" / (row["normal_result_id"] + ".json")).read_text())["result"]
+        assert hashlib.sha256(old_trace.read_bytes()).hexdigest() == old_result["trace_hash"]
+        with np.load(trace, allow_pickle=False) as stream:
+            a = {name: stream[name] for name in stream.files}
+        with np.load(old_trace, allow_pickle=False) as stream:
+            normal = {name: stream[name] for name in stream.files}
+        blocked = potential = delivered = post_delivered = post_targeted = wire = 0
+        balances = [8192] * 4
+        for i in range(row["active_events"]):
+            sender = int(a["agent_id"][i])
+            length = int(a["emitted_length"][i])
+            balances[sender] -= length
+            assert balances == a["balances"][i, :4].tolist()
+            in_window = 512 <= i < 768
+            if in_window:
+                wire += length
+            for receiver in range(4):
+                targeted = sender in isolated or receiver in isolated
+                allowed = sender != receiver and not (in_window and targeted)
+                assert bool(a["external_links"][i, receiver]) == allowed
+                possible = length > 0 and sender != receiver and bool(a["physical_links"][i, receiver])
+                assert bool(a["delivered"][i, receiver]) == (possible and allowed)
+                if in_window:
+                    potential += int(possible)
+                    blocked += int(possible and not allowed)
+                    delivered += int(possible and allowed)
+                elif i >= 768:
+                    post_delivered += int(possible and allowed)
+                    post_targeted += int(possible and allowed and targeted)
+        assert (blocked, potential, delivered, wire, post_delivered, post_targeted) == (
+            row["actual_blocked_copies"], row["window_potential_copies"], row["window_delivered_copies"],
+            row["window_emitted_bytes"], row["post_recovery_delivered_copies"], row["post_recovery_targeted_delivered_copies"])
+        area = areas[key]
+        burst_count = int(np.rint(a["coverage"][row["active_events"] - 1] * area))
+        normal_count = int(np.rint(normal["coverage"][row["normal_active_events"] - 1] * area))
+        pairs.append({
+            "result_id": key, "normal_result_id": row["normal_result_id"], "method_id": row["method_id"],
+            "source": row["source"], "family": row["family"], "normal_outcome": row["normal_outcome"], "burst_outcome": row["outcome"],
+            "component_area": area, "normal_final_coverage_count": normal_count, "burst_final_coverage_count": burst_count,
+            "normal_final_coverage": row["normal_metrics"]["final_coverage"], "burst_final_coverage": row["metrics"]["final_coverage"],
+            "delta_coverage_percentage_points": 100 * (burst_count - normal_count) / area,
+            "normal_auc": row["normal_metrics"]["auc"], "burst_auc": row["metrics"]["auc"], "delta_auc": row["auc_delta"],
+            "actual_blocked_receiver_copies": blocked, "window_emitted_bytes": wire,
+            "post_recovery_active_events": row["post_recovery_active_events"], "post_recovery_targeted_delivered_copies": post_targeted,
+            "normal_spent_bytes": row["normal_spent_bytes"], "burst_spent_bytes": row["spent_bytes"],
+            "first_pair_differences": row["first_pair_differences"],
+        })
+assert len(pairs) == 10 and "jax" not in sys.modules and "ir2_benchmark" not in sys.modules
+summary = {
+    "complete": True, "pairs": pairs, "unit": "five fixed Validation maps, two methods; descriptive engineering pairs",
+    "window_wall_seconds": closed["epoch"] - window["started_epoch"],
+    "cases_wall_seconds": sum(case["wall_seconds"] for case in audit["cases"]),
+    "actual_blocked_receiver_copies": sum(row["actual_blocked_receiver_copies"] for row in pairs),
+    "window_emitted_bytes": sum(row["window_emitted_bytes"] for row in pairs),
+    "normal_coverage_successes": sum(row["normal_outcome"] == "success" for row in pairs),
+    "burst_coverage_successes": audit["coverage_successes"],
+    "coverage_count_increased_pairs": sum(row["burst_final_coverage_count"] > row["normal_final_coverage_count"] for row in pairs),
+    "coverage_count_decreased_pairs": sum(row["burst_final_coverage_count"] < row["normal_final_coverage_count"] for row in pairs),
+    "coverage_count_equal_pairs": sum(row["burst_final_coverage_count"] == row["normal_final_coverage_count"] for row in pairs),
+    "scalar_replay_verified_pairs": 10,
+    "reviewed_utc": datetime.datetime.now(datetime.UTC).isoformat(),
+    "review_protocol_sha256": hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest(),
+    "analysis_runtime": {"python": sys.version.split()[0], "numpy": np.__version__, "jax_initialized": False},
+}
+with (root / "paired-summary.json").open("x", encoding="utf-8") as stream:
+    json.dump(summary, stream, indent=2)
+    stream.write("\n")
+print(json.dumps({name: value for name, value in summary.items() if name != "pairs"}))

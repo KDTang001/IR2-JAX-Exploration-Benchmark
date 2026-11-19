@@ -195,7 +195,12 @@ have in-window emissions and targeted successful Normal deliveries. Static
 overlay identifies 817 potentially blocked receiver copies, not observed Burst
 losses. Nine Normal traces also support a post-recovery observation; one ended
 successfully earlier. This offline check did not start a GPU window or run any
-new episode; the actual 8KiB Burst gate is still pending authorization/execution.
+new episode. The separately authorized November 19
+[actual ten-task 8KiB Burst run](BURST8K_PROBE_REPORT.md) subsequently passed:
+784 receiver copies were blocked, all ten had post-recovery activity and nine
+had targeted recovery delivery. Outcome changes were mixed. IR2 runtime samples
+included other GPU PIDs, so its cost is not exclusive-device performance evidence.
+Other communication modes, 8KiB Dropout and the full pilot remain outside that run.
 
 ## Evidence and review
 

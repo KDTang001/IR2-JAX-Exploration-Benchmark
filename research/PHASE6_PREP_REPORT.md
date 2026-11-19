@@ -30,6 +30,18 @@ The weakest task has only two targeted copies and remains in the cohort.
 No environment, JAX/GPU, training or new resource window was started. This
 supports requesting a bounded actual Burst run, not claiming a Burst result.
 
+November 19 follow-up: the separately authorized
+[ten frozen 8KiB/mixed/Burst episodes](BURST8K_PROBE_REPORT.md) passed full
+execution and actual-traffic/Normal-pair audits: 18,320 active events, five
+coverage successes and five normal timeouts, zero execution/graph/OOM errors.
+The 09:41:26 window closed at 10:07:09 (25 minutes 44 seconds including waiting
+and compilation). All ten had actual blocking: 784 receiver copies, with
+post-recovery activity in ten and targeted recovery delivery in nine. All
+pre-fault 512-event prefixes matched; eight paths changed and performance
+changes had mixed signs. Other GPU PIDs appeared during IR2 execution, so
+that group's runtime is not exclusive-H100 evidence. No full pilot, training
+or merge was started; all 153 frozen inputs and 111 package sources were unchanged.
+
 ## Scope and resource boundary
 
 The authorized H100 window is at most four hours, including compilation. It began

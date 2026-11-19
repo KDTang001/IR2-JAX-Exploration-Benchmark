@@ -1,0 +1,27 @@
+{
+  "path": "/tmp/ir2-burst8k-probe-20261119.tar.gz",
+  "sha256": "8d9dd0c0975f75fd7f86298b8bd8a349859b7a735662b28d7ea382e03a4657e8",
+  "bytes": 666058,
+  "files": 44,
+  "postrun": {
+    "observed_epoch": 1795054033.53579,
+    "pinned_inputs_verified": 153,
+    "input_mismatches": [],
+    "core_source_files_verified": 111,
+    "worker_gpu_processes_remaining": [],
+    "gpu_processes_at_postrun_observation": "987028, 1944",
+    "runtime_postrun_observation": {
+      "python": "3.11.0 (main, Mar  1 2023, 18:26:19) [GCC 11.2.0]",
+      "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+      "packages": {
+        "jax": "0.4.35",
+        "jaxlib": "0.4.34",
+        "numpy": "2.0.2",
+        "flax": "0.10.2",
+        "optax": "0.2.4"
+      },
+      "jax_initialized": false
+    }
+  },
+  "temporary_remote_bundle_removed": true
+}

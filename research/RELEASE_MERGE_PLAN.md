@@ -28,6 +28,10 @@ Later pushed heads require a fresh metadata check before any merge.
    Its 2KiB/mixed Burst cohort had zero in-window emitted bytes; retain that
    exposure limit in release notes. C1024 remains a candidate for wider
    conditions; do not call all 240 or the paper matrix done.
+   The separately authorized November 19 [8KiB Burst follow-up](BURST8K_PROBE_REPORT.md)
+   now has actual blocked-message exposure and passed its ten-task audit.
+   Its mixed outcome changes do not certify general robustness; IR2 cost
+   samples include other GPU PIDs and are not exclusive-performance evidence.
 3. After explicit merge approval, integrate PR1 first. Prefer a merge preserving
    its audit ancestry if repository policy allows it; do not publish/tag that
    intermediate tree as the completed release because PR2 contains metadata/OOM
